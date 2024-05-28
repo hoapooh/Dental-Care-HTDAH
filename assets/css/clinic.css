@@ -318,6 +318,7 @@ p {
 }
 
 .clinic__dentist__container .info-title {
+	text-align: center;
 	color: #fff;
 	padding: 12px 16px;
 	background: linear-gradient(36deg, #00b5f1, #00e0ff);
@@ -524,7 +525,7 @@ p {
 .booking__dentist::-webkit-scrollbar {
 	width: 6px;
 	display: block;
-	background-color: #f5f5f5;
+	background-color: #b2b2b2;
 }
 
 .booking__dentist::-webkit-scrollbar-thumb {
@@ -532,6 +533,12 @@ p {
 	background-image: linear-gradient(0deg, #88d3ce 0, #2d9cfd);
 	border: 1px solid #b5b5b5;
 	border-radius: 5px;
+}
+
+.booking__dentist .card-end {
+	text-align: center;
+	color: #00559c;
+	font-size: 2rem;
 }
 
 .clinic .booking .back-btn {
