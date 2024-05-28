@@ -64,7 +64,7 @@
 
 		<main>
 			<div class="clinic">
-				<h1 class="clinic__title text-center fw-bold">Chọn Bác Sĩ</h1>
+				<h1 class="clinic__title text-center fw-bold">Chọn Ngày Khám</h1>
 				<div class="text-center">
 					<img src="./assets/images/separate.png" alt="" />
 				</div>
@@ -88,119 +88,87 @@
 										<i class="fa-solid fa-tooth"></i>
 										<div class="text"><span>Chuyên khoa: Niềng răng</span></div>
 									</li>
+									<li>
+										<i class="fa-solid fa-stethoscope"></i>
+										<div class="text">
+											<span>Bác sĩ: THS BS Đỗ Hồng Hải</span>
+										</div>
+									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<div class="booking">
 						<div class="booking-style">
-							<div class="booking-title">Vui lòng chọn Bác sĩ</div>
-							<div class="booking-body">
-								<div>
-									<div class="search">
-										<span class="input-wrap">
-											<span class="input-wrap-search">
-												<input
-													type="search"
-													placeholder="Tìm nhanh bác sĩ" /></span
-											><span class="icon-wrap"
-												><button>
-													<i class="fa-solid fa-magnifying-glass"></i></button
-											></span>
-										</span>
-									</div>
-									<div class="filter">
-										<select name="degree" id="degree">
-											<option value="">Học hàm / Học vị</option>
-											<option value="pgs">PGS</option>
-											<option value="ts">Tiến Sĩ</option>
-											<option value="ths">Thạc Sĩ</option></select
-										><select name="gender" id="gender">
-											<option value="male">Giới tính</option>
-											<option value="male">Nam</option>
-											<option value="female">Nữ</option>
-										</select>
+							<div class="booking-title">Vui lòng chọn ngày khám</div>
+							<div class="booking-calender">
+								<div class="year-month__container">
+									<div class="year-month__container__style">
+										<div>
+											<button type="button" disabled>
+												<i class="fa-solid fa-circle-left"></i>
+											</button>
+										</div>
+										<div><div class="year-month__time">THÁNG 05-2024</div></div>
+										<div>
+											<button type="button">
+												<i class="fa-solid fa-circle-right"></i>
+											</button>
+										</div>
 									</div>
 								</div>
-								<div class="booking__dentist">
-									<a href="./cliniccalender.html">
-										<div class="booking__dentist__card">
-											<div class="booking__dentist__card__style">
-												<div class="stylist">
-													<i class="fa-solid fa-stethoscope"></i> THS BS Đỗ Hồng
-													Hải
-												</div>
-												<div>
-													<i class="fa-solid fa-mars-and-venus"></i> Giới tính:
-													Nam
-												</div>
-												<div>
-													<i class="fa-solid fa-dollar-sign"></i> Giá khám:
-													150.000đ
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="./cliniccalender.html">
-										<div class="booking__dentist__card">
-											<div class="booking__dentist__card__style">
-												<div class="stylist">
-													<i class="fa-solid fa-stethoscope"></i> THS BS Đỗ Hồng
-													Hải
-												</div>
-												<div>
-													<i class="fa-solid fa-mars-and-venus"></i> Giới tính:
-													Nam
-												</div>
-												<div>
-													<i class="fa-solid fa-dollar-sign"></i> Giá khám:
-													150.000đ
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="./cliniccalender.html">
-										<div class="booking__dentist__card">
-											<div class="booking__dentist__card__style">
-												<div class="stylist">
-													<i class="fa-solid fa-stethoscope"></i> THS BS Đỗ Hồng
-													Hải
-												</div>
-												<div>
-													<i class="fa-solid fa-mars-and-venus"></i> Giới tính:
-													Nam
-												</div>
-												<div>
-													<i class="fa-solid fa-dollar-sign"></i> Giá khám:
-													150.000đ
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="./cliniccalender.html">
-										<div class="booking__dentist__card">
-											<div class="booking__dentist__card__style">
-												<div class="stylist">
-													<i class="fa-solid fa-stethoscope"></i> THS BS Đỗ Hồng
-													Hải
-												</div>
-												<div>
-													<i class="fa-solid fa-mars-and-venus"></i> Giới tính:
-													Nam
-												</div>
-												<div>
-													<i class="fa-solid fa-dollar-sign"></i> Giá khám:
-													150.000đ
-												</div>
-											</div>
-										</div>
-									</a>
-									<div class="card-end">Đã hết danh sách</div>
+								<div class="week__container">
+									<div class="week__cell">CN</div>
+									<div class="week__cell">Hai</div>
+									<div class="week__cell">Ba</div>
+									<div class="week__cell">Tư</div>
+									<div class="week__cell">Năm</div>
+									<div class="week__cell">Sáu</div>
+									<div class="week__cell">Bảy</div>
+								</div>
+								<div class="date__container">
+									<div class="date__container__style">
+										<div class="date__cell"><span>1</span></div>
+										<div class="date__cell"><span>2</span></div>
+										<div class="date__cell"><span>3</span></div>
+										<div class="date__cell"><span>4</span></div>
+										<div class="date__cell"><span>5</span></div>
+										<div class="date__cell"><span>6</span></div>
+										<div class="date__cell"><span>7</span></div>
+										<div class="date__cell"><span>8</span></div>
+										<div class="date__cell"><span>9</span></div>
+										<div class="date__cell"><span>10</span></div>
+										<div class="date__cell"><span>11</span></div>
+										<div class="date__cell"><span>12</span></div>
+										<div class="date__cell"><span>13</span></div>
+										<div class="date__cell"><span>14</span></div>
+										<div class="date__cell"><span>15</span></div>
+										<div class="date__cell"><span>16</span></div>
+										<div class="date__cell"><span>17</span></div>
+										<div class="date__cell"><span>18</span></div>
+										<div class="date__cell"><span>19</span></div>
+										<div class="date__cell"><span>20</span></div>
+										<div class="date__cell"><span>21</span></div>
+										<div class="date__cell"><span>22</span></div>
+										<div class="date__cell"><span>23</span></div>
+										<div class="date__cell"><span>24</span></div>
+										<div class="date__cell"><span>25</span></div>
+										<div class="date__cell"><span>26</span></div>
+										<div class="date__cell"><span>27</span></div>
+										<div class="date__cell"><span>28</span></div>
+										<div class="date__cell"><span>29</span></div>
+										<div class="date__cell available-day"><span>30</span></div>
+										<div class="date__cell"><span>31</span></div>
+										<div class="date__cell"><span>01</span></div>
+										<div class="date__cell available-day"><span>02</span></div>
+										<div class="date__cell"><span>03</span></div>
+										<div class="date__cell"><span>04</span></div>
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="back-btn">
-							<a href="./clinicspecialty.html">
+							<a href="./clinicdentist.html">
 								<button type="button">
 									Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
 								</button>

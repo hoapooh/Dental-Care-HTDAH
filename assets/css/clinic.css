@@ -338,6 +338,7 @@ p {
 .clinic__dentist__container .info-body ul li {
 	display: flex;
 	align-items: flex-start;
+	margin-bottom: 10px;
 }
 
 .clinic__dentist__container .info-body ul li i {
@@ -347,7 +348,8 @@ p {
 
 .clinic__dentist__container .info-body .text {
 	color: #003553;
-	font-size: 1.6rem;
+	font-size: 1.9rem;
+	font-weight: 600;
 }
 
 .clinic__dentist__container .info-body .address {
@@ -496,6 +498,7 @@ p {
 
 .booking__dentist__card {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	color: #003553;
 	margin-bottom: 15px;
 	border-radius: 12px;
 	animation: styles_animation__RBREz 0.7s ease 0.3s forwards;
@@ -573,4 +576,138 @@ p {
 		#00e0ff 113.91%
 	) !important;
 	color: #fff;
+}
+
+/* ========= Booking Calender ========== */
+.year-month__container {
+	text-align: center;
+	margin-bottom: 5px;
+	padding: 12px;
+	color: #1ca1f4;
+	font-size: 1.1rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-radius: 5px 5px 0 0;
+}
+
+.year-month__container__style {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.year-month__container__style button {
+	width: 40px;
+	height: 40px;
+	padding: 6.4px 0;
+	font-size: 16px;
+	border-radius: 3px;
+	vertical-align: -3px;
+	border-color: transparent;
+	background: transparent;
+	text-shadow: none;
+	box-shadow: none;
+	border: none;
+	outline: none;
+	color: rgb(0, 181, 241);
+}
+
+.year-month__container__style button[disabled] {
+	color: rgb(149, 165, 166);
+	cursor: not-allowed;
+}
+
+.year-month__container__style .year-month__time {
+	font-weight: 600;
+	line-height: 28.287px;
+	font-size: 2.2rem;
+	text-transform: uppercase;
+	color: #00b5f1;
+	background: linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+
+.week__container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+}
+
+.week__cell {
+	pointer-events: none;
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: calc(100% / 7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	border-right: 1px solid #dfe3eb;
+	border-bottom: 1px solid #dfe3eb;
+	border-top: 1px solid #e4e7ee;
+	font-size: 1rem;
+	white-space: nowrap;
+	background: #f7f7f7;
+	font-size: 2rem;
+}
+
+.week__cell:first-child {
+	color: #fa531f;
+}
+
+.week__cell:last-child {
+	color: #faa01f;
+}
+
+.date__container__style {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+}
+
+.date__container__style .date__cell {
+	pointer-events: none;
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: calc(100% / 7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	border-right: 1px solid #dfe3eb;
+	border-bottom: 1px solid #dfe3eb;
+	cursor: pointer;
+	font-size: 2rem;
+}
+
+.date__container__style .date__cell span {
+	opacity: 0.2;
+}
+
+.date__container__style .date__cell.available-day {
+	pointer-events: unset;
+}
+
+.date__container__style .date__cell.available-day span {
+	opacity: 0.8 !important;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.2s ease-in-out;
+	padding: 0 10px;
+	min-width: 40px;
+	text-align: center;
+}
+
+.date__container__style .date__cell.available-day:hover span {
+	border-radius: 5px;
+	background: linear-gradient(48deg, #00b5f1, #00e0ff);
+	color: #fff !important;
+	cursor: pointer;
+	font-weight: 500;
 }
