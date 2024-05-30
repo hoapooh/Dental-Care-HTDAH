@@ -174,21 +174,22 @@ p {
 .status {
 	padding: 0.4rem 0;
 	border-radius: 32px;
+	font-weight: 600;
 	text-align: center;
 	margin-bottom: 0;
 }
 
-.status.dentist {
+.status.complete {
 	background: #86e49d;
 	color: #006b21;
 }
 
-.status.member {
-	background: #93aff0;
-	color: #4880ff;
+.status.working {
+	background: #4880ff;
+	color: #fff;
 }
 
-.status.admin {
+.status.out {
 	background: #d893a3;
 	color: #b30021;
 }
@@ -196,4 +197,26 @@ p {
 .pagination .page-link {
 	padding: 5px 20px;
 	font-weight: 600;
+}
+
+/* =========== Manager Schedule ============ */
+.ws__style {
+	width: 600px;
+}
+
+.manager__management .work__schedule {
+	display: flex;
+	flex-wrap: wrap;
+	white-space: nowrap;
+	gap: 10px;
+}
+
+.manager__management .work__schedule .time {
+	min-width: 115px;
+	margin-right: 10px;
+	padding: 5px 10px;
+	background: #4880ff;
+	border-radius: 5px;
+	color: #fff;
+	font-weight: 500;
 }
