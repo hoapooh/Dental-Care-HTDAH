@@ -129,7 +129,7 @@ p {
 
 .account__management table button:last-child:hover,
 .account__management .close-btn:hover {
-	background: #ff0000;
+	background: #f81f1f;
 }
 
 .account__management .table tbody img {
