@@ -24,13 +24,34 @@ p {
 	margin-bottom: 0;
 }
 
+@media (min-width: 576px) {
+	.modal-dialog {
+		max-width: 100%;
+	}
+}
+
 .form-modal-styles {
-	width: 600px;
+	width: 1000px;
+}
+
+.form-modal-styles .modal-body {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .form-modal-styles .modal-body label {
 	font-size: 2rem;
 	font-weight: 500;
+}
+
+.form-modal-styles .modal-body .modal-body-card {
+	flex: 0 0 50%;
+	padding: 0 10px;
+}
+
+.form-modal-styles .modal-body .user-address,
+.form-modal-styles .modal-body .user-pic {
+	flex: 0 0 100%;
 }
 
 .form-modal-styles .modal-footer .close-btn,
@@ -39,9 +60,8 @@ p {
 }
 
 .form-modal-styles .modal-body input,
-.form-modal-styles .modal-body textarea {
-	display: flex;
-	align-items: center;
+.form-modal-styles .modal-body textarea,
+.form-modal-styles .modal-body select {
 	width: 100%;
 	font-size: 2rem;
 	margin-bottom: 10px;
@@ -50,11 +70,17 @@ p {
 	border-radius: 5px;
 }
 
-.account__management {
+.form-modal-styles .modal-body input:focus,
+.form-modal-styles .modal-body textarea:focus {
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+		rgba(0, 0, 0, 0.05) 0px 5px 10px;
+}
+
+.manager__management {
 	padding: 0 20px;
 }
 
-.account__management__header {
+.manager__management__header {
 	padding: 0 20px;
 	display: flex;
 	justify-content: space-between;
@@ -62,77 +88,78 @@ p {
 	font-size: 2rem;
 }
 
-.account__management__header .title {
+.manager__management__header .title {
 	font-size: 4.4rem;
 	font-weight: bold;
 }
 
-.account__management__header .action-btn {
+.manager__management__header .action-btn {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
 
-.account__management__header .action-btn .search__bar {
+.manager__management__header .action-btn .search__bar {
 	padding: 5px 10px;
 	border: 1px solid #4880ff;
 	border-radius: 6px;
 }
 
-.account__management__header .action-btn .search__bar input {
+.manager__management__header .action-btn .search__bar input {
 	border: none;
 	outline: none;
 }
 
-.account__management__header .action-btn .add__new {
+.manager__management__header .action-btn .add__new {
 	background: #4880ff;
 	border: none;
 	outline: none;
 	color: white;
+	font-weight: 600;
 	padding: 6px 20px;
 	border-radius: 6px;
 	cursor: pointer;
 }
 
-.account__management__header .action-btn .add__new:hover {
+.manager__management__header .action-btn .add__new:hover {
 	background: #2e5bff;
 }
 
-.account__management table button {
+.manager__management table button {
 	border: none;
 	outline: none;
 	border-radius: 6px;
 	padding: 5px 10px;
 }
 
-.account__management table button i {
+.manager__management table button i {
 	vertical-align: middle;
 }
 
-.account__management table button:first-child,
-.account__management .submit-btn {
+.manager__management table button:first-child,
+.manager__management .submit-btn {
 	background: #4880ff;
 	color: white;
 }
 
-.account__management table button:first-child:hover,
-.account__management .submit-btn:hover {
+.manager__management table button:first-child:hover,
+.manager__management .submit-btn:hover {
 	background: #3b6cd9;
 }
 
-.account__management table button:last-child,
-.account__management .close-btn {
+.manager__management table button:last-child,
+.manager__management .close-btn {
 	margin-left: 5px;
 	background: rgb(255, 66, 66);
 	color: white;
 }
 
-.account__management table button:last-child:hover,
-.account__management .close-btn:hover {
-	background: #ff0000;
+.manager__management table button:last-child:hover,
+.manager__management .close-btn:hover {
+	background: #f81f1f;
 }
 
-.account__management .table tbody img {
+.manager__management .table tbody img {
 	height: 32px;
 	width: 32px;
 	border-radius: 50%;
@@ -140,7 +167,7 @@ p {
 	margin-right: 5px;
 }
 
-.account__management .table tbody span {
+.manager__management .table tbody span {
 	font-weight: 600;
 }
 
@@ -164,4 +191,9 @@ p {
 .status.admin {
 	background: #d893a3;
 	color: #b30021;
+}
+
+.pagination .page-link {
+	padding: 5px 20px;
+	font-weight: 600;
 }
