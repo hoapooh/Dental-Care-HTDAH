@@ -20,134 +20,128 @@ a {
 	text-decoration: none;
 }
 
-table {
-	width: 100%;
+p {
+	margin-bottom: 0;
+}
+
+.form-modal-styles {
+	width: 600px;
+}
+
+.form-modal-styles .modal-body label {
+	font-size: 2rem;
+	font-weight: 500;
+}
+
+.form-modal-styles .modal-footer .close-btn,
+.form-modal-styles .modal-footer .submit-btn {
 	font-size: 2rem;
 }
 
-.dashboard__info {
-	background: #f5f6fa;
-	border-radius: 0.8rem 0 0 0;
-	width: 100%;
-	padding: 20px 30px 20px;
-	min-height: calc(100vh - 80px);
+.form-modal-styles .modal-body input,
+.form-modal-styles .modal-body textarea {
 	display: flex;
-	justify-content: center;
 	align-items: center;
-}
-
-.dashboard__info__table {
-	width: 90%;
-	height: calc(100vh - 122px);
-	backdrop-filter: blur(7px);
-	box-shadow: 0 0.6rem 1rem #0005;
-	border-radius: 1rem;
-}
-
-.table__header {
 	width: 100%;
-	height: 8%;
-	background-color: #fff4;
-	padding: 15px 10px;
-	text-align: center;
-	border-radius: 1rem 1rem 0 0;
+	font-size: 2rem;
+	margin-bottom: 10px;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
-.table__header h1 {
-	font-size: 3rem;
+.account__management {
+	padding: 0 20px;
+}
+
+.account__management__header {
+	padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 2rem;
+}
+
+.account__management__header .title {
+	font-size: 4.4rem;
 	font-weight: bold;
-	margin-bottom: 0;
-	vertical-align: middle;
 }
 
-.table__body {
-	width: 100%;
-	max-height: 92%;
-	background: #fffb;
-	margin: 0 auto;
-	border-radius: 1rem;
+.account__management__header .action-btn {
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
-.table__body::-webkit-scrollbar {
-	width: 0.7rem;
-	height: 0.7rem;
+.account__management__header .action-btn .search__bar {
+	padding: 5px 10px;
+	border: 1px solid #4880ff;
+	border-radius: 6px;
 }
 
-.table__body::-webkit-scrollbar-thumb {
-	border-radius: 0.7rem;
-	background: #0004;
-	visibility: hidden;
+.account__management__header .action-btn .search__bar input {
+	border: none;
+	outline: none;
 }
 
-.table__body:hover::-webkit-scrollbar-thumb {
-	visibility: visible;
+.account__management__header .action-btn .add__new {
+	background: #4880ff;
+	border: none;
+	outline: none;
+	color: white;
+	padding: 6px 20px;
+	border-radius: 6px;
+	cursor: pointer;
 }
 
-.table__body img {
-	width: 55px;
-	height: 55px;
-	border-radius: 50%;
-	margin-right: 0.8rem;
-	vertical-align: middle;
+.account__management__header .action-btn .add__new:hover {
+	background: #2e5bff;
 }
 
-.table__body button {
+.account__management table button {
 	border: none;
 	outline: none;
 	border-radius: 6px;
 	padding: 5px 10px;
 }
 
-.table__body button i {
+.account__management table button i {
 	vertical-align: middle;
 }
 
-.table__body button:first-child {
+.account__management table button:first-child,
+.account__management .submit-btn {
 	background: #4880ff;
 	color: white;
 }
 
-.table__body button:last-child {
+.account__management table button:first-child:hover,
+.account__management .submit-btn:hover {
+	background: #3b6cd9;
+}
+
+.account__management table button:last-child,
+.account__management .close-btn {
 	margin-left: 5px;
 	background: rgb(255, 66, 66);
 	color: white;
 }
 
-table,
-th,
-td {
-	border-collapse: collapse;
-	padding: 1rem;
-	text-align: left;
+.account__management table button:last-child:hover,
+.account__management .close-btn:hover {
+	background: #f81f1f;
 }
 
-thead,
-th {
-	position: sticky;
-	top: 0;
-	left: 0;
-	background-color: #d5d1defe;
+.account__management .table tbody img {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 5px;
 }
 
-tbody tr:nth-child(even) {
-	background: #0000000b;
-}
-
-tbody tr:hover {
-	background: #fff6;
-}
-
-thead {
-	border-radius: 1rem 1rem 0 0;
-}
-
-tbody {
-	border-radius: 0 0 1rem 1rem;
-}
-
-thead,
-tbody {
-	width: 100%;
+.account__management .table tbody span {
+	font-weight: 600;
 }
 
 .status {
@@ -170,10 +164,4 @@ tbody {
 .status.admin {
 	background: #d893a3;
 	color: #b30021;
-}
-
-@media (max-width: 1000px) {
-	td:not(:first-of-type) {
-		min-width: 14rem;
-	}
 }
