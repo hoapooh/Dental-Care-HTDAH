@@ -24,6 +24,12 @@ p {
 	margin-bottom: 0;
 }
 
+input:focus {
+	border-color: #47bfff;
+	box-shadow: 0 0 0 4px rgba(29, 161, 242, 0.2);
+	outline: 0;
+}
+
 .sidebar {
 	display: flex;
 	flex-direction: column;

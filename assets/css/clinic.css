@@ -154,24 +154,20 @@ p {
 	background: #fff;
 	box-shadow: 5px 20px 40px #ccd6ef;
 	border-radius: 20px;
-	display: flex;
-	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
 }
 
 .clinic__gallery .gallery-item {
-	display: inline-block;
-	margin: 5px;
-	width: calc(100% / 3 - 10px);
-	vertical-align: top;
+	width: 100%;
 	cursor: pointer;
 }
 
 .clinic__gallery .gallery-image {
 	width: 100%;
-	height: 120px;
 	-o-object-fit: cover;
 	object-fit: cover;
-	border-radius: 10px;
+	border-radius: 20px;
 }
 
 /* ============= Clinic Specialty ============= */
@@ -710,4 +706,105 @@ p {
 	color: #fff !important;
 	cursor: pointer;
 	font-weight: 500;
+}
+
+/* ============== CLINIC DETAIL ============== */
+.clinic__detail__style {
+	background: #f5f8fc;
+	padding-top: 40px;
+}
+
+.clinic__detail {
+	width: 1180px;
+	margin: 0 auto;
+}
+
+.clinic__detail__info__images {
+	height: 422px;
+}
+
+.clinic__detail__info__images .info {
+	background: #fff;
+	box-shadow: #ccd6ef 5px 20px 40px 0px;
+	border-radius: 20px;
+	padding: 35px 35px 20px;
+	height: 100%;
+}
+
+.clinic__detail__info__images .images {
+	height: 100%;
+}
+
+.clinic__detail__info__images .images img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.clinic__detail__info__images .info-title {
+	text-align: center;
+}
+
+.clinic__detail__info__images .info-title img {
+	width: 150px;
+}
+
+.clinic__detail__info__images .info-title .name {
+	margin-top: 20px;
+	text-align: center;
+	font-size: 3rem;
+	font-weight: 700;
+	color: #2d9cfd;
+}
+
+.clinic__detail__info__images .info-details {
+	font-size: 1.6rem;
+}
+
+.clinic__detail__info__images .info-details .book a {
+	display: block;
+	padding: 10px 30px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	background: #1376f8;
+	width: 100%;
+	border-radius: 100px;
+}
+
+.clinic__detail__info__images .info-details .book a:hover {
+	background: #0f5fcb;
+}
+
+.clinic__detail__info__images .info-details .style__item {
+	display: inline-flex;
+	gap: 5.5px;
+	align-items: center;
+	margin-bottom: 12px;
+}
+
+.clinic__detail__info__images .info-details .style__item .span {
+	line-height: 18.75px;
+}
+
+.clinic__detail__desc__map {
+	margin-top: 30px;
+}
+
+.clinic__detail__desc__map .desc {
+	padding: 35px;
+	background: #fff;
+	box-shadow: #ccd6ef 5px 20px 40px 0px;
+	border-radius: 20px;
+}
+
+.clinic__detail__desc__map .desc h2 {
+	font-size: 2.4rem;
+	font-weight: 700;
+	color: #2d9cfd;
+}
+
+.clinic__detail__desc__map .desc p {
+	font-size: 1.8rem;
+	color: #003553;
 }
