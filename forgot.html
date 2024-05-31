@@ -60,61 +60,42 @@
 				</div>
 			</nav>
 		</header>
-		<div class="content">
-			<div class="content__img">
-				<img src="./assets/images/login-image.png" alt="doctor" />
-				<div class="content__img__quote">
-					<p class="quote">
-						“Chưa hề có một ai có thể kiên nhẫn chịu đựng cơn đau răng” <br />
-						~ Dr Đỗ Anh Tú
-					</p>
-					<p class="summary">
-						Người sáng lập ra công ty trách nhiệm hữu hạn 1 mình tôi
-					</p>
+		<main class="forgot__style">
+			<div class="forgot__pass">
+				<div class="forgot__container row">
+					<div class="col-7 forgot__container__form">
+						<form method="POST" action="" class="forgot__form">
+							<div class="forgot__form__title">Quên mật khẩu</div>
+							<div class="forgot__form__input">
+								<label for="email" class="email">Email</label>
+								<input
+									type="email"
+									name="email"
+									id="email"
+									placeholder="Nhập email để lấy lại mật khẩu"
+								/>
+							</div>
+							<div class="forgot__form__submit">
+								<input type="submit" value="Đặt lại mật khẩu" />
+							</div>
+							<div class="forgot__form__cta-btn">
+								<a href="./login.html">Trở về trang đăng nhập</a>
+							</div>
+						</form>
+					</div>
+					<div class="col-5 forgot__container__image">
+						<div class="forgot__image">
+							<div class="forgot__image__quote">
+								Đừng lo lắng, chúng tôi sẽ giúp bạn lấy lại mật khẩu.
+							</div>
+							<div class="forgot__image__img">
+								<img src="./assets/images/forgot.png" alt="" />
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="content__form">
-				<h1 class="content__form__title">Đăng nhập tài khoản</h1>
-				<div class="content__form__login">
-					<button type="button" class="content__form__login__google">
-						<img src="./assets/images/Google.png" alt="" />
-						Đăng nhập bằng Google
-					</button>
-				</div>
-				<div class="content__form__separate">Hoặc</div>
-				<form action="/" method="POST" class="content__form__system">
-					<div class="username">
-						<i class="fa-solid fa-envelope"></i>
-						<input type="email" placeholder="Nhập Email của bạn" />
-					</div>
-					<div class="password">
-						<i class="fa-solid fa-lock"></i>
-						<input type="text" placeholder="Mật khẩu" />
-					</div>
-					<div class="remember__forgot">
-						<label class="remember">
-							<input type="checkbox" />
-							Tự động đăng nhập
-						</label>
-						<a href="./forgot.html" class="forgot"> Quên mật khẩu? </a>
-					</div>
-					<div class="cta-btn">
-						<input
-							type="submit"
-							value="Đăng nhập"
-							class="content__form__system__submit"
-						/>
-						<br />
-						<a
-							class="content__form__system__register__navigation"
-							href="./register.html"
-						>
-							Bạn chưa có tài khoản? Đăng ký ngay!
-						</a>
-					</div>
-				</form>
-			</div>
-		</div>
+		</main>
 		<footer class="footer">
 			<div class="footer__navigation">
 				<a href="/">
