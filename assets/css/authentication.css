@@ -225,11 +225,12 @@
 .content__form__system .email input,
 .content__form__system .password input {
 	background: transparent;
-	width: 260px;
+	width: 100%;
+	padding: 10px 10px;
 	border: none;
 	outline: none;
 	color: #011632;
-	font-size: 1.4rem;
+	font-size: 1.6rem;
 	font-family: "Baloo Paaji 2";
 	font-weight: 600;
 	line-height: 155%; /* 21.7px */
