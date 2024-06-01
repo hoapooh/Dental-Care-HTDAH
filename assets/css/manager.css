@@ -30,6 +30,20 @@ p {
 	}
 }
 
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background: #b2b2b2;
+	border-radius: 100px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: #b2b2b2;
+	background-image: linear-gradient(0deg, #88d3ce 0, #2d9cfd);
+	border: 1px solid #b5b5b5;
+	border-radius: 100px;
+}
+
 .form-modal-styles {
 	width: 1000px;
 }
@@ -219,4 +233,9 @@ p {
 	border-radius: 5px;
 	color: #fff;
 	font-weight: 500;
+}
+
+/* ================ PAGINATION =============== */
+.pagination .page-link {
+	font-size: 2rem;
 }

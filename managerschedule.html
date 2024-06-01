@@ -61,6 +61,7 @@
 						>
 					</li>
 				</ul>
+				<div class="copyright">©️ All rights reserved | Dental Care</div>
 			</nav>
 
 			<div class="container-fluid" style="width: 85%; padding: 0">
@@ -96,7 +97,7 @@
 						</div>
 					</div>
 					<div class="table-responsive">
-						<table class="table table-striped mt-5" style="font-size: 1.6rem">
+						<table class="table table-striped mt-3" style="font-size: 1.6rem">
 							<thead>
 								<tr>
 									<th class="text-center">STT</th>
@@ -108,7 +109,7 @@
 									<th>Hành động</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="myTableBody">
 								<tr style="vertical-align: middle">
 									<td class="text-center">1</td>
 									<td>D00001</td>
@@ -201,11 +202,104 @@
 										<button type="button"><i class="bx bxs-trash"></i></button>
 									</td>
 								</tr>
+
+								<tr style="vertical-align: middle">
+									<td class="text-center">3</td>
+									<td>D00001</td>
+									<td>
+										<img src="./assets/images/avatar.jpg" alt="" />
+										<span>Phúc Hoà</span>
+									</td>
+									<td>2000-05-30</td>
+									<td class="ws__style">
+										<div class="work__schedule">
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+										</div>
+									</td>
+									<td><p class="status complete">Đang làm việc</p></td>
+									<td>
+										<button type="button">
+											<i class="bx bxs-edit"></i>
+										</button>
+										<button type="button"><i class="bx bxs-trash"></i></button>
+									</td>
+								</tr>
+
+								<tr style="vertical-align: middle">
+									<td class="text-center">3</td>
+									<td>D00001</td>
+									<td>
+										<img src="./assets/images/avatar.jpg" alt="" />
+										<span>Phúc Hoà</span>
+									</td>
+									<td>2000-05-30</td>
+									<td class="ws__style">
+										<div class="work__schedule">
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+										</div>
+									</td>
+									<td><p class="status complete">Đang làm việc</p></td>
+									<td>
+										<button type="button">
+											<i class="bx bxs-edit"></i>
+										</button>
+										<button type="button"><i class="bx bxs-trash"></i></button>
+									</td>
+								</tr>
+
+								<tr style="vertical-align: middle">
+									<td class="text-center">3</td>
+									<td>D00001</td>
+									<td>
+										<img src="./assets/images/avatar.jpg" alt="" />
+										<span>Phúc Hoà</span>
+									</td>
+									<td>2000-05-30</td>
+									<td class="ws__style">
+										<div class="work__schedule">
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
+										</div>
+									</td>
+									<td><p class="status complete">Đang làm việc</p></td>
+									<td>
+										<button type="button">
+											<i class="bx bxs-edit"></i>
+										</button>
+										<button type="button"><i class="bx bxs-trash"></i></button>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
-					<ul class="pagination">
-						<li class="page-item">
+					<ul id="pagination" class="pagination">
+						<!-- <li class="page-item">
 							<a class="page-link" href="#" style="font-size: 2rem">Previous</a>
 						</li>
 						<li class="page-item">
@@ -219,7 +313,7 @@
 						</li>
 						<li class="page-item">
 							<a class="page-link" href="#" style="font-size: 2rem">Next</a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
@@ -234,5 +328,6 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script src="./assets/js/pagination.js"></script>
 	</body>
 </html>
