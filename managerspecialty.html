@@ -30,6 +30,7 @@
 	</head>
 	<body>
 		<div class="dashboard__container d-flex">
+			<!-- ======== SIDEBAR ======== -->
 			<nav class="sidebar" style="width: 15%">
 				<p class="dashboard__logo"><span>Dental</span>Care</p>
 				<ul class="nav">
@@ -54,15 +55,17 @@
 						>
 					</li>
 					<li class="nav-item">
-						<a href="#!"
+						<a href="./managerclinic.html"
 							><span class="menu-icon"
 								><i class="fa-solid fa-house-chimney-medical"></i></span
 							>Quản lý phòng khám</a
 						>
 					</li>
 				</ul>
+				<div class="copyright">©️ All rights reserved | Dental Care</div>
 			</nav>
 
+			<!-- ======== INFO ======== -->
 			<div class="container-fluid" style="width: 85%; padding: 0">
 				<nav class="nav__header d-flex flex-row justify-content-end">
 					<a href="#!">
@@ -78,7 +81,6 @@
 				</nav>
 
 				<div class="manager__management">
-					<!-- account management header -->
 					<div class="manager__management__header">
 						<div class="title">Dịch vụ khám</div>
 						<div class="action-btn">
@@ -167,6 +169,8 @@
 							</form>
 						</div>
 					</div>
+
+					<!-- ========== TABLE  ========== -->
 					<table class="table table-striped mt-5" style="font-size: 1.6rem">
 						<thead>
 							<tr>
@@ -177,7 +181,85 @@
 								<th>Hành động</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="myTableBody">
+							<tr style="vertical-align: middle">
+								<td class="text-center">1</td>
+								<td>Trám răng</td>
+								<td>Nha khoa tổng quát</td>
+								<td>50,000đ</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">2</td>
+								<td>Trám răng</td>
+								<td>Nha khoa tổng quát</td>
+								<td>50,000đ</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">3</td>
+								<td>Trám răng</td>
+								<td>Nha khoa tổng quát</td>
+								<td>50,000đ</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">1</td>
+								<td>Trám răng</td>
+								<td>Nha khoa tổng quát</td>
+								<td>50,000đ</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">2</td>
+								<td>Trám răng</td>
+								<td>Nha khoa tổng quát</td>
+								<td>50,000đ</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">3</td>
+								<td>Trám răng</td>
+								<td>Nha khoa tổng quát</td>
+								<td>50,000đ</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
 							<tr style="vertical-align: middle">
 								<td class="text-center">1</td>
 								<td>Trám răng</td>
@@ -218,8 +300,10 @@
 							</tr>
 						</tbody>
 					</table>
-					<ul class="pagination">
-						<li class="page-item">
+
+					<!-- ========== PAGINATION  ========== -->
+					<ul id="pagination" class="pagination">
+						<!-- <li class="page-item">
 							<a class="page-link" href="#" style="font-size: 2rem">Previous</a>
 						</li>
 						<li class="page-item">
@@ -233,7 +317,7 @@
 						</li>
 						<li class="page-item">
 							<a class="page-link" href="#" style="font-size: 2rem">Next</a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
@@ -248,5 +332,6 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script src="./assets/js/pagination.js"></script>
 	</body>
 </html>

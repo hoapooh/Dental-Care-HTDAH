@@ -30,6 +30,7 @@
 	</head>
 	<body>
 		<div class="dashboard__container d-flex">
+			<!-- ======== SIDEBAR ======== -->
 			<nav class="sidebar" style="width: 15%">
 				<p class="dashboard__logo"><span>Dental</span>Care</p>
 				<ul class="nav">
@@ -54,15 +55,17 @@
 						>
 					</li>
 					<li class="nav-item">
-						<a href="#!"
+						<a href="./managerclinic.html"
 							><span class="menu-icon"
 								><i class="fa-solid fa-house-chimney-medical"></i></span
 							>Quản lý phòng khám</a
 						>
 					</li>
 				</ul>
+				<div class="copyright">©️ All rights reserved | Dental Care</div>
 			</nav>
 
+			<!-- ======== INFO ======== -->
 			<div class="container-fluid" style="width: 85%; padding: 0">
 				<nav class="nav__header d-flex flex-row justify-content-end">
 					<a href="#!">
@@ -167,7 +170,12 @@
 							</form>
 						</div>
 					</div>
-					<table class="table table-striped mt-5" style="font-size: 1.6rem">
+					<!-- ====== TABLE ====== -->
+					<table
+						id="myTable"
+						class="table table-striped mt-5"
+						style="font-size: 1.6rem"
+					>
 						<thead>
 							<tr>
 								<th class="text-center">STT</th>
@@ -180,7 +188,7 @@
 								<th>Hành động</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="myTableBody">
 							<tr style="vertical-align: middle">
 								<td class="text-center">1</td>
 								<td>D00001</td>
@@ -390,10 +398,264 @@
 									<button type="button"><i class="bx bxs-trash"></i></button>
 								</td>
 							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">11</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">11</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">8</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">9</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">10</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">11</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">11</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">8</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">9</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">10</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">11</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
+
+							<tr style="vertical-align: middle">
+								<td class="text-center">11</td>
+								<td>D00001</td>
+								<td>
+									<img src="./assets/images/avatar.jpg" alt="" />
+									<span>Phúc Hoà</span>
+								</td>
+								<td>Nam</td>
+								<td>example@gmail.com</td>
+								<td>2000-01-01</td>
+								<td class="desc">
+									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								</td>
+								<td>
+									<button type="button">
+										<i class="bx bxs-edit"></i>
+									</button>
+									<button type="button"><i class="bx bxs-trash"></i></button>
+								</td>
+							</tr>
 						</tbody>
 					</table>
-					<ul class="pagination">
-						<li class="page-item">
+
+					<!-- ========== PAGINATION  ========== -->
+					<ul class="pagination" id="pagination">
+						<!-- <li class="page-item">
 							<a class="page-link" href="#" style="font-size: 2rem">Previous</a>
 						</li>
 						<li class="page-item">
@@ -407,7 +669,7 @@
 						</li>
 						<li class="page-item">
 							<a class="page-link" href="#" style="font-size: 2rem">Next</a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
@@ -422,5 +684,6 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script src="./assets/js/pagination.js"></script>
 	</body>
 </html>
