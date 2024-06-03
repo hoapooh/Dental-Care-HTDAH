@@ -35,7 +35,7 @@
 				<p class="dashboard__logo"><span>Dental</span>Care</p>
 				<ul class="nav">
 					<li class="nav-item">
-						<a href="./manager.html"
+						<a href="./manager.html" class="active"
 							><span class="menu-icon"><i class="bx bxs-user"></i></span>Quản lý
 							nha sĩ</a
 						>
@@ -55,7 +55,7 @@
 						>
 					</li>
 					<li class="nav-item">
-						<a href="./managerclinic.html" class="active"
+						<a href="./managerclinic.html"
 							><span class="menu-icon"
 								><i class="fa-solid fa-house-chimney-medical"></i></span
 							>Quản lý phòng khám</a
@@ -80,35 +80,72 @@
 					</a>
 				</nav>
 
-				<!-- quản lý thông tin phòng khám -->
 				<div class="manager__management">
 					<div class="manager__management__header">
-						<div class="title">Quản lý phòng khám</div>
+						<div class="title">Thông tin nha sĩ</div>
 					</div>
-					<form method="post" action="" class="manager__management__clinic row">
+					<form
+						method="post"
+						action=""
+						class="manager__management__dentist row"
+					>
 						<div class="col-md-6">
-							<label for="name">Tên phòng khám</label>
-							<input type="text" name="name" id="name" />
+							<label for="username">Username</label
+							><input type="text" name="username" id="username" />
 						</div>
 						<div class="col-md-6">
-							<label for="address">Địa chỉ</label>
+							<label for="password">Password</label
+							><input type="password" name="password" id="password" />
+						</div>
+						<div class="col-md-3">
+							<label for="firstname">First</label
+							><input type="text" name="firstname" id="firstname" />
+						</div>
+						<div class="col-md-3">
+							<label for="lastname">Last</label
+							><input type="text" name="lastname" id="lastname" />
+						</div>
+						<div class="col-md-6">
+							<label for="email">Email</label
+							><input type="email" name="email" id="email" />
+						</div>
+						<div class="col-md-6">
+							<label for="dateofbirth">DOB</label
+							><input type="date" name="dateofbirth" id="dateofbirth" />
+						</div>
+						<div class="col-md-6">
+							<label for="gender">Gender</label
+							><select name="gender" id="gender">
+								<option value="male">Nam</option>
+								<option value="female">Nữ</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="province">Province</label
+							><select name="province" id="province">
+								<option value="hcm">Ho Chi Minh</option>
+								<option value="hn">Ha Noi</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="district">District</label
+							><select name="district" id="district">
+								<option value="tduc">Thu Duc</option>
+								<option value="badinh">Ba Dinh</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="ward">Ward</label
+							><select name="ward" id="ward">
+								<option value="ttho">Truong Tho</option>
+								<option value="dda">Dong Da</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="address">Address</label>
 							<input type="text" name="address" id="address" />
 						</div>
-						<div class="col-md-6 image-file">
-							<label for="image">Hình ảnh</label>
-							<input type="file" name="image" id="image" />
-						</div>
-						<div class="col-md-6">
-							<label for="phone">Số điện thoại liên hệ</label>
-							<input type="tel" name="phone" id="phone" />
-						</div>
-						<div class="col-md-12">
-							<label for="container">Mô tả phòng khám</label>
-							<div id="container">
-								<div id="editor"></div>
-							</div>
-						</div>
-						<div class="col-md-12">
+						<div class="col-md-12 text-end">
 							<button type="submit" class="btn">Lưu</button>
 							<button type="reset" class="btn">Đặt lại</button>
 						</div>
@@ -126,8 +163,5 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
-		<script src="assets\js\tinymce\js\tinymce\tinymce.min.js"></script>
-		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
-		<script src="assets\js\richtexteditor.js"></script>
 	</body>
 </html>
