@@ -30,6 +30,7 @@
 	</head>
 	<body>
 		<div class="dashboard__container d-flex">
+			<!-- ============ SIDEBAR ============ -->
 			<nav class="sidebar" style="width: 15%">
 				<p class="dashboard__logo"><span>Dental</span>Care</p>
 				<ul class="nav">
@@ -39,14 +40,53 @@
 							>Dashboard</a
 						>
 					</li>
-					<li class="nav-item">
-						<a href="./dashboardaccount.html"
-							><span class="menu-icon"><i class="bx bxs-user"></i></span>Quản lý
-							tài khoản</a
+					<li class="nav-item menu-items">
+						<a
+							class="nav-link collapsed"
+							data-bs-toggle="collapse"
+							href="#manage-account"
+							aria-expanded="false"
+							aria-controls="manage-account"
 						>
+							<span class="menu-icon"><i class="bx bxs-user"></i></span>
+							<span class="menu-title">Quản lý tài khoản</span>
+							<span class="menu-down" style="margin-left: auto"
+								><i class="fa-solid fa-chevron-down"></i
+							></span>
+						</a>
+						<div class="collapse" id="manage-account">
+							<ul class="nav flex-column sub-menu">
+								<li class="nav-item">
+									<a
+										style="padding-left: 40px; font-size: 1.4rem"
+										class="nav-link"
+										href="./dashboardaccount.html"
+										><i class="fa-solid fa-stethoscope"></i> Quản lý nha sĩ</a
+									>
+								</li>
+								<li class="nav-item">
+									<a
+										style="padding-left: 40px; font-size: 1.4rem"
+										class="nav-link"
+										href="#!"
+										><i class="fa-solid fa-hospital-user"></i> Quản lý người
+										dùng</a
+									>
+								</li>
+								<li class="nav-item">
+									<a
+										style="padding-left: 40px; font-size: 1.4rem"
+										class="nav-link"
+										href="#!"
+										><i class="fa-solid fa-hospital"></i> Quản lý chủ phòng
+										khám</a
+									>
+								</li>
+							</ul>
+						</div>
 					</li>
 					<li class="nav-item">
-						<a href="#!"
+						<a href="./dashboardclinic.html"
 							><span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản
 							lý phòng khám</a
 						>
@@ -81,7 +121,7 @@
 				</nav>
 				<div class="specialty__management" style="padding: 40px">
 					<h1 class="specialty__management__title mb-0">Quản lý chuyên khoa</h1>
-					<!-- Modal -->
+					<!-- =========== MODAL =========== -->
 					<div
 						class="modal fade"
 						id="myModal"
@@ -142,6 +182,7 @@
 							</form>
 						</div>
 					</div>
+					<!-- =========== TABLE =========== -->
 					<table class="table table-striped mt-5" style="font-size: 2rem">
 						<thead>
 							<tr>

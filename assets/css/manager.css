@@ -239,11 +239,6 @@ input:focus {
 	color: #b30021;
 }
 
-.pagination .page-link {
-	padding: 5px 20px;
-	font-weight: 600;
-}
-
 /* =========== Manager Schedule ============ */
 .ws__style {
 	width: 600px;
@@ -271,6 +266,10 @@ input:focus {
 	font-size: 2rem;
 }
 
+.pagination .page-link {
+	padding: 5px 20px;
+	font-weight: 600;
+}
 /* ================ CLINIC MANAGEMENT ================ */
 .manager__management__clinic {
 	width: 80%;
@@ -360,7 +359,4 @@ input:focus {
 
 .manager__management__dentist input {
 	padding: 8.5px 10px;
-}
-
-.manager__management__dentist button {
 }
