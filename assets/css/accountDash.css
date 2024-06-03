@@ -98,36 +98,36 @@ p {
 	background: #2e5bff;
 }
 
-.account__management table button {
+.account__management table a button {
 	border: none;
 	outline: none;
 	border-radius: 6px;
 	padding: 5px 10px;
 }
 
-.account__management table button i {
+.account__management table a button i {
 	vertical-align: middle;
 }
 
-.account__management table button:first-child,
+.account__management table a:first-child button,
 .account__management .submit-btn {
 	background: #4880ff;
 	color: white;
 }
 
-.account__management table button:first-child:hover,
+.account__management table a:first-child:hover button,
 .account__management .submit-btn:hover {
 	background: #3b6cd9;
 }
 
-.account__management table button:last-child,
+.account__management table a:last-child button,
 .account__management .close-btn {
 	margin-left: 5px;
 	background: rgb(255, 66, 66);
 	color: white;
 }
 
-.account__management table button:last-child:hover,
+.account__management table a:last-child:hover button,
 .account__management .close-btn:hover {
 	background: #f81f1f;
 }
@@ -164,4 +164,14 @@ p {
 .status.admin {
 	background: #d893a3;
 	color: #b30021;
+}
+
+/* ================ PAGINATION =============== */
+.pagination .page-link {
+	font-size: 2rem;
+}
+
+.pagination .page-link {
+	padding: 5px 20px;
+	font-weight: 600;
 }

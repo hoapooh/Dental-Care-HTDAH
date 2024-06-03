@@ -30,23 +30,64 @@
 	</head>
 	<body>
 		<div class="dashboard__container d-flex">
+			<!-- ============ SIDEBAR ============ -->
 			<nav class="sidebar" style="width: 15%">
 				<p class="dashboard__logo"><span>Dental</span>Care</p>
 				<ul class="nav">
 					<li class="nav-item">
-						<a href="./dashboard.htmls" class="active"
+						<a href="./dashboard.html" class="active"
 							><span class="menu-icon"><i class="bx bxs-dashboard"></i></span
 							>Dashboard</a
 						>
 					</li>
-					<li class="nav-item">
-						<a href="./dashboardaccount.html"
-							><span class="menu-icon"><i class="bx bxs-user"></i></span>Quản lý
-							tài khoản</a
+					<!-- =========== DROPDOWN MENU =========== -->
+					<li class="nav-item menu-items">
+						<a
+							class="nav-link collapsed"
+							data-bs-toggle="collapse"
+							href="#manage-account"
+							aria-expanded="false"
+							aria-controls="manage-account"
 						>
+							<span class="menu-icon"><i class="bx bxs-user"></i></span>
+							<span class="menu-title">Quản lý tài khoản</span>
+							<span class="menu-down" style="margin-left: auto"
+								><i class="fa-solid fa-chevron-down"></i
+							></span>
+						</a>
+						<div class="collapse" id="manage-account">
+							<ul class="nav flex-column sub-menu">
+								<li class="nav-item">
+									<a
+										style="padding-left: 40px; font-size: 1.4rem"
+										class="nav-link"
+										href="./dashboardaccount.html"
+										><i class="fa-solid fa-stethoscope"></i> Quản lý nha sĩ</a
+									>
+								</li>
+								<li class="nav-item">
+									<a
+										style="padding-left: 40px; font-size: 1.4rem"
+										class="nav-link"
+										href="#!"
+										><i class="fa-solid fa-hospital-user"></i> Quản lý người
+										dùng</a
+									>
+								</li>
+								<li class="nav-item">
+									<a
+										style="padding-left: 40px; font-size: 1.4rem"
+										class="nav-link"
+										href="#!"
+										><i class="fa-solid fa-hospital"></i> Quản lý chủ phòng
+										khám</a
+									>
+								</li>
+							</ul>
+						</div>
 					</li>
 					<li class="nav-item">
-						<a href="#!"
+						<a href="./dashboardclinic.html"
 							><span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản
 							lý phòng khám</a
 						>
@@ -78,6 +119,8 @@
 						</div>
 					</a>
 				</nav>
+
+				<!-- ============ INFO ============ -->
 				<div class="dashboard__info">
 					<h1 class="dashboard__info__title mb-0">Dashboard</h1>
 					<div class="dashboard__info__cards d-flex flex-row">
@@ -118,6 +161,8 @@
 							<img src="./assets/images/pending.png" alt="" />
 						</div>
 					</div>
+
+					<!-- ============ CHART ============ -->
 					<div class="dashboard__info__chart">
 						<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
 					</div>
@@ -128,6 +173,10 @@
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
