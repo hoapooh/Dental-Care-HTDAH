@@ -26,7 +26,7 @@
 		/>
 		<link rel="stylesheet" href="./assets/css/sidebar.css" />
 		<link rel="stylesheet" href="./assets/css/headerAd.css" />
-		<link rel="stylesheet" href="./assets/css/contentDash.css" />
+		<link rel="stylesheet" href="./assets/css/accountDash.css" />
 	</head>
 	<body>
 		<div class="dashboard__container d-flex">
@@ -35,7 +35,7 @@
 				<p class="dashboard__logo"><span>Dental</span>Care</p>
 				<ul class="nav">
 					<li class="nav-item">
-						<a href="./dashboard.html" class="active"
+						<a href="./dashboard.html"
 							><span class="menu-icon"><i class="bx bxs-dashboard"></i></span
 							>Dashboard</a
 						>
@@ -43,7 +43,7 @@
 					<!-- =========== DROPDOWN MENU =========== -->
 					<li class="nav-item menu-items">
 						<a
-							class="nav-link collapsed"
+							class="nav-link collapsed active"
 							data-bs-toggle="collapse"
 							href="#manage-account"
 							aria-expanded="false"
@@ -129,51 +129,72 @@
 				</nav>
 
 				<!-- ============ INFO ============ -->
-				<div class="dashboard__info">
-					<h1 class="dashboard__info__title mb-0">Dashboard</h1>
-					<div class="dashboard__info__cards d-flex flex-row">
-						<div class="card-item">
-							<p>Total Users</p>
-							<p class="nums">40,000</p>
-							<p class="trends">
-								<i class="bx bx-trending-up"></i> <span>8.5%</span> Up from
-								yesterday
-							</p>
-							<img src="./assets/images/user.png" alt="" />
-						</div>
-						<div class="card-item">
-							<p>Total Users</p>
-							<p class="nums">40,000</p>
-							<p class="trends">
-								<i class="bx bx-trending-up"></i> <span>8.5%</span> Up from
-								yesterday
-							</p>
-							<img src="./assets/images/order.png" alt="" />
-						</div>
-						<div class="card-item">
-							<p>Total Users</p>
-							<p class="nums">40,000</p>
-							<p class="trends">
-								<i class="bx bx-trending-up"></i> <span>8.5%</span> Up from
-								yesterday
-							</p>
-							<img src="./assets/images/sales.png" alt="" />
-						</div>
-						<div class="card-item">
-							<p>Total Users</p>
-							<p class="nums">40,000</p>
-							<p class="trends">
-								<i class="bx bx-trending-up"></i> <span>8.5%</span> Up from
-								yesterday
-							</p>
-							<img src="./assets/images/pending.png" alt="" />
-						</div>
+				<div class="account__management">
+					<div class="account__management__header">
+						<h1 class="title mb-0">Thông tin ...</h1>
 					</div>
-
-					<!-- ============ CHART ============ -->
-					<div class="dashboard__info__chart">
-						<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
-					</div>
+					<form method="post" action="" class="account__management__edit row">
+						<div class="col-md-6">
+							<label for="username">Username</label
+							><input type="text" name="username" id="username" />
+						</div>
+						<div class="col-md-6">
+							<label for="password">Password</label
+							><input type="password" name="password" id="password" />
+						</div>
+						<div class="col-md-3">
+							<label for="firstname">First</label
+							><input type="text" name="firstname" id="firstname" />
+						</div>
+						<div class="col-md-3">
+							<label for="lastname">Last</label
+							><input type="text" name="lastname" id="lastname" />
+						</div>
+						<div class="col-md-6">
+							<label for="email">Email</label
+							><input type="email" name="email" id="email" />
+						</div>
+						<div class="col-md-6">
+							<label for="dateofbirth">DOB</label
+							><input type="date" name="dateofbirth" id="dateofbirth" />
+						</div>
+						<div class="col-md-6">
+							<label for="gender">Gender</label
+							><select name="gender" id="gender">
+								<option value="male">Nam</option>
+								<option value="female">Nữ</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="province">Province</label
+							><select name="province" id="province">
+								<option value="hcm">Ho Chi Minh</option>
+								<option value="hn">Ha Noi</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="district">District</label
+							><select name="district" id="district">
+								<option value="tduc">Thu Duc</option>
+								<option value="badinh">Ba Dinh</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="ward">Ward</label
+							><select name="ward" id="ward">
+								<option value="ttho">Truong Tho</option>
+								<option value="dda">Dong Da</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="address">Address</label>
+							<input type="text" name="address" id="address" />
+						</div>
+						<div class="col-md-12 text-end">
+							<button type="submit" class="btn">Lưu</button>
+							<button type="reset" class="btn">Đặt lại</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -187,8 +208,5 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-		<script src="./assets/js/chart.js"></script>
 	</body>
 </html>

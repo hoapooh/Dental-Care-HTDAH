@@ -26,7 +26,7 @@
 		/>
 		<link rel="stylesheet" href="./assets/css/sidebar.css" />
 		<link rel="stylesheet" href="./assets/css/headerAd.css" />
-		<link rel="stylesheet" href="./assets/css/accountDash.css" />
+		<link rel="stylesheet" href="./assets/css/contentDash.css" />
 	</head>
 	<body>
 		<div class="dashboard__container d-flex">
@@ -69,8 +69,8 @@
 										style="padding-left: 40px; font-size: 1.4rem"
 										class="nav-link"
 										href="#!"
-										><i class="fa-solid fa-hospital-user"></i> Quản lý người
-										dùng</a
+										><i class="fa-solid fa-hospital-user"></i> Quản lý bệnh
+										nhân</a
 									>
 								</li>
 								<li class="nav-item">
@@ -80,6 +80,14 @@
 										href="#!"
 										><i class="fa-solid fa-hospital"></i> Quản lý chủ phòng
 										khám</a
+									>
+								</li>
+								<li class="nav-item">
+									<a
+										style="padding-left: 40px; font-size: 1.4rem"
+										class="nav-link"
+										href="#!"
+										><i class="fa-solid fa-ban"></i> Tài khoản bị cấm</a
 									>
 								</li>
 							</ul>
@@ -120,10 +128,10 @@
 					</a>
 				</nav>
 
-				<div class="account__management">
-					<!-- account management header -->
-					<div class="account__management__header">
-						<div class="title">Quản lý phòng khám</div>
+				<div class="clinic__management">
+					<!-- Clinic management header -->
+					<div class="clinic__management__header">
+						<h1 class="title">Quản lý phòng khám</h1>
 						<div class="action-btn">
 							<div class="search__bar">
 								<input type="search" placeholder="Tìm kiếm ..." />
@@ -138,7 +146,7 @@
 							</button>
 						</div>
 					</div>
-					<!-- Modal For Add new User -->
+					<!-- Modal For Add new clinic -->
 					<div
 						class="modal fade"
 						id="myModal"
@@ -150,7 +158,7 @@
 							<form action="" method="POST" class="modal-content">
 								<div class="modal-header">
 									<h1 class="modal-title fs-10" id="mainTitle">
-										Thêm mới người dùng
+										Thêm mới phòng khám
 									</h1>
 									<button
 										type="button"
@@ -159,28 +167,58 @@
 										aria-label="Close"
 									></button>
 								</div>
-								<div class="modal-body">
-									<div class="user-name">
-										<label for="nameSpecialty">Tên người dùng</label
-										><input
-											type="text"
-											name="nameSpecialty"
-											id="nameSpecialty"
-										/>
+								<div class="modal-body row">
+									<div class="clinic-name col-md-6">
+										<label for="name">Tên phòng khám</label
+										><input type="text" name="name" id="name" />
 									</div>
-									<div class="user-tel">
-										<label for="telSpecialty">Số điện thoại</label
-										><input type="tel" name="telSpecialty" id="telSpecialty" />
+									<div class="clinic-tel col-md-6">
+										<label for="tel">Số điện thoại</label
+										><input type="tel" name="tel" id="tel" />
 									</div>
-									<div class="user-mail">
-										<label for="mailSpecialty">Email</label
-										><input
-											type="email"
-											name="mailSpecialty"
-											id="mailSpecialty"
-										/>
+									<div class="clinic-mail col-md-6">
+										<label for="mail">Email</label
+										><input type="email" name="mail" id="mail" />
 									</div>
-									<div class="user-address">
+									<div class="clinic-manager col-md-6">
+										<label for="manager">Tên chủ phòng khám</label
+										><input type="text" name="manager" id="manager" />
+									</div>
+									<div class="clinic-province col-md-6">
+										<label for="province">Tỉnh / Thành phố</label>
+										<select name="province" id="province">
+											<option value="" disabled selected>
+												-- Tỉnh / Thành phố --
+											</option>
+											<option value="">HCM</option>
+											<option value="">HN</option>
+										</select>
+									</div>
+									<div class="clinic-district col-md-3">
+										<label for="district">Quận / Huyện</label>
+										<select name="district" id="district">
+											<option value="" disabled selected>
+												-- Quận / Huyện --
+											</option>
+											<option value="">TDUC</option>
+											<option value="">...</option>
+										</select>
+									</div>
+									<div class="clinic-ward col-md-3">
+										<label for="ward">Phường / Xã</label>
+										<select name="ward" id="ward">
+											<option value="" disabled selected>
+												-- Phường / Xã --
+											</option>
+											<option value="">...</option>
+											<option value="">...</option>
+										</select>
+									</div>
+									<div class="clinic-image col-md-12">
+										<label for="image">Địa chỉ</label
+										><input type="file" name="image" id="image" />
+									</div>
+									<div class="clinic-address col-md-12">
 										<label for="addrSpecialty">Địa chỉ</label
 										><input
 											type="text"
@@ -204,77 +242,63 @@
 							</form>
 						</div>
 					</div>
-					<table class="table table-striped mt-5" style="font-size: 1.6rem">
-						<thead>
-							<tr>
-								<th class="text-center">STT</th>
-								<th>Tên người dùng</th>
-								<th>Email</th>
-								<th>Số điện thoại</th>
-								<th>Địa chỉ</th>
-								<th>Hành động</th>
-							</tr>
-						</thead>
-						<tbody id="myTableBody">
-							<tr style="vertical-align: middle">
-								<td class="text-center">1</td>
-								<td>
-									<img src="./assets/images/avatar.jpg" alt="" />
-									<span>Phúc Hoà</span>
-								</td>
-								<td>example@gmail.com</td>
-								<td>0123456789</td>
-								<td class="desc">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-								</td>
-								<td>
-									<a href="#!"
-										><button type="button"><i class="bx bxs-edit"></i></button
-									></a>
-									<a href="#!"
-										><button type="button"><i class="bx bxs-trash"></i></button
-									></a>
-								</td>
-							</tr>
 
-							<tr style="vertical-align: middle">
-								<td class="text-center">2</td>
-								<td>
-									<img src="./assets/images/avatar.jpg" alt="" />
-									<span>Phúc Hoà</span>
-								</td>
-								<td>example@gmail.com</td>
-								<td>0123456789</td>
-								<td class="desc">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-								</td>
-								<td>
-									<a href="#!"
-										><button type="button"><i class="bx bxs-edit"></i></button
-									></a>
-									<a href="#!"
-										><button type="button"><i class="bx bxs-trash"></i></button
-									></a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<!-- CLINIC LIST MANAGEMENT -->
+					<div id="myItem" class="clinic__management__wrapper row">
+						<div class="clinic-wrap-item col-md-6">
+							<div class="clinic-wrap-item__style row">
+								<div class="img-content col-md-6">
+									<img
+										src="https://eastrosedental.com/Content/Home/images/content/banner-left.jpg"
+										alt="clinic"
+									/>
+								</div>
+								<div class="info-content col-md-6">
+									<h2 class="title">Hoa hong</h2>
+									<div class="name">Manager: <span>...</span></div>
+									<div class="address">Address: <span>...</span></div>
+									<div class="action">
+										<a href="#!"><i class="fa-solid fa-phone-volume"></i></a
+										><a href="#!"><i class="fa-solid fa-envelope"></i></a
+										><a href="#!" class="view"
+											><i class="fa-solid fa-eye"></i></a
+										><a href="#!" class="delete"
+											><i class="fa-solid fa-xmark"></i
+										></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="clinic-wrap-item col-md-6">
+							<div class="clinic-wrap-item__style row">
+								<div class="img-content col-md-6">
+									<img
+										src="https://eastrosedental.com/Content/Home/images/content/banner-left.jpg"
+										alt="clinic"
+									/>
+								</div>
+								<div class="info-content col-md-6">
+									<h2 class="title">Hoa hong</h2>
+									<div class="name">Manager: <span>...</span></div>
+									<div class="address">Address: <span>...</span></div>
+									<div class="action">
+										<a href="#!"><i class="fa-solid fa-phone-volume"></i></a
+										><a href="#!"><i class="fa-solid fa-envelope"></i></a
+										><a href="#!" class="view"
+											><i class="fa-solid fa-eye"></i></a
+										><a href="#!" class="delete"
+											><i class="fa-solid fa-xmark"></i
+										></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<!-- ========== PAGINATION  ========== -->
 					<ul class="pagination" id="pagination">
 						<!-- <li class="page-item">
 							<a class="page-link" href="#" style="font-size: 2rem">Previous</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">1</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">2</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">3</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">Next</a>
 						</li> -->
 					</ul>
 				</div>
@@ -290,6 +314,6 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
-		<script src="./assets/js/pagination.js"></script>
+		<script src="./assets/js/pagination-clinic.js"></script>
 	</body>
 </html>
