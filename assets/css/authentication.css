@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400..800&display=swap");
 
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background-color: #b2b2b2;
+}
+
 /* ============= Login ============= */
 .content {
 	position: relative;
