@@ -615,7 +615,15 @@ namespace Dental_Clinic_System.Controllers
             var user = await _context.Accounts
                 .FirstOrDefaultAsync(u => u.ID == id);
 
+
+
             if (user == null)
+            {
+                TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
+                return RedirectToAction("Profile", "Account");
+            }
+
+            if(DataEncryptionExtensions.Encrypt(model.Password) != user.Password)
             {
                 TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
                 return RedirectToAction("Profile", "Account");

@@ -1425,6 +1425,10 @@
       "PackagePath": "staticwebassets\\dashboardaccount.html"
     },
     {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\dashboardclinic.html",
+      "PackagePath": "staticwebassets\\dashboardclinic.html"
+    },
+    {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\dashboardspecialty.html",
       "PackagePath": "staticwebassets\\dashboardspecialty.html"
     },
@@ -1751,6 +1755,14 @@
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\manager_update_services.html",
       "PackagePath": "staticwebassets\\manager_update_services.html"
+    },
+    {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\managerclinic.html",
+      "PackagePath": "staticwebassets\\managerclinic.html"
+    },
+    {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\manageredit.html",
+      "PackagePath": "staticwebassets\\manageredit.html"
     },
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\managerschedule.html",
