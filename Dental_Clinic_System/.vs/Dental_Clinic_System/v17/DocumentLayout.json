@@ -1,0 +1,174 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\viewmodels\\patientvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\viewmodels\\patientvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\models\\data\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\models\\data\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\helper\\claimshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\helper\\claimshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\services\\emailsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\services\\emailsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\views\\account\\linkwithgoogleview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\views\\account\\linkwithgoogleview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 328,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Account.cs",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Models\\Data\\Account.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Models\\Data\\Account.cs",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Models\\Data\\Account.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\Models\\Data\\Account.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAcwCwAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T16:17:11.616Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Profile.cshtml",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Account\\Profile.cshtml",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\Account\\Profile.cshtml",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Account\\Profile.cshtml",
+              "RelativeToolTip": "Dental_Clinic_System\\Views\\Account\\Profile.cshtml",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAawIcAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-05T15:53:23.034Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_Header.cshtml",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Shared\\_Header.cshtml",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\Shared\\_Header.cshtml",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Shared\\_Header.cshtml",
+              "RelativeToolTip": "Dental_Clinic_System\\Views\\Shared\\_Header.cshtml",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAACEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-05T15:24:18.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "EmailSender.cs",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Services\\EmailSender.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Services\\EmailSender.cs",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Services\\EmailSender.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\Services\\EmailSender.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAowCYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T15:05:33.165Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\appsettings.json",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\appsettings.json",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\appsettings.json",
+              "RelativeToolTip": "Dental_Clinic_System\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-05T14:57:02.885Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ClaimsHelper.cs",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Helper\\ClaimsHelper.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Helper\\ClaimsHelper.cs",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Helper\\ClaimsHelper.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\Helper\\ClaimsHelper.cs",
+              "ViewState": "AQIAADgAAAAAAAAAAAAwwEcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T11:33:05.879Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LinkWithGoogleView.cshtml",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Account\\LinkWithGoogleView.cshtml",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\Account\\LinkWithGoogleView.cshtml",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Account\\LinkWithGoogleView.cshtml",
+              "RelativeToolTip": "Dental_Clinic_System\\Views\\Account\\LinkWithGoogleView.cshtml",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAAAHcAAABUAQAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-04T06:53:08.66Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PatientVM.cs",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\ViewModels\\PatientVM.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\ViewModels\\PatientVM.cs",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\ViewModels\\PatientVM.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\ViewModels\\PatientVM.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T05:47:16.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Controllers\\AccountController.cs",
+              "ToolTip": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\Controllers\\AccountController.cs",
+              "ViewState": "AQIAAE8BAAAAAAAAAAAawGEBAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-03T03:17:27.786Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

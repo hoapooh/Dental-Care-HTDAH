@@ -236,7 +236,7 @@ p {
 	gap: 23px;
 }
 
-.special__cards__card {
+.special__cards .card {
 	flex: 1;
 	width: 387px;
 	text-align: center;
@@ -293,28 +293,92 @@ p {
 	text-align: center;
 }
 
-.clinic-container {
+.clinic__cards {
+	width: 1208px;
+	margin: 0 auto;
+	margin-top: 30px;
+	display: flex;
+	gap: 23px;
+}
+
+.clinic__cards .card {
+	flex: 1;
+	width: 387px;
+	text-align: center;
+	padding: 65px 83px 89px;
+	border-radius: 10px;
+	background: #fdfcf8;
+}
+
+.clinic__cards .title {
+	color: #011632;
+	margin-top: 24px;
+	font-size: 2.4rem;
+	font-weight: bold;
+	line-height: 120%; /* 28.8px */
+	text-transform: capitalize;
+}
+
+.clinic__navigate {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	margin-top: 29px;
+}
+
+.clinic__navigate button {
+	padding: 2px 28px;
+	background: #fff;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.clinic__navigate button:hover {
+	opacity: 0.8;
+}
+
+/* ================= Dentist =============== */
+.dentist {
+	margin-top: 113px;
+	background: #e6f6fe;
+	padding: 19px 0 27px;
+}
+
+.dentist__title {
+	color: #011632;
+	font-size: 4.2rem;
+	font-weight: bold;
+	line-height: 125%; /* 52.5px */
+	text-transform: capitalize;
+	text-align: center;
+}
+
+.dentist__separate {
+	text-align: center;
+}
+
+.dentist-container {
 	margin-top: 30px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.clinic-container__wrapper {
-	width: 1440px;
+.dentist-container__wrapper {
+	width: 1280px;
+}
+
+.dentist__content {
 	padding: 40px 80px;
 }
 
-.clinic__content {
-	overflow: hidden;
-}
-
-.clinic__wrapper__card {
+.dentist__wrapper__card {
 	border-radius: 25px;
 	background: #fff;
 }
 
-.clinic__wrapper__card .card-image {
+.dentist__wrapper__card .card-image {
 	position: relative;
 	height: 150px;
 	width: 150px;
@@ -323,7 +387,7 @@ p {
 	padding: 3px;
 }
 
-.clinic__wrapper__card .card-image .card-img {
+.dentist__wrapper__card .card-image .card-img {
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
@@ -331,33 +395,33 @@ p {
 	border: 4px solid #1376f8;
 }
 
-.clinic__wrapper__card .image-content,
-.clinic__wrapper__card .card-content {
+.dentist__wrapper__card .image-content,
+.dentist__wrapper__card .card-content {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 10px 14px;
 }
 
-.clinic__wrapper__card .image-content {
+.dentist__wrapper__card .image-content {
 	position: relative;
 	row-gap: 5px;
 	padding: 10px 25px;
 	border-radius: 25px 25px 0 25px;
 }
 
-.clinic__wrapper__card .image-content .overlay {
+.dentist__wrapper__card .image-content .overlay {
 	position: absolute;
 	left: 0;
 	top: 0;
 	height: 100%;
 	width: 100%;
 	background: #1376f8;
-	border-radius: 25px 25px 0 0;
+	border-radius: 25px 25px 0 25px;
 }
-/* 
-.clinic__wrapper__card .image-content .overlay::before,
-.clinic__wrapper__card .image-content .overlay::after {
+
+.dentist__wrapper__card .image-content .overlay::before,
+.dentist__wrapper__card .image-content .overlay::after {
 	content: "";
 	position: absolute;
 	height: 40px;
@@ -367,24 +431,23 @@ p {
 	bottom: -40px;
 }
 
-.clinic__wrapper__card .image-content .overlay::after {
+.dentist__wrapper__card .image-content .overlay::after {
 	background: #fff;
 	border-radius: 0 25px 0 0;
-} */
-
-.clinic__wrapper__card .card-content .name {
-	font-size: 2.4rem;
-	font-weight: 700;
-	text-align: center;
 }
 
-.clinic__wrapper__card .card-content .desc {
+.dentist__wrapper__card .card-content .name {
+	font-size: 2.4rem;
+	font-weight: 700;
+}
+
+.dentist__wrapper__card .card-content .desc {
 	font-size: 1.6rem;
 	text-align: center;
 	color: #707070;
 }
 
-.clinic__wrapper__card .card-content .work-place {
+.dentist__wrapper__card .card-content .work-place {
 	font-size: 2rem;
 	font-weight: bold;
 	display: flex;
@@ -392,7 +455,7 @@ p {
 	gap: 5px;
 }
 
-.clinic__wrapper__card .card-content .button {
+.dentist__wrapper__card .card-content .button {
 	border: none;
 	outline: none;
 	font-size: 1.6rem;
@@ -405,76 +468,6 @@ p {
 	transition: all 0.25s ease;
 }
 
-.clinic__wrapper__card .card-content .button:hover {
+.dentist__wrapper__card .card-content .button:hover {
 	background: #4c8ce0;
-}
-
-/* =============== NEWS & ARTICLES =============== */
-.news__wrapper {
-	width: 1280px;
-	margin: 0 auto;
-	margin-top: 60px;
-}
-
-.news__title {
-	color: #011632;
-	font-size: 4.2rem;
-	font-weight: bold;
-	line-height: 125%; /* 52.5px */
-	text-transform: capitalize;
-	text-align: center;
-}
-
-.news__view__all {
-	padding: 15px 40px;
-	color: #fff;
-	font-size: 1.6rem;
-	font-weight: bold;
-	background: #1376f8;
-	border: none;
-	outline: none;
-	border-radius: 10px;
-}
-
-.news__view__all:hover {
-	background: #4c8ce0;
-}
-
-.news__cards {
-	margin-top: 30px;
-	gap: 20px;
-}
-
-.news__cards_item {
-	flex: 1;
-	padding: 20px;
-	background: #e6f6fe;
-	border-radius: 10px;
-}
-
-.news__cards_item img {
-	width: 100%;
-	height: 200px;
-	object-fit: cover;
-	border-radius: 10px;
-}
-
-.news__cards_item--title {
-	margin-top: 20px;
-}
-
-.news__cards_item--title a {
-	color: #011632;
-	font-size: 1.8rem;
-	font-weight: bold;
-	line-height: 155%; /* 27.9px */
-	letter-spacing: 0.27px;
-}
-
-.news__cards_item--desc {
-	color: #3c4959;
-	font-size: 1.6rem;
-	font-weight: 400;
-	line-height: 155%; /* 21.7px */
-	letter-spacing: 0.21px;
 }

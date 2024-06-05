@@ -1,10 +1,7 @@
-var swiper = new Swiper(".clinic__content", {
+var swiper = new Swiper(".mySwiper", {
 	slidesPerView: 3,
-	spaceBetween: 25,
+	spaceBetween: 30,
 	loop: true,
-	centerSlide: "true",
-	fade: "true",
-	grabCursor: "true",
 	autoplay: {
 		delay: 2500,
 		disableOnInteraction: false,
@@ -12,7 +9,6 @@ var swiper = new Swiper(".clinic__content", {
 	pagination: {
 		el: ".swiper-pagination",
 		clickable: true,
-		dynamicBullets: true,
 	},
 	navigation: {
 		nextEl: ".swiper-button-next",
