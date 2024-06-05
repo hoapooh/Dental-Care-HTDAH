@@ -623,7 +623,7 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
-            if(DataEncryptionExtensions.Encrypt(model.Password) != user.Password)
+            if(DataEncryptionExtensions.ToMd5Hash(model.Password) != user.Password)
             {
                 TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
                 return RedirectToAction("Profile", "Account");
