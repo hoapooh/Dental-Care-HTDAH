@@ -241,6 +241,10 @@
       "PackagePath": "staticwebassets\\assets\\images\\facebook.png"
     },
     {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\facebookmail.png",
+      "PackagePath": "staticwebassets\\assets\\images\\facebookmail.png"
+    },
+    {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\forgot.png",
       "PackagePath": "staticwebassets\\assets\\images\\forgot.png"
     },
@@ -251,6 +255,10 @@
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\instagram.png",
       "PackagePath": "staticwebassets\\assets\\images\\instagram.png"
+    },
+    {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\instagrammail.png",
+      "PackagePath": "staticwebassets\\assets\\images\\instagrammail.png"
     },
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\linkedin.png",
@@ -365,6 +373,10 @@
       "PackagePath": "staticwebassets\\assets\\images\\teeth3.png"
     },
     {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\twittermail.png",
+      "PackagePath": "staticwebassets\\assets\\images\\twittermail.png"
+    },
+    {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\user.png",
       "PackagePath": "staticwebassets\\assets\\images\\user.png"
     },
@@ -375,6 +387,10 @@
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\youtube.png",
       "PackagePath": "staticwebassets\\assets\\images\\youtube.png"
+    },
+    {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\youtubemail.png",
+      "PackagePath": "staticwebassets\\assets\\images\\youtubemail.png"
     },
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\chart.js",
@@ -1459,6 +1475,10 @@
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\forgot.html",
       "PackagePath": "staticwebassets\\forgot.html"
+    },
+    {
+      "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\htmlpage.html",
+      "PackagePath": "staticwebassets\\htmlpage.html"
     },
     {
       "Id": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\image\\DuongThuTrang_Dentist.png",

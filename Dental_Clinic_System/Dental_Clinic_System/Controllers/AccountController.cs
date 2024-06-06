@@ -96,7 +96,7 @@ namespace Dental_Clinic_System.Controllers
                 var confirmationLink = Url.Action("ConfirmEmail", "Account", new { code = code, username = DataEncryptionExtensions.Encrypt(model.Username), email = DataEncryptionExtensions.Encrypt(model.Email), phonenumber = DataEncryptionExtensions.Encrypt(model.PhoneNumber) }, HttpContext.Request.Scheme);
 
                 // Send confirmation email
-                await _emailSender.SendEmailAsync(model.Email, "Xác nhận email", $"Please confirm your account by <a href='{confirmationLink}'>clicking here</a>.");
+                await _emailSender.SendEmailAsync(model.Email, "Xác nhận email", confirmationLink);
 
                 // Debugging: Print all claims to console
                 //foreach (var claim in ClaimsHelper.GetCurrentClaims(HttpContext.User))

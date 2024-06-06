@@ -106,6 +106,7 @@
                                 <label for="phone">Số điện thoại <sup>*</sup></label><br /><input type="text"
                                                                                                   id="phone"
                                                                                                   placeholder="Vui lòng nhập số điện thoại ..."
+                                                                                                  pattern="[0-9]*"
                                                                                                   value="@Model.PhoneNumber"
                                                                                                   asp-for="@Model.PhoneNumber"
                                                                                                   style="width: 100%" />
@@ -167,6 +168,7 @@
                                                                                               id="birth"
                                                                                               value="@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") : string.Empty)"
                                                                                               asp-for="@Model.DateOfBirth"
+                                                                                              max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")"
                                                                                               placeholder="Vui lòng nhập ngày sinh"
                                                                                               style="width: 100%" />
                             </div>
