@@ -46,6 +46,13 @@
 	border-radius: 5px;
 }
 
+/* ================ PAGINATION =============== */
+.pagination .page-link {
+	font-size: 2rem;
+	padding: 5px 20px;
+	font-weight: 600;
+}
+
 /* =============== DASHBOARD ============ */
 
 .dashboard__info {
@@ -233,4 +240,18 @@
 .clinic-wrap-item__style .info-content .action a:hover {
 	background: #4880ff;
 	color: #fff;
+}
+
+/* ========== RICHTEXT EDITOR =========== */
+#container {
+	width: 100%;
+}
+.ck-editor__editable[role="textbox"] {
+	/* Editing area */
+	min-height: 100px;
+}
+.ck-content .image {
+	/* Block images */
+	max-width: 80%;
+	margin: 20px auto;
 }

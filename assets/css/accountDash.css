@@ -132,7 +132,6 @@ input:focus {
 
 .account__management table a:last-child button,
 .account__management .close-btn {
-	margin-left: 5px;
 	background: rgb(255, 66, 66);
 	color: white;
 }
@@ -231,4 +230,11 @@ input:focus {
 
 .account__management__edit button[type="reset"]:hover {
 	background: #ff9c00;
+}
+
+/* ================ PAGINATION =============== */
+.pagination .page-link {
+	font-size: 2rem;
+	padding: 5px 20px;
+	font-weight: 600;
 }
