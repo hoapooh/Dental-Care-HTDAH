@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "LinkWithGoogleView";
+    Layout = null;
 }
 
 <head>
@@ -115,7 +116,7 @@
                                     <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                         <div style="display: flex; justify-content: center; gap: 20px;">
                                             
-                                            <a asp-controller="home" asp-action="index" style="font-size: 20px; font-family: 'Baloo Paaji 2', cursive; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; background-color: #FFA73B; display: inline-block;">Hủy</a>
+                                            <a asp-controller="account" asp-action="logout" style="font-size: 20px; font-family: 'Baloo Paaji 2', cursive; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; background-color: #FFA73B; display: inline-block;">Hủy</a>
 
                                             <a asp-action="LinkWithGoogle" asp-route-emailLinked="@ViewBag.UserLinked" style="font-size: 20px; font-family: 'Baloo Paaji 2', cursive; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; background-color: #FFA73B; display: inline-block;">Đồng ý</a>
                                         </div>

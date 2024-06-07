@@ -19,5 +19,5 @@ namespace Dental_Clinic_System.ViewModels
         public string? District { get; set; }
         public string? Ward { get; set; }
         public string? Address { get; set; }
-	}
+    }
 }

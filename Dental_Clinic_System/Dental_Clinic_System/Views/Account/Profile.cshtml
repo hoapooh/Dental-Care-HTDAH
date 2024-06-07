@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="~/assets/css/header.css" />
     <link rel="stylesheet" href="~/assets/css/footer.css" />
     <link rel="stylesheet" href="~/assets/css/profile.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <main>
@@ -182,24 +183,24 @@
 
                             <div style="width: 50%">
                                 <label for="province">Tỉnh / Thành phố <sup>*</sup></label><br />
-                                <select asp-for="@Model.Province" id="province">
-                                    <option value="hcm">Ho Chi Minh</option>
-                                    <option value="hn">Ha Noi</option>
+                                <select id="tinh" title="Chọn Tỉnh Thành">
+                                    <option value="0">Tỉnh Thành</option>
                                 </select>
+                                <input type="hidden" asp-for="Province" id="Province"  />
                             </div>
                             <div style="width: 25%" class="district">
                                 <label for="district">Quận / Huyện <sup>*</sup></label><br />
-                                <select asp-for="@Model.District" id="district">
-                                    <option value="tduc">Thu Duc</option>
-                                    <option value="bdinh">Ba Dinh</option>
+                                <select id="quan" title="Chọn Quận Huyện">
+                                    <option value="0">Quận Huyện</option>
                                 </select>
+                                <input type="hidden" asp-for="District" id="District"  />
                             </div>
                             <div style="width: 25%" class="ward">
                                 <label for="ward">Phường / Xã <sup>*</sup></label><br />
-                                <select asp-for="@Model.Ward" id="ward">
-                                    <option value="ltrung">Linh Trung</option>
-                                    <option value="btho">Binh Tho</option>
+                                <select id="phuong" title="Chọn Phường Xã">
+                                    <option value="0">Phường Xã</option>
                                 </select>
+                                <input type="hidden" asp-for="Ward" id="Ward" />
                             </div>
 
                             <div style="width: 100%" class="address">
@@ -312,4 +313,114 @@
             crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/53f42380b0.js"
             crossorigin="anonymous"></script>
+
+    @* Call API from https://esgoo.ne to get data*@
+    <script src="https://esgoo.net/scripts/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var savedProvince = '@Model.Province';
+            var savedDistrict = '@Model.District';
+            var savedWard = '@Model.Ward';
+
+            // Chuyển đổi giá trị chuỗi sang số
+            var savedProvinceId = parseInt(savedProvince, 10);
+            var savedDistrictId = parseInt(savedDistrict, 10);
+            var savedWardId = parseInt(savedWard, 10);
+
+            function loadWards(idquan, callback) {
+                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                    if (data_phuong.error == 0) {
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                            var selected = (val_phuong.id == savedWardId) ? ' selected' : '';
+                            $("#phuong").append('<option value="' + val_phuong.id + '" data-fullname="' + val_phuong.full_name + '"' + selected + '>' + val_phuong.full_name + '</option>');
+                        });
+
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function loadDistricts(idtinh, callback) {
+                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                    if (data_quan.error == 0) {
+                        $("#quan").html('<option value="0">Quận Huyện</option>');
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_quan.data, function (key_quan, val_quan) {
+                            var selected = (val_quan.id == savedDistrictId) ? ' selected' : '';
+                            $("#quan").append('<option value="' + val_quan.id + '" data-fullname="' + val_quan.full_name + '"' + selected + '>' + val_quan.full_name + '</option>');
+                        });
+
+                        if (savedDistrictId) {
+                            loadWards(savedDistrictId, callback);
+                        } else if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function loadProvinces(callback) {
+                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+                    if (data_tinh.error == 0) {
+                        $("#tinh").html('<option value="0">Tỉnh Thành</option>');
+                        $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                            var selected = (val_tinh.id == savedProvinceId) ? ' selected' : '';
+                            $("#tinh").append('<option value="' + val_tinh.id + '" data-fullname="' + val_tinh.full_name + '"' + selected + '>' + val_tinh.full_name + '</option>');
+                        });
+
+                        if (savedProvinceId) {
+                            loadDistricts(savedProvinceId, callback);
+                        } else if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function setInitialValues() {
+                if (savedProvinceId) {
+                    $("#tinh").val(savedProvinceId);
+                    $("#tinh").trigger('change');
+                }
+                if (savedDistrictId) {
+                    $("#quan").val(savedDistrictId);
+                    $("#quan").trigger('change');
+                }
+                if (savedWardId) {
+                    $("#phuong").val(savedWardId);
+                }
+            }
+
+            loadProvinces(setInitialValues);
+
+            $("#tinh").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var idtinh = selectedOption.val();
+                var fullnameTinh = selectedOption.data('fullname');
+                $('#Province').val(fullnameTinh);
+
+                // Load districts based on selected province
+                loadDistricts(idtinh);
+            });
+
+            $("#quan").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var idquan = selectedOption.val();
+                var fullnameQuan = selectedOption.data('fullname');
+                $('#District').val(fullnameQuan);
+
+                // Load wards based on selected district
+                loadWards(idquan);
+            });
+
+            $("#phuong").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var fullnamePhuong = selectedOption.data('fullname');
+                $('#Ward').val(fullnamePhuong);
+            });
+        });
+    </script>
 </body>

@@ -38,10 +38,12 @@
 		<div class="content__form register">
 			<h1 class="content__form__title">Đăng ký tài khoản</h1>
 			<div class="content__form__login">
-				<button type="button" class="content__form__login__google">
-					<img src="~/assets/images/Google.png" alt="" />
-					Đăng nhập bằng Google
-				</button>
+				<a asp-controller="account" asp-action="loginbygoogle">
+					<button type="button" class="content__form__login__google">
+						<img src="~/assets/images/Google.png" alt="" />
+						Đăng nhập bằng Google
+					</button>
+				</a>
 			</div>
 			<div class="content__form__separate">Hoặc</div>
 			<form asp-action="register" method="POST" class="content__form__system">

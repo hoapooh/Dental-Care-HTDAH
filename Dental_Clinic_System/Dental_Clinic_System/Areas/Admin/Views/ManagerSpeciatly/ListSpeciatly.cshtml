@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.ManagerSpeciatlyVM>
+
+@{
+	ViewData["Title"] = "ListSpeciatly";
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="specialty__management" style="padding: 40px">
+	<h1 class="specialty__management__title mb-0">Quản lý chuyên khoa</h1>
+	<!-- =========== MODAL =========== -->
+	<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="mainTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered form-modal-styles">
+			<form action="@Url.Action("EditSpeciatly", "ManagerSpeciatly")" method="POST" class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-10" id="mainTitle"> Chỉnh sửa thông tin chuyên khoa </h1>
+					<button type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="Id" id="specialtyId" />
+					<div class="special-name">
+						<label for="nameSpecialty">Tên chuyên khoa</label>
+						<input type="text" name="Name" id="nameSpecialty" />
+					</div>
+					<div class="special-image">
+						<label for="imageSpecialty">Hình ảnh</label>
+						<input type="file" name="Image" id="imageSpecialty" />
+					</div>
+					<div class="special-desc">
+						<label for="descSpecialty">Mô tả</label>
+						<textarea name="Description" id="descSpecialty">></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+							class="close-btn btn"
+							data-bs-dismiss="modal">
+						Close
+					</button>
+					<button type="submit" class="submit-btn btn">
+						Save changes
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- =========== TABLE =========== -->
+	<table class="table table-striped mt-5" style="font-size: 2rem">
+		<thead>
+			<tr>
+				<th class="text-center">STT</th>
+				<th>Chuyên Khoa</th>
+				<th>Hình ảnh</th>
+				<th>Mô tả</th>
+				<th>Hành động</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var account in Model)
+			{
+				<tr style="vertical-align: middle">
+					<td>@account.Id</td>
+					<td>@account.Name</td>
+					<td><img src="@account.Image" alt="" /></td>
+					<td>@account.Description</td>
+					<td>
+						<button type="button" class="btn btn-primary edit-btn"
+								data-bs-toggle="modal" data-bs-target="#myModal"
+								data-bs-id="@account.Id"
+								data-bs-name="@account.Name"
+								data-bs-image="@account.Image"
+								data-bs-description="@account.Description">
+							<i class="bx bxs-edit"></i>
+						</button>
+						<button type="button" onclick="location.href='@Url.Action("DeleteSpeciatly", new {id = account.Id})'">
+							<i class="bx bxs-trash"></i>
+						</button>
+					</td>
+				</tr>
+			}
+
+		</tbody>
+	</table>
+</div>
+
+

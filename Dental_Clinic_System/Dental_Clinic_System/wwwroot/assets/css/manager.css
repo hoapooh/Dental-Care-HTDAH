@@ -264,9 +264,6 @@ input:focus {
 /* ================ PAGINATION =============== */
 .pagination .page-link {
 	font-size: 2rem;
-}
-
-.pagination .page-link {
 	padding: 5px 20px;
 	font-weight: 600;
 }

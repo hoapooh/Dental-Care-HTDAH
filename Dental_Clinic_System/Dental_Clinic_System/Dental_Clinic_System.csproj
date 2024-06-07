@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -14,6 +14,8 @@
     <None Include="wwwroot\assets\images\user.svg" />
     <None Include="wwwroot\assets\js\chart.js" />
     <None Include="wwwroot\assets\js\myswiper.js" />
+    <None Include="wwwroot\assets\js\pagination-clinic.js" />
+    <None Include="wwwroot\assets\js\pagination.js" />
     <None Include="wwwroot\assets\js\richtexteditor.js" />
     <None Include="wwwroot\assets\js\swiper-bundle.js" />
     <None Include="wwwroot\assets\js\text_editor.js" />
@@ -247,6 +249,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Manager\Data\" />
+    <Folder Include="Areas\Manager\Models\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

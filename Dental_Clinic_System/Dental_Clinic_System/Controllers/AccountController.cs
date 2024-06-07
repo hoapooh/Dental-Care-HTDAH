@@ -226,6 +226,9 @@ namespace Dental_Clinic_System.Controllers
                         claims.AddClaimIfNotNull(ClaimTypes.GivenName, patient.LastName);
                         claims.AddClaimIfNotNull(ClaimTypes.Surname, patient.FirstName);
                         claims.AddClaimIfNotNull(ClaimTypes.Gender, patient.Gender);
+                        claims.AddClaimIfNotNull(ClaimTypes.StateOrProvince, patient.Province);
+                        claims.AddClaimIfNotNull("Ward", patient.Ward);
+                        claims.AddClaimIfNotNull("District", patient.District);
                         claims.AddClaimIfNotNull(ClaimTypes.StreetAddress, patient.Address);
                         claims.AddClaimIfNotNull(ClaimTypes.MobilePhone, patient.PhoneNumber);
                         claims.AddClaimIfNotNull(ClaimTypes.DateOfBirth, patient.DateOfBirth.ToString());
@@ -293,8 +296,6 @@ namespace Dental_Clinic_System.Controllers
                 claim.Type,
                 claim.Value
             }).ToList();
-
-
 
             var emailClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             if (emailClaim != null)
@@ -384,6 +385,9 @@ namespace Dental_Clinic_System.Controllers
                 updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.GivenName, user.LastName);
                 updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.Surname, user.FirstName);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.MobilePhone, user.PhoneNumber);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.StateOrProvince, user.Province);
+                updatedClaims.AddOrUpdateClaim("Ward", user.Ward);
+                updatedClaims.AddOrUpdateClaim("District", user.District);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, user.Address);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, user.Gender);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString());
@@ -473,9 +477,13 @@ namespace Dental_Clinic_System.Controllers
             updatedClaims.AddOrUpdateClaim(ClaimTypes.MobilePhone, user.PhoneNumber);
             updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.GivenName, user.LastName);
             updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.Surname, user.FirstName);
+            updatedClaims.AddOrUpdateClaim(ClaimTypes.StateOrProvince, user.Province);
+            updatedClaims.AddOrUpdateClaim("Ward", user.Ward);
+            updatedClaims.AddOrUpdateClaim("District", user.District);
             updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, user.Address);
             updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, user.Gender);
             updatedClaims.AddOrUpdateClaim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString());
+
 
             await ClaimsHelper.UpdateClaimsAsync(HttpContext, updatedClaims);
 
@@ -501,9 +509,9 @@ namespace Dental_Clinic_System.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
-
+            
             var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            if(_context.Accounts.FirstOrDefault(u => u.Email == claimsValue) == null)
+            if (_context.Accounts.FirstOrDefault(u => u.Email == claimsValue) == null)
             {
                 HttpContext.SignOutAsync();
 				return RedirectToAction("Index", "Home");
@@ -527,9 +535,14 @@ namespace Dental_Clinic_System.Controllers
                 PhoneNumber = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone)?.Value,
                 Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 Gender = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value,
+                Province = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StateOrProvince)?.Value,
+                Ward = User.Claims.FirstOrDefault(c => c.Type == "Ward")?.Value,
+                District = User.Claims.FirstOrDefault(c => c.Type == "District")?.Value,
                 Address = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value,
-                DateOfBirth = dateOfBirth
+                DateOfBirth = dateOfBirth,
             };
+
+            Console.WriteLine($"{model.Province} | {model.Ward} | {model.District}");
 
             return View(model);
         }
@@ -599,6 +612,9 @@ namespace Dental_Clinic_System.Controllers
                 user.PhoneNumber = model.PhoneNumber;
                 user.Gender = model.Gender;
                 //user.Email = model.Email;
+                user.Province = model.Province;
+                user.Ward = model.Ward;
+                user.District = model.District;
                 user.Address = model.Address;
                 user.DateOfBirth = model.DateOfBirth;
 
@@ -606,12 +622,15 @@ namespace Dental_Clinic_System.Controllers
                 var updatedClaims = ClaimsHelper.GetCurrentClaims(User);
 
                 // Update or add new claims
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.GivenName, model.LastName);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.Surname, model.FirstName);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, model.Gender);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, model.Address);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.MobilePhone, model.PhoneNumber);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToString());
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.GivenName, user.LastName);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.Surname, user.FirstName);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, user.Gender);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.StateOrProvince, user.Province);
+                updatedClaims.AddOrUpdateClaim("Ward", user.Ward);
+                updatedClaims.AddOrUpdateClaim("District", user.District);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, user.Address);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.MobilePhone, user.PhoneNumber);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString());
 
                 // Ensure Name claim is present
                 updatedClaims.EnsureNameClaim(ClaimTypes.Name, user.Email);
@@ -786,7 +805,7 @@ namespace Dental_Clinic_System.Controllers
                 return View(model);
             }
 
-            user.Password = DataEncryptionExtensions.ToMd5Hash(model.Password, model.Password);
+            user.Password = DataEncryptionExtensions.ToMd5Hash(model.Password);
             _context.Accounts.Update(user);
             await _context.SaveChangesAsync();
 
