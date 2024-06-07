@@ -49,19 +49,22 @@
 				<div class="username">
 					<i class="fa-solid fa-user"></i>
 					<input type="text" placeholder="Tên tài khoản" asp-for="@Model.Username"/>
-					@Html.ValidationMessage("errorRegister")
+					@Html.ValidationMessage("errorUsernameRegister")
 				</div>
 				<div class="phone">
 					<i class="fa-solid fa-phone"></i>
 					<input type="text" placeholder="Nhập số điện thoại" asp-for="@Model.PhoneNumber"/>
+					@Html.ValidationMessage("errorPhoneRegister")
 				</div>
 				<div class="email">
 					<i class="fa-solid fa-envelope"></i>
 					<input type="email" placeholder="Nhập Email của bạn" asp-for="@Model.Email"/>
+					@Html.ValidationMessage("errorEmailRegister")
 				</div>
 				<div class="password">
 					<i class="fa-solid fa-lock"></i>
 					<input type="text" placeholder="Nhập mật khẩu" asp-for="@Model.Password"/>
+					<span asp-validation-for="Password" class="text-danger"></span>
 				</div>
 				<label class="policies_check">
 					<input type="checkbox" required/>
@@ -86,5 +89,9 @@
             crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/53f42380b0.js"
             crossorigin="anonymous"></script>
+
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
 </body>
 

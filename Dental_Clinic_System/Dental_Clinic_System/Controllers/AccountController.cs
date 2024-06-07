@@ -50,31 +50,31 @@ namespace Dental_Clinic_System.Controllers
                 var patient = _context.Accounts.SingleOrDefault(p => p.Username == model.Username);
                 if (patient != null)
                 {
-                    if (patient.Email == model.Email)
-                    {
-                        ModelState.AddModelError("errorRegister", "Email đã tồn tại");
-                        return View();
-                    }
-                    if (patient.PhoneNumber == model.PhoneNumber)
-                    {
-                        ModelState.AddModelError("errorRegister", "Số điện thoại đã tồn tại");
-                        return View();
-                    }
-                    ModelState.AddModelError("errorRegister", "Tên đăng nhập đã tồn tại");
+                    //if (patient.Email == model.Email)
+                    //{
+                    //    ModelState.AddModelError("errorEmailRegister", "Email đã tồn tại");
+                    //    return View();
+                    //}
+                    //if (patient.PhoneNumber == model.PhoneNumber)
+                    //{
+                    //    ModelState.AddModelError("errorPhoneRegister", "Số điện thoại đã tồn tại");
+                    //    return View();
+                    //}
+                    ModelState.AddModelError("errorUsernameRegister", "Tên đăng nhập đã tồn tại");
                     return View();
                 }
 
                 var checkEmail = _context.Accounts.SingleOrDefault(p => p.Email == model.Email);
                 if (checkEmail != null)
                 {
-                    ModelState.AddModelError("errorRegister", "Email đã tồn tại");
+                    ModelState.AddModelError("errorEmailRegister", "Email đã tồn tại");
                     return View();
                 }
 
                 var checkPhoneNumber = _context.Accounts.SingleOrDefault(p => p.PhoneNumber == model.PhoneNumber);
                 if (checkPhoneNumber != null)
                 {
-                    ModelState.AddModelError("errorRegister", "Số điện thoại đã tồn tại");
+                    ModelState.AddModelError("errorPhoneRegister", "Số điện thoại đã tồn tại");
                     return View();
                 }
 
@@ -108,7 +108,7 @@ namespace Dental_Clinic_System.Controllers
                 //return RedirectToAction("ConfirmEmail", "Account");
             }
 
-            // Log ModelState errors and going so far by this stop which you got bugs LOL
+            // Log ModelState errors and going so far by this stop which means you got bugs LOL
             //foreach (var state in ModelState)
             //{
             //    foreach (var error in state.Value.Errors)
@@ -116,6 +116,9 @@ namespace Dental_Clinic_System.Controllers
             //        Console.WriteLine($"Property: {state.Key}, Error: {error.ErrorMessage}");
             //    }
             //}
+
+
+
             Console.WriteLine("Not valid at Register (POST)!");
 
             return View();
@@ -498,6 +501,13 @@ namespace Dental_Clinic_System.Controllers
         public IActionResult Profile()
         {
 
+            var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            if(_context.Accounts.FirstOrDefault(u => u.Email == claimsValue) == null)
+            {
+                HttpContext.SignOutAsync();
+				return RedirectToAction("Index", "Home");
+			}
+
             // Extract the Date of Birth claim value
             var dateOfBirthClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth)?.Value;
 
@@ -577,6 +587,7 @@ namespace Dental_Clinic_System.Controllers
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.Surname, model.FirstName);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, model.Gender);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, model.Address);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.MobilePhone, model.PhoneNumber);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToString());
 
                 // Ensure Name claim is present

@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Specialty>
+﻿
+
+
+@model IEnumerable<Dental_Clinic_System.Models.Data.Specialty>
 
 @{
     ViewData["Title"] = "Specialty";
@@ -43,7 +46,7 @@
 					<p>
 						@specialty.Description
 					</p>
-					<a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
+					<a href="~/dentistry.html">
 						<span>Chi tiết</span><i class="bx bx-chevron-right-circle"></i>
 					</a>
 					<img src="~/assets/images/separate-01.png" alt="" />
