@@ -1,4 +1,4 @@
-﻿USE DentalClinicDbN
+﻿USE DentalClinicDb
 GO
 
 --DELETE DATA IN DATABASE
@@ -149,7 +149,19 @@ insert into Appointment(ScheduleID, PatientRecordID, SpecialtyID, AppointmentSta
 insert into Appointment(ScheduleID, PatientRecordID, SpecialtyID, AppointmentStatus, TotalPrice) values (16, 9, 4, N'Đã Khám', 120000)
 
 --SERVICE DATA
-insert into Service (ClinicID, Specialty, Name, Description, Price) values()
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(1, 1, N'Chụp Phim Toàn Cảnh Panorex - Sọ Nghiêng Cephalo (Niềng răng chỉnh nha)', NULL , '150.000 - 200.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(1, 1, N'Chụp phim Cone Beam CT)', NULL , '300.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(2, 1, N'Chụp Phim Toàn Cảnh Panorex - Sọ Nghiêng Cephalo (Niềng răng chỉnh nha)', NULL , '190.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(2, 1, N'Chụp phim Cone Beam CT)', NULL , '320.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(3, 1, N'Chụp Phim Toàn Cảnh Panorex - Sọ Nghiêng Cephalo (Niềng răng chỉnh nha)', NULL , '180.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(3, 1, N'Chụp phim Cone Beam CT)', NULL , '290.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(2, 2, N'Mắc cài Inox thường', NULL , '35.000.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(2, 2, N'Mắc cài Inox tự đóng', NULL , '44.000.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(2, 2, N'Mắc cài sứ thường', NULL , '47.000.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(2, 2, N'Mắc sài sứ tự đóng', NULL , '57.000.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(1, 2, N'Mắc sài pha lê', NULL , '49.000.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(1, 2, N'Mắc cài pha lê tự đóng', NULL , '61.000.000')
+insert into Service (ClinicID, SpecialtyID, Name, Description, Price) values(1, 2, N'Mắc cài cánh cam cải tiến', NULL , '50.000.000')
 
 --TRANSACTION DATA
 insert into [dbo].[Transaction](AppointmentID, Date, BankAccountNumber, BankName) values (3, '2024-06-07', '074653864731', N'Ngân Hàng VietcomBank') 
