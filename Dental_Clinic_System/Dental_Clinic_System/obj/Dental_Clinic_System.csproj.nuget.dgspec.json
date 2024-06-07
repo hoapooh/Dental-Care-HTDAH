@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {}
+    "D:\\Github\\Dental-Care-HTDAH01\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {}
   },
   "projects": {
-    "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {
+    "D:\\Github\\Dental-Care-HTDAH01\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
+        "projectUniqueName": "D:\\Github\\Dental-Care-HTDAH01\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
         "projectName": "Dental_Clinic_System",
-        "projectPath": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
-        "packagesPath": "C:\\Users\\Admins\\.nuget\\packages\\",
-        "outputPath": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\",
+        "projectPath": "D:\\Github\\Dental-Care-HTDAH01\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Github\\Dental-Care-HTDAH01\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admins\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -103,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

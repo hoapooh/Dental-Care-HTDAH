@@ -1,3 +1,4 @@
+using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services;
@@ -40,6 +41,9 @@ builder.Services.AddScoped<IEmailSenderCustom, EmailSender>();
 //// Register the email sender service
 //builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+// Register HiddenSpecialtyService as a singleton
+builder.Services.AddSingleton<HiddenSpecialtyService>();
+
 var app = builder.Build();
 
 
@@ -59,6 +63,14 @@ app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapControllerRoute(
+	  name: "areas",
+	  pattern: "{area:exists}/{controller=Admin}/{action=ListAccount}/{id?}"
+	);
+});
 
 app.MapControllerRoute(
     name: "default",

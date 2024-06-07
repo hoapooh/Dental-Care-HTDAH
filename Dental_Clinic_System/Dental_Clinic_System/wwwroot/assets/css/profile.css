@@ -10,7 +10,6 @@ html {
 
 body {
 	font-family: "Baloo Paaji 2";
-	overflow-y: scroll;
 }
 
 ul {
@@ -29,12 +28,6 @@ input:focus {
 	border-color: #47bfff;
 	box-shadow: 0 0 0 4px rgba(29, 161, 242, 0.2);
 	outline: 0;
-}
-
-body::-webkit-scrollbar {
-	width: 6px;
-	display: block;
-	background-color: #b2b2b2;
 }
 
 .sidebar {
@@ -121,12 +114,6 @@ body::-webkit-scrollbar {
 	margin-bottom: 18px;
 }
 
-.account__content__wrapper div.district,
-.account__content__wrapper div.ward {
-	flex: 0 0 25%;
-	max-width: 25%;
-}
-
 .account__content__wrapper div.address {
 	flex: 0 0 100%;
 	max-width: 100%;
@@ -148,7 +135,6 @@ body::-webkit-scrollbar {
 
 .account__content__wrapper select {
 	padding: 1.5px 10px;
-	width: 100%;
 }
 
 .account__content__wrapper sup {
