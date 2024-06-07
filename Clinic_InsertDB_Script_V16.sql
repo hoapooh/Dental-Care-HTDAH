@@ -2,19 +2,19 @@
 GO
 
 --DELETE DATA IN DATABASE
-delete from [dbo].[Specialty]; 
-delete from [dbo].[TimeSlot]; 
-delete from [dbo].[Dentist]; 
-delete from [dbo].[Degree]; 
-delete from [dbo].[Clinic];
-delete from [dbo].[Account]; 
-delete from [dbo].[Service]; 
-delete from [dbo].[Dentist_Specialty]; 
-delete from [dbo].[Schedule]; 
-delete from [dbo].[PatientRecord]; 
-delete from [dbo].[Appointment]; 
-delete from [dbo].[Transaction];
-delete from [dbo].[Review]; 
+--delete from [dbo].[Specialty]; 
+--delete from [dbo].[TimeSlot]; 
+--delete from [dbo].[Dentist]; 
+--delete from [dbo].[Degree]; 
+--delete from [dbo].[Clinic];
+--delete from [dbo].[Account]; 
+--delete from [dbo].[Service]; 
+--delete from [dbo].[Dentist_Specialty]; 
+--delete from [dbo].[Schedule]; 
+--delete from [dbo].[PatientRecord]; 
+--delete from [dbo].[Appointment]; 
+--delete from [dbo].[Transaction];
+--delete from [dbo].[Review]; 
 
 --DEGREE DATA
 insert into Degree (Name) values(N'Bác sĩ Răng Hàm Mặt')
