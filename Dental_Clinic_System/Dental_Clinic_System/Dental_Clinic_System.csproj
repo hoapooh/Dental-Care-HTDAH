@@ -250,6 +250,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Manager\Data\" />
+    <Folder Include="Areas\Manager\Models\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

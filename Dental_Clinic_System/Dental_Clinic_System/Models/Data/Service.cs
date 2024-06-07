@@ -38,7 +38,7 @@ namespace Dental_Clinic_System.Models.Data
 
 		#region Entity Mapping
 
-		public virtual Specialty Specialty { get; set; } = null!;
+		public virtual Specialty? Specialty { get; set; } = null!;
 
 		#endregion
 	}
