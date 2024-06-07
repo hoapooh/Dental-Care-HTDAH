@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.Services;
 using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -26,9 +27,9 @@ namespace Dental_Clinic_System.Controllers
     {
         private readonly DentalClinicDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailSenderCustom _emailSender;
 
-        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSender emailSender)
+        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSenderCustom emailSender)
         {
             _context = context;
             _mapper = mapper;
@@ -571,11 +572,33 @@ namespace Dental_Clinic_System.Controllers
                     return View(model);
                 }
 
-                user.FirstName = model.FirstName;
+
+                if (model.Email != user.Email)
+                {
+
+                    // Generate a unique code for email confirmation
+                    var code = Guid.NewGuid().ToString();
+                    var confirmationLink = Url.Action("ConfirmEmailChange", "Account", new { userId = user.ID, oldEmail = user.Email, newEmail = model.Email, code = code }, protocol: HttpContext.Request.Scheme);
+
+                    // Save the temporary data
+                    TempData["NewEmail"] = model.Email;
+                    TempData["ConfirmationCodeUpdateProfile"] = code;
+
+                    // Send confirmation email
+                    await _emailSender.SendEmailForUpdatingAsync(model.Email, user.Username, "Xác Minh Email Mới Của Bạn", confirmationLink);
+
+                    TempData["EmailChangeMessage"] = "A confirmation email has been sent to your new email address. Please confirm to complete the change.";
+
+                }
+
+
+
+
+				user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.PhoneNumber = model.PhoneNumber;
                 user.Gender = model.Gender;
-                user.Email = model.Email;
+                //user.Email = model.Email;
                 user.Address = model.Address;
                 user.DateOfBirth = model.DateOfBirth;
 
@@ -611,7 +634,49 @@ namespace Dental_Clinic_System.Controllers
             return View(model);
         }
 
-        [Authorize]
+		[HttpGet]
+		public async Task<IActionResult> ConfirmEmailChange(int userId, string oldEmail, string newEmail, string code)
+		{
+			var user = await _context.Accounts.FindAsync(userId);
+			if (user == null)
+			{
+				return NotFound("User not found.");
+			}
+
+			var savedCode = TempData["ConfirmationCodeUpdateProfile"] as string;
+			var savedNewEmail = TempData["NewEmail"] as string;
+
+            // Debugging Data
+            //await Console.Out.WriteLineAsync($"Confirmation Code = {savedCode}");
+            //await Console.Out.WriteLineAsync($"New Email = {savedNewEmail}");
+
+            // Should add checking savedCode == code for avoiding attack, hacker can get code from the outside
+            if (savedNewEmail == newEmail)
+			{
+				user.Email = newEmail;
+				_context.Update(user);
+				await _context.SaveChangesAsync();
+
+				// Update the email claim
+				var updatedClaims = ClaimsHelper.GetCurrentClaims(User);
+				updatedClaims.AddOrUpdateClaim(ClaimTypes.Email, newEmail);
+				await ClaimsHelper.UpdateClaimsAsync(HttpContext, updatedClaims);
+
+                // Send confirmation email
+                await _emailSender.SendEmailUpdatedAsync(oldEmail, user.Email, "Bạn Đã Thay Đổi Địa Chỉ Email Của Mình", "");
+
+                TempData["EmailChangeMessage"] = "Email updated successfully.";
+			}
+			else
+			{
+				TempData["EmailChangeMessage"] = "Invalid confirmation code.";
+			}
+
+			return RedirectToAction("Profile", "Account");
+		}
+
+
+		[Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();

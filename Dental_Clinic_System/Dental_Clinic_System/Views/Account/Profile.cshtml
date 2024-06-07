@@ -84,6 +84,13 @@
                             </div>
                         }
 
+                        @if (TempData["EmailChangeMessage"] != null)
+                        {
+                            <div class="alert alert-info">
+                                @TempData["EmailChangeMessage"]
+                            </div>
+                        }
+
                         <div class="profile__warn">(*) Thông tin bắt buộc nhập</div>
                         <form asp-action="profile" method="POST" class="d-flex account__content__wrapper">
                             <div style="width: 50%">

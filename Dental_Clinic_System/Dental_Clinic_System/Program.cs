@@ -35,8 +35,10 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Register the email sender service
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IEmailSenderCustom, EmailSender>();
 
+//// Register the email sender service
+//builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 

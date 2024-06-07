@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a6FGCdWTqhLxbf8PAPpKRScC3glKUbjlanspmAn6kNwysUdQlPfPlzdLUBGA164d0cguQnofF8F6igYT/mtlAQ==",
+  "dgSpecHash": "IvFF99lxmsOOgXShA+YW1vqqM7js1aeEQjTRi4OOHP1y46e2Ge/5PpICKlfiWqlNPBHcxiED1CmwPoiTpdQIpQ==",
   "success": true,
-  "projectFilePath": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
+  "projectFilePath": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admins\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Admins\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

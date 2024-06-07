@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {}
+    "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {}
   },
   "projects": {
-    "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {
+    "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
+        "projectUniqueName": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
         "projectName": "Dental_Clinic_System",
-        "projectPath": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
+        "projectPath": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
         "packagesPath": "C:\\Users\\Admins\\.nuget\\packages\\",
-        "outputPath": "G:\\My Project .NET\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\",
+        "outputPath": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admins\\AppData\\Roaming\\NuGet\\NuGet.Config",
