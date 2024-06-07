@@ -51,7 +51,8 @@ input:focus {
 }
 
 /* ============== FORM BUTTON ================ */
-.manager__management__clinic button,
+.manager__management__clinic .btn,
+.manager__management__add__schedule .btn,
 .manager__management__dentist button {
 	font-size: 2rem;
 	padding: 5px 10px;
@@ -60,19 +61,22 @@ input:focus {
 	color: #fff;
 }
 
-.manager__management__clinic button:hover,
+.manager__management__clinic .btn:hover,
+.manager__management__add__schedule .btn:hover,
 .manager__management__dentist button:hover {
 	background: #3b6cd9;
 	color: #fff;
 }
 
-.manager__management__clinic button[type="reset"],
+.manager__management__clinic .btn[type="reset"],
+.manager__management__add__schedule .btn[type="reset"],
 .manager__management__dentist button[type="reset"] {
 	margin-left: 10px;
 	background: #ffb54a;
 }
 
-.manager__management__clinic button[type="reset"]:hover,
+.manager__management__clinic .btn[type="reset"]:hover,
+.manager__management__add__schedule .btn[type="reset"]:hover,
 .manager__management__dentist button[type="reset"]:hover {
 	background: #ff9c00;
 }
@@ -99,7 +103,8 @@ input:focus {
 }
 
 .form-modal-styles .modal-body .user-address,
-.form-modal-styles .modal-body .user-pic {
+.form-modal-styles .modal-body .user-pic,
+.form-modal-styles .modal-body .special-name {
 	flex: 0 0 100%;
 }
 
@@ -194,7 +199,6 @@ input:focus {
 
 .manager__management table a:last-child button,
 .manager__management .close-btn {
-	margin-left: 5px;
 	background: rgb(255, 66, 66);
 	color: white;
 }
@@ -292,32 +296,6 @@ input:focus {
 	padding: 8px 10px;
 }
 
-.manager__management__clinic button,
-.manager__management__dentist button {
-	font-size: 2rem;
-	padding: 5px 10px;
-	font-weight: bold;
-	background: #4880ff;
-	color: #fff;
-}
-
-.manager__management__clinic button:hover,
-.manager__management__dentist button:hover {
-	background: #3b6cd9;
-	color: #fff;
-}
-
-.manager__management__clinic button[type="reset"],
-.manager__management__dentist button[type="reset"] {
-	margin-left: 10px;
-	background: #ffb54a;
-}
-
-.manager__management__clinic button[type="reset"]:hover,
-.manager__management__dentist button[type="reset"]:hover {
-	background: #ff9c00;
-}
-
 /* ========== RICHTEXT EDITOR =========== */
 #container {
 	width: 100%;
@@ -355,5 +333,45 @@ input:focus {
 }
 
 .manager__management__dentist input {
+	padding: 8.5px 10px;
+}
+
+/* ============ TIME INTERVAL =============== */
+#checkboxContainer {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	flex-wrap: wrap;
+}
+
+#checkboxContainer label {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	font-size: 1.6rem;
+}
+
+/* ============ MANAGER SCHEDULE ADD ============ */
+.manager__management__add__schedule {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.manager__management__add__schedule .sub-title {
+	font-size: 2rem;
+	font-weight: 500;
+}
+
+.manager__management__add__schedule .input-text,
+.manager__management__add__schedule select {
+	width: 100%;
+	font-size: 2rem;
+	margin-bottom: 20px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.manager__management__add__schedule input {
 	padding: 8.5px 10px;
 }

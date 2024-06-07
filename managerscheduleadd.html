@@ -41,7 +41,7 @@
 						>
 					</li>
 					<li class="nav-item">
-						<a href="#!" class="active"
+						<a href="./managerschedule.html" class="active"
 							><span class="menu-icon"
 								><i class="fa-solid fa-calendar-days"></i></span
 							>Lịch làm việc</a
@@ -82,85 +82,58 @@
 
 				<div class="manager__management">
 					<div class="manager__management__header">
-						<div class="title">Lịch làm việc</div>
-						<div class="action-btn">
-							<div class="search__bar">
-								<input type="search" placeholder="Tìm kiếm ..." />
-							</div>
-							<a href="./managerscheduleadd.html">
-								<button type="button" class="add__new">+ New</button>
-							</a>
+						<div class="title">Thêm mới lịch khám</div>
+					</div>
+					<form
+						method="post"
+						action=""
+						class="manager__management__add__schedule row"
+					>
+						<div class="col-md-6">
+							<label for="dentist" class="sub-title">Nha sĩ</label
+							><input
+								class="input-text"
+								type="text"
+								name="dentist"
+								id="dentist"
+							/>
 						</div>
-					</div>
-					<div class="table-responsive">
-						<table class="table table-striped mt-3" style="font-size: 1.6rem">
-							<thead>
-								<tr>
-									<th class="text-center">STT</th>
-									<th>Mã số nha sĩ</th>
-									<th>Tên nha sĩ</th>
-									<th>Ngày đăng ký</th>
-									<th>Lịch làm việc</th>
-									<th>Trạng thái</th>
-									<th>Hành động</th>
-								</tr>
-							</thead>
-							<tbody id="myTableBody">
-								<tr style="vertical-align: middle">
-									<td class="text-center">1</td>
-									<td>D00001</td>
-									<td>
-										<img src="./assets/images/avatar.jpg" alt="" />
-										<span>Phúc Hoà</span>
-									</td>
-									<td>2000-05-30</td>
-									<td class="ws__style">
-										<div class="work__schedule">
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-											<a href="#!" class="time"><div>08:00 - 08:30</div></a>
-										</div>
-									</td>
-									<td><p class="status complete">Đang làm việc</p></td>
-									<td>
-										<a href="#!"
-											><button type="button"><i class="bx bxs-edit"></i></button
-										></a>
-										<a href="#!"
-											><button type="button">
-												<i class="bx bxs-trash"></i></button
-										></a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<!-- ========== PAGINATION  ========== -->
-					<ul id="pagination" class="pagination">
-						<!-- <li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">Previous</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">1</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">2</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">3</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" style="font-size: 2rem">Next</a>
-						</li> -->
-					</ul>
+						<div class="col-md-6">
+							<label for="dentist" class="sub-title">Nha sĩ</label
+							><input
+								class="input-text"
+								type="text"
+								name="dentist"
+								id="dentist"
+							/>
+						</div>
+						<div class="col-md-12">
+							<label for="schedule" class="sub-title">Chọn ngày khám</label
+							><input
+								class="input-text"
+								type="date"
+								name="schedule"
+								id="schedule"
+							/>
+						</div>
+						<div class="col-md-12">
+							<label for="timeInterval" class="sub-title"
+								>Chọn khoảng thời gian:</label
+							>
+							<select id="timeInterval">
+								<option value="" disabled selected>
+									Chọn khoảng thời gian
+								</option>
+								<option value="30">30 Minutes</option>
+								<option value="60">1 Hour</option>
+							</select>
+							<div id="checkboxContainer"></div>
+						</div>
+						<div class="col-md-12 text-end">
+							<button type="submit" class="btn">Lưu</button>
+							<button type="reset" class="btn">Đặt lại</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -174,6 +147,6 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
-		<script src="./assets/js/pagination.js"></script>
+		<script src="./assets/js/timeinterval.js"></script>
 	</body>
 </html>
