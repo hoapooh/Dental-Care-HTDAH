@@ -28,7 +28,7 @@ namespace Dental_Clinic_System.Models.Data
 
 		#region Foreign Key
 
-		[ForeignKey("PatientID")]
+		[ForeignKey("PatientRecordID")]
         [InverseProperty("Appointments")]
         public virtual PatientRecord PatientRecords { get; set; } = null!;
 

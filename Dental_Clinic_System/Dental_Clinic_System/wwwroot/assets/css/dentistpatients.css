@@ -24,7 +24,7 @@ p {
 	margin-bottom: 0;
 }
 
-.patients__management .status {
+.patients__management .status.pending {
 	text-align: center;
 	padding: 5px 10px;
 	width: 80%;
@@ -40,6 +40,10 @@ p {
 
 .patients__management .status.deny {
 	background: #ff474d;
+}
+
+.patients__management .status.approved {
+	background: #66ff00;
 }
 
 .patients__management i {

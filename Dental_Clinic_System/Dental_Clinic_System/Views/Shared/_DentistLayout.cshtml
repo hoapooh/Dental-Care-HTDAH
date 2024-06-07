@@ -1,0 +1,17 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+	<main>
+		<div class="dashboard__container d-flex">
+			@Html.Partial("_DentistSidebar")
+			<div class="container-fluid" style="width: 85%; padding: 0">
+		
+		@Html.Partial("_DentistAvatar");
+
+		</div>
+		@RenderBody()
+	</main>
+</body>
+</html>
