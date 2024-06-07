@@ -14,6 +14,7 @@
     <None Include="wwwroot\assets\images\user.svg" />
     <None Include="wwwroot\assets\js\chart.js" />
     <None Include="wwwroot\assets\js\myswiper.js" />
+    <None Include="wwwroot\assets\js\pagination-clinic.js" />
     <None Include="wwwroot\assets\js\pagination.js" />
     <None Include="wwwroot\assets\js\richtexteditor.js" />
     <None Include="wwwroot\assets\js\swiper-bundle.js" />
