@@ -138,9 +138,6 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("AppointmentStatus");
 
-                    b.Property<int>("PatientID")
-                        .HasColumnType("int");
-
                     b.Property<int>("PatientRecordID")
                         .HasColumnType("int")
                         .HasColumnName("PatientRecordID");
@@ -160,7 +157,7 @@ namespace Dental_Clinic_System.Migrations
                     b.HasKey("ID")
                         .HasName("PK_Appointment");
 
-                    b.HasIndex("PatientID");
+                    b.HasIndex("PatientRecordID");
 
                     b.HasIndex("ScheduleID")
                         .IsUnique();
@@ -626,7 +623,7 @@ namespace Dental_Clinic_System.Migrations
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecords")
                         .WithMany("Appointments")
-                        .HasForeignKey("PatientID")
+                        .HasForeignKey("PatientRecordID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK__Appointment__PatientRecord");
 

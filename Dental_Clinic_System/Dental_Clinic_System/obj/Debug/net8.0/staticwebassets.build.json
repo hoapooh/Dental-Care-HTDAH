@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rK87G9OnPkL8qtqF41JV09GWOZ1NAaCrvfvAeRx9aNQ=",
+  "Hash": "Xl5uudzC7yPGhWpGSO+AyArPr8HYl0G+mLajU/1HQlg=",
   "Source": "Dental_Clinic_System",
   "BasePath": "_content/Dental_Clinic_System",
   "Mode": "Default",
@@ -6931,6 +6931,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\dashboardclinic.html"
+    },
+    {
+      "Identity": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\dashboardedit.html",
+      "SourceId": "Dental_Clinic_System",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
+      "BasePath": "_content/Dental_Clinic_System",
+      "RelativePath": "dashboardedit.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\dashboardedit.html"
     },
     {
       "Identity": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\dashboardspecialty.html",

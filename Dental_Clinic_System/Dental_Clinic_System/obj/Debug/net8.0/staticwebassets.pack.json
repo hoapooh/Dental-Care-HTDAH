@@ -1453,6 +1453,10 @@
       "PackagePath": "staticwebassets\\dashboardclinic.html"
     },
     {
+      "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\dashboardedit.html",
+      "PackagePath": "staticwebassets\\dashboardedit.html"
+    },
+    {
       "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\dashboardspecialty.html",
       "PackagePath": "staticwebassets\\dashboardspecialty.html"
     },
