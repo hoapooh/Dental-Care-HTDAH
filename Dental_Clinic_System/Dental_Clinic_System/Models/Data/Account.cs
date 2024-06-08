@@ -38,14 +38,14 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("DateOfBirth", TypeName = "DATE")]
 		public DateOnly? DateOfBirth { get; set; }
 
-		[Column("Province", TypeName ="nvarchar(50)")]
-		public string? Province {  get; set; } = null;
+		[Column("Province")]
+		public int? Province {  get; set; } = null;
 
-		[Column("Ward", TypeName = "nvarchar(50)")]
-		public string? Ward { get; set; } = null;
+		[Column("Ward")]
+		public int? Ward { get; set; } = null;
 
-		[Column("District", TypeName = "nvarchar(50)")]
-		public string? District { get; set; } = null;
+		[Column("District")]
+		public int? District { get; set; } = null;
 
 		[Column("Address", TypeName = "nvarchar(100)")]
 		public string? Address { get; set; } = null;
