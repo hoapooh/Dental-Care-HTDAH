@@ -67,6 +67,7 @@
 
 			<!-- ======== INFO ======== -->
 			<div class="container-fluid" style="width: 85%; padding: 0">
+				<!-- ============= HEADER ============= -->
 				<nav class="nav__header d-flex flex-row justify-content-end">
 					<a href="#!">
 						<div class="d-flex align-items-center nav__header__profile">
@@ -81,6 +82,7 @@
 				</nav>
 
 				<div class="manager__management">
+					<!-- Header of main content -->
 					<div class="manager__management__header">
 						<div class="title">Dịch vụ khám</div>
 						<div class="action-btn">
@@ -97,7 +99,7 @@
 							</button>
 						</div>
 					</div>
-					<!-- Modal For Add new User -->
+					<!-- Modal For add new special-service -->
 					<div
 						class="modal fade"
 						id="myModal"
@@ -109,7 +111,7 @@
 							<form action="" method="POST" class="modal-content">
 								<div class="modal-header">
 									<h1 class="modal-title fs-10" id="mainTitle">
-										Thêm mới nha sĩ
+										Thêm mới dịch vụ
 									</h1>
 									<button
 										type="button"
@@ -119,39 +121,77 @@
 									></button>
 								</div>
 								<div class="modal-body">
-									<div class="user-name modal-body-card">
-										<label for="dentName">Tên nha sĩ</label
-										><input type="text" name="dentName" id="dentName" />
+									<div class="special-service modal-body-card">
+										<label for="service">Tên dịch vụ</label
+										><input type="text" name="service" id="service" />
 									</div>
-									<div class="user-tel modal-body-card">
-										<label for="dentGender">Giới tính</label>
-										<select name="dentGender" id="dentGender">
+									<div class="special-price modal-body-card">
+										<label for="price">Giá</label
+										><input type="number" name="price" id="price" />
+									</div>
+									<div class="special-name modal-body-card">
+										<label for="name">Chuyên khoa</label>
+										<select name="name" id="name">
 											<option value="" disabled selected>
-												-- Vui lòng chọn giới tính --
+												-- Vui lòng chọn Chuyên khoa --
 											</option>
-											<option value="male">Nam</option>
-											<option value="female">Nữ</option>
+											<option value="">Nha khoa</option>
+											<option value="">Nha khoa</option>
 										</select>
 									</div>
-									<div class="user-mail modal-body-card">
-										<label for="dentMail">Email</label
-										><input type="email" name="dentMail" id="dentMail" />
+								</div>
+								<div class="modal-footer">
+									<button
+										type="button"
+										class="close-btn btn"
+										data-bs-dismiss="modal"
+									>
+										Close
+									</button>
+									<button type="submit" class="submit-btn btn">
+										Save changes
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<!-- Modal for edit special-service -->
+					<div
+						class="modal fade"
+						id="myService"
+						tabindex="-1"
+						aria-labelledby="mainTitle"
+						aria-hidden="true"
+					>
+						<div class="modal-dialog modal-dialog-centered form-modal-styles">
+							<form action="" method="POST" class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-10" id="mainTitle">
+										Chỉnh sửa thông tin dịch vụ
+									</h1>
+									<button
+										type="button"
+										class="btn-close"
+										data-bs-dismiss="modal"
+										aria-label="Close"
+									></button>
+								</div>
+								<div class="modal-body">
+									<div class="special-service modal-body-card">
+										<label for="service">Tên dịch vụ</label
+										><input type="text" name="service" id="service" />
 									</div>
-									<div class="user-birth modal-body-card">
-										<label for="dentBirth">Ngày sinh</label
-										><input type="date" name="dentBirth" id="dentBirth" />
+									<div class="special-price modal-body-card">
+										<label for="price">Giá</label
+										><input type="number" name="price" id="price" />
 									</div>
-									<div class="user-pic modal-body-card">
-										<label for="dentPic">Ảnh đại diện</label
-										><input type="file" name="dentPic" id="dentPic" />
-									</div>
-									<div class="user-address modal-body-card">
-										<label for="addrSpecialty">Địa chỉ</label
-										><input
-											type="text"
-											name="addrSpecialty"
-											id="addrSpecialty"
-										/>
+									<div class="special-name modal-body-card">
+										<label for="name">Chuyên khoa</label>
+										<select name="name" id="name">
+											<option value="">Nha khoa</option>
+											<option value="">Nha khoa</option>
+										</select>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -188,7 +228,10 @@
 								<td>Nha khoa tổng quát</td>
 								<td>50,000đ</td>
 								<td>
-									<a href="#!"
+									<a
+										href="#!"
+										data-bs-toggle="modal"
+										data-bs-target="#myService"
 										><button type="button"><i class="bx bxs-edit"></i></button
 									></a>
 									<a href="#!"
@@ -203,7 +246,10 @@
 								<td>Nha khoa tổng quát</td>
 								<td>50,000đ</td>
 								<td>
-									<a href="#!"
+									<a
+										href="#!"
+										data-bs-toggle="modal"
+										data-bs-target="#myService"
 										><button type="button"><i class="bx bxs-edit"></i></button
 									></a>
 									<a href="#!"
