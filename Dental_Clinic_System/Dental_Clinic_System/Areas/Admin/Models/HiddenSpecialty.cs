@@ -4,13 +4,13 @@
     {
         private readonly List<int> _hiddenSpeciatlies = new List<int>();
 
-        public void HiddenSpeciatly(int id)
+        public void HiddenSpecialty(int id)
         {
             if (!_hiddenSpeciatlies.Contains(id))
                 _hiddenSpeciatlies.Add(id);
         }
 
-        public List<int> GetHiddenSpeciatly()
+        public List<int> GetHiddenSpecialty()
         {
             return _hiddenSpeciatlies;
         }

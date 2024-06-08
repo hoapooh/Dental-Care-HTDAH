@@ -249,7 +249,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Dentist\Data\" />
     <Folder Include="Areas\Dentist\Models\" />
     <Folder Include="Areas\Manager\Data\" />

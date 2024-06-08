@@ -52,14 +52,14 @@
 					<div class="collapse" id="manage-account">
 						<ul class="nav flex-column sub-menu">
 							<li class="nav-item">
-								<form action="~/Admin/Admin/ListAccount" method="get" href="~/dashboardaccount.html">
+								<form action="~/Admin/Admin/ListAccount" method="get">
 									<button type="submit" name="Role" value="Nha sĩ" style="padding-left: 40px; font-size: 1.4rem" class="nav-link">
 										<i class="fa-solid fa-stethoscope"></i> Quản lý nha sĩ
 									</button>
 								</form>
 							</li>
 							<li class="nav-item">
-								<form action="~/Admin/Admin/ListAccount" method="get" href="~/dashboardaccount.html" >
+								<form action="~/Admin/Admin/ListAccount" method="get" >
 									<button type="submit" name="Role" value="Bệnh nhân" style="padding-left: 40px; font-size: 1.4rem" class="nav-link">
 										<i class="fa-solid fa-hospital-user"></i> Quản lý tài khoản bệnh nhân
 									</button>
@@ -67,7 +67,7 @@
 							</li>
 
 							<li class="nav-item">
-								<form action="~/Admin/Admin/ListAccount" method="get" href="#!">
+								<form action="~/Admin/Admin/ListAccount" method="get">
 									<button type="submit" name="Role" value="Quản lý" style="padding-left: 40px; font-size: 1.4rem" class="nav-link">
 										<i class="fa-solid fa-hospital"></i> Quản lý tài khoản Manager
 									</button>
@@ -83,7 +83,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="~/dashboardspecialty.html">
+					<a href="~/Admin/ManagerSpecialty/ListSpecialty">
 						<span class="menu-icon"><i class="bx bxs-bookmarks"></i></span>Quản lý chuyên khoa
 					</a>
 				</li>
@@ -127,5 +127,7 @@
 			crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="~/assets/js/pagination.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

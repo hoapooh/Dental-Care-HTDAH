@@ -18,7 +18,7 @@ namespace Dental_Clinic_System.Models.Data
         public string? Description { get; set; }
 
         [Column("Image", TypeName = "varchar(256)")]
-        public string Image { get; set; } = null!;
+        public string? Image { get; set; }
 
 		#region Entity Mapping
 
