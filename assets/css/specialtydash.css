@@ -50,11 +50,49 @@ p {
 	border-radius: 5px;
 }
 
-.specialty__management__title {
-	color: #202224;
+/* ======== BODY HEADER ========= */
+.specialty__management__header {
+	padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 2rem;
+}
+
+.specialty__management__header .title {
 	font-size: 4.4rem;
-	font-weight: 700;
-	letter-spacing: -0.0114rem;
+	font-weight: bold;
+}
+
+.specialty__management__header .action-btn {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.specialty__management__header .action-btn .search__bar {
+	padding: 5px 10px;
+	border: 1px solid #4880ff;
+	border-radius: 6px;
+}
+
+.specialty__management__header .action-btn .search__bar input {
+	border: none;
+	outline: none;
+}
+
+.specialty__management__header .action-btn .add__new {
+	background: #4880ff;
+	border: none;
+	outline: none;
+	color: white;
+	padding: 6px 20px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.specialty__management__header .action-btn .add__new:hover {
+	background: #2e5bff;
 }
 
 .specialty__management tbody tr {
