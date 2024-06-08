@@ -26,6 +26,12 @@ p {
 	margin-bottom: 0;
 }
 
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background-color: #b2b2b2;
+}
+
 .clinic {
 	margin-top: 60px;
 }

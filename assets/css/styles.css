@@ -23,6 +23,28 @@ a {
 p {
 	margin-bottom: 0;
 }
+
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background-color: #b2b2b2;
+}
+
+/* ========== DROPDOWN HOVER ========== */
+/* .dropdown:hover .dropdown-menu {
+	display: block;
+	margin-top: 0;
+} */
+
+.navbar__auth__avatar:active,
+.navbar__auth__avatar.show {
+	border: none;
+}
+
+.dropdown .dropdown-item {
+	font-size: 2rem;
+}
+
 /* ================ hero ================= */
 .hero {
 	width: 1280px;
