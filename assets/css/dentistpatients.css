@@ -42,10 +42,19 @@ p {
 	background: #ff474d;
 }
 
-.patients__management i {
-	color: #4880ff;
+.patients__management a button i {
+	vertical-align: middle;
 }
 
-.patients__management i:hover {
-	color: #29b18e;
+.patients__management a button {
+	border: none;
+	outline: none;
+	background: #4880ff;
+	color: white;
+	border-radius: 6px;
+	padding: 5px 10px;
+}
+
+.patients__management a:hover button {
+	background: #3b6cd9;
 }
