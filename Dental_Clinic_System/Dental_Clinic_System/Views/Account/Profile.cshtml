@@ -183,24 +183,21 @@
 
                             <div style="width: 50%">
                                 <label for="province">Tỉnh / Thành phố <sup>*</sup></label><br />
-                                <select id="tinh" title="Chọn Tỉnh Thành">
+                                <select id="tinh" title="Chọn Tỉnh Thành" asp-for="@Model.Province">
                                     <option value="0">Tỉnh Thành</option>
                                 </select>
-                                <input type="hidden" asp-for="Province" id="Province"  />
                             </div>
                             <div style="width: 25%" class="district">
                                 <label for="district">Quận / Huyện <sup>*</sup></label><br />
-                                <select id="quan" title="Chọn Quận Huyện">
+                                <select id="quan" title="Chọn Quận Huyện" asp-for="@Model.District">
                                     <option value="0">Quận Huyện</option>
                                 </select>
-                                <input type="hidden" asp-for="District" id="District"  />
                             </div>
                             <div style="width: 25%" class="ward">
                                 <label for="ward">Phường / Xã <sup>*</sup></label><br />
-                                <select id="phuong" title="Chọn Phường Xã">
+                                <select id="phuong" title="Chọn Phường Xã" asp-for="@Model.Ward">
                                     <option value="0">Phường Xã</option>
                                 </select>
-                                <input type="hidden" asp-for="Ward" id="Ward" />
                             </div>
 
                             <div style="width: 100%" class="address">
