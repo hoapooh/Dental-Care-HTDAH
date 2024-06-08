@@ -101,6 +101,7 @@
                                                                                            value="@Model.FirstName"
                                                                                            asp-for="@Model.FirstName"
                                                                                            style="width: 100%" />
+                                <span class="text-danger" asp-validation-for="FirstName"></span>
                             </div>
                             <div style="width: 50%">
                                 <label for="lastname">Tên <sup>*</sup></label><br /><input type="text"
@@ -109,6 +110,7 @@
                                                                                            value="@Model.LastName"
                                                                                            asp-for="@Model.LastName"
                                                                                            style="width: 100%" />
+                                <span class="text-danger" asp-validation-for="LastName"></span>
                             </div>
                             <div style="width: 50%">
                                 <label for="phone">Số điện thoại <sup>*</sup></label><br /><input type="text"
@@ -118,6 +120,7 @@
                                                                                                   value="@Model.PhoneNumber"
                                                                                                   asp-for="@Model.PhoneNumber"
                                                                                                   style="width: 100%" />
+                                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
 
                             </div>
                             <div style="width: 50%">
@@ -155,6 +158,7 @@
                                                                                              asp-for="@Model.Email"
                                                                                              readonly
                                                                                              style="width: 100%" />
+                                    <span class="text-danger" asp-validation-for="Email"></span>
 
                                 </div>
                             }
@@ -167,7 +171,7 @@
                                                                                              value="@Model.Email"
                                                                                              asp-for="@Model.Email"
                                                                                              style="width: 100%" />
-
+                                    <span class="text-danger" asp-validation-for="Email"></span>
                                 </div>
                             }
 
@@ -207,6 +211,7 @@
                                                                                               value="@Model.Address"
                                                                                               asp-for="@Model.Address"
                                                                                               style="width: 100%" />
+                                <span class="text-danger" asp-validation-for="Address"></span>
                             </div>
                             <div class="submit__button">
                                 <button type="reset" class="reset">Nhập lại</button>
@@ -224,6 +229,10 @@
                                         <label for="pass">Mật khẩu</label><br /><input type="password"
                                                                                        name="password"
                                                                                        id="pass"
+                                                                                       pattern="^[a-zA-Z][a-zA-Z0-9]*$"
+                                                                                       minlength="3"
+                                                                                       maxlength="30"
+                                                                                       required
                                                                                        placeholder="Nhập mật khẩu"
                                         @(User.Identity.IsAuthenticated && (User.Identity as ClaimsIdentity)?.Claims.Any(c => c.Issuer == "Google") == true ? "readonly" : "required")
                                                                                        style="width: 100%" />
@@ -232,6 +241,10 @@
                                         <label for="firstname">Mật khẩu mới</label><br /><input type="password"
                                                                                                 name="newPassword"
                                                                                                 id="firstname"
+                                                                                                pattern="^[a-zA-Z][a-zA-Z0-9]*$"
+                                                                                                minlength="3"
+                                                                                                maxlength="30"
+                                                                                                required
                                                                                                 placeholder="Nhập mật khẩu mới"
                                         @(User.Identity.IsAuthenticated && (User.Identity as ClaimsIdentity)?.Claims.Any(c => c.Issuer == "Google") == true ? "readonly" : "required")
                                                                                                 style="width: 100%" />
@@ -240,6 +253,10 @@
                                         <label for="firstname">Nhập lại mật khẩu</label><br /><input type="password"
                                                                                                      name="confirmPassword"
                                                                                                      id="firstname"
+                                                                                                     pattern="^[a-zA-Z][a-zA-Z0-9]*$"
+                                                                                                     minlength="3"
+                                                                                                     maxlength="30"
+                                                                                                     required
                                                                                                      placeholder="Nhập lại mật khẩu"
                                         @(User.Identity.IsAuthenticated && (User.Identity as ClaimsIdentity)?.Claims.Any(c => c.Issuer == "Google") == true ? "readonly" : "required")
                                                                                                      style="width: 100%" />

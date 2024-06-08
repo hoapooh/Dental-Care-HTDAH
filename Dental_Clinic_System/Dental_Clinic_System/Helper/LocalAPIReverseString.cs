@@ -2,11 +2,11 @@
 
 namespace Dental_Clinic_System.Helper
 {
-	public class LocalAPIReverseString
+	public static class LocalAPIReverseString
 	{
 		private static readonly HttpClient client = new();
 
-		public async Task<string> GetProvinceNameById(int provinceId)
+		public static async Task<string> GetProvinceNameById(int provinceId)
 		{
 			string url = $"https://esgoo.net/api-tinhthanh/1/0.htm";
 			var response = await client.GetStringAsync(url);
@@ -25,7 +25,7 @@ namespace Dental_Clinic_System.Helper
 			return "Not Found";
 		}
 
-		public async Task<string> GetDistrictNameById(int provinceId, int districtId)
+		public static async Task<string> GetDistrictNameById(int provinceId, int districtId)
 		{
 			string url = $"https://esgoo.net/api-tinhthanh/2/{provinceId}.htm";
 			var response = await client.GetStringAsync(url);
@@ -44,7 +44,7 @@ namespace Dental_Clinic_System.Helper
 			return "Not Found";
 		}
 
-		public async Task<string> GetWardNameById(int districtId, int wardId)
+		public static async Task<string> GetWardNameById(int districtId, int wardId)
 		{
 			string url = $"https://esgoo.net/api-tinhthanh/3/{districtId}.htm";
 			var response = await client.GetStringAsync(url);

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SG8B/wI/lVisDKQIfgSZKk0WE/iN5HzoJUmc3kAbbUw=",
+  "Hash": "QQyNWYsXIg4KkMQ6s38/z/jCB3Pe+4y6i4NArzaIq+0=",
   "Source": "Dental_Clinic_System",
   "BasePath": "_content/Dental_Clinic_System",
   "Mode": "Default",
@@ -2048,6 +2048,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\js\\text_editor.js"
+    },
+    {
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\timeinterval.js",
+      "SourceId": "Dental_Clinic_System",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
+      "BasePath": "_content/Dental_Clinic_System",
+      "RelativePath": "assets/js/timeinterval.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\js\\timeinterval.js"
     },
     {
       "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\tinymce\\CHANGELOG.md",

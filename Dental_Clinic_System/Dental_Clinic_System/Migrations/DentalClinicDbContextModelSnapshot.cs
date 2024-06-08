@@ -78,7 +78,7 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnName("Password");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("char(11)")
+                        .HasColumnType("varchar(11)")
                         .HasColumnName("PhoneNumber")
                         .IsFixedLength();
 
@@ -188,6 +188,11 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("Basis");
 
+                    b.Property<string>("ClinicStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("ClinicStatus");
+
                     b.Property<string>("Description")
                         .HasColumnType("ntext")
                         .HasColumnName("Description");
@@ -195,6 +200,10 @@ namespace Dental_Clinic_System.Migrations
                     b.Property<int?>("District")
                         .HasColumnType("int")
                         .HasColumnName("District");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Email");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -209,6 +218,10 @@ namespace Dental_Clinic_System.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("varchar(11)")
+                        .HasColumnName("PhoneNumber");
 
                     b.Property<int?>("Province")
                         .HasColumnType("int")

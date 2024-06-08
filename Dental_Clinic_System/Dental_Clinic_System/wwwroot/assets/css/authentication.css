@@ -404,15 +404,3 @@
 .forgot__image__img {
 	text-align: center;
 }
-
-
-/* Display Error Text beside the input */
-.form-group {
-	margin-bottom: 1rem;
-}
-
-	.form-group .text-danger {
-		margin-left: 10px;
-		font-size: 14px;
-		display: inline-block;
-	}

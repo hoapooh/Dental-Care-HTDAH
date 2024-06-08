@@ -32,7 +32,7 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("Email", TypeName = "varchar(50)")]
 		public string? Email { get; set; }
 
-		[Column("PhoneNumber", TypeName = "char(11)")]
+		[Column("PhoneNumber", TypeName = "varchar(11)")]
 		public string? PhoneNumber { get; set; }
 
 		[Column("DateOfBirth", TypeName = "DATE")]

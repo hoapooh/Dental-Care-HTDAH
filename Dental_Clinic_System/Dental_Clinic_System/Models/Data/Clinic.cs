@@ -32,15 +32,24 @@ namespace Dental_Clinic_System.Models.Data
         [Column("Basis",TypeName = "nvarchar(200)")]
         public string? Basis { get; set; } = null;
 
+        [Column("PhoneNumber", TypeName = "varchar(11)")]
+        public string? PhoneNumber { get; set; }
+
+        [Column("Email", TypeName = "varchar(50)")]
+        public string? Email { get; set; }
+
         [Column("Description",TypeName = "ntext")]
         public string? Description { get; set; }
 
         [Column("Image", TypeName = "varchar(256)")]
         public string Image { get; set; } = null!;
 
-		#region Foreign Key
+        [Column("ClinicStatus", TypeName = "nvarchar(30)")]
+        public string ClinicStatus { get; set; } = null!;
 
-		[ForeignKey("ManagerID")]
+        #region Foreign Key
+
+        [ForeignKey("ManagerID")]
 		[InverseProperty("Clinics")]
 		public virtual Account Manager { get; set; } = null!;
 
