@@ -11,11 +11,11 @@ namespace Dental_Clinic_System.Controllers
 {
 	[Area("Manager")]
 	//[Route("Manager/[controller]")]
-	public class DentistController : Controller
+	public class DentistsController : Controller
 	{
 		private readonly DentalClinicDbContext _context;
 
-		public DentistController(DentalClinicDbContext context)
+		public DentistsController(DentalClinicDbContext context)
 		{
 			_context = context;
 		}
