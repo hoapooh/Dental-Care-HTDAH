@@ -44,8 +44,8 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("DATE")
                         .HasColumnName("DateOfBirth");
 
-                    b.Property<string>("District")
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("District")
+                        .HasColumnType("int")
                         .HasColumnName("District");
 
                     b.Property<string>("Email")
@@ -82,8 +82,8 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnName("PhoneNumber")
                         .IsFixedLength();
 
-                    b.Property<string>("Province")
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("Province")
+                        .HasColumnType("int")
                         .HasColumnName("Province");
 
                     b.Property<string>("Role")
@@ -96,8 +96,8 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("varchar(30)")
                         .HasColumnName("Username");
 
-                    b.Property<string>("Ward")
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("Ward")
+                        .HasColumnType("int")
                         .HasColumnName("Ward");
 
                     b.HasKey("ID")
@@ -192,9 +192,8 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("ntext")
                         .HasColumnName("Description");
 
-                    b.Property<string>("District")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("District")
+                        .HasColumnType("int")
                         .HasColumnName("District");
 
                     b.Property<string>("Image")
@@ -211,14 +210,12 @@ namespace Dental_Clinic_System.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("Province")
+                        .HasColumnType("int")
                         .HasColumnName("Province");
 
-                    b.Property<string>("Ward")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("Ward")
+                        .HasColumnType("int")
                         .HasColumnName("Ward");
 
                     b.HasKey("ID")
@@ -339,9 +336,8 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("date")
                         .HasColumnName("DateOfBirth");
 
-                    b.Property<string>("District")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("District")
+                        .HasColumnType("int")
                         .HasColumnName("District");
 
                     b.Property<string>("EmailReceiver")
@@ -389,13 +385,11 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnName("PhoneNumber");
 
                     b.Property<string>("Province")
-                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("Province");
 
-                    b.Property<string>("Ward")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("Ward")
+                        .HasColumnType("int")
                         .HasColumnName("Ward");
 
                     b.HasKey("ID")

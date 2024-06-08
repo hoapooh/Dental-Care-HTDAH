@@ -52,21 +52,24 @@
 					<i class="fa-solid fa-user"></i>
 					<input type="text" placeholder="Tên tài khoản" asp-for="@Model.Username"/>
 					@Html.ValidationMessage("errorUsernameRegister")
+					<span class="text-danger" asp-validation-for="Username"></span>
 				</div>
 				<div class="phone">
 					<i class="fa-solid fa-phone"></i>
 					<input type="text" placeholder="Nhập số điện thoại" asp-for="@Model.PhoneNumber"/>
 					@Html.ValidationMessage("errorPhoneRegister")
+					<span class="text-danger" asp-validation-for="PhoneNumber"></span>
 				</div>
 				<div class="email">
 					<i class="fa-solid fa-envelope"></i>
 					<input type="email" placeholder="Nhập Email của bạn" asp-for="@Model.Email"/>
 					@Html.ValidationMessage("errorEmailRegister")
+					<span class="text-danger" asp-validation-for="Email"></span>
 				</div>
 				<div class="password">
 					<i class="fa-solid fa-lock"></i>
 					<input type="text" placeholder="Nhập mật khẩu" asp-for="@Model.Password"/>
-					<span asp-validation-for="Password" class="text-danger"></span>
+					<span class="text-danger" asp-validation-for="Password"></span>
 				</div>
 				<label class="policies_check">
 					<input type="checkbox" required/>
