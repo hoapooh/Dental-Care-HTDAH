@@ -17,158 +17,12 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Dental_Clinic_System
 build_property.RootNamespace = Dental_Clinic_System
-<<<<<<< HEAD
-build_property.ProjectDir = E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\
-=======
 build_property.ProjectDir = E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\
->>>>>>> 1e49cee7a6056f421f7f9c02446a456634e4b3ca
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-<<<<<<< HEAD
-build_property.MSBuildProjectDirectory = E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System
-build_property._RazorSourceGeneratorDebug = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/About/About.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJvdXRcQWJvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ConfirmEmail.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ForgotPassword.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ForgotPasswordConfirmation.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZENvbmZpcm1hdGlvbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/LinkWithGoogleView.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMaW5rV2l0aEdvb2dsZVZpZXcuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Profile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ResetPassword.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ResetPasswordConfirmation.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/Clinic.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pYy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDentist.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY0RlbnRpc3QuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDentistCalendar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY0RlbnRpc3RDYWxlbmRhci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicSpecialty.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY1NwZWNpYWx0eS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Contact/Contact.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdFxDb250YWN0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Dentist/DentistDescription.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVudGlzdFxEZW50aXN0RGVzY3JpcHRpb24uY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Dentist/DentistSchedule.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVudGlzdFxEZW50aXN0U2NoZWR1bGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Dentist/PatientAppointments.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVudGlzdFxQYXRpZW50QXBwb2ludG1lbnRzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Blog.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9CbG9nLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_DentistAvatar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZW50aXN0QXZhdGFyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_DentistLayout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZW50aXN0TGF5b3V0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_DentistSidebar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZW50aXN0U2lkZWJhci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Footer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Header.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/DentistBookingRequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XERlbnRpc3RCb29raW5nUmVxdWVzdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/DentistInformation.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XERlbnRpc3RJbmZvcm1hdGlvbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/Dentistry.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XERlbnRpc3RyeS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/Specialty.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XFNwZWNpYWx0eS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Layout.cshtml]
-=======
 build_property.MSBuildProjectDirectory = E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System
 build_property._RazorSourceGeneratorDebug = 
 
@@ -184,24 +38,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentist/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0XENyZWF0ZS5jc2h0bWw=
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentist/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0XERlbGV0ZS5jc2h0bWw=
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentist/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0XERldGFpbHMuY3NodG1s
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentist/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0XEVkaXQuY3NodG1s
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentist/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0XEluZGV4LmNzaHRtbA==
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Create.cshtml]
@@ -296,6 +150,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdFxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Dentist/DentistDescription.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVudGlzdFxEZW50aXN0RGVzY3JpcHRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Dentist/DentistSchedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVudGlzdFxEZW50aXN0U2NoZWR1bGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Dentist/PatientAppointments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVudGlzdFxQYXRpZW50QXBwb2ludG1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -310,6 +176,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Blog.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9CbG9nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_DentistAvatar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZW50aXN0QXZhdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_DentistLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZW50aXN0TGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_DentistSidebar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZW50aXN0U2lkZWJhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Footer.cshtml]
@@ -349,6 +227,5 @@ build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Layout.cshtml]
->>>>>>> 1e49cee7a6056f421f7f9c02446a456634e4b3ca
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-gj3lj87o29
