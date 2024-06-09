@@ -60,9 +60,9 @@
 							</div>
 							<div class="details">
 								<p class="name">Bác sĩ Chuyên khoa | @dentistry.Account.LastName @dentistry.Account.FirstName</p>
-								<p class="desc">
-									@dentistry.Description
-								</p>
+								<div class="desc">
+									@Html.Raw(dentistry.Description)
+								</div>
 								<p class="location">
 									<i class="fa-solid fa-location-dot"></i><span> @dentistry.Clinic.Province</span>
 								</p>

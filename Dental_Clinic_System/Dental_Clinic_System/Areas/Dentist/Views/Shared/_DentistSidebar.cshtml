@@ -1,0 +1,27 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+	string currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<nav class="sidebar" style="width: 15%">
+	<p class="dashboard__logo"><span>Dental</span>Care</p>
+	<ul class="nav">
+		<li class="nav-item">
+			<a asp-area="Dentist" asp-controller="Dentist" asp-action="dentistschedule" class="@(currentAction != "DentistDescription" && currentAction != "PatientAppointments" ? "active" : "")">
+				<span class="menu-icon"><i class="bx bxs-dashboard"></i></span>Lịch làm việc
+			</a>
+		</li>
+		<li class="nav-item">
+			<a asp-area="Dentist" asp-controller="Dentist" asp-action="dentistdescription" class="@(currentAction == "DentistDescription" ? "active" : "")">
+				<span class="menu-icon"><i class="bx bxs-user"></i></span>Thêm mô
+				tả bản thân
+			</a>
+		</li>
+		<li class="nav-item">
+			<a asp-area="Dentist" asp-controller="Dentist" asp-action="patientappointments" class="@(currentAction == "PatientAppointments" ? "active" : "")">
+				<span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản
+				lý bệnh nhân
+			</a>
+		</li>
+	</ul>
+</nav>

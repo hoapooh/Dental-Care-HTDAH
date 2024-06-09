@@ -27,9 +27,9 @@
 		<img src="@Model.Account.Image" alt="" />
 		<div class="dentist__profile__info">
 			<h1 class="name">Bác sĩ Chuyên khoa | @Model.Account.LastName @Model.Account.FirstName </h1>
-			<p class="desc">
-				@Model.Description
-			</p>
+			<div class="desc">
+				@Html.Raw(Model.Description)
+			</div>
 			<p class="location">
 				<i class="fa-solid fa-location-dot"></i> @Model.Clinic.Province
 			</p>

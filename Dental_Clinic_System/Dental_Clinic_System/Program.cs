@@ -72,9 +72,20 @@ app.UseEndpoints(endpoints =>
 	);
 });
 
-//app.MapControllerRoute(
-//    name: "dentist",
-//    pattern: "{controller=dentist}/{action=dentistschedule}/{id?}");
+
+//============ Dentist Route ================
+app.UseEndpoints(endpoints =>
+{
+	_ = endpoints.MapControllerRoute(
+	   name: "dentist_default",
+	   pattern: "Dentist",
+	   defaults: new { area = "Dentist", controller = "Dentist", action = "DentistSchedule" });
+
+	_ = endpoints.MapControllerRoute(
+			name: "areas",
+			pattern: "{area:exists}/{controller=Home}/{id?}");
+});
+//===========================================
 
 app.MapControllerRoute(
     name: "default",

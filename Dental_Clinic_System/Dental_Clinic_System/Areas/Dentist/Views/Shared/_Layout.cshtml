@@ -1,0 +1,16 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                               
+<!DOCTYPE html>
+<html lang = "en">
+<body>
+    <div class="dashboard__container d-flex">
+        @Html.Partial("_DentistSidebar")
+    <div class="container-fluid" style="width: 85%; padding: 0">
+        @Html.Partial("_DentistAvatar")
+        @RenderBody()
+    </div>
+    </div>
+</body>
+</html>
