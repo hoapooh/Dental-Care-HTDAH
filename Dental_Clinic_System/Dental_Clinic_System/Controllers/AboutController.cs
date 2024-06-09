@@ -6,7 +6,7 @@ namespace Dental_Clinic_System.Controllers
 	{
 		public IActionResult Index()
 		{
-			return View("About");
+            return View("About");
 		}
 	}
 }

@@ -152,7 +152,7 @@ namespace Dental_Clinic_System.Controllers
 
 
 
-        //[Authorize(Roles = "Bệnh Nhân")]
+        [Authorize(Roles = "Bệnh Nhân")]
         public IActionResult PaymentCallBack()
         {
             var response = _vnPayment.PaymentExecute(Request.Query);

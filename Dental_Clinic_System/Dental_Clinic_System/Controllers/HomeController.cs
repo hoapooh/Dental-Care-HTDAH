@@ -20,7 +20,14 @@ namespace Dental_Clinic_System.Controllers
 
 		public IActionResult Index()
 		{
-			var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            var specialties = _context.Specialties.ToList();
+            ViewBag.Specialities = specialties;
+
+            var clinics = _context.Clinics.ToList();
+            ViewBag.Clinics = clinics;
+
+            var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
 			if (claimsValue == null)
 			{
