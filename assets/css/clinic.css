@@ -550,7 +550,7 @@ body::-webkit-scrollbar {
 	margin-bottom: 24px;
 	display: flex;
 	justify-content: space-between;
-	border-radius: 5px;
+	border-radius: 8px;
 }
 
 .clinic .booking .back-btn button {
