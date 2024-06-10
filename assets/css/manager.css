@@ -362,7 +362,6 @@ input:focus {
 	font-weight: 500;
 }
 
-.manager__management__add__schedule .input-text,
 .manager__management__add__schedule select {
 	width: 100%;
 	font-size: 2rem;
@@ -370,8 +369,4 @@ input:focus {
 	padding: 5px 10px;
 	border-radius: 5px;
 	border: 1px solid #ccc;
-}
-
-.manager__management__add__schedule input {
-	padding: 8.5px 10px;
 }
