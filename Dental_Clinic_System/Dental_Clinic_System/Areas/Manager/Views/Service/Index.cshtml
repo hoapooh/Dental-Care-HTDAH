@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Service>
-
 @{
 	ViewData["Title"] = "Dịch vụ khám";
 	Layout = "_LayoutManager";
@@ -57,26 +56,73 @@
 
 <!-- account management header -->
 <div class="manager__management__header">
-	<div class="title">Dịch vụ khám</div>
+	<div class="title">Dịch vụ làm răng</div>
 	<div class="action-btn">
 		<form asp-action="Search" asp-controller="Service">
 			<div class="search__bar">
 				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
 			</div>
 		</form>
-		@* <form asp-action="Create">
-			<button type="submit"
-					data-bs-toggle="modal"
-					data-bs-target="#myModal"
-					class="add__new">
-				+ New
-			</button>
-		</form> *@
-		<a asp-controller="Service" asp-action="Create" class="btn btn-primary">+ New</a>
+
+		<a asp-controller="Service" asp-action="Create" class="add__new">+ New</a>
 	</div>
 </div>
 
 <!-- Modal For Add new DichVu -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="mainTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered form-modal-styles">
+		<form action="" method="POST" class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-10" id="mainTitle">
+					Thêm mới dịch vụ
+				</h1>
+				<button type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="user-name modal-body-card">
+					<label for="dentName">Dịch vụ</label><input type="text" name="dentName" id="dentName" />
+				</div>
+				<div class="user-tel modal-body-card">
+					<label for="dentGender">Đơn giá</label>
+					<select name="dentGender" id="dentGender">
+						<option value="" disabled selected>
+							-- Vui lòng chọn giới tính --
+						</option>
+						<option value="male">Nam</option>
+						<option value="female">Nữ</option>
+					</select>
+				</div>
+				<div class="user-mail modal-body-card">
+					<label for="dentMail">Email</label><input type="email" name="dentMail" id="dentMail" />
+				</div>
+				<div class="user-birth modal-body-card">
+					<label for="dentBirth">Ngày sinh</label><input type="date" name="dentBirth" id="dentBirth" />
+				</div>
+				<div class="user-pic modal-body-card">
+					<label for="dentPic">Ảnh đại diện</label><input type="file" name="dentPic" id="dentPic" />
+				</div>
+				<div class="user-address modal-body-card">
+					<label for="addrSpecialty">Địa chỉ</label><input type="text"
+														   name="addrSpecialty"
+														   id="addrSpecialty" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button"
+						class="close-btn btn"
+						data-bs-dismiss="modal">
+					Close
+				</button>
+				<button type="submit" class="submit-btn btn">
+					Save changes
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
 <!-- Table -->
 <table class="table table-striped mt-5" style="font-size: 1.6rem">
 	<thead>

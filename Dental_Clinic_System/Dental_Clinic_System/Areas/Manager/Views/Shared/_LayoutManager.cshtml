@@ -34,7 +34,7 @@
 				<p class="dashboard__logo"><span>Dental</span>Care</p>
 				<ul class="nav">
 					<li class="nav-item">
-						<a asp-controller="Dentist" class="Quan_ly_nha_si">
+						<a asp-controller="Dentists" asp-action="Index" class="Quan_ly_nha_si">
 							<span class="menu-icon"><i class="bx bxs-user"></i></span>Quản lý nha sĩ</a>
 					</li>
 					<li class="nav-item">
@@ -44,9 +44,9 @@
 							>Lịch làm việc</a>
 					</li>
 					<li class="nav-item">
-					<a asp-controller="Service" class="Dich_vu_kham"><span class="menu-icon"
-								><i class="fa-solid fa-notes-medical"></i></span
-							>Dịch vụ khám</a>
+					<a asp-controller="Service" asp-action="Index" class="Dich_vu_kham">
+						<span class="menu-icon"><i class="fa-solid fa-notes-medical"></i></span
+							>Dịch vụ làm răng</a>
 					</li>
 					<li class="nav-item">
 						<a href="#!"

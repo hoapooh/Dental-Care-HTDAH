@@ -14,6 +14,42 @@
 			color: #fff;
 			background: #4880ff;
 		}
+		a.button-link {
+			display: inline-block;
+			padding: 5px 10px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			text-decoration: none;
+			color: inherit;
+			border-radius: 6px;
+}
+		.manager__management table a.button-link i {
+			vertical-align: middle;
+		}
+
+		.manager__management table a.button-link:first-child,
+		.manager__management .submit-btn {
+			background: #4880ff;
+			color: white;
+		}
+
+		.manager__management table a.button-link:first-child:hover,
+		.manager__management .submit-btn:hover {
+			background: #3b6cd9;
+		}
+
+		.manager__management table a.button-link:last-child,
+		.manager__management .close-btn {
+			margin-left: 5px;
+			background: rgb(255, 66, 66);
+			color: white;
+		}
+
+		.manager__management table a.button-link:last-child:hover,
+		.manager__management .close-btn:hover {
+			background: #f81f1f;
+		}
     </style>
 }
 
@@ -105,14 +141,14 @@
 				<th>Giới tính</th>
 				<th>Email</th>
 				<th>Số điện thoại</th>
-				<th>Địa chỉ</th>
+				<th>Bằng cấp</th>
 				<th>Hành động</th>
 			</tr>
 		</thead>
 		<tbody id="myTableBody">
-			@{
-				int index = 0;
-			}
+		@{
+			int index = 0;
+		}
 			@foreach (var item in Model)
 			{
 				<tr style="vertical-align: middle">
@@ -137,22 +173,18 @@
 					<td>
 						@item.Account.PhoneNumber
 					</td>
+					<td >
+						@item.Degree?.Name
+					</td>
 					<td>
-						@item.Account.Province
+						<a asp-action="Edit" asp-route-id="@item.ID" class="button-link">
+							<i class="bx bxs-edit"></i>
+						</a>
+						<a asp-action="Delete" asp-route-id="@item.ID" class="button-link">
+							<i class="bx bxs-trash"></i>
+						</a>
 					</td>
-					<td class="form-container">
-						<form asp-action="Edit" asp-route-id="@item.ID">
-							<button type="submit" >
-								<i class="bx bxs-edit"></i>
-							</button>
-						</form>
-
-						<form asp-action="Delete" asp-route-id="@item.ID">
-							<button type="submit">
-								<i class="bx bxs-trash"></i
-							</button>
-						</form>
-					</td>
+					
 				</tr>
 			}
 		</tbody>
@@ -161,5 +193,3 @@
 	<!-- ========== PAGINATION  ========== -->
 	<ul id="pagination" class="pagination">
 	</ul>
-
-

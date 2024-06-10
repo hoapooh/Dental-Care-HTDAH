@@ -10,59 +10,73 @@
             color: #fff;
             background: #4880ff;
         }
+
+        .manager__management__header {
+            justify-content: space-around;
+        }
+        .form-modal-styles {
+            width: 1000px;
+        }
+
+        .modal-footer {
+            gap: 10px;
+        }
     </style>
 }
-
 <!--header -->
 <div class="manager__management__header">
-    <div class="title">Thêm dịch vụ khám</div>
+    <div class="title" >Thêm dịch vụ làm răng</div>
 </div>
+<h1></h1>
 <!--Form create -->
-<div class="row" style="font-size: 2rem">
-    <div class="col-md-4">
-                                    @* enctype: để thêm hình ảnh *@
-        <form asp-action="Create" enctype="multipart/form-data">
-            
-            @* Kiểm tra dữ liệu đầu vào, dựa trên ServiceVM *@
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
-            
-
-            
-            <div class="form-group">
-                <label>Phòng khám</label>
-                <select asp-for="ClinicID" class ="form-control" asp-items="ViewBag.ClinicID"></select>
-            </div>
-            <div class="form-group">
-                <label>Chuyên khoa</label>
-                <select asp-for="SpecialtyID" class ="form-control" asp-items="ViewBag.SpecialtyID">
-                    <option>--Chọn chuyên khoa--</option>
-                </select>
-            </div>
-            <div class="form-group">
+<div class="modal-dialog modal-dialog-centered form-modal-styles">
+                                        @* enctype: để thêm hình ảnh *@
+    <form asp-action="Create" enctype="multipart/form-data" class="modal-content" style="font-size: 2rem">
+        
+        @* Kiểm tra dữ liệu đầu vào, dựa trên ServiceVM *@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <div class="modal-body">
+            <div class="user-address modal-body-card">
                 <label>Dịch vụ</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="user-address modal-body-card">
+                <label>Đơn giá</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="user-address modal-body-card">
+                <label>Phòng khám</label>
+                <select asp-for="ClinicID" class="form-control" asp-items="ViewBag.ClinicID"></select>
+            </div>
+            <div class="user-address modal-body-card">
+                <label>Chuyên khoa</label>
+                <select asp-for="SpecialtyID" class="form-control" asp-items="ViewBag.SpecialtyID">
+                    <option>--Chọn chuyên khoa--</option>
+                </select>
+            </div>
+            <div class="user-address modal-body-card">
                 <label>Mô tả dịch vụ</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span> @* Kiểm tra Validate cho trường Name trong ServiceVM *@
             </div>
-            <div class="form-group">
-                <label >Đơn giá</label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <h1></h1>
+        <h1></h1>
+        <div class="modal-footer">
+            <div>
+                <a asp-action="Index">Back to List</a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+            |
+            <button type="submit" class="submit-btn btn">
+                Thêm mới
+            </button>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>

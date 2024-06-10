@@ -10,6 +10,39 @@
             color: #fff;
             background: #4880ff;
         }
+
+        .chinhle {
+            width: 1000px;
+        }
+        .xoa {
+            background: #dc3545;
+            border: none;
+            outline: none;
+            color: white;
+            font-weight: 600;
+            padding: 6px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .button {
+            padding: 6px 20px;
+
+        }
+
+        .manager__management__header .action-btn .add__new {
+            background: #dc3545;
+            border: none;
+            outline: none;
+            color: white;
+            font-weight: 600;
+            padding: 6px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+            .manager__management__header .action-btn .add__new:hover {
+                background: #bb2d3b;
+            }
     </style>
 }
 
@@ -19,28 +52,28 @@
     <div class="title">Chắc chắn xóa dịch vụ khám này?</div>
 </div>
 <!--body -->
-<div>
-    <hr /> @* Đường phân cách *@
-    <dl class="row" style="font-size: 2rem">
-        <dt class = "col-sm-2">Dịch vụ</dt>
-        <dd class = "col-sm-10"> @Model.Name</dd>
+<hr /> @* Đường phân cách *@
 
-        <dt class = "col-sm-2">Đơn giá</dt>
-        <dd class = "col-sm-10">
+<dl class="row" style="padding-left: 100px; font-size: 2rem">
+        <dt class="col-sm-2">Dịch vụ</dt>
+        <dd class="col-sm-10"> @Model.Name</dd>
+
+        <dt class="col-sm-2">Đơn giá</dt>
+        <dd class="col-sm-10">
             @Model.Price
         </dd>
 
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Phòng khám
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Model.Clinic?.Name
         </dd>
 
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Chuyên khoa
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Model.Specialty?.Name
         </dd>
 
@@ -51,10 +84,23 @@
             @Model.Description
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+
+<hr />
+<div class="manager__management__header">
+    <h1></h1>
+        <div class="action-btn">
+            
+            <a asp-action="Index">Back to List</a>
+            |
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="ID" />
+                <button type="submit"
+                        class="add__new">
+                    Xóa
+                </button>
+            </form>
+        </div>
+    </div>
+
+   
+

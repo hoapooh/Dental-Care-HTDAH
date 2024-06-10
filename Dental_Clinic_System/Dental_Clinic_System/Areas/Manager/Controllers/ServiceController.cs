@@ -116,8 +116,8 @@ namespace Dental_Clinic_System.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "ID", service.ClinicID);
-            ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "ID", service.SpecialtyID);
+            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
+            ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
             return View(service);
         }
 
@@ -153,8 +153,8 @@ namespace Dental_Clinic_System.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "ID", service.ClinicID);
-            ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "ID", service.SpecialtyID);
+            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
+            ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
             return View(service);
         }
 
