@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|e:\\fpt\\summer_2024\\swp391\\banckend_newest\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\areas\\dentist\\controllers\\dentistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\areas\\dentist\\controllers\\dentistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\dental_clinic_system\\areas\\dentist\\views\\dentist\\dentistdescription.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\areas\\dentist\\views\\dentist\\dentistdescription.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\dental_clinic_system\\areas\\dentist\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\areas\\dentist\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,48 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DentistController.cs",
+              "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Areas\\Dentist\\Controllers\\DentistController.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Areas\\Dentist\\Controllers\\DentistController.cs",
+              "ToolTip": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Areas\\Dentist\\Controllers\\DentistController.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\Areas\\Dentist\\Controllers\\DentistController.cs",
+              "ViewState": "AQIAAIIAAAAAAAAAAAAcwJYAAABfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-10T00:08:19.887Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Areas\\Dentist\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Areas\\Dentist\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Areas\\Dentist\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Dental_Clinic_System\\Areas\\Dentist\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-09T16:29:33.405Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DentistDescription.cshtml",
+              "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Areas\\Dentist\\Views\\Dentist\\DentistDescription.cshtml",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Areas\\Dentist\\Views\\Dentist\\DentistDescription.cshtml",
+              "ToolTip": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Areas\\Dentist\\Views\\Dentist\\DentistDescription.cshtml",
+              "RelativeToolTip": "Dental_Clinic_System\\Areas\\Dentist\\Views\\Dentist\\DentistDescription.cshtml",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAABcAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-09T16:02:30.756Z"
             }
           ]
         }

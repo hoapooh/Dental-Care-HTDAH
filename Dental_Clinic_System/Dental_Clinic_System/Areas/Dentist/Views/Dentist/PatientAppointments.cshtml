@@ -67,7 +67,7 @@
                                                                     data-patient-district="@appointment.PatientRecords.District" 
                                                                     data-patient-ward="@appointment.PatientRecords.Ward" 
                                                                     data-patient-address="@appointment.PatientRecords.Address" 
-                                                                    data-appointment-price="@appointment.TotalPrice" 
+                                                                    data-appointment-price="@Math.Round(appointment.TotalPrice)" 
                                                                     data-appointment-status="@appointment.AppointmentStatus">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </button>
@@ -76,6 +76,7 @@
             </tbody>
         }
     </table>
+    <ul class="pagination" id="pagination"><ul/>
 </div>
 
 <!-- Dark overlay -->
@@ -138,6 +139,8 @@
         <button type="submit" class="btn btn-primary">Lưu</button>
         <button type="button" class="btn btn-secondary" id="closePopup">Đóng</button>
     </form>
+
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

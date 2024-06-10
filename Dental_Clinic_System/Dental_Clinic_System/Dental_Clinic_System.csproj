@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\js\toastmessage.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\assets\images\clinic-icon.svg" />
     <None Include="wwwroot\assets\images\envelope.svg" />
     <None Include="wwwroot\assets\images\lock.svg" />
@@ -16,6 +20,7 @@
     <None Include="wwwroot\assets\js\myswiper.js" />
     <None Include="wwwroot\assets\js\pagination-clinic.js" />
     <None Include="wwwroot\assets\js\pagination.js" />
+    <None Include="wwwroot\assets\js\toastmessage.js" />
     <None Include="wwwroot\assets\js\richtexteditor.js" />
     <None Include="wwwroot\assets\js\swiper-bundle.js" />
     <None Include="wwwroot\assets\js\text_editor.js" />
