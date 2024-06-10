@@ -178,6 +178,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY0RlbnRpc3RDYWxlbmRhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY0RldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicSpecialty.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY1NwZWNpYWx0eS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -192,6 +196,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/PaymentFail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxQYXltZW50RmFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/PaymentSuccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxQYXltZW50U3VjY2Vzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/RefundFail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxSZWZ1bmRGYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/RefundSuccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxSZWZ1bmRTdWNjZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/FPT/SUMMER_2024/SWP391/Banckend_Newest/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/Error.cshtml]

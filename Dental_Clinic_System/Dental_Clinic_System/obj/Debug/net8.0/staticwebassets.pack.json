@@ -1529,6 +1529,14 @@
       "PackagePath": "staticwebassets\\image\\TranTuanAnh_Dentist.png"
     },
     {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\imagespecialty\\Image.jpg",
+      "PackagePath": "staticwebassets\\imagespecialty\\Image.jpg"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\imagespecialty\\Image02.jpg",
+      "PackagePath": "staticwebassets\\imagespecialty\\Image02.jpg"
+    },
+    {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\Banckend_Newest\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },

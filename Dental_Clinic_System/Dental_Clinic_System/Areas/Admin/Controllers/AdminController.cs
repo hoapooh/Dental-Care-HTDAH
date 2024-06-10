@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
@@ -31,7 +32,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			@ViewBag.Role = Role;
 
 			var accountsQuery = _context.Accounts
-			.Where(a => a.Role != "Admin" && a.AccountStatus == "Hoạt động");
+			.Where(a => a.AccountStatus == "Hoạt động");
 
 			if (!string.IsNullOrEmpty(Role))
 			{
@@ -47,14 +48,14 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				Email = a.Email,
 				PhoneNumber = a.PhoneNumber,
 				Address = a.Address,
-				Role = a.Role,
-				//Gender = a.Gender,
-				Status = a.AccountStatus
+				Role = a.Role
+				//Status = a.AccountStatus
 			}).ToList();
+
 			return View(accountList);
 		}
 
-		//[Route("Admin/{controller=Admin}/SearchAccount")]
+		//===================TÌM KIẾM===================
 		[Route("SearchAccount")]
 		public async Task<IActionResult> SearchAccount(string keyword, string role)
 		{
@@ -67,7 +68,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			}
 
 			var accountQuesry = _context.Accounts
-			.Where(a => a.Username.Contains(keyword) && a.AccountStatus == "Hoạt động" && a.Role != "Admin");
+			.Where(a => a.Username.Contains(keyword) && a.AccountStatus == "Hoạt động");
 
 			if (!string.IsNullOrEmpty(keyword))
 			{
@@ -83,17 +84,51 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				Email = a.Email,
 				PhoneNumber = a.PhoneNumber,
 				Address = a.Address,
-				Role = a.Role,
-				Status = a.AccountStatus
+				Role = a.Role
+				//Status = a.AccountStatus
 			}).ToList();
 
 			return View("ListAccount", accountList);
 		}
 
+		//===================THÊM TÀI KHOẢN===================
 		[Route("AddAccount")]
 		[HttpPost]
+		
+
 		public async Task<IActionResult> AddAccount(string Username, string Password, string PhoneNumber, string Email, string Address, string Role)
 		{
+			//Check thông tin trùng lặp
+			var existingAccount = await _context.Accounts
+				.FirstOrDefaultAsync(a => a.Email == Email || a.PhoneNumber == PhoneNumber || a.Username == Username);
+
+			if (existingAccount != null)
+			{
+				//Thấy thông tin bị trùng, thông báo lỗi
+				ModelState.AddModelError(string.Empty, "Thông tin người dùng đã tồn tại.");
+
+				//Lấy lại list account để hiển thị
+				var accounts = await _context.Accounts
+					.Where(a => a.AccountStatus == "Hoạt động" && a.Role == Role)
+					.ToListAsync();
+
+				var accountList = accounts.Select(a => new ManagerAccountVM
+				{
+					Id = a.ID,
+					Username = a.Username,
+					Email = a.Email,
+					PhoneNumber = a.PhoneNumber,
+					Address = a.Address,
+					Role = a.Role
+					//Status = a.AccountStatus
+				}).ToList();
+
+				// Truyền lại Role và list account vào View
+				ViewBag.Role = Role;
+				return View("ListAccount", accountList);
+			}
+
+			//Thêm mới account vào DB
 			var newAccount = new Account
 			{
 				Username = Username,
@@ -110,7 +145,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			return RedirectToAction(nameof(ListAccount), new { Role });
 		}
 
-		//[Route("Admin/{controller = Admin}/{action=HiddenAccountStatus}")]
+		//===================KHÓA TÀI KHOẢN===================
 		[Route("HiddenAccountStatus")]
 		[HttpPost]
 		public async Task<IActionResult> HiddenAccountStatus(string username, string status)
@@ -124,5 +159,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			}
 			return RedirectToAction(nameof(ListAccount));
 		}
+
+		//===================LIST TÀI KHOẢN BỊ KHÓA===================
+
 	}
 }

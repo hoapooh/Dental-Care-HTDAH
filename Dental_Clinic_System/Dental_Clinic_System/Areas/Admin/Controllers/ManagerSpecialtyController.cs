@@ -13,11 +13,13 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 	{
 		private readonly DentalClinicDbContext _context;
 		private readonly HiddenSpecialtyService _hiddenSpecialty;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public ManagerSpecialtyController(DentalClinicDbContext context, HiddenSpecialtyService hiddenSpecialty)
+        public ManagerSpecialtyController(DentalClinicDbContext context, HiddenSpecialtyService hiddenSpecialty, IWebHostEnvironment iwebhostenvironment)
 		{
 			_context = context;
 			_hiddenSpecialty = hiddenSpecialty;
+			_webHostEnvironment = iwebhostenvironment;	
 		}
 
 		//=======================================QUẢN LÝ CHUYÊN KHOA=======================================
@@ -42,14 +44,16 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			return View("ListSpecialty", specialtyList);
 		}
 
-		[Route("DeleteSpecialty/{id}")]
+        //===================XÓA TẠM THỜI===================
+        [Route("DeleteSpecialty/{id}")]
 		public IActionResult DeleteSpecialty(int id)
 		{
 			_hiddenSpecialty.HiddenSpecialty(id);
 			return RedirectToAction(nameof(ListSpecialty));
 		}
 
-		[HttpGet]
+        //===================CHỈNH SỬA===================
+        [HttpGet]
 		[Route("EditSpecialty/{id}")]
 		public async Task<IActionResult> EditSpecialty(int id)
 		{
@@ -74,7 +78,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		[Route("EditSpecialty")]
 		public async Task<IActionResult> EditSpecialty(ManagerSpecialtyVM model)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
                 var specialty = await _context.Specialties.FindAsync(model.Id);
 
@@ -84,8 +88,26 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				}
 
 				specialty.Name = model.Name;
-				specialty.Image = model.Image;
 				specialty.Description = model.Description;
+
+                if (model.ImageFile != null)
+                {
+                    //Check xem thư mục imagespecialty có tồn tại trong wwwroot không
+                    //Nếu không, tạo thư mục có tên là imagespecialty
+                    var imageDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "imagespecialty");
+                    if (!Directory.Exists(imageDirectory))
+                    {
+                        Directory.CreateDirectory(imageDirectory);
+                    }
+
+					//Lưu tệp vào thư mục 
+                    var filePath = Path.Combine(imageDirectory, model.ImageFile.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.ImageFile.CopyToAsync(stream);
+                    }
+                    specialty.Image = "/imagespecialty/" + model.ImageFile.FileName;
+                }
 
                 _context.Specialties.Update(specialty);
 				await _context.SaveChangesAsync();
@@ -93,18 +115,44 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				return RedirectToAction(nameof(ListSpecialty));
 			}
 
-			//List<string> errors = new List<string>();
-			//foreach (var value in ModelState.Values)
-			//{
-			//	foreach (var error in value.Errors)
-			//	{
-			//		errors.Add(error.ErrorMessage);
-			//	}
-			//}
-			//string errorMessage = string.Join("\n", errors);
-			//return BadRequest(errorMessage);
+			//KIẾM TRA LỖI
+			List<string> errors = new List<string>();
+			foreach (var value in ModelState.Values)
+			{
+				foreach (var error in value.Errors)
+				{
+					errors.Add(error.ErrorMessage);
+				}
+			}
+			string errorMessage = string.Join("\n", errors);
+			return BadRequest(errorMessage);
 
 			return View("EditSpecialty", model);
 		}
+
+        //===================TÌM KIẾM===================
+  //      public async Task<IActionResult> SeachSpecialty(string keyword)
+		//{
+		//	if (string.IsNullOrWhiteSpace(keyword))
+		//	{
+		//		return RedirectToAction(nameof(ListSpecialty));
+		//	}
+
+		//	var specialty = await _context.Specialties
+		//		.Where(s => s.Name.Contains(keyword))
+		//		.ToListAsync();
+
+		//	var specialtyList = specialty.Select(s => new ManagerSpecialtyVM
+		//	{
+		//		Id = s.ID,
+		//		Name = s.Name,
+		//		Image = s.Image,
+		//		Description = s.Description
+		//	}).ToList();
+
+		//	return View(nameof(ListSpecialty), specialtyList);
+		//}
+
+
 	}
 }

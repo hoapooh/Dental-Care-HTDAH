@@ -20,7 +20,7 @@
                 </div>
                 <div class="special-image">
                     <label for="imageSpecialty">Hình ảnh</label>
-                    <input type="file" name="Image" id="imageSpecialty" value="@Model.Image" />
+                    <input type="file" name="ImageFile" id="imageSpecialty" required/>
                 </div>
                 <div class="special-desc">
                     <label for="descSpecialty">Mô tả</label>
@@ -34,9 +34,3 @@
         </form>
     </div>
 </div>
-
-@* Bạn cũng có thể sử dụng các helper của ASP.NET Core như ValidationSummary
-    để hiển thị tất cả các lỗi validation trong một vùng cụ thể của view*@
-
-@* @Html.ValidationSummary(true, "", new { @class = "text-danger" })
- *@

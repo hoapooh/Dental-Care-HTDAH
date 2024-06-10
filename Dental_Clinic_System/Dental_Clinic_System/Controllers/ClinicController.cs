@@ -19,7 +19,14 @@ namespace Dental_Clinic_System.Controllers
             return View("clinic", clinics);
         }
 
-        [HttpGet]
+		[HttpGet]
+        public async Task<IActionResult> ClinicDetail(int clinicID)
+        {
+			var clinic = _context.Clinics.FirstOrDefault(c => c.ID == clinicID);
+			return View(clinic);
+        }
+
+		[HttpGet]
         public async Task<IActionResult> ChooseClinicSpecialty(int clinicID)
         {
             var clinic = await _context.Clinics.

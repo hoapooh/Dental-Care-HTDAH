@@ -11,6 +11,7 @@ namespace Dental_Clinic_System.ViewModels
         [Required(ErrorMessage = "* Vui lòng nhập số điện thoại")]
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
         [StringLength(11, ErrorMessage = "Số điện thoại không được vượt quá 11 ký tự")]
+        [RegularExpression(@"^\d{9,11}$", ErrorMessage = "Số điện thoại phải có độ dài từ 9 đến 11 ký tự và chỉ chứa các chữ số.")]
         public string? PhoneNumber { get; set; }
 		public string? Gender { get; set; }
 		public string Email { get; set; }

@@ -32,72 +32,43 @@
 		<h2 class="clinic__container__title">
 			<img src="~/assets/images/clinic-icon.svg" alt="" /><span>Chọn Phòng Khám</span>
 		</h2>
-		<div class="clinic__container__card">
-			<div class="row">
-				<div class="col-6">
-					<h3 class="clinic__container__card__title">
-						M Plaza Smart Clinic
-					</h3>
-					<p class="location">
-						<i class="fa-solid fa-location-dot"></i>Tầng 1, M Plaza -39 Lê
-						Duẩn, Bến Nghé, Quận 1, TP.HCM
-					</p>
-					<p class="time">
-						<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
-					</p>
-					<div class="notification">
-						Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
+		@foreach (var clinic in Model)
+		{
+			<div class="clinic__container__card">
+				<div class="row">
+					<div class="col-6">
+						<h3 class="clinic__container__card__title">
+							@clinic.Name
+						</h3>
+						<p class="location">
+							<i class="fa-solid fa-location-dot"></i>
+							@clinic.Address
+						</p>
+						<p class="time">
+							<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
+						</p>
+						<div class="notification">
+							Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
+						</div>
+						<br />
+						<div class="buttons">
+							<a asp-controller="clinic" asp-action="ChooseClinicSpecialty" asp-route-clinicID="@clinic.ID" class="button-book">Đặt khám</a>
+							<a asp-controller="clinic" asp-action="ClinicDetail" asp-route-clinicID="@clinic.ID" class="button-more">Xem chi tiết</a>
+						</div>
 					</div>
-					<br />
-					<div class="buttons">
-						<a href="~/clinicspecialty.html" class="button-book">Đặt khám</a>
-						<a href="~/clinicdetail.html" class="button-more">Xem chi tiết</a>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="clinic__gallery">
-						<div class="gallery-item">
-							<img src="~/assets/images/clinic-test.png"
-								 alt=""
-								 class="gallery-image" />
+					<div class="col-6">
+						<div class="clinic__gallery">
+							<div class="gallery-item">
+								@* ~/assets/images/clinic-test.png *@
+								<img src="@clinic.Image"
+									 alt="@clinic.Name"
+									 class="gallery-image" />
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="clinic__container__card">
-			<div class="row">
-				<div class="col-6">
-					<h3 class="clinic__container__card__title">
-						M Plaza Smart Clinic
-					</h3>
-					<p class="location">
-						<i class="fa-solid fa-location-dot"></i>Tầng 1, M Plaza -39 Lê
-						Duẩn, Bến Nghé, Quận 1, TP.HCM
-					</p>
-					<p class="time">
-						<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
-					</p>
-					<div class="notification">
-						Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
-					</div>
-					<br />
-					<div class="buttons">
-						<a href="~/clinicspecialty.html" class="button-book">Đặt khám</a>
-						<a href="~/clinicdetail.html" class="button-more">Xem chi tiết</a>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="clinic__gallery">
-						<div class="gallery-item">
-							<img src="~/assets/images/clinic-test.png"
-								 alt=""
-								 class="gallery-image" />
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		}
 	</div>
 </div>
 

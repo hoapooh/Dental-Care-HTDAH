@@ -2,6 +2,7 @@ using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services;
+using Dental_Clinic_System.Services.VNPAY;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -43,6 +44,15 @@ builder.Services.AddScoped<IEmailSenderCustom, EmailSender>();
 
 // Register HiddenSpecialtyService as a singleton
 builder.Services.AddSingleton<HiddenSpecialtyService>();
+
+// Register VNPAY Service for checkout
+builder.Services.AddSingleton<IVNPayment, VNPayment>();
+
+// Register VNPAY Service for checkout with HttpClient
+//builder.Services.AddHttpClient<IVNPayment, VNPayment>();
+
+// Configure HttpClient
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

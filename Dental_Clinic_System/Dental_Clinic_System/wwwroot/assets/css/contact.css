@@ -20,6 +20,12 @@ a {
 	text-decoration: none;
 }
 
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background-color: #b2b2b2;
+}
+
 .contact__title {
 	font-size: 6.2rem;
 	margin-top: 80px;
