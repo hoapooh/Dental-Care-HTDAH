@@ -41,3 +41,10 @@ document.getElementById("timeInterval").addEventListener("change", function () {
 function pad(n) {
 	return n < 10 ? "0" + n : n;
 }
+
+document.querySelector("form").addEventListener("reset", function () {
+	var container = document.getElementById("checkboxContainer");
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
+	}
+});

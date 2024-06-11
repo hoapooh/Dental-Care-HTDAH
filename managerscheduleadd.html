@@ -24,6 +24,7 @@
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 		/>
+		<link rel="stylesheet" href="./assets/css/mobiscroll.javascript.min.css" />
 		<link rel="stylesheet" href="./assets/css/sidebar.css" />
 		<link rel="stylesheet" href="./assets/css/headerAd.css" />
 		<link rel="stylesheet" href="./assets/css/manager.css" />
@@ -91,30 +92,38 @@
 					>
 						<div class="col-md-6">
 							<label for="dentist" class="sub-title">Nha sĩ</label
-							><input
-								class="input-text"
-								type="text"
-								name="dentist"
-								id="dentist"
-							/>
+							><select name="dentist" id="dentist">
+								<option value="hoa">An Phuc Hoa</option>
+								<option value="tu">Do Anh Tu</option>
+							</select>
 						</div>
 						<div class="col-md-6">
-							<label for="dentist" class="sub-title">Nha sĩ</label
-							><input
-								class="input-text"
-								type="text"
-								name="dentist"
-								id="dentist"
-							/>
+							<label for="status" class="sub-title">Trạng thái làm việc</label
+							><select
+								class="bg-body-secondary"
+								name="status"
+								id="status"
+								disabled
+							>
+								<option value="working" selected>Đang làm việc</option>
+								<option value="done">Đã xong</option>
+							</select>
 						</div>
 						<div class="col-md-12">
-							<label for="schedule" class="sub-title">Chọn ngày khám</label
-							><input
-								class="input-text"
-								type="date"
-								name="schedule"
-								id="schedule"
-							/>
+							<!-- ========== TEST MOBISCROLL SCHEDULE ========== -->
+							<div class="mbsc-grid">
+								<div class="mbsc-col-sm-12 mbsc-col-md-12">
+									<div class="mbsc-form-group">
+										<div
+											class="mbsc-form-group-title text-center"
+											style="font-size: 3rem"
+										>
+											Chọn ngày khám
+										</div>
+										<div id="demo-counter"></div>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="col-md-12">
 							<label for="timeInterval" class="sub-title"
@@ -138,6 +147,30 @@
 			</div>
 		</div>
 
+		<!-- ALL 3 OPTIONS OF CALENDAR MULTIPLE DATE CHOSEN -->
+		<!-- <div class="mbsc-grid">
+			<div class="mbsc-row">
+				<div class="mbsc-col-sm-12 mbsc-col-md-4">
+					<div class="mbsc-form-group">
+						<div class="mbsc-form-group-title">Multi-day</div>
+						<div id="demo-multi-day"></div>
+					</div>
+				</div>
+				<div class="mbsc-col-sm-12 mbsc-col-md-4">
+					<div class="mbsc-form-group">
+						<div class="mbsc-form-group-title">Max days</div>
+						<div id="demo-max-days"></div>
+					</div>
+				</div>
+				<div class="mbsc-col-sm-12 mbsc-col-md-4">
+					<div class="mbsc-form-group">
+						<div class="mbsc-form-group-title">Counter</div>
+						<div id="demo-counter"></div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -148,5 +181,8 @@
 			crossorigin="anonymous"
 		></script>
 		<script src="./assets/js/timeinterval.js"></script>
+		<script src="./assets/js/mobiscroll.javascript.min.js"></script>
+		<!-- ========== MOBISCROLL SCHEDULE ========== -->
+		<script src="./assets/js/mobiscroll-calendar.js"></script>
 	</body>
 </html>
