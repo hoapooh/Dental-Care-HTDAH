@@ -42,13 +42,17 @@ body::-webkit-scrollbar {
 }
 
 .clinic__container {
-	width: 970px;
+	width: 779px;
 	border-radius: 30px;
 	margin: 0 auto;
 	margin-top: 60px;
 	padding: 30px 52px 40px;
 	position: relative;
 	background: #fff;
+}
+
+.clinic__container__special {
+	width: 970px;
 }
 
 .clinic__container__title {
@@ -64,7 +68,7 @@ body::-webkit-scrollbar {
 }
 
 .clinic__container__card {
-	width: 870px;
+	width: 674px;
 	background: #fff;
 	border-radius: 20px;
 	padding: 15px 17px;
@@ -102,7 +106,7 @@ body::-webkit-scrollbar {
 	font-size: 1.8rem;
 	background: #e8f1ff;
 	border-radius: 1000px;
-	margin: 8px 0 0 16px;
+	margin-top: 8px;
 	padding: 7px 22px 7px 16px;
 	color: #111c63;
 }
@@ -725,19 +729,33 @@ body::-webkit-scrollbar {
 	margin: 0 auto;
 }
 
-.clinic__detail__info__images {
-	height: 422px;
-}
-
 .clinic__detail__info__images .info {
 	background: #fff;
 	box-shadow: #ccd6ef 5px 20px 40px 0px;
 	border-radius: 20px;
 	padding: 35px 35px 20px;
-	height: 100%;
 }
 
-.clinic__detail__info__images .images {
+.clinic__detail__info__images .desc {
+	margin-top: 30px;
+	padding: 35px;
+	background: #fff;
+	box-shadow: #ccd6ef 5px 20px 40px 0px;
+	border-radius: 20px;
+}
+
+.clinic__detail__info__images .desc h2 {
+	font-size: 2.4rem;
+	font-weight: 700;
+	color: #2d9cfd;
+}
+
+.clinic__detail__info__images .desc p {
+	font-size: 1.8rem;
+	color: #003553;
+}
+
+/* .clinic__detail__info__images .images {
 	height: 100%;
 }
 
@@ -745,7 +763,7 @@ body::-webkit-scrollbar {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-}
+} */
 
 .clinic__detail__info__images .info-title {
 	text-align: center;
@@ -793,24 +811,7 @@ body::-webkit-scrollbar {
 	line-height: 18.75px;
 }
 
-.clinic__detail__desc__map {
+.clinic__detail__desc__map .map {
 	margin-top: 30px;
-}
-
-.clinic__detail__desc__map .desc {
-	padding: 35px;
-	background: #fff;
-	box-shadow: #ccd6ef 5px 20px 40px 0px;
-	border-radius: 20px;
-}
-
-.clinic__detail__desc__map .desc h2 {
-	font-size: 2.4rem;
-	font-weight: 700;
-	color: #2d9cfd;
-}
-
-.clinic__detail__desc__map .desc p {
-	font-size: 1.8rem;
-	color: #003553;
+	height: 30%;
 }

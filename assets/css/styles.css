@@ -250,19 +250,25 @@ body::-webkit-scrollbar {
 	text-align: center;
 }
 
-.special__cards {
-	width: 1208px;
-	margin: 0 auto;
+.special__container {
 	margin-top: 30px;
 	display: flex;
-	gap: 23px;
+	align-items: center;
+	justify-content: center;
+}
+
+.special__container__wrapper {
+	width: 1208px;
+	padding: 40px 80px;
+}
+
+.special__content {
+	overflow: hidden;
 }
 
 .special__cards__card {
-	flex: 1;
-	width: 387px;
 	text-align: center;
-	padding: 65px 83px 89px;
+	padding: 65px 83px 40px;
 	border-radius: 10px;
 	background: #fdfcf8;
 }

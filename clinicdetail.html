@@ -64,7 +64,7 @@
 
 		<main class="clinic__detail__style">
 			<div class="clinic__detail">
-				<div class="clinic__detail__info__images row">
+				<!-- <div class="clinic__detail__info__images row">
 					<div class="info col-4">
 						<div class="info-title">
 							<img
@@ -172,6 +172,121 @@
 							loading="lazy"
 							referrerpolicy="no-referrer-when-downgrade"
 						></iframe>
+					</div>
+				</div> -->
+
+				<div class="row">
+					<div class="clinic__detail__info__images col-md-4">
+						<div class="info">
+							<div class="info-title">
+								<img src="@Model.Image" alt="@Model.Name" />
+								<h1 class="name">@Model.Name</h1>
+							</div>
+							<hr style="width: 100%" />
+							<div class="info-details">
+								<div class="address">
+									<div class="style__item">
+										<i class="fa-solid fa-location-dot"></i>
+										<span>@Model.Address</span>
+									</div>
+								</div>
+								<div class="time">
+									<div class="style__item">
+										<i class="fa-solid fa-clock"></i>
+										<span>
+											Thứ 2 - Thứ 6 (08:30 - 19:00), Thứ 7 - CN (08:30 - 20:00)
+										</span>
+									</div>
+								</div>
+								<div class="phone">
+									<div class="style__item">
+										<i class="fa-solid fa-phone"></i>
+										<span>Hỗ trợ đặt khám: 0963 333 844</span>
+									</div>
+								</div>
+								<div class="book">
+									<a
+										asp-controller="clinic"
+										asp-action="ChooseClinicSpecialty"
+										asp-route-clinicID="@Model.ID"
+										>Đặt khám ngay</a
+									>
+								</div>
+							</div>
+						</div>
+						<div class="desc">
+							<h2>Mô tả</h2>
+							<p>
+								<strong>Đối với khách hàng:</strong> Đem đến cho khách hàng
+								những dịch vụ nha khoa tốt nhất, mang đến sự thoải mái và an
+								toàn trong suốt quá trình điều trị tại Nha khoa. Đồng thời thực
+								hiện điều trị răng miệng cho khách hàng nhanh chóng và hiệu quả
+								với các công nghệ hiện đại nhất. <br />
+								<strong>Đối với xã hội:</strong> Kết nối nụ cười rạng rỡ đến với
+								mọi người, không chỉ các bạn trẻ mà tất cả những người mong muốn
+								có nụ cười khỏe, tươi trẻ. Nâng cao nhận thức về tầm quan trọng
+								của việc chăm sóc và bảo vệ răng miệng khỏe mạnh.
+							</p>
+						</div>
+					</div>
+					<div class="clinic__detail__desc__map col-md-8">
+						<div
+							id="carouselRide"
+							class="images carousel slide"
+							data-bs-ride="carousel"
+						>
+							<div class="carousel-inner" style="height: 100%">
+								<div class="carousel-item active" style="height: 100%">
+									<img
+										src="https://nhakhoatre.com/wp-content/uploads/2023/02/phong-kham-nha-khoa-tre-1.jpg"
+										alt=""
+									/>
+								</div>
+								<div class="carousel-item" style="height: 100%">
+									<img
+										src="https://nhakhoatre.com/wp-content/uploads/2023/02/phong-kham-nha-khoa-tre-2.jpg"
+										alt=""
+									/>
+								</div>
+							</div>
+							<button
+								class="carousel-control-prev"
+								type="button"
+								data-bs-target="#carouselRide"
+								data-bs-slide="prev"
+								style="background: #d3d3d380"
+							>
+								<span
+									class="carousel-control-prev-icon"
+									aria-hidden="true"
+								></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<button
+								class="carousel-control-next"
+								type="button"
+								data-bs-target="#carouselRide"
+								data-bs-slide="next"
+								style="background: #d3d3d380"
+							>
+								<span
+									class="carousel-control-next-icon"
+									aria-hidden="true"
+								></span>
+								<span class="visually-hidden">Next</span>
+							</button>
+						</div>
+						<div class="map">
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14899.433547295605!2d105.799865!3d20.998313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135acbc82896c2b%3A0xc36a3966949f5e0a!2zTmhhIEtob2EgVHLhurs!5e0!3m2!1svi!2sus!4v1718035809868!5m2!1svi!2sus"
+								width="100%"
+								height="100%"
+								style="border: 0"
+								allowfullscreen=""
+								loading="lazy"
+								referrerpolicy="no-referrer-when-downgrade"
+							></iframe>
+						</div>
 					</div>
 				</div>
 			</div>
