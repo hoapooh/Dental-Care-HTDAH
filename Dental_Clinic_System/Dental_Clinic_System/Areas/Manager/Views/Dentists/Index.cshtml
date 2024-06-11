@@ -136,7 +136,6 @@
 		<thead>
 			<tr>
 				<th class="text-center">STT</th>
-				<th class="text-center">Mã số nha sĩ</th>
 				<th>Tên nha sĩ</th>
 				<th>Giới tính</th>
 				<th>Email</th>
@@ -155,14 +154,8 @@
 					<td class="text-center">
 						@(++index)
 					</td>
-					<td class="text-center">
-						@item.ID
-					</td>
 					<td>
-						<img src="@item.Account.Image" alt="" />
-						<span>
-							<a asp-action="Details" asp-route-id="@item.ID">@item.Account.LastName @item.Account.FirstName</a>
-						</span>
+						<a asp-action="Details" asp-route-id="@item.ID">@item.Account.LastName @item.Account.FirstName</a>
 					</td>
 					<td>
 						@item.Account.Gender
