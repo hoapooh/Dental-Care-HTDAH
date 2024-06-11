@@ -6,6 +6,8 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.SqlServer.Server;
 
 namespace Dental_Clinic_System.Services.VNPAY
 {
@@ -39,7 +41,7 @@ namespace Dental_Clinic_System.Services.VNPAY
             vnpay.AddRequestData("vnp_CurrCode", _configuration["VNPAY:CurrencyCode"]);
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(context));
             vnpay.AddRequestData("vnp_Locale", _configuration["VNPAY:Locale"]);
-            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán đặt cọc: " + model.DepositID);
+            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toan dat coc: " + "");
             //vnpay.AddRequestData("vnp_OrderType", orderCategory.SelectedItem.Value); //default value: other
             vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
             vnpay.AddRequestData("vnp_ReturnUrl", _configuration["VNPAY:PaymentCallBackURL"]);
@@ -62,14 +64,17 @@ namespace Dental_Clinic_System.Services.VNPAY
                 }
             }
 
-            var vnp_orderID = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
+            //var vnp_orderID = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
             var vnp_transactionID = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
             var vnp_secureHash = collection.FirstOrDefault(e => e.Key == "vnp_SecureHash").Value;
             var vnp_responseCode = vnpay.GetResponseData("vnp_ResponseCode");
             var vnp_orderInfo = vnpay.GetResponseData("vnp_OrderInfo");
-
-            var vnp_amount = vnpay.GetResponseData("vnp_Amount");
-            Console.WriteLine($"Amount = {vnp_amount} | Deposit Info = {vnp_orderInfo}");
+            var vnp_createdDate = vnpay.GetResponseData("vnp_PayDate");
+            var vnp_bankCode = vnpay.GetResponseData("vnp_BankCode");
+            var vnp_cardType = vnpay.GetResponseData("vnp_CardType");
+            var vnp_bannkTranNo = vnpay.GetResponseData("vnp_BankTranNo");
+            var vnp_amount = Decimal.Parse(vnpay.GetResponseData("vnp_Amount"));
+            var vnp_txnRef = vnpay.GetResponseData("vnp_TxnRef");
 
             bool checkSignature = vnpay.ValidateSignature(vnp_secureHash, _configuration["VNPAY:HashSecret"]);
             if (!checkSignature)
@@ -77,19 +82,24 @@ namespace Dental_Clinic_System.Services.VNPAY
                 return new VNPaymentResponseModel
                 {
                     Success = false,
-                };
-            }
+				};
+			}
 
-            return new VNPaymentResponseModel
+			return new VNPaymentResponseModel
             {
                 Success = true,
                 PaymentMethod = "VNPAY",
                 OrderDescription = vnp_orderInfo,
-                OrderId = vnp_orderID.ToString(),
+                OrderId = vnp_txnRef.ToString(),
                 TransactionId = vnp_transactionID.ToString(),
                 Token = vnp_secureHash,
-                VnPayResponseCode = vnp_responseCode
-            };
+                VnPayResponseCode = vnp_responseCode,
+				CreatedDate = DateTime.ParseExact(vnp_createdDate, "yyyyMMddHHmmss", CultureInfo.InvariantCulture),
+                BankCode = vnp_bankCode,
+                CardType = vnp_cardType,
+                Amount = vnp_amount,
+                BankTransactionNo = vnp_bannkTranNo,
+			};
         }
 
         public string CreateRefundURL(HttpContext context, VNPaymentRefundRequestModel model)

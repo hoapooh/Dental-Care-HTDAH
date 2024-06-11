@@ -47,6 +47,9 @@ namespace Dental_Clinic_System.Models.Data
         [Column("ClinicStatus", TypeName = "nvarchar(30)")]
         public string ClinicStatus { get; set; } = null!;
 
+        [Column("MapLinker", TypeName = "ntext")]
+        public string? MapLinker { get; set; }
+
         #region Foreign Key
 
         [ForeignKey("ManagerID")]

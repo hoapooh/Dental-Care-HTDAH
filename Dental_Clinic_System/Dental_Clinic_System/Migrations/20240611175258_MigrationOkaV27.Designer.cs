@@ -4,6 +4,7 @@ using Dental_Clinic_System.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    partial class DentalClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240611175258_MigrationOkaV27")]
+    partial class MigrationOkaV27
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -625,15 +628,13 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("Date");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("FullName");
-
                     b.Property<string>("MedicalReportID")
+                        .IsRequired()
                         .HasColumnType("varchar(50)")
                         .HasColumnName("MedicalReportID");
 
                     b.Property<string>("PaymentMethod")
+                        .IsRequired()
                         .HasColumnType("varchar(50)")
                         .HasColumnName("PaymentMethod");
 
@@ -641,11 +642,12 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("Status");
 
-                    b.Property<decimal?>("TotalPrice")
+                    b.Property<decimal>("TotalPrice")
                         .HasColumnType("money")
                         .HasColumnName("TotalPrice");
 
                     b.Property<string>("TransactionCode")
+                        .IsRequired()
                         .HasColumnType("varchar(50)")
                         .HasColumnName("TransactionCode");
 

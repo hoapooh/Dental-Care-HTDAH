@@ -110,6 +110,31 @@ namespace Dental_Clinic_System.Helper
                 }
             }
         }
-    }
+
+
+        // For MOMO API
+
+        // Not mine
+		public static String HmacSHA256(string inputData, string key)
+		{
+			byte[] keyByte = Encoding.UTF8.GetBytes(key);
+			byte[] messageBytes = Encoding.UTF8.GetBytes(inputData);
+			using (var hmacsha256 = new HMACSHA256(keyByte))
+			{
+				byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
+				string hex = BitConverter.ToString(hashmessage);
+				hex = hex.Replace("-", "").ToLower();
+				return hex;
+			}
+		}
+
+		// Mine
+		public static string SignSHA256(string data, string key)
+		{
+			var hmacsha256 = new HMACSHA256(Encoding.UTF8.GetBytes(key));
+			var hash = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(data));
+			return BitConverter.ToString(hash).Replace("-", "").ToLower();
+		}
+	}
 
 }

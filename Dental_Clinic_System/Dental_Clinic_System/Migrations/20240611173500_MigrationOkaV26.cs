@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Dental_Clinic_System.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationV18 : Migration
+    public partial class MigrationOkaV26 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,11 +24,11 @@ namespace Dental_Clinic_System.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Email = table.Column<string>(type: "varchar(50)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "char(11)", fixedLength: true, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(11)", fixedLength: true, nullable: true),
                     DateOfBirth = table.Column<DateOnly>(type: "DATE", nullable: true),
-                    Province = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    Ward = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    District = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Province = table.Column<int>(type: "int", nullable: true),
+                    Ward = table.Column<int>(type: "int", nullable: true),
+                    District = table.Column<int>(type: "int", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Image = table.Column<string>(type: "varchar(256)", nullable: true),
                     IsLinked = table.Column<bool>(type: "bit", nullable: true),
@@ -63,7 +63,7 @@ namespace Dental_Clinic_System.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Description = table.Column<string>(type: "ntext", nullable: true),
-                    Image = table.Column<string>(type: "varchar(256)", nullable: false)
+                    Image = table.Column<string>(type: "varchar(256)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,13 +92,17 @@ namespace Dental_Clinic_System.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ManagerID = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Province = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Ward = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Province = table.Column<int>(type: "int", nullable: true),
+                    Ward = table.Column<int>(type: "int", nullable: true),
+                    District = table.Column<int>(type: "int", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     Basis = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(11)", nullable: true),
+                    Email = table.Column<string>(type: "varchar(50)", nullable: true),
                     Description = table.Column<string>(type: "ntext", nullable: true),
-                    Image = table.Column<string>(type: "varchar(256)", nullable: false)
+                    Image = table.Column<string>(type: "varchar(256)", nullable: false),
+                    ClinicStatus = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    MapLinker = table.Column<string>(type: "ntext", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,9 +129,9 @@ namespace Dental_Clinic_System.Migrations
                     Job = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     IdentityNumber = table.Column<string>(type: "varchar(12)", nullable: true),
                     EmailReceiver = table.Column<string>(type: "varchar(50)", nullable: true),
-                    Province = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Ward = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Province = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    District = table.Column<int>(type: "int", nullable: true),
+                    Ward = table.Column<int>(type: "int", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     FMName = table.Column<string>(type: "nvarchar(75)", nullable: true),
                     FMRelationship = table.Column<string>(type: "nvarchar(30)", nullable: true),
@@ -300,7 +304,8 @@ namespace Dental_Clinic_System.Migrations
                     PatientRecordID = table.Column<int>(type: "int", nullable: false),
                     SpecialtyID = table.Column<int>(type: "int", nullable: false),
                     AppointmentStatus = table.Column<string>(type: "nvarchar(30)", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "money", nullable: false)
+                    TotalPrice = table.Column<decimal>(type: "money", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -334,7 +339,12 @@ namespace Dental_Clinic_System.Migrations
                     AppointmentID = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "DATETIME", nullable: false),
                     BankAccountNumber = table.Column<string>(type: "varchar(20)", fixedLength: true, nullable: false),
-                    BankName = table.Column<string>(type: "nvarchar(100)", nullable: false)
+                    BankName = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    TransactionCode = table.Column<string>(type: "varchar(50)", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "varchar(50)", nullable: false),
+                    MedicalReportID = table.Column<string>(type: "varchar(50)", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "money", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    [Migration("20240608115335_MigrationV20")]
-    partial class MigrationV20
+    [Migration("20240611173500_MigrationOkaV26")]
+    partial class MigrationOkaV26
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -141,6 +141,10 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("AppointmentStatus");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedDate");
+
                     b.Property<int>("PatientRecordID")
                         .HasColumnType("int")
                         .HasColumnName("PatientRecordID");
@@ -191,6 +195,11 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("Basis");
 
+                    b.Property<string>("ClinicStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("ClinicStatus");
+
                     b.Property<string>("Description")
                         .HasColumnType("ntext")
                         .HasColumnName("Description");
@@ -198,6 +207,10 @@ namespace Dental_Clinic_System.Migrations
                     b.Property<int?>("District")
                         .HasColumnType("int")
                         .HasColumnName("District");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Email");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -208,10 +221,18 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ManagerID");
 
+                    b.Property<string>("MapLinker")
+                        .HasColumnType("ntext")
+                        .HasColumnName("MapLinker");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("varchar(11)")
+                        .HasColumnName("PhoneNumber");
 
                     b.Property<int?>("Province")
                         .HasColumnType("int")
@@ -539,7 +560,6 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnName("Description");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("varchar(256)")
                         .HasColumnName("Image");
 
@@ -607,6 +627,30 @@ namespace Dental_Clinic_System.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("DATETIME")
                         .HasColumnName("Date");
+
+                    b.Property<string>("MedicalReportID")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("MedicalReportID");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("PaymentMethod");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Status");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("money")
+                        .HasColumnName("TotalPrice");
+
+                    b.Property<string>("TransactionCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("TransactionCode");
 
                     b.HasKey("ID")
                         .HasName("PK_Transaction");

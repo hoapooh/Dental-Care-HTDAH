@@ -1,4 +1,6 @@
-﻿namespace Dental_Clinic_System.Services.VNPAY
+﻿using Dental_Clinic_System.Helper;
+
+namespace Dental_Clinic_System.Services.VNPAY
 {
     public class VNPaymentResponseModel
     {
@@ -6,21 +8,30 @@
         public string PaymentMethod { get; set; }
         public string OrderDescription { get; set; }
         public string OrderId { get; set; }
-        public string PaymentId { get; set; }
         public string TransactionId { get; set; }
         public string Token { get; set; }
         public string VnPayResponseCode { get; set; }
-        public string? Message { get; set; } = "Hello World";
+        public string BankCode { get; set; }
+        public string CardType { get; set; }
+        public decimal Amount { get; set; }
+        public string BankTransactionNo { get; set; }
+        public DateTime CreatedDate { get; set; }
+		public string MedicalReportID { get; set; } = DepositIDGenerator.GenerateDepositID();
+		public string? Message { get; set; } = "Hello World";
     }
 
     public class VNPaymentRequestModel()
     {
-        public int DepositID { get; set; }
         public string FullName { get; set; }
         public string Description { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
-    }
+
+        // For Appointment Info
+        public int ScheduleID { get; set; }
+        public int PatientRecordID { get; set; }
+        public int SpecialtyID { get; set; }
+	}
 
     public class VNPaymentRefundRequestModel
     {

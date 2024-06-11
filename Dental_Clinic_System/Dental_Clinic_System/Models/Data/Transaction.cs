@@ -23,6 +23,24 @@ namespace Dental_Clinic_System.Models.Data
         [Column("BankName", TypeName ="nvarchar(100)")]
         public string BankName { get; set; } = null!;
 
+        [Column("TransactionCode", TypeName = "varchar(50)")]
+        public string? TransactionCode { get; set; }
+
+		[Column("PaymentMethod", TypeName = "varchar(50)")]
+		public string? PaymentMethod { get; set; }
+
+		[Column("MedicalReportID", TypeName = "varchar(50)")]
+		public string? MedicalReportID { get; set; }
+
+		[Column("TotalPrice", TypeName = "money")]
+		public decimal? TotalPrice { get; set; }
+
+		[Column("Status", TypeName = "nvarchar(50)")]
+		public string? Status { get; set; }
+
+		[Column("FullName", TypeName = "nvarchar(50)")]
+		public string? FullName { get; set; }
+
 		#region Foreign Key
 
 		[ForeignKey("AppointmentID")]
