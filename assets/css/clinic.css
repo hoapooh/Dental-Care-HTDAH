@@ -32,6 +32,70 @@ body::-webkit-scrollbar {
 	background-color: #b2b2b2;
 }
 
+/* ======== BUTTON ========= */
+.btn-wrapper {
+	margin-bottom: 24px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 24px;
+	margin-bottom: 28px;
+}
+
+.btn-wrapper.payment {
+	margin-bottom: 0;
+}
+
+.btn-wrapper .back-btn {
+	border: none;
+	outline: none;
+	color: #003553;
+	font-size: 1.6rem;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	border-color: transparent;
+	background: transparent;
+	box-shadow: none;
+	gap: 5px;
+	cursor: pointer;
+	padding: 8px 15px;
+	border-radius: 8px;
+	transition: all 0.25s ease;
+}
+
+.btn-wrapper .back-btn:hover {
+	background: linear-gradient(
+		83.63deg,
+		#00b5f1 33.34%,
+		#00e0ff 113.91%
+	) !important;
+	color: #fff;
+}
+
+.btn-wrapper .add-record-btn {
+	padding: 8px 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	gap: 5px;
+	font-size: 1.6rem;
+	font-weight: 600;
+	color: #fff;
+	background: linear-gradient(
+		83.63deg,
+		#00b5f1 33.34%,
+		#00e0ff 113.91%
+	) !important;
+	border-radius: 8px;
+}
+
+.btn-wrapper .add-record-btn:hover {
+	box-shadow: 0 4px 30px 0 rgba(116, 157, 206, 0.2);
+	background: linear-gradient(40deg, #07aae0, #00c6e1) !important;
+}
+
 .clinic {
 	margin-top: 60px;
 }
@@ -535,6 +599,7 @@ body::-webkit-scrollbar {
 	width: 6px;
 	display: block;
 	background-color: #b2b2b2;
+	border-radius: 5px;
 }
 
 .booking__dentist::-webkit-scrollbar-thumb {
@@ -548,40 +613,6 @@ body::-webkit-scrollbar {
 	text-align: center;
 	color: #00559c;
 	font-size: 2rem;
-}
-
-.clinic .booking .back-btn {
-	margin-bottom: 24px;
-	display: flex;
-	justify-content: space-between;
-	border-radius: 8px;
-}
-
-.clinic .booking .back-btn button {
-	border: none;
-	outline: none;
-	color: #003553;
-	font-size: 2rem;
-	font-weight: 600;
-	display: flex;
-	align-items: center;
-	border-color: transparent;
-	background: transparent;
-	box-shadow: none;
-	gap: 5px;
-	cursor: pointer;
-	padding: 8px 15px;
-	border-radius: 5px;
-	transition: all 0.25s ease;
-}
-
-.clinic .booking .back-btn button:hover {
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
-	color: #fff;
 }
 
 /* ========= Booking Calender ========== */

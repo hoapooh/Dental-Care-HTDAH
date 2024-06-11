@@ -7,7 +7,7 @@ let formattedDate =
 	String(date.getDate()).padStart(2, "0");
 
 let futureDate = new Date(date.getTime()); // Create a copy of the original date
-futureDate.setFullYear(futureDate.getFullYear() + 20);
+futureDate.setMonth(futureDate.getMonth() + 1);
 let futureFormattedDate =
 	futureDate.getFullYear() +
 	"-" +
@@ -20,10 +20,49 @@ mobiscroll.setOptions({
 	themeVariant: "light",
 });
 
-mobiscroll.datepicker("#demo-multi-day", {
+mobiscroll.datepicker("#demo-single-select-date", {
 	controls: ["calendar"],
+	selectMultiple: false,
+});
+
+mobiscroll.datepicker("#demo-single-select-datetime", {
+	controls: ["calendar", "time"],
+	selectMultiple: false,
+});
+
+mobiscroll.datepicker("#demo-single-select-timegrid", {
+	controls: ["calendar", "timegrid"],
+	selectMultiple: false,
+});
+
+// Tập trung vào đây
+mobiscroll.datepicker("#demo-single-day", {
+	controls: ["calendar", "timegrid"],
 	display: "inline",
-	selectMultiple: true,
+	touchUi: true,
+	selectMultiple: false,
+	valid: [
+		{
+			start: formattedDate,
+			end: futureFormattedDate,
+		},
+	],
+	valid: [
+		{
+			start: "02:00",
+			end: "06:30",
+			recurring: {
+				repeat: "daily",
+			},
+		},
+		{
+			start: "13:00",
+			end: "14:00",
+			recurring: {
+				repeat: "daily",
+			},
+		},
+	],
 });
 
 mobiscroll.datepicker("#demo-max-days", {
@@ -34,6 +73,7 @@ mobiscroll.datepicker("#demo-max-days", {
 	headerText: "Pick up to 5 days",
 });
 
+// Tâp trung vào đây
 mobiscroll.datepicker("#demo-counter", {
 	controls: ["calendar"],
 	display: "inline",
