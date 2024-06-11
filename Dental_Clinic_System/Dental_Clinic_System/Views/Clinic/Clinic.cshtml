@@ -36,7 +36,7 @@
 		{
 			<div class="clinic__container__card">
 				<div class="row">
-					<div class="col-6">
+					<div class="col-md-8">
 						<h3 class="clinic__container__card__title">
 							@clinic.Name
 						</h3>
@@ -56,13 +56,13 @@
 							<a asp-controller="clinic" asp-action="ClinicDetail" asp-route-clinicID="@clinic.ID" class="button-more">Xem chi tiết</a>
 						</div>
 					</div>
-					<div class="col-6">
+					<div class="col-md-4">
 						<div class="clinic__gallery">
 							<div class="gallery-item">
 								@* ~/assets/images/clinic-test.png *@
 								<img src="@clinic.Image"
 									 alt="@clinic.Name"
-									 class="gallery-image" />
+									 class="gallery-image" style="height: 200px"/> @* Inline Resize Image *@
 							</div>
 						</div>
 					</div>

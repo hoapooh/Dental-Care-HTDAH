@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -35,62 +37,9 @@ namespace Dental_Clinic_System.Controllers
             return Redirect(_vnPayment.CreatePaymentURL(HttpContext, vnpayModel));
         }
 
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //public IActionResult Refund(string transactionId, long amount, string transactionDate, string createBy)
-        //{
-        //    var refundModel = new VNPaymentRefundRequestModel
-        //    {
-        //        RequestId = Guid.NewGuid().ToString(), // Unique request ID
-        //        TransactionId = transactionId,
-        //        Amount = amount,
-        //        OrderInfo = "Hoàn tiền cho giao dịch " + transactionId,
-        //        TransactionDate = transactionDate,
-        //        CreateBy = createBy // Use the specified user name or identifier
-        //    };
-
-        //    return Redirect(_vnPayment.CreateRefundURL(HttpContext, refundModel));
-        //}
-
-        //[HttpPost]
-        ////[Authorize(Roles = "Bệnh Nhân")]
-        //public IActionResult Refund()
-        //{
-        //    var refundModel = new VNPaymentRefundRequestModel
-        //    {
-        //        RequestId = Guid.NewGuid().ToString(), // Unique request ID
-        //        TransactionId = "14450704",
-        //        Amount = 20000000,
-        //        OrderInfo = "Hoàn tiền cho giao dịch 14450704",
-        //        TransactionDate = DateTime.Now, // Format as string
-        //        CreatedDate= DateTime.Now,
-        //        CreateBy = "Đỗ Anh Tú" // Use the specified user name or identifier
-        //    };
-
-        //    // Log the refund model data for debugging
-        //    Console.WriteLine($"RequestId = {refundModel.RequestId}");
-        //    Console.WriteLine($"TransactionId = {refundModel.TransactionId}");
-        //    Console.WriteLine($"Amount = {refundModel.Amount}");
-        //    Console.WriteLine($"OrderInfo = {refundModel.OrderInfo}");
-        //    Console.WriteLine($"TransactionDate = {refundModel.TransactionDate}");
-        //    Console.WriteLine($"CreateBy = {refundModel.CreateBy}");
-
-        //    var refundURL = _vnPayment.CreateRefundURL(HttpContext, refundModel);
-        //    return Redirect(refundURL);
-        //}
-
-
-
-        private string CreateChecksum(string data, string secretKey)
-        {
-            using (var hmac = new HMACSHA512(Encoding.UTF8.GetBytes(secretKey)))
-            {
-                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
-                return BitConverter.ToString(hash).Replace("-", "").ToLower();
-            }
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Refund(string txnRef = "14450898", long amount = 20000 * 100)
+        [Authorize(Roles = "Bệnh Nhân")]
+        public async Task<IActionResult> ProcessRefund(string txnRef = "638536559852904902", long amount = 20000)
         {
             var requestId = Guid.NewGuid().ToString();
             var version = _configuration["VNPAY:Version"];
@@ -104,8 +53,11 @@ namespace Dental_Clinic_System.Controllers
             var ipAddr = HttpContext.Connection.RemoteIpAddress.ToString();
             var secureHash = _configuration["VNPAY:HashSecret"];
 
-            //var data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}||{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
-            //var secureHash = CreateChecksum(data, secretKey);
+            // Tạo chuỗi dữ liệu để tính checksum
+            string data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}|{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
+
+            // Tính checksum
+            string secureHashed = ComputeSHA256Hash(secureHash, data);
 
             var jsonData = new JObject
             {
@@ -115,18 +67,21 @@ namespace Dental_Clinic_System.Controllers
                 ["vnp_TmnCode"] = tmnCode,
                 ["vnp_TransactionType"] = transactionType,
                 ["vnp_TxnRef"] = txnRef,
-                ["vnp_Amount"] = amount,
+                ["vnp_Amount"] = amount.ToString(),
                 ["vnp_OrderInfo"] = orderInfo,
                 ["vnp_TransactionDate"] = transactionDate,
                 ["vnp_CreateBy"] = createBy,
                 ["vnp_CreateDate"] = createDate,
                 ["vnp_IpAddr"] = ipAddr,
-                ["vnp_SecureHash"] = secureHash
+                ["vnp_SecureHash"] = secureHashed
             };
 
-            using (var client = new HttpClient())
+            var jsonString = JsonConvert.SerializeObject(jsonData);
+            var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            Console.WriteLine("JSON STRING: " + jsonString);
+
+            using (var client = _httpClientFactory.CreateClient())
             {
-                var content = new StringContent(jsonData.ToString(), Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(_configuration["VNPAY:RefundURL"], content);
                 var responseString = await response.Content.ReadAsStringAsync();
                 return ProcessResponse(responseString);
@@ -136,6 +91,7 @@ namespace Dental_Clinic_System.Controllers
         private IActionResult ProcessResponse(string responseString)
         {
             var jsonResponse = JObject.Parse(responseString);
+            Console.WriteLine(jsonResponse.ToString());
             var responseCode = jsonResponse["vnp_ResponseCode"].ToString();
             Console.WriteLine($"Response Code = {responseCode}");
             if (responseCode == "00")
@@ -148,9 +104,19 @@ namespace Dental_Clinic_System.Controllers
             }
         }
 
-
-
-
+        public static string ComputeSHA256Hash(string secretKey, string rawData)
+        {
+            using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
+            {
+                byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
 
         [Authorize(Roles = "Bệnh Nhân")]
         public IActionResult PaymentCallBack()
@@ -163,7 +129,6 @@ namespace Dental_Clinic_System.Controllers
                 TempData["Message"] = $"Lỗi thanh toán VN Pay: {response.VnPayResponseCode}";
                 return RedirectToAction("PaymentFail");
             }
-
 
             // Lưu đơn hàng vô database
 
@@ -182,7 +147,6 @@ namespace Dental_Clinic_System.Controllers
         {
             return View();
         }
-
 
         [Authorize(Roles = "Bệnh Nhân")]
         public IActionResult RefundCallBack()
@@ -212,6 +176,5 @@ namespace Dental_Clinic_System.Controllers
         {
             return View();
         }
-
     }
 }
