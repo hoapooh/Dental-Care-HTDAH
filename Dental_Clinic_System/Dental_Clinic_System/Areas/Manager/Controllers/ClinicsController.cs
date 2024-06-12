@@ -116,7 +116,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit));
             }
             //ViewData["ManagerID"] = new SelectList(_context.Accounts, "ID", "AccountStatus", clinic.ManagerID);
             //return View(clinic);

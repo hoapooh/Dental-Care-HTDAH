@@ -46,25 +46,6 @@
             <span asp-validation-for="Image" class="text-danger"></span>
         </div>
 
-
-
-
-        @* <div class="col-md-6">
-            <label>Tỉnh/Thành phố</label>
-            <input asp-for="Province" class="form-control" />
-            <span asp-validation-for="Province" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
-            <label>Quận/Huyện</label>
-            <input asp-for="District" class="form-control" />
-            <span asp-validation-for="District" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
-            <label>Phường/Xã</label>
-            <input asp-for="Ward" class="form-control" />
-            <span asp-validation-for="Ward" class="text-danger"></span>
-        </div> *@
-
         <div class="col-md-6">
             <label for="province">Tỉnh / Thành phố </label>
             <select id="tinh" title="Chọn Tỉnh Thành" asp-for="@Model.Province" class="form-control">
@@ -126,21 +107,27 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
     <script src="~/assets/js/richtexteditor2.js"></script>
 
-    @* Call API from https://esgoo.ne to get data*@
+    @* Call API from https://esgoo.net to get data*@
     <script src="https://esgoo.net/scripts/jquery.js"></script>
+
     <script>
         $(document).ready(function () {
             var savedProvince = '@Model.Province';
             var savedDistrict = '@Model.District';
             var savedWard = '@Model.Ward';
 
-            // Chuyển đổi giá trị chuỗi sang số
-            var savedProvinceId = parseInt(savedProvince, 10);
-            var savedDistrictId = parseInt(savedDistrict, 10);
-            var savedWardId = parseInt(savedWard, 10);
+            // Function to format ID with leading zeros based on the length requirement
+            function formatId(id, length) {
+                return id.toString().padStart(length, '0');
+            }
+
+            var savedProvinceId = savedProvince ? formatId(parseInt(savedProvince, 10), 2) : null;
+            var savedDistrictId = savedDistrict ? formatId(parseInt(savedDistrict, 10), 3) : null;
+            var savedWardId = savedWard ? formatId(parseInt(savedWard, 10), 5) : null;
 
             function loadWards(idquan, callback) {
-                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                var formattedId = formatId(idquan, 3);
+                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + formattedId + '.htm', function (data_phuong) {
                     if (data_phuong.error == 0) {
                         $("#phuong").html('<option value="0">Phường Xã</option>');
                         $.each(data_phuong.data, function (key_phuong, val_phuong) {
@@ -156,7 +143,8 @@
             }
 
             function loadDistricts(idtinh, callback) {
-                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                var formattedId = formatId(idtinh, 2);
+                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + formattedId + '.htm', function (data_quan) {
                     if (data_quan.error == 0) {
                         $("#quan").html('<option value="0">Quận Huyện</option>');
                         $("#phuong").html('<option value="0">Phường Xã</option>');

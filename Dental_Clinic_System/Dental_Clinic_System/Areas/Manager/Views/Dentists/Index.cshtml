@@ -62,14 +62,7 @@
 				<input type="search" placeholder="Tìm kiếm ..." name="keyword"/>
 			</div>
 			</form>
-			<form asp-action="Create">
-			<button type="button"
-					data-bs-toggle="modal"
-					data-bs-target="#myModal"
-					class="add__new">
-				+ New
-			</button>
-			</form>
+		<a asp-controller="Dentists" asp-action="Create" class="add__new">+ New</a>
 		</div>
 	</div>
 	<!-- Modal For Add new User -->
@@ -141,6 +134,7 @@
 				<th>Email</th>
 				<th>Số điện thoại</th>
 				<th>Bằng cấp</th>
+				<th>Trạng thái</th>
 				<th>Hành động</th>
 			</tr>
 		</thead>
@@ -157,7 +151,7 @@
 					<td>
 						<a asp-action="Details" asp-route-id="@item.ID">@item.Account.LastName @item.Account.FirstName</a>
 					</td>
-					<td>
+					<td >
 						@item.Account.Gender
 					</td>
 					<td>
@@ -168,6 +162,9 @@
 					</td>
 					<td >
 						@item.Degree?.Name
+					</td>
+					<td>
+						@item.Account.AccountStatus
 					</td>
 					<td>
 						<a asp-action="Edit" asp-route-id="@item.ID" class="button-link">
