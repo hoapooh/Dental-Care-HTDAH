@@ -1,4 +1,5 @@
 ﻿using Dental_Clinic_System.Models.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -102,6 +103,25 @@ namespace Dental_Clinic_System.Controllers
             ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;
             return View("ClinicDentistCalendar", dentistBooking);
+        }
+
+        // Choose a patient record for booking (Method GET is here)
+
+        [HttpGet]
+        [Authorize(Roles = "Bệnh Nnhân")]
+        // Route
+        public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit)
+        {
+            var appointment = new Dictionary<string, object>
+            {
+                {"Schedule", _context.Schedules.FirstOrDefaultAsync(s => s.ID == scheduleID)},
+                { "PatientRecord", _context.PatientRecords.FirstOrDefaultAsync(p => p.ID == patientRecordID)},
+                { "Specialty", _context.Specialties.FirstOrDefaultAsync(s => s.ID == specialtyID)}
+            };
+
+            
+            ViewBag.totalDeposit = totalDeposit;
+			return View(appointment);
         }
     }
 

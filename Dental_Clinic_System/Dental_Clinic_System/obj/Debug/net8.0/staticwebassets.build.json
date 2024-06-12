@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< Updated upstream
   "Hash": "AXUPU518wd8ikP4O3I6yZclit0YN1CJD3zhvyGF6U0E=",
+=======
+  "Hash": "ilyGDAHDgQGo7voZShPjzMAWVfBrkxjy3hQy5Sf3jV8=",
+>>>>>>> Stashed changes
   "Source": "Dental_Clinic_System",
   "BasePath": "_content/Dental_Clinic_System",
   "Mode": "Default",
@@ -359,10 +363,14 @@
       "OriginalItemSpec": "wwwroot\\assets\\css\\manager.css"
     },
     {
+<<<<<<< Updated upstream
       "Identity": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\patientrecord.css",
+=======
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\patientrecord.css",
+>>>>>>> Stashed changes
       "SourceId": "Dental_Clinic_System",
       "SourceType": "Discovered",
-      "ContentRoot": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
+      "ContentRoot": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
       "BasePath": "_content/Dental_Clinic_System",
       "RelativePath": "assets/css/patientrecord.css",
       "AssetKind": "All",
@@ -378,7 +386,11 @@
       "OriginalItemSpec": "wwwroot\\assets\\css\\patientrecord.css"
     },
     {
+<<<<<<< Updated upstream
       "Identity": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\profile.css",
+=======
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\profile.css",
+>>>>>>> Stashed changes
       "SourceId": "Dental_Clinic_System",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
@@ -8700,10 +8712,33 @@
       "OriginalItemSpec": "wwwroot\\managerspecialty.html"
     },
     {
+<<<<<<< Updated upstream
       "Identity": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\payment.html",
+=======
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\patientsrecordconfirm.html",
+>>>>>>> Stashed changes
       "SourceId": "Dental_Clinic_System",
       "SourceType": "Discovered",
-      "ContentRoot": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
+      "ContentRoot": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
+      "BasePath": "_content/Dental_Clinic_System",
+      "RelativePath": "patientsrecordconfirm.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\patientsrecordconfirm.html"
+    },
+    {
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\payment.html",
+      "SourceId": "Dental_Clinic_System",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
       "BasePath": "_content/Dental_Clinic_System",
       "RelativePath": "payment.html",
       "AssetKind": "All",
@@ -8719,7 +8754,11 @@
       "OriginalItemSpec": "wwwroot\\payment.html"
     },
     {
+<<<<<<< Updated upstream
       "Identity": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\profile.html",
+=======
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\profile.html",
+>>>>>>> Stashed changes
       "SourceId": "Dental_Clinic_System",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",

@@ -2,6 +2,7 @@ using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services;
+using Dental_Clinic_System.Services.MOMO;
 using Dental_Clinic_System.Services.VNPAY;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -50,6 +51,9 @@ builder.Services.AddSingleton<IVNPayment, VNPayment>();
 
 // Register VNPAY Service for checkout with HttpClient
 //builder.Services.AddHttpClient<IVNPayment, VNPayment>();
+
+// Register MOMO Service for checkout
+builder.Services.AddScoped<IMOMOPayment, MOMOPayment>();
 
 // Configure HttpClient
 builder.Services.AddHttpClient();

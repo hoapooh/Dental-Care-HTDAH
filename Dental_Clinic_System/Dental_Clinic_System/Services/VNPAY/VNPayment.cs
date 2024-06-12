@@ -98,7 +98,7 @@ namespace Dental_Clinic_System.Services.VNPAY
                 BankCode = vnp_bankCode,
                 CardType = vnp_cardType,
                 Amount = vnp_amount,
-                BankTransactionNo = vnp_bannkTranNo,
+                BankTransactionNo = vnp_bannkTranNo
 			};
         }
 

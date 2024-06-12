@@ -210,7 +210,15 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY1NwZWNpYWx0eS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+<<<<<<< Updated upstream
 [E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Contact/Contact.cshtml]
+=======
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ConfirmAppointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENvbmZpcm1BcHBvaW50bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Contact/Contact.cshtml]
+>>>>>>> Stashed changes
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdFxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 

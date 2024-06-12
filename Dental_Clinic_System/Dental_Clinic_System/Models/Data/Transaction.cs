@@ -30,7 +30,7 @@ namespace Dental_Clinic_System.Models.Data
 		public string? PaymentMethod { get; set; }
 
 		[Column("MedicalReportID", TypeName = "varchar(50)")]
-		public string? MedicalReportID { get; set; }
+		public string MedicalReportID { get; set; } = Helper.DepositIDGenerator.GenerateDepositID();
 
 		[Column("TotalPrice", TypeName = "money")]
 		public decimal? TotalPrice { get; set; }
@@ -41,9 +41,12 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("FullName", TypeName = "nvarchar(50)")]
 		public string? FullName { get; set; }
 
-		#region Foreign Key
+        [Column("Message", TypeName = "nvarchar(100)")]
+        public string? Message { get; set; } = null;
 
-		[ForeignKey("AppointmentID")]
+        #region Foreign Key
+
+        [ForeignKey("AppointmentID")]
         [InverseProperty("Transactions")]
 
 		#endregion

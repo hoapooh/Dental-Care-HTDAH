@@ -16,22 +16,8 @@ namespace Dental_Clinic_System.Services.VNPAY
         public decimal Amount { get; set; }
         public string BankTransactionNo { get; set; }
         public DateTime CreatedDate { get; set; }
-		public string MedicalReportID { get; set; } = DepositIDGenerator.GenerateDepositID();
 		public string? Message { get; set; } = "Hello World";
     }
-
-    public class VNPaymentRequestModel()
-    {
-        public string FullName { get; set; }
-        public string Description { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime CreatedDate { get; set; }
-
-        // For Appointment Info
-        public int ScheduleID { get; set; }
-        public int PatientRecordID { get; set; }
-        public int SpecialtyID { get; set; }
-	}
 
     public class VNPaymentRefundRequestModel
     {
