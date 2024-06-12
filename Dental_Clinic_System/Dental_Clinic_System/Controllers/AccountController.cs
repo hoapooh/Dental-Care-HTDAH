@@ -537,7 +537,7 @@ namespace Dental_Clinic_System.Controllers
 
         [Authorize(Roles = "Bệnh Nhân")]
         [HttpGet]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
 
             var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
