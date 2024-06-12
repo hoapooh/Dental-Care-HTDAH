@@ -69,15 +69,11 @@
       "PackagePath": "staticwebassets\\assets\\css\\manager.css"
     },
     {
-<<<<<<< Updated upstream
-      "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\profile.css",
-=======
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\patientrecord.css",
+      "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\patientrecord.css",
       "PackagePath": "staticwebassets\\assets\\css\\patientrecord.css"
     },
     {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\profile.css",
->>>>>>> Stashed changes
+      "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\profile.css",
       "PackagePath": "staticwebassets\\assets\\css\\profile.css"
     },
     {
@@ -1829,15 +1825,11 @@
       "PackagePath": "staticwebassets\\managerspecialty.html"
     },
     {
-<<<<<<< Updated upstream
-      "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\profile.html",
-=======
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\payment.html",
+      "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\payment.html",
       "PackagePath": "staticwebassets\\payment.html"
     },
     {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\profile.html",
->>>>>>> Stashed changes
+      "Id": "E:\\1_SWP391\\Team_Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\profile.html",
       "PackagePath": "staticwebassets\\profile.html"
     },
     {

@@ -54,7 +54,7 @@ namespace Dental_Clinic_System.Models.Data
 
         [ForeignKey("ManagerID")]
 		[InverseProperty("Clinics")]
-		public virtual Account Manager { get; set; } = null!;
+		public virtual Account? Manager { get; set; } = null!;
 
 		#endregion
 
