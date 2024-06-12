@@ -17,279 +17,275 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Dental_Clinic_System
 build_property.RootNamespace = Dental_Clinic_System
-build_property.ProjectDir = E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\
+build_property.ProjectDir = G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System
+build_property.MSBuildProjectDirectory = G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System
 build_property._RazorSourceGeneratorDebug = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/Admin/ListAccount.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/Admin/ListAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5cTGlzdEFjY291bnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/ManagerSpecialty/EditSpecialty.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/ManagerSpecialty/EditSpecialty.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWFuYWdlclNwZWNpYWx0eVxFZGl0U3BlY2lhbHR5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/ManagerSpecialty/ListSpecialty.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/ManagerSpecialty/ListSpecialty.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWFuYWdlclNwZWNpYWx0eVxMaXN0U3BlY2lhbHR5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Dentist/DentistDescription.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Dentist/DentistDescription.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xEZW50aXN0XERlbnRpc3REZXNjcmlwdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Dentist/DentistSchedule.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Dentist/DentistSchedule.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xEZW50aXN0XERlbnRpc3RTY2hlZHVsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Dentist/PatientAppointments.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Dentist/PatientAppointments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xEZW50aXN0XFBhdGllbnRBcHBvaW50bWVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Shared/_DentistAvatar.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Shared/_DentistAvatar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xTaGFyZWRcX0RlbnRpc3RBdmF0YXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Shared/_DentistSidebar.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Shared/_DentistSidebar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xTaGFyZWRcX0RlbnRpc3RTaWRlYmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Shared/_Layout.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xTaGFyZWRcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/_ViewImports.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/_ViewStart.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Dentist/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVudGlzdFxWaWV3c1xfVmlld1N0YXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Create.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDbGluaWNzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Delete.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDbGluaWNzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Details.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDbGluaWNzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Edit - Copy.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Edit - Copy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDbGluaWNzXEVkaXQgLSBDb3B5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Edit.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDbGluaWNzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Index.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Clinics/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDbGluaWNzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Create.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Delete.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Details.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Edit.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Index.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Dentists/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEZW50aXN0c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Create.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xTZXJ2aWNlXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Delete.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xTZXJ2aWNlXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Details.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xTZXJ2aWNlXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Edit.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xTZXJ2aWNlXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Index.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Service/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xTZXJ2aWNlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Shared/_LayoutManager.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Shared/_LayoutManager.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xTaGFyZWRcX0xheW91dE1hbmFnZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Shared/_ValidationScriptsPartial.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xTaGFyZWRcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/_ViewImports.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Areas/Manager/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/About/About.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/About/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJvdXRcQWJvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ConfirmEmail.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ConfirmEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ForgotPassword.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ForgotPasswordConfirmation.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ForgotPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZENvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/LinkWithGoogleView.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/LinkWithGoogleView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMaW5rV2l0aEdvb2dsZVZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Login.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Profile.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Register.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ResetPassword.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ResetPasswordConfirmation.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Account/ResetPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/Clinic.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/Clinic.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pYy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDentist.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDentist.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY0RlbnRpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDentistCalendar.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDentistCalendar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY0RlbnRpc3RDYWxlbmRhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDetail.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY0RldGFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicSpecialty.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ClinicSpecialty.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENsaW5pY1NwZWNpYWx0eS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-<<<<<<< Updated upstream
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Contact/Contact.cshtml]
-=======
 [G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Clinic/ConfirmAppointment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbmljXENvbmZpcm1BcHBvaW50bWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Contact/Contact.cshtml]
->>>>>>> Stashed changes
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdFxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Index.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Privacy.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/PaymentFail.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/PaymentFail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxQYXltZW50RmFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/PaymentSuccess.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/PaymentSuccess.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxQYXltZW50U3VjY2Vzcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/RefundFail.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/RefundFail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxSZWZ1bmRGYWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/RefundSuccess.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Payment/RefundSuccess.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxSZWZ1bmRTdWNjZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/Error.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Blog.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Blog.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9CbG9nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Footer.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Header.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Header.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_ValidationScriptsPartial.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/DentistBookingRequest.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/DentistBookingRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XERlbnRpc3RCb29raW5nUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/DentistInformation.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/DentistInformation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XERlbnRpc3RJbmZvcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/Dentistry.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/Dentistry.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XERlbnRpc3RyeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/Specialty.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Specialty/Specialty.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbHR5XFNwZWNpYWx0eS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/_ViewImports.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/_ViewStart.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/1_SWP391/Team_Github/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Layout.cshtml]
+[G:/My Project .NET/Github-Team/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-gj3lj87o29

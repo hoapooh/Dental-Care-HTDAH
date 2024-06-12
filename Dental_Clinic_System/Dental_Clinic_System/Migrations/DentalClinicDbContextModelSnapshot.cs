@@ -630,8 +630,13 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnName("FullName");
 
                     b.Property<string>("MedicalReportID")
+                        .IsRequired()
                         .HasColumnType("varchar(50)")
                         .HasColumnName("MedicalReportID");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Message");
 
                     b.Property<string>("PaymentMethod")
                         .HasColumnType("varchar(50)")
