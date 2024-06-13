@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dental_Clinic_System.ViewModels
+namespace Dental_Clinic_System.Areas.Manager.ViewModels
 {
 	public class AddDentistVM
 	{

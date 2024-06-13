@@ -13,6 +13,7 @@
     <None Include="Areas\Manager\Views\Clinics\Edit - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Edit.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Index.cshtml" />
+    <None Include="Areas\Manager\Views\Dentists\Create - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Create.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Details.cshtml" />

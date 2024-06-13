@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
-using Dental_Clinic_System.ViewModels;
+using Dental_Clinic_System.Areas.Manager.ViewModels;
 using System.Configuration;
 
 namespace Dental_Clinic_System.Controllers
@@ -195,7 +195,6 @@ namespace Dental_Clinic_System.Controllers
                     var account = _context.Accounts.Find(dentistForm.AccountId);
                     if (account != null) 
                     {
-                        account.ID = dentistForm.AccountId;
                         account.LastName = dentistForm.LastName;
                         account.FirstName = dentistForm.FirstName;
                         account.Gender = dentistForm.Gender;

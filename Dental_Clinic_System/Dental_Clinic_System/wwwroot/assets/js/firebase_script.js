@@ -44,7 +44,8 @@ document.getElementById('clinicForm').addEventListener('submit', function (event
             console.error('Error uploading file:', error);
         });
     } else {
-        console.log('No file selected');
-        alert('No file selected');
+        //console.log('No file selected');
+        //alert('No file selected');
+        document.getElementById('clinicForm').submit();
     }
 });
