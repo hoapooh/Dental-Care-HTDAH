@@ -1,4 +1,4 @@
-﻿@model Dental_Clinic_System.Models.Data.Dentist
+﻿@model Dental_Clinic_System.ViewModels.AddDentistVM
 
 @{
     ViewData["Title"] = "Create";
@@ -46,49 +46,49 @@
         <div class="modal-body ">
             <div class="user-name modal-body-card">
                 <label for="username">Tên đăng nhập</label>
-                <input type="text" name="Username" id="username" required />
+                <input asp-for="Username" type="text"  required />
             </div>
             <div class="user-password modal-body-card">
-                <label for="password">Mật khẩu</label>
-                <input type="password" name="Password" id="password" required />
+                <label for="Password">Mật khẩu</label>
+                <input asp-for="Password" type="password" required />
             </div>
             <div class="user-name modal-body-card">
-                <label for="lastname">Họ (Tên đệm)</label>
-                <input type="text" name="Lastname" id="lastname" required />
+                <label for="LastName">Họ (Tên đệm)</label>
+                <input asp-for="LastName" type="text" required />
             </div>
             <div class="user-password modal-body-card2">
-                <label for="firstname">Tên</label>
-                <input type="text" name="Firstname" id="firstname" required />
+                <label for="FirstName">Tên</label>
+                <input asp-for="FirstName" type="text"required />
             </div>
             <div class="user-password modal-body-card3">
-                <label for="gender">Giới tính</label>
+                <label for="Gender">Giới tính</label>
                 @* <input type="text" name="Gender" id="gender" required /> *@
 
-                <select name="Gender" id="gender" required>
+                <select asp-for="Gender" required>
                     <option value="Nam">Nam</option>
                     <option value="Nữ">Nữ</option>
                 </select>
             </div>
             <div class="user-mail modal-body-card">
-                <label for="email">Email</label>
-                <input type="email" name="Email" id="email" required />
+                <label for="Email">Email</label>
+                <input type="email" asp-for="Email" required />
             </div>
             <div class="user-tel modal-body-card">
-                <label for="phonenumber">Số điện thoại</label>
-                <input type="tel" name="PhoneNumber" id="phonenumber" required />
+                <label for="PhoneNumber">Số điện thoại</label>
+                <input type="tel" asp-for="PhoneNumber" required />
             </div>
             
             <div class="user-address modal-body-card">
-                <label for="degree">Bằng cấp</label>
+                <label for="DegreeID">Bằng cấp</label>
                 @* <input type="text" name="Degree" id="degree" required /> *@
-                <select asp-items="ViewBag.DegreeID" name="Degree" id="degree" required></select>
+                <select asp-items="ViewBag.DegreeID" asp-for="DegreeID" required></select>
             </div>
             <div class="user-address modal-body-card">
-                <label for="descrip">Mô tả nha sĩ</label>
+                <label for="Description">Mô tả nha sĩ</label>
                @*  <input type="text" name="Description" id="descrip"  /> *@
                 <div id="container">
                     <div id="editor">
-                        <textarea asp-for="Description" class="form-control" name="Description" id="descrip"></textarea>
+                        <textarea asp-for="Description" class="form-control" ></textarea>
                     </div>
                 </div>
             </div>
