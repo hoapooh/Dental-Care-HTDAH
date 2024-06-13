@@ -1,6 +1,6 @@
 var tbody = document.getElementById("myTableBody");
 var pagination = document.getElementById("pagination");
-var numRowsPerPage = 10; // số dòng trên mỗi trang
+var numRowsPerPage = 5; // số dòng trên mỗi trang
 var currentPage = 1;
 
 function updateTable() {

@@ -38,22 +38,11 @@ p {
 	background: #4880ff;
 }
 
-.patients__management .status.pending {
-        background: #d3d3d3;
-    }
-
-.patients__management .status.approved {
-        background: #4880ff;
-    }
-
 .patients__management .status.deny {
 	background: #ff474d;
 }
 
-.patients__management i {
-	color: #4880ff;
-	margin: auto;
-	.patients__management a button i {
+.patients__management a button i {
 	vertical-align: middle;
 }
 
@@ -68,57 +57,4 @@ p {
 
 .patients__management a:hover button {
 	background: #3b6cd9;
-}
-
-table {
-	font-family: arial, sans-serif;
-	width: 100%;
-}
-
-th {
-	background-color: #d3d3d3;
-}
-
-td, th {
-	border-bottom: 1px solid #dddddd;
-	text-align: center;
-	padding: 8px;
-}
-
-.modal-overlay {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.5);
-	z-index: 999;
-}
-
-.modal-content {
-	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 60%;
-	padding: 20px;
-	background-color: #fff;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-	z-index: 1000;
-	border-radius: 8px;
-	font-size: 1.5rem; /* Larger text inside the modal */
-}
-
-	.modal-content h5 {
-		font-size: 2rem; /* Larger heading text */
-	}
-
-	.modal-content .form-label, .modal-content .form-control {
-		font-size: 1.5rem; /* Larger form text */
-	}
-
-.btn {
-	font-size: 1.5rem; /* Larger button text */
 }
