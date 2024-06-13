@@ -32,7 +32,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                                  {
                                      ClinicName = clinic.Name,
                                      Address = clinic.Address,
-                                     ManagerName = account.Username
+                                     ManagerName = account.LastName + " " + account.FirstName
                                  }).ToListAsync();
 
             return View(clinics);

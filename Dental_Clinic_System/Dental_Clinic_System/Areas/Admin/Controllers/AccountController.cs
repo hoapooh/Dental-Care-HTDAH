@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.Data;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
@@ -146,7 +147,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		//===================CHỈNH SỬA TÀI KHOẢN===================
 
 		[Route("EditAccount/{id}")]
-		public async Task<IActionResult> EditAccount(int id)
+		public async Task<IActionResult> EditAccount(int id, string role)
 		{
 			var account = await _context.Accounts.FindAsync(id);
 			if (account == null)
@@ -154,7 +155,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				return NotFound();
 			}
 
-			var accountVM = new EditAccountVM
+            var accountVM = new EditAccountVM
 			{
 				Id = account.ID,
                 FirstName = account.FirstName,
@@ -170,14 +171,15 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 Ward = account.Ward,
                 Address = account.Address,
 				Role = account.Role
-            };
+			};
 
-			return View(accountVM);
+            ViewBag.Role = role;
+            return View(accountVM);
 		}
 
 		[HttpPost]
 		[Route("EditAccount")]
-		public async Task<IActionResult> EditAccount(EditAccountVM model)
+		public async Task<IActionResult> EditAccount(EditAccountVM model, string role)
 		{
 			if (ModelState.IsValid)
 			{
@@ -205,20 +207,23 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				_context.Update(account);
 				await _context.SaveChangesAsync();
 
-				return RedirectToAction(nameof(ListAccount));
+				//Chuyển đến ListAccount theo role
+				return RedirectToAction(nameof(ListAccount), new { role = role });
 			}
 
-			//List<string> errors = new List<string>();
-			//foreach (var value in ModelState.Values)
-			//{
-			//	foreach (var error in value.Errors)
-			//	{
-			//		errors.Add(error.ErrorMessage);
-			//	}
-			//}
-			//string errorMessage = string.Join("\n", errors);
-			//return BadRequest(errorMessage);
-			return View(model);
+            //List<string> errors = new List<string>();
+            //foreach (var value in ModelState.Values)
+            //{
+            //	foreach (var error in value.Errors)
+            //	{
+            //		errors.Add(error.ErrorMessage);
+            //	}
+            //}
+            //string errorMessage = string.Join("\n", errors);
+            //return BadRequest(errorMessage);
+
+            ViewBag.Role = role;
+            return View(model);
 		}
 
 		//===================KHÓA TÀI KHOẢN===================

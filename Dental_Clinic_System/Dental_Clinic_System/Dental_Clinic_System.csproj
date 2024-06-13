@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Areas\Admin\Views\Account\EditAccount.cshtml" />
-    <None Include="Areas\Admin\Views\Account\ListAccount.cshtml" />
-    <None Include="Areas\Admin\Views\Account\ListLockedAccount.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerClinic\CreateClinic.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerClinic\ListClinic.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerSpecialty\EditSpecialty.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerSpecialty\ListSpecialty.cshtml" />
-    <None Include="Areas\Admin\Views\Shared\_AdminSideBar.cshtml" />
-    <None Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Create.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Details.cshtml" />

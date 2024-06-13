@@ -11,9 +11,9 @@
 	</div>
 
 	<form method="post" action="~/Admin/Account/EditAccount" class="account__management__edit row">
-		<input type="hidden" name="id" value="@Model.Id" />
-        <input type="hidden" name="role" value="@Model.Role"/>
-        @* <input type="hidden" name="Role" id="role" value="@ViewBag.role" /> *@
+		<input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Role" value="@Model.Role"/>
+        <input type="hidden" name="role" value="@ViewBag.Role" />
 		<div class="col-md-6">
 			<label for="username">Tên tài khoản</label>
 			<input type="text" name="Username" id="username" value="@Model.Username" />
