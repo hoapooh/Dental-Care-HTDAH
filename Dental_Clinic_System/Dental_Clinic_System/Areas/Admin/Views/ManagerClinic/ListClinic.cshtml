@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.ManagerClinicVM>
+
+@{
+	ViewData["Title"] = "ListClinic";
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+	.title-Name-Clinic {
+		font-size: 2.8rem;
+		font-weight: 700;
+		color: #202224;
+	}
+
+	.title-Address {
+		font-size: 2.2rem;
+		font-weight: 700;
+	}
+
+	/* .trash-button .color-trash button {
+		background: rgb(255, 66, 66); /* Nền đỏ */
+		color: white; /* Màu chữ trắng */
+	} */
+</style>
+
+<!-- Clinic management header -->
+<div class="clinic__management__header">
+	<h1 class="title">Quản lý phòng khám</h1>
+	<div class="action-btn">
+		<!-- TÌM KIẾM -->
+		<form action="~/Admin/ManagerClinic/SearchClinic" method="get">
+			<div class="search__bar">
+				<input type="search" placeholder="Tìm kiếm ..." name="search" />
+			</div>
+		</form>
+		<button type="button"
+				data-bs-toggle="modal" data-bs-target="#myModal"
+				class="add__new" id="newBtn">
+			+ New
+		</button>
+	</div>
+
+
+</div>
+
+
+<!-- CLINIC LIST MANAGEMENT -->
+<div id="myItem" class="clinic__management__wrapper row">
+	@foreach (var clinic in Model)
+	{
+		<div class="clinic-wrap-item col-md-6">
+			<div class="clinic-wrap-item__style row">
+				<div class="img-content col-md-6">
+					<img src="https://eastrosedental.com/Content/Home/images/content/banner-left.jpg" alt="clinic" />
+				</div>
+				<div class="info-content col-md-6">
+					<h2 class="title-Name-Clinic">@clinic.ClinicName</h2>
+					<div class="name">Quản lý: <span class="title-Address">@clinic.ManagerName</span></div>
+					<div class="address">Địa chỉ: <span class="title-Address">@clinic.Address</span></div>
+					<div class="action">
+						<a href="tel:0123456789"><i class="fa-solid fa-phone-volume"></i></a>
+						<a href="mailto:example@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+						<a href="#!" class="view"><i class="fa-solid fa-eye"></i></a>
+						<form action="~/Admin/ManagerClinic/HiddenClinic" method="post">
+							<input type="hidden" name="name" value="@clinic.ClinicName" />
+							<input type="hidden" name="status" value="Đóng cửa" />
+							<button class="delete">
+								<i class="fa-solid fa-xmark"></i>
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+
+<!-- ========== PAGINATION  ========== -->
+<ul class="pagination" id="pagination">
+	<!-- <li class="page-item">
+		<a class="page-link" href="#" style="font-size: 2rem">Previous</a>
+	</li> -->
+</ul>
+
+
+<script>
+	//Đợi cho document được tải hoàn chỉnh
+	document.addEventListener("DOMContentLoaded", function () {
+		// Lấy button "+ New"
+		var newBtn = document.getElementById("newBtn");
+
+		// Nếu button tồn tại
+		if (newBtn) {
+			// Thêm click
+			newBtn.addEventListener("click", function () {
+				// Chuyển hướng đến URL của view khác
+				window.location.href = "/Admin/ManagerClinic/CreateClinic";
+			});
+		}
+	});
+</script>

@@ -5,62 +5,103 @@
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="specialty__management" style="padding: 40px">
-	<h1 class="specialty__management__title mb-0">Quản lý chuyên khoa</h1>
-	<!-- =========== MODAL =========== -->
-	@* <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="mainTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered form-modal-styles">
-	<form asp-action="EditSpecialty" method="POST" class="modal-content">
-	<div class="modal-header">
-	<h1 class="modal-title fs-10" id="mainTitle"> Chỉnh sửa thông tin chuyên khoa </h1>
-	<button type="button"
-	class="btn-close"
-	data-bs-dismiss="modal"
-	aria-label="Close"></button>
-	</div>
-	<div class="modal-body">
-	<input type="hidden" name="Id" id="specialtyId" />
-	<div class="special-name">
-	<label for="nameSpecialty">Tên chuyên khoa</label>
-	<input type="text" name="Name" id="nameSpecialty" />
-	</div>
-	<div class="special-image">
-	<label for="imageSpecialty">Hình ảnh</label>
-	<input type="file" name="Image" id="imageSpecialty" />
-	</div>
-	<div class="special-desc">
-	<label for="descSpecialty">Mô tả</label>
-	<textarea name="Description" id="descSpecialty">></textarea>
-	</div>
-	</div>
-	<div class="modal-footer">
-	<button type="button" class="close-btn btn" data-bs-dismiss="modal">
-	Close
-	</button>
-	<button type="submit" class="submit-btn btn">
-	Save changes
-	</button>
-	</div>
-	</form>
-	</div>
-	</div> *@
+<!-- Thông báo lỗi bị trùng -->
+@if (!ViewData.ModelState.IsValid)
+{
+	<div class="alert alert-danger" role="alert">
+		@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+		{
+			<span>@error.ErrorMessage</span>
 
-	<!-- =========== TABLE =========== -->
-	<table class="table table-striped mt-5" style="font-size: 2rem">
-		<thead>
-			<tr>
-				<th class="text-center">STT</th>
-				<th>Chuyên Khoa</th>
-				<th>Hình ảnh</th>
-				<th>Mô tả</th>
-				<th>Hành động</th>
-			</tr>
-		</thead>
-		<tbody>
+			<br />
+		}
+	</div>
+}
+
+
+<div class="account__management__header">
+	<h1 class="title mb-0">Quản lý chuyên khoa</h1>
+	<div class="action-btn">
+		<form action="~/Admin/ManagerSpecialty/SeachSpecialty" method="post">
+			<div class="search__bar">
+				<input type="search" placeholder="Tìm kiếm ..." name="search" />
+			</div>
+		</form>
+		<button type="button"
+				data-bs-toggle="modal"
+				data-bs-target="#myModalAdd"
+				class="add__new">
+			+ New
+		</button>
+	</div>
+
+	<!-- =========== MODAL FOR ADD =========== -->
+	<div class="modal fade"
+		 id="myModalAdd"
+		 tabindex="-1"
+		 aria-labelledby="mainTitle"
+		 aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered form-modal-styles">
+			<form action="~/Admin/ManagerSpecialty/AddSpecialty" method="POST" class="modal-content" onsubmit="return validateForm()">
+				<div class="modal-header">
+					<h1 class="modal-title fs-10" id="mainTitle">
+						Thêm mới chuyên khoa
+					</h1>
+					<button type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="special-name">
+						<label for="name">Tên chuyên khoa</label>
+						<input type="text" name="name" id="name" required />
+					</div>
+					<div class="special-image">
+						<label for="imageSpecialty">Hình ảnh</label>
+						<input type="file" name="imageSpecialty" id="imageSpecialty" required />
+					</div>
+					<div class="special-desc">
+						<label for="description">Mô tả</label>
+						<textarea name="description" id="description"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+							class="close-btn btn"
+							data-bs-dismiss="modal">
+						Close
+					</button>
+					<button type="submit" class="submit-btn btn">
+						Save changes
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+
+<!-- =========== TABLE =========== -->
+<table class="table table-striped mt-5" style="font-size: 1.7rem">
+	<thead>
+		<tr>
+			<th class="text-center">STT</th>
+			<th style="width: 15%;">Chuyên Khoa</th>
+			<th style="width: 8%;">Hình ảnh</th>
+			<th style="width: 60%;">Mô tả</th>
+			<th>Hành động</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model != null && Model.Any())
+		{
+			int stt = 1;
+
 			@foreach (var account in Model)
 			{
 				<tr style="vertical-align: middle">
-					<td>@account.Id</td>
+					<td>@stt</td>
 					<td>@account.Name</td>
 					<td><img src="@account.Image" alt="" /></td>
 					<td>@account.Description</td>
@@ -73,16 +114,8 @@
 						</button>
 					</td>
 				</tr>
+				stt++;
 			}
-
-		</tbody>
-	</table>
-</div>
-
-
-
-
-
-@* <button href="@url.action("editspecialty", new { id = account.id })" type="button" class="btn btn-primary edit-btn">
-<i class="bx bxs-edit"></i>
-</button> *@
+		}
+	</tbody>
+</table>

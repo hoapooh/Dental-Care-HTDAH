@@ -206,7 +206,8 @@
 	gap: 10px;
 }
 
-.clinic-wrap-item__style .info-content .action a {
+.clinic-wrap-item__style .info-content .action a 
+.clinic-wrap-item__style .info-content .action button{
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -227,13 +228,13 @@
 	background: #049a84;
 }
 
-.clinic-wrap-item__style .info-content .action a.delete {
+.clinic-wrap-item__style .info-content .action button.delete {
 	border: none;
 	background: rgb(255, 66, 66);
 	color: #fff;
 }
 
-.clinic-wrap-item__style .info-content .action a.delete:hover {
+.clinic-wrap-item__style .info-content .action button.delete:hover {
 	background: #f81f1f;
 }
 

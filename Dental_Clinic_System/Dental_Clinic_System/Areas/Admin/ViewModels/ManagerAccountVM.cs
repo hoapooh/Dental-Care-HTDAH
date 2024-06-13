@@ -1,28 +1,48 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Dental_Clinic_System.Models.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
-namespace Dental_Clinic_System.ViewModels
+namespace Dental_Clinic_System.Areas.Admin.ViewModels
 {
 	public class ManagerAccountVM
 	{
 		public int Id { get; set; }
 
-		[Required(ErrorMessage = "Tên người dùng là bắt buộc.")]
-		[MaxLength(30, ErrorMessage = "Tối đa 30 ký tự")]
+        [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập.")]
+		[StringLength(30, ErrorMessage = "Tên đăng nhập không được vượt quá 30 ký tự.")]
+		[MinLength(3, ErrorMessage = "Tên đăng nhập phải có ít nhất 3 ký tự.")]
+		[RegularExpression(@"^[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Tên đăng nhập chỉ được chứa các ký tự chữ cái và số, và phải bắt đầu bằng chữ cái.")]
 		public string Username { get; set; } = null!;
 
-		[Required(ErrorMessage = "Vui lòng nhập Email")]
-		public string Email { get; set; } = null!;
+		[Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
+		[DataType(DataType.Password)]
+		[StringLength(30, ErrorMessage = "Mật khẩu không được quá 30 ký tự.")]
+		[MinLength(3, ErrorMessage = "Mật khẩu phải có ít nhất 3 ký tự.")]
+		[RegularExpression(@"[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Mật khẩu chỉ được chứa các ký tự chữ cái và số, và phải bắt đầu bằng chữ cái.")]
+		public string Password { get; set; } = null!;
 
-		public string? PhoneNumber { get; set; }
+		[Required(ErrorMessage = "Vui lòng nhập email.")]
+		[EmailAddress(ErrorMessage = "Email không hợp lệ.")]
+		[StringLength(50, ErrorMessage = "Email không được quá 50 ký tự.")]
+		[MinLength(3, ErrorMessage = "Email phải có ít nhất 3 ký tự.")]
+		public string? Email { get; set; }
 
-		public string? Address { get; set; }
 
-		//public string Gender { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
+        [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
+        [RegularExpression(@"^\d{9,11}$", ErrorMessage = "Số điện thoại phải có độ dài từ 9 đến 11 số.")]
+        public string? PhoneNumber { get; set; }
 
-		public string Role { get; set; }
+        public string? Address { get; set; }
 
-		public string Status { get; set; }
+        public string Role { get; set; }
 
-		public bool IsHidden { get; set; }
+        public string Status { get; set; } 
+
+        public bool IsHidden { get; set; }
+
 	}
 }
+
+
+

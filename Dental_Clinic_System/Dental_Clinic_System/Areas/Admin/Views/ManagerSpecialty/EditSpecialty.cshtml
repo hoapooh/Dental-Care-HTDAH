@@ -10,13 +10,17 @@
         <form action="~/Admin/ManagerSpecialty/EditSpecialty" method="post" class="modal-content" enctype="multipart/form-data">
             <div class="modal-header">
                 <h1 class="modal-title fs-10">Chỉnh sửa thông tin chuyên khoa</h1>
-                <a href="@Url.Action("ListSpecialty")" class="btn-close" aria-label="Close"></a>
+                <a href="~/Admin/ManagerSpecialty/ListSpecialty" class="btn-close" aria-label="Close"></a>
             </div>
             <div class="modal-body">
                 <input type="hidden" name="Id" value="@Model.Id" />
                 <div class="special-name">
                     <label for="nameSpecialty">Tên chuyên khoa</label>
                     <input type="text" name="Name" id="nameSpecialty" value="@Model.Name" required />
+                    @if (ViewData.ModelState["Name"] != null)
+                    {
+                        <span class="text-danger">@ViewData.ModelState["Name"].Errors.FirstOrDefault().ErrorMessage</span>
+                    }
                 </div>
                 <div class="special-image">
                     <label for="imageSpecialty">Hình ảnh</label>
@@ -28,7 +32,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="@Url.Action("ListSpecialty")" class="close-btn btn">Close</a>
+                <a href="~/Admin/ManagerSpecialty/ListSpecialty" class="close-btn btn">Close</a>
                 <button type="submit" class="submit-btn btn">Save changes</button>
             </div>
         </form>

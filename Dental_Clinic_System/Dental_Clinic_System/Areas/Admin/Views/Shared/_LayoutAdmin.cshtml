@@ -1,6 +1,4 @@
-﻿@{
-	Layout = null;
-}
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,89 +23,12 @@
 	<link rel="stylesheet" href="~/assets/css/accountDash.css" />
 	<link rel="stylesheet" href="~/assets/css/contentDash.css" />
 	<link rel="stylesheet" href="~/assets/css/specialtydash.css" />
+	@RenderSection("Scripts", required: false)
 </head>
+
 <body>
 	<div class="dashboard__container d-flex">
-		<nav class="sidebar" style="width: 15%">
-			<p class="dashboard__logo"><span>Dental</span>Care</p>
-			<ul class="nav">
-				<li class="nav-item">
-					<a href="~/dashboard.html" class="active">
-						<span class="menu-icon"><i class="bx bxs-dashboard"></i></span>Dashboard
-					</a>
-				</li>
-				<!-- =========== DROPDOWN MENU =========== -->
-				<li class="nav-item menu-items">
-					<a class="nav-link collapsed"
-					   data-bs-toggle="collapse"
-					   href="#manage-account"
-					   aria-expanded="false"
-					   aria-controls="manage-account">
-						<span class="menu-icon"><i class="bx bxs-user"></i></span>
-						<span class="menu-title">Quản lý tài khoản</span>
-						<span class="menu-down" style="margin-left: auto">
-							<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-						</span>
-					</a>
-					<div class="collapse" id="manage-account">
-						<ul class="nav flex-column sub-menu">
-							<li class="nav-item">
-								<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_nhasi').submit();">
-									<i class="fa-solid fa-stethoscope"></i> Tài khoản nha sĩ
-								</a>
-								<form id="form_nhasi" action="~/Admin/Admin/ListAccount" method="get">
-									<input type="hidden" name="Role" value="Nha sĩ">
-								</form>
-							</li>
-
-							<li class="nav-item">
-								<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_benh_nhan').submit();">
-									<i class="fa-solid fa-hospital-user"></i> Tài khoản bệnh nhân
-								</a>
-								<form id="form_benh_nhan" action="~/Admin/Admin/ListAccount" method="get">
-									<input type="hidden" name="Role" value="Bệnh nhân" />
-								</form>
-							</li>
-
-							<li class="nav-item">
-								<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_quan_ly').submit();">
-									<i class="fa-solid fa-hospital"></i> Tài khoản quản lý
-								</a>
-								<form id="form_quan_ly" action="~/Admin/Admin/ListAccount" method="get">
-									<input type="hidden" name="Role" value="Quản lý" />
-								</form>
-							</li>
-
-							<li class="nav-item">
-								<form>
-									<a style="padding-left: 40px; font-size: 1.4rem"
-									   class="nav-link"
-									   href="#!"><i class="fa-solid fa-ban"></i> Tài khoản bị cấm</a>
-								</form>
-							</li>
-						</ul>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a href="~/dashboardclinic.html">
-						<span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản
-						lý phòng khám
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="~/Admin/ManagerSpecialty/ListSpecialty">
-						<span class="menu-icon"><i class="bx bxs-bookmarks"></i></span>Quản lý chuyên khoa
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#!">
-						<span class="menu-icon"><i class="bx bx-history"></i></span>Xem
-						lịch sử giao dịch
-					</a>
-				</li>
-			</ul>
-			<div class="copyright">©️ All rights reserved | Dental Care</div>
-		</nav>
+		@Html.Partial("_AdminSideBar")
 
 		<div class="container-fluid" style="width: 85%; padding: 0">
 			<nav class="nav__header d-flex flex-row justify-content-end">
@@ -139,10 +60,17 @@
 	<script src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+	<script src="~/assets/js/richtexteditor.js"></script>
 	<script src="~/assets/js/pagination.js"></script>
+	<script src="~/assets/js/pagination-clinic.js"></script>
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	
 
-	@* @RenderSection("Scripts", required: false) *@
+	
+
 </body>
 </html>
