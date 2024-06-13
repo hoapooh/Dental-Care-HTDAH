@@ -381,8 +381,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Dentist\Data\" />
-    <Folder Include="Areas\Dentist\Models\" />
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="Areas\Manager\Models\" />
     <Folder Include="Migrations\" />

@@ -405,8 +405,8 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("varchar(11)")
                         .HasColumnName("PhoneNumber");
 
-                    b.Property<string>("Province")
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("Province")
+                        .HasColumnType("int")
                         .HasColumnName("Province");
 
                     b.Property<int?>("Ward")

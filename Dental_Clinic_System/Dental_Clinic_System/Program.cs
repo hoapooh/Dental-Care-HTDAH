@@ -17,24 +17,31 @@ builder.Services.AddDbContext<DentalClinicDbContext>(o => o.UseSqlServer(builder
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
+	options.IdleTimeout = TimeSpan.FromMinutes(10);
+	options.Cookie.HttpOnly = true;
+	options.Cookie.IsEssential = true;
 });
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 	//options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 	options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddCookie(options =>
 {
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/AccessDenied";
-    options.ExpireTimeSpan = TimeSpan.FromDays(14); // Set the expiration time for persistent cookies
+	options.LoginPath = "/Account/Login";
+	options.AccessDeniedPath = "/AccessDenied";
+	options.ExpireTimeSpan = TimeSpan.FromDays(14); // Set the expiration time for persistent cookies
+
+}).AddCookie("DentistScheme", options =>
+{
+	options.LoginPath = "/Dentist/DentistAccount/Login";
+	options.AccessDeniedPath = "/Dentist/DentistAccount/AccessDenied";
+	options.ExpireTimeSpan = TimeSpan.FromDays(14);
+
 }).AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {
-    options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
-    options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+	options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
+	options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
 });
 
 // Register the email sender service
@@ -64,9 +71,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Home/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -93,16 +100,16 @@ app.UseEndpoints(endpoints =>
 	_ = endpoints.MapControllerRoute(
 	   name: "dentist_default",
 	   pattern: "Dentist",
-	   defaults: new { area = "Dentist", controller = "Dentist", action = "DentistSchedule" });
+	   defaults: new { area = "Dentist", controller = "DentistDetail", action = "DentistSchedule" });
 
 	_ = endpoints.MapControllerRoute(
 			name: "areas",
-			pattern: "{area:exists}/{controller=Home}/{id?}");
+			pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 });
 //===========================================
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

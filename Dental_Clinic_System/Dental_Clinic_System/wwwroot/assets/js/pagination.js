@@ -23,7 +23,7 @@ function updatePagination() {
 	var prevA = document.createElement("a");
 	prevA.className = "page-link";
 	prevA.href = "#";
-	prevA.textContent = "Previous";
+	prevA.textContent = "Trước";
 	prevA.addEventListener("click", function (e) {
 		e.preventDefault();
 		if (currentPage > 1) {
@@ -81,7 +81,7 @@ function updatePagination() {
 	var nextA = document.createElement("a");
 	nextA.className = "page-link";
 	nextA.href = "#";
-	nextA.textContent = "Next";
+	nextA.textContent = "Sau";
 	nextA.addEventListener("click", function (e) {
 		e.preventDefault();
 		if (currentPage < numPages) {

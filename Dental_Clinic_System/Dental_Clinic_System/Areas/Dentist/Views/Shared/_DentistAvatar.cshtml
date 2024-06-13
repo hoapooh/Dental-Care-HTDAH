@@ -1,12 +1,14 @@
-﻿<nav class="nav__header d-flex flex-row justify-content-end">
-	<a href="#!">
+﻿<nav class="nav__header d-flex flex-row justify-content-end pt-5 pb-4">
+	<div>
 		<div class="d-flex align-items-center nav__header__profile">
 			<img src="@ViewBag.DentistAvatar" alt="" />
 			<p>
-				<span>@ViewBag.DentistName</span> <br />
-				Nha sĩ
+				Chào mừng, Nha sĩ <br />
+				<span>@ViewBag.DentistName</span>
 			</p>
-			@*<i class="bx bx-chevron-down-circle"></i>*@
+			<a asp-area="dentist" asp-controller="dentistaccount" asp-action="logout">
+				<i class="bx bx-log-out" style="color: red; transform: rotate(180deg)"></i>
+			</a>
 		</div>
-	</a>
+	</div>
 </nav>

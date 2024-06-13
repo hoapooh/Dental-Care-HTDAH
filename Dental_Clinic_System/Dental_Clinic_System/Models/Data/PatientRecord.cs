@@ -38,13 +38,13 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("EmailReceiver", TypeName = "varchar(50)")]
 		public string? EmailReceiver { get; set; } = null;
 
-		[Column("Province", TypeName = "nvarchar(50)")]
+		[Column("Province", TypeName = "int")]
 		public int? Province { get; set; } = null!;
 
-		[Column("District")]
+		[Column("District", TypeName = "int")]
 		public int? District { get; set; } = null!;
 
-		[Column("Ward")]
+		[Column("Ward", TypeName = "int")]
 		public int? Ward { get; set; } = null!;
 
 		[Column("Address", TypeName = "nvarchar(50)")]
