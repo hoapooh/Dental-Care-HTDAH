@@ -52,7 +52,9 @@ mobiscroll.datepicker("#demo-single-day", {
 			start: "02:00",
 			end: "06:30",
 			recurring: {
-				repeat: "daily",
+				repeat: "weekly",
+				weekDays: "MO, WE",
+				interval: 1,
 			},
 		},
 		{
