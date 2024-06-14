@@ -1,5 +1,6 @@
 ﻿using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.Services.MOMO;
 using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
     public class DentistDetailController : Controller
     {
         private readonly DentalClinicDbContext _context;
-        public DentistDetailController(DentalClinicDbContext context)
+        private readonly IMOMOPayment _momoPayment;
+        public DentistDetailController(DentalClinicDbContext context, IMOMOPayment momoPayment)
         {
             _context = context;
+            _momoPayment = momoPayment;
         }
 
         public IActionResult Index()
@@ -26,14 +29,14 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 
 
-		#region Lấy lịch làm việc của Dentist, đưa vào Calendar
-		[HttpGet]
+        #region Lấy lịch làm việc của Dentist, đưa vào Calendar
+        [HttpGet]
         //[Authorize(Roles = "Nha Sĩ")]
         public async Task<IActionResult> DentistSchedule()
         {
 
             var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
-            if(dentistAccountID == null)
+            if (dentistAccountID == null)
             {
                 return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
             }
@@ -53,18 +56,18 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             // Map 2 bên Schedule với appointment, sau đó map những cột appointment ko null với patient record
             var scheduleAppointments = from schedule in schedules
-                         join appointment in _context.Appointments
-                         on schedule.ID equals appointment.ScheduleID into appointmentGroup
-                         from appointment in appointmentGroup.DefaultIfEmpty()
-                         select new
-                         {
-                             appointmentID = appointment?.ID ?? 0,
-                             scheduleDate = schedule.Date,
-                             patientID = appointment?.PatientRecordID ?? 0,
-                             startTime = schedule?.TimeSlot?.StartTime,
-                             endTime = schedule?.TimeSlot?.EndTime,
-                             patientRecordID = appointment?.PatientRecordID ?? 0
-                         };
+                                       join appointment in _context.Appointments
+                                       on schedule.ID equals appointment.ScheduleID into appointmentGroup
+                                       from appointment in appointmentGroup.DefaultIfEmpty()
+                                       select new
+                                       {
+                                           appointmentID = appointment?.ID ?? 0,
+                                           scheduleDate = schedule.Date,
+                                           patientID = appointment?.PatientRecordID ?? 0,
+                                           startTime = schedule?.TimeSlot?.StartTime,
+                                           endTime = schedule?.TimeSlot?.EndTime,
+                                           patientRecordID = appointment?.PatientRecordID ?? 0
+                                       };
 
 
             var result = from sa in scheduleAppointments
@@ -77,8 +80,8 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                              sa.scheduleDate,
                              sa.startTime,
                              sa.endTime,
-                            patientName = patientRecord?.FullName ?? "No Patient"
-                        };
+                             patientName = patientRecord?.FullName ?? "No Patient"
+                         };
 
             // Map to EventVM
             var events = result.Select(s => new EventVM
@@ -87,7 +90,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 Start = s.scheduleDate != null && s.startTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.startTime.Value:HH:mm:ss}" : null,
                 End = s.scheduleDate != null && s.endTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.endTime.Value:HH:mm:ss}" : null,
             }).ToList();
-           
+
 
             // Lấy thông tin Nha sĩ
             var dentist = await _context.Dentists
@@ -101,11 +104,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             return View();
         }
 
-		#endregion
+        #endregion
 
-		#region Chỉnh sửa thông tin của Dentist
+        #region Chỉnh sửa thông tin của Dentist
 
-		[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> DentistDescription()
         {
             var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
@@ -150,7 +153,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
         #endregion
 
-        #region Quản lý lịch đặt khám của bệnh nhân (Bản thử nghiệm, còn province, district và ward, những dữ liệu quan trọng nữa)
+        #region Quản lý lịch đặt khám của bệnh nhân (Bản thử nghiệm và những dữ liệu quan trọng nữa)
 
         [HttpGet]
         public async Task<IActionResult> PatientAppointments()
@@ -167,10 +170,10 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                                     .Where(a => a.Schedule.DentistID == 1)
                                     .ToListAsync();
             var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
-			ViewBag.DentistAvatar = dentist?.Account.Image;
-			ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
+            ViewBag.DentistAvatar = dentist?.Account.Image;
+            ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
 
-			ViewBag.Message = TempData["Message"];
+            ViewBag.Message = TempData["Message"];
             return View("PatientAppointments", appointments);
         }
 
@@ -185,13 +188,35 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             {
                 return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
             }
-            var appointment = await _context.Appointments.FindAsync(appointmentID);
+            var appointment = await _context.Appointments.Include(a => a.Transactions).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
             appointment.AppointmentStatus = appointmentStatus;
+
+            //var a = appointment.Transactions.FirstOrDefault().TransactionCode;
+
             _context.Update(appointment);
             await _context.SaveChangesAsync();
+
+            // HERE
+            #region Refund MOMO API
+            //if (appointment.AppointmentStatus == "Đã Khám")
+            //{
+            //    // Invoke the refund method from payment controller
+            //    // Hoàn tiền thành công
+            //    //return View("RefundSuccess", responseObject);
+
+            //    if (_momoPayment.RefundPayment != null)
+            //    {
+            //        var response = _momoPayment.RefundPayment;
+            //        return RedirectToAction("RefundSuccess", "payment");
+            //    }
+
+
+            //}
+            #endregion
+
             TempData["message"] = "success";
             return RedirectToAction("PatientAppointments");
         }
-		#endregion
-	}
+        #endregion
+    }
 }

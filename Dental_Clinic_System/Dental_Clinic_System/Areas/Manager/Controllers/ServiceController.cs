@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
-
+using Dental_Clinic_System.ViewModels;
+using Dental_Clinic_System.Areas.Manager.ViewModels;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -76,11 +77,19 @@ namespace Dental_Clinic_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ClinicID,SpecialtyID,Name,Description,Price")] Service service)
+        public async Task<IActionResult> Create([Bind("ID,ClinicID,SpecialtyID,Name,Description,Price")] ServiceVM service)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(service);
+                var newSer = new Service
+                {
+                    ClinicID = service.ClinicID,
+                    SpecialtyID = service.SpecialtyID,
+                    Name = service.Name,
+                    Description = service.Description,
+                    Price = service.Price
+                };
+                _context.Add(newSer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -126,7 +135,7 @@ namespace Dental_Clinic_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ClinicID,SpecialtyID,Name,Description,Price")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ClinicID,SpecialtyID,Name,Description,Price")] ServiceVM service)
         {
             if (id != service.ID)
             {
@@ -137,7 +146,15 @@ namespace Dental_Clinic_System.Controllers
             {
                 try
                 {
-                    _context.Update(service);
+                    var upSer = await _context.Services.FindAsync(id);
+                    if (upSer != null)
+                    {
+                        upSer.SpecialtyID = service.SpecialtyID;
+                        upSer.Name = service.Name;
+                        upSer.Description = service.Description;
+                        upSer.Price = service.Price;
+                    }
+                    _context.Update(upSer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\about.html"
     },
     {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\Bill.css",
+      "PackagePath": "staticwebassets\\assets\\css\\Bill.css"
+    },
+    {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\about.css",
       "PackagePath": "staticwebassets\\assets\\css\\about.css"
     },
@@ -419,6 +423,10 @@
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\chart.js",
       "PackagePath": "staticwebassets\\assets\\js\\chart.js"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\firebase_script.js",
+      "PackagePath": "staticwebassets\\assets\\js\\firebase_script.js"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\fullcalendar.js",

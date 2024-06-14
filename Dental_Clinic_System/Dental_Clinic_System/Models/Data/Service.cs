@@ -29,7 +29,7 @@ namespace Dental_Clinic_System.Models.Data
 
 		[ForeignKey("ClinicID")]
         [InverseProperty("Services")]
-        public virtual Clinic? Clinic { get; set; }
+        public virtual Clinic Clinic { get; set; }
 
         [ForeignKey("SpecialtyID")]
         [InverseProperty("Services")]
@@ -38,7 +38,7 @@ namespace Dental_Clinic_System.Models.Data
 
 		#region Entity Mapping
 
-		public virtual Specialty? Specialty { get; set; } = null!;
+		public virtual Specialty Specialty { get; set; } = null!;
 
 		#endregion
 	}

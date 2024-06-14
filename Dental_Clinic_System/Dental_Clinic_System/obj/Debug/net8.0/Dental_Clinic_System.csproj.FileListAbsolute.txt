@@ -1,258 +1,3 @@
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.Development.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.staticwebassets.runtime.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.exe
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.deps.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.runtimeconfig.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.pdb
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\AutoMapper.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Azure.Core.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Azure.Identity.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Humanizer.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.AspNetCore.Razor.Language.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Build.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Build.Framework.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Features.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Elfie.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Features.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Razor.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Scripting.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.DiaSymReader.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.DotNet.Scaffolding.Shared.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.NET.StringTools.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\dotnet-aspnet-codegenerator-design.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Mono.TextTemplating.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Newtonsoft.Json.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Common.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Configuration.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.DependencyResolver.Core.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Frameworks.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.LibraryModel.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Packaging.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.ProjectModel.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Protocol.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Versioning.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.CodeDom.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.AttributedModel.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Convention.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Hosting.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Runtime.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.TypedParts.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Drawing.Common.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Memory.Data.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Reflection.MetadataLoadContext.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Runtime.Caching.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Permissions.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Windows.Extensions.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\af\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ar\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\az\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\bg\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\bn-BD\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\da\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\el\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fa\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fi-FI\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr-BE\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\he\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hr\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hu\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hy\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\id\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\is\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko-KR\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ku\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\lv\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ms-MY\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\mt\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nb\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nb-NO\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nl\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ro\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sk\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sl\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sr\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sr-Latn\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sv\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\th-TH\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uk\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uz-Cyrl-UZ\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uz-Latn-UZ\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\vi\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-CN\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Humanizer.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.AssemblyReference.cache
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.GeneratedMSBuildEditorConfig.editorconfig
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfoInputs.cache
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfo.cs
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.CoreCompileInputs.cache
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.MvcApplicationPartsAssemblyInfo.cache
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cache
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cs
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.sourcelink.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.build.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.development.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.Dental_Clinic_System.Microsoft.AspNetCore.StaticWebAssets.props
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.build.Dental_Clinic_System.props
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Dental_Clinic_System.props
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Dental_Clinic_System.props
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.pack.json
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\bundle\Dental_Clinic_System.styles.css
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\projectbundle\Dental_Clinic_System.bundle.scp.css
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_C.0B603CCC.Up2Date
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\refint\Dental_Clinic_System.dll
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.pdb
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.genruntimeconfig.cache
-G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\ref\Dental_Clinic_System.dll
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.Development.json
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.json
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.staticwebassets.runtime.json
@@ -508,18 +253,517 @@ D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.pdb
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.genruntimeconfig.cache
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\ref\Dental_Clinic_System.dll
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.AssemblyReference.cache
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.GeneratedMSBuildEditorConfig.editorconfig
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfoInputs.cache
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfo.cs
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.CoreCompileInputs.cache
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.MvcApplicationPartsAssemblyInfo.cache
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cache
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cs
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.sourcelink.json
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.dll
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\refint\Dental_Clinic_System.dll
-E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.pdb
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.Development.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.staticwebassets.runtime.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.exe
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.deps.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.runtimeconfig.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.pdb
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\AutoMapper.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Azure.Core.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Azure.Identity.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Humanizer.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.AspNetCore.Razor.Language.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Build.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Build.Framework.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Elfie.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Features.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Razor.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Scripting.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.DiaSymReader.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.DotNet.Scaffolding.Shared.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.NET.StringTools.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\dotnet-aspnet-codegenerator-design.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Mono.TextTemplating.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Common.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Configuration.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.DependencyResolver.Core.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Frameworks.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.LibraryModel.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Packaging.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.ProjectModel.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Protocol.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Versioning.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.CodeDom.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Convention.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Hosting.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Runtime.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.TypedParts.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Drawing.Common.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Memory.Data.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Reflection.MetadataLoadContext.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Runtime.Caching.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Permissions.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Windows.Extensions.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\af\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ar\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\az\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\bg\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\bn-BD\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\da\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\el\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fa\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fi-FI\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr-BE\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\he\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hr\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hu\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hy\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\id\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\is\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko-KR\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ku\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\lv\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ms-MY\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\mt\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nb\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nb-NO\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nl\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ro\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sk\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sl\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sr\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sr-Latn\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sv\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\th-TH\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uk\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uz-Cyrl-UZ\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uz-Latn-UZ\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\vi\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-CN\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Humanizer.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.AssemblyReference.cache
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.GeneratedMSBuildEditorConfig.editorconfig
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfoInputs.cache
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfo.cs
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.CoreCompileInputs.cache
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.MvcApplicationPartsAssemblyInfo.cache
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cache
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cs
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.sourcelink.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.build.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.development.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.Dental_Clinic_System.Microsoft.AspNetCore.StaticWebAssets.props
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.build.Dental_Clinic_System.props
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Dental_Clinic_System.props
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Dental_Clinic_System.props
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.pack.json
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\bundle\Dental_Clinic_System.styles.css
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\projectbundle\Dental_Clinic_System.bundle.scp.css
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_C.0B603CCC.Up2Date
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\refint\Dental_Clinic_System.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.pdb
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.genruntimeconfig.cache
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\ref\Dental_Clinic_System.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.Development.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.staticwebassets.runtime.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.exe
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.deps.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.runtimeconfig.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.pdb
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\AutoMapper.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Azure.Core.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Azure.Identity.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Humanizer.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.AspNetCore.Razor.Language.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Build.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Build.Framework.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Elfie.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Features.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Razor.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Scripting.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.DiaSymReader.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.DotNet.Scaffolding.Shared.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.NET.StringTools.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\dotnet-aspnet-codegenerator-design.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Mono.TextTemplating.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Newtonsoft.Json.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Common.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Configuration.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.DependencyResolver.Core.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Frameworks.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.LibraryModel.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Packaging.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.ProjectModel.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Protocol.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Versioning.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.CodeDom.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Convention.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Hosting.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Runtime.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.TypedParts.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Drawing.Common.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Memory.Data.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Reflection.MetadataLoadContext.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Runtime.Caching.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Permissions.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Windows.Extensions.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\af\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ar\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\az\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\bg\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\bn-BD\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\da\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\el\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fa\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fi-FI\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr-BE\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\he\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hr\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hu\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\hy\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\id\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\is\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko-KR\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ku\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\lv\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ms-MY\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\mt\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nb\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nb-NO\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\nl\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ro\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sk\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sl\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sr\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sr-Latn\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\sv\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\th-TH\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uk\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uz-Cyrl-UZ\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\uz-Latn-UZ\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\vi\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-CN\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Humanizer.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.AssemblyReference.cache
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.GeneratedMSBuildEditorConfig.editorconfig
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfoInputs.cache
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfo.cs
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.CoreCompileInputs.cache
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.MvcApplicationPartsAssemblyInfo.cache
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cache
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cs
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.sourcelink.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.build.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.development.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.Dental_Clinic_System.Microsoft.AspNetCore.StaticWebAssets.props
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.build.Dental_Clinic_System.props
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Dental_Clinic_System.props
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Dental_Clinic_System.props
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.pack.json
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\bundle\Dental_Clinic_System.styles.css
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\projectbundle\Dental_Clinic_System.bundle.scp.css
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_C.0B603CCC.Up2Date
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\refint\Dental_Clinic_System.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.pdb
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.genruntimeconfig.cache
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\ref\Dental_Clinic_System.dll
+G:\My Project .NET\Github-Team\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zxing.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.Development.json
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\appsettings.json
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Dental_Clinic_System.staticwebassets.runtime.json
@@ -600,6 +844,7 @@ E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_Sy
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Security.Permissions.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Windows.Extensions.dll
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zxing.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\af\Humanizer.resources.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\ar\Humanizer.resources.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\az\Humanizer.resources.dll
@@ -750,6 +995,15 @@ E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_Sy
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.AssemblyReference.cache
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.GeneratedMSBuildEditorConfig.editorconfig
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfoInputs.cache
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.AssemblyInfo.cs
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.csproj.CoreCompileInputs.cache
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.MvcApplicationPartsAssemblyInfo.cache
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cache
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.RazorAssemblyInfo.cs
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.sourcelink.json
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.build.json
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets.development.json
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\staticwebassets\msbuild.Dental_Clinic_System.Microsoft.AspNetCore.StaticWebAssets.props
@@ -761,5 +1015,8 @@ E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_Sy
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\bundle\Dental_Clinic_System.styles.css
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\scopedcss\projectbundle\Dental_Clinic_System.bundle.scp.css
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_C.0B603CCC.Up2Date
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.dll
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\refint\Dental_Clinic_System.dll
+E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.pdb
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.genruntimeconfig.cache
 E:\FPT\SUMMER_2024\SWP391\BackEnd_NotConflict\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\ref\Dental_Clinic_System.dll

@@ -8,6 +8,8 @@ using Dental_Clinic_System.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using ZXing.QrCode.Internal;
+using Dental_Clinic_System.Helper;
 
 namespace Dental_Clinic_System.Services
 {
@@ -29,6 +31,7 @@ namespace Dental_Clinic_System.Services
             // Get username from the email
             var user = _context.Accounts.FirstOrDefault(u => u.Email == email);
             string username = user?.Username;
+
             try
             {
                 var smtpClient = new SmtpClient(_configuration["Email:Smtp:Host"])
@@ -134,6 +137,148 @@ namespace Dental_Clinic_System.Services
             catch (SmtpException ex)
             {
                 _logger.LogError(ex, $"Error sending email to {newEmail} with subject {subject}");
+                throw; // Re-throw the exception if you want the caller to handle it
+            }
+        }
+
+        public async Task SendInvoiceEmailAsync(string email, string subject, string message)
+        {
+
+            string htmlMessage = @"
+<html>
+<head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Document</title>
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap' rel='stylesheet' />
+</head>
+<body style='color: #3e3e3e; background: #e8f2f7; font-family: Poppins, sans-serif; font-size: 1.6rem; min-height: 100vh; display: flex; align-items: center; justify-content: center;'>
+    <table style='max-width: 600px; margin: auto; background: #fff; border-radius: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-collapse: collapse;'>
+        <!-- HEADER -->
+        <tr>
+            <td style='padding: 20px 0; text-align: center;'>
+                <h1 style='font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;'>PHIẾU KHÁM BỆNH</h1>
+                <p style='font-size: 14px; font-weight: 700; margin-bottom: 5px;'>Nha khoa Thẩm Mỹ Quốc Tế New Gate</p>
+                <p style='font-size: 13px; font-weight: 300; color: #3e3e3e;'>218 Tân Hương, Tân Quý, Tân Phú, Thành phố Hồ Chí Minh</p>
+                <h2 style='font-size: 1.4rem; margin-bottom: 10px;'>Mã phiếu</h2>
+                <div class='barcode' style='text-align: center;'>
+                   <img src='https://barcodeapi.org/api/code128/T240611NUBLY2' alt='Barcode' style='max-width: 100%; height: auto;'>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style='text-align: center;'>
+                <div style='font-size: 20px; padding: 10px 28%; border-radius: 20px; background-color: #3bb54a; color: #fff; display: inline-block;'>
+                    Đặt khám thành công
+                </div>
+            </td>
+        </tr>
+        <!-- TIME -->
+        <tr>
+            <td style='padding: 20px 0; text-align: center;'>
+                <div style='color: #1376f8; font-size: 1.4rem; font-weight: 500;'>Giờ khám dự kiến</div>
+                <div style='font-size: 3.2rem; color: #1376f8; font-weight: 700; line-height: normal; margin-bottom: 2rem;'>08:30</div>
+                <table style='width: 100%; font-size: 1.3rem; padding: 0 20px;'>
+                    <tr>
+                        <td style='width: 50%; text-align: left;'>Mã phiếu:</td>
+                        <td style='text-align: right;'><b>T240611NUBLY2</b></td>
+                    </tr>
+                    <tr>
+                        <td style='text-align: left;'>Chuyên khoa:</td>
+                        <td style='text-align: right;'><b>Nha khoa</b></td>
+                    </tr>
+                    <tr>
+                        <td style='text-align: left;'>Ngày khám:</td>
+                        <td style='text-align: right; color: #1abc9c;'><b>dd/mm/yyyy</b></td>
+                    </tr>
+                    <tr>
+                        <td style='text-align: left;'>Giờ khám dự kiến:</td>
+                        <td style='text-align: right; color: #1abc9c;'><b>xx:xx</b></td>
+                    </tr>
+                    <tr>
+                        <td style='text-align: left;'>Phí khám:</td>
+                        <td style='text-align: right;'><b>0 VND</b></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- PATIENT INFO -->
+        <tr>
+            <td style='padding: 20px 0;'>
+                <table style='width: 100%; font-size: 1.3rem; padding: 0 20px;'>
+                    <tr>
+                        <td style='width: 50%; text-align: left;'>Bệnh nhân:</td>
+                        <td style='text-align: right;'><b>AN PHÚC HOÀ</b></td>
+                    </tr>
+                    <tr>
+                        <td style='text-align: left;'>Ngày sinh:</td>
+                        <td style='text-align: right;'><b>29/12/2004</b></td>
+                    </tr>
+                    <tr>
+                        <td style='text-align: left;'>Mã bệnh nhân:</td>
+                        <td style='text-align: right;'><b>??????????</b></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- COPYRIGHT -->
+        <tr>
+            <td style='padding: 20px 0 0; text-align: center;'>
+                <div class='note'>
+                    <p style='color: #df0000; font-style: italic; font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;'>Lưu ý:</p>
+                    <div style='font-size: 1.4rem; margin-bottom: 10px; font-style: italic; color: #3e3e3e;'>
+                        Quý bệnh nhân vui lòng đến quầy tiếp nhận tại sảnh để được tiếp đón.
+                        <br />
+                        Quý bệnh nhân cần hỗ trợ, vui lòng liên hệ tổng đài <strong>CSKH 1900 2115</strong>
+                    </div>
+                </div>
+                <div style='font-size: 1.3rem;'>
+                    <div>Bản quyền thuộc về</div>
+                    <div>
+                        <img style='width: 50%' src='https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.jpg?alt=media&token=30af9837-0908-4441-a4ea-d99031bc25ae' alt='DentalCare Logo' />
+                    </div>
+                </div>
+                <div style='border-bottom: 2px dashed #f0f2f5; margin-top: 5px; padding-bottom: 30px; font-size: 1rem;'>Đặt lịch khám tại Bệnh viện - Phòng khám hàng đầu Việt Nam</div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>";
+
+
+            try
+            {
+                var smtpClient = new SmtpClient(_configuration["Email:Smtp:Host"])
+                {
+                    Port = int.Parse(_configuration["Email:Smtp:Port"]),
+                    Credentials = new NetworkCredential(_configuration["Email:Smtp:Username"], _configuration["Email:Smtp:Password"]),
+                    EnableSsl = true,
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_configuration["Email:FromAddress"], _configuration["Email:FromName"]),
+                    Subject = subject,
+                    Body = htmlMessage,
+                    IsBodyHtml = true,
+                };
+
+                mailMessage.To.Add(email);
+
+                // Optional: Add additional headers to improve deliverability
+                mailMessage.Headers.Add("X-Priority", "1");
+                mailMessage.Headers.Add("X-MSMail-Priority", "High");
+                mailMessage.Headers.Add("Importance", "High");
+
+                await smtpClient.SendMailAsync(mailMessage);
+                _logger.LogInformation($"Email sent to {email} with subject {subject}");
+            }
+            catch (SmtpException ex)
+            {
+                _logger.LogError(ex, $"Error sending email to {email} with subject {subject}");
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
-using Dental_Clinic_System.ViewModels;
+using Dental_Clinic_System.Areas.Manager.ViewModels;
 using System.Configuration;
 
 namespace Dental_Clinic_System.Controllers
@@ -69,17 +69,15 @@ namespace Dental_Clinic_System.Controllers
         // GET: Dentists/Create 
         public IActionResult Create()
 		{
-			ViewData["AccountID"] = new SelectList(_context.Accounts, "ID", "AccountStatus");
-			ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name");
 			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name");
 			return View();
 		}
 
-		// POST: Dentists/Create
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		
-		/*[HttpPost]
+        // POST: Dentists/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /*[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("ID,AccountID,ClinicID,DegreeID,Description")] Dentist dentist)
 		{
@@ -95,77 +93,87 @@ namespace Dental_Clinic_System.Controllers
 			return View(dentist);
 		}*/
 
-		//Thêm tài khoản -> Thêm Nha sĩ
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(string Username, string Password, string Lastname, string Firstname, string Gender, string PhoneNumber, string Email, string Degree, string Description)
-		{
-			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", Degree);
-			//Check thông tin trùng lặp
-			var existingAccount = await _context.Accounts
-				.FirstOrDefaultAsync(a => a.Email == Email || a.PhoneNumber == PhoneNumber || a.Username == Username);
+        //Thêm tài khoản -> Thêm Nha sĩ
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Username, Password, LastName, FirstName, Gender, PhoneNumber, Email, DegreeID, Description")] AddDentistVM dentist)
+        {
+            ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
+            //Check thông tin trùng lặp
+            var existingAccount = await _context.Accounts
+                .FirstOrDefaultAsync(a => a.Email == dentist.Email || a.PhoneNumber == dentist.PhoneNumber || a.Username == dentist.Username);
 
-			if (existingAccount != null)
-			{
-				//Thấy thông tin bị trùng, thông báo lỗi
-				ModelState.AddModelError(string.Empty, "Fail: Tên đăng nhập / Email / Số điện thoại - đã tồn tại");
+            if (existingAccount != null)
+            {
+                //Thấy thông tin bị trùng, thông báo lỗi
+                ModelState.AddModelError(string.Empty, "Fail: Tên đăng nhập / Email / Số điện thoại - đã tồn tại");
 
-				return View("Create");
-			}
+                return View("Create",dentist);
+            }
 
-			//Thêm mới account vào DB
-			var newAccount = new Account
-			{
-				Username = Username,
-				Password = Password,
-				LastName = Lastname,
-				FirstName = Firstname,
-				Gender = Gender,
-				PhoneNumber = PhoneNumber,
-				Email = Email,
-				Role = "Nha Sĩ",
-				AccountStatus = "Hoạt động"
-			};
+            //Thêm mới account vào DB
+            var newAccount = new Account
+            {
+                Username = dentist.Username,
+                Password = dentist.Password,
+                LastName = dentist.LastName,
+                FirstName = dentist.FirstName,
+                Gender = dentist.Gender,
+                PhoneNumber = dentist.PhoneNumber,
+                Email = dentist.Email,
+                Role = "Nha Sĩ",
+                AccountStatus = "Hoạt động"
+            };
 
-			_context.Accounts.Add(newAccount);
-			await _context.SaveChangesAsync();
-			//Thêm mới nha sĩ
-			var account = await _context.Accounts
-				.FirstOrDefaultAsync(a => a.Username == Username);
-						// Debugging
-						Console.WriteLine($"AccountID: {account.ID}");
-						Console.WriteLine($"DegreeID: {Degree}");
-			var newDentist = new Dentist
-			{
-				AccountID = account.ID,
-				ClinicID = int.Parse("1"),
-				DegreeID = int.Parse(Degree),
-				Description = Description
-			};
-			_context.Dentists.Add(newDentist);
-			await _context.SaveChangesAsync();
-			//Về xem danh sách
-			var dentists = _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree);
-			return View("Index", await dentists.ToListAsync());
-		}
+            _context.Accounts.Add(newAccount);
+            await _context.SaveChangesAsync();
+            //Thêm mới nha sĩ
+            var account = await _context.Accounts
+                .FirstOrDefaultAsync(a => a.Username == dentist.Username);
+            // Debugging
+            Console.WriteLine($"AccountID: {account.ID}");
+            Console.WriteLine($"DegreeID: {dentist.DegreeID}");
+            var newDentist = new Dentist
+            {
+                AccountID = account.ID,
+                ClinicID = int.Parse("1"),
+                DegreeID = dentist.DegreeID,
+                Description = dentist.Description
+            };
+            _context.Dentists.Add(newDentist);
+            await _context.SaveChangesAsync();
+            //Về xem danh sách
+            var dentists = _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree);
+            return View("Index", await dentists.ToListAsync());
+        }
 
-		// GET: Dentists/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+        // GET: Dentists/Edit/5
+        public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
 			{
 				return NotFound();
 			}
 
-			var dentist = await _context.Dentists.FindAsync(id);
-			if (dentist == null)
+            var dentist = await _context.Dentists
+								.Include(d => d.Account)
+								.FirstOrDefaultAsync(d => d.ID == id);
+            if (dentist == null || dentist.Account == null)
 			{
 				return NotFound();
 			}
-			ViewData["AccountID"] = new SelectList(_context.Accounts, "ID", "AccountStatus", dentist.AccountID);
-			ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "ID", dentist.ClinicID);
-			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "ID", dentist.DegreeID);
-			return View(dentist);
+			var dentistForm = new EditDentistVM
+			{
+				DentistId = dentist.ID,
+                AccountId = dentist.Account.ID,
+				LastName = dentist.Account.LastName ?? "",
+				FirstName = dentist.Account.FirstName ?? "",
+				Gender = dentist.Account.Gender ?? "",
+				PhoneNumber = dentist.Account.PhoneNumber ?? "",
+				Email = dentist.Account.Email ?? ""
+			};
+			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
+			return View(dentistForm);
 		}
 
 		// POST: Dentists/Edit/5
@@ -173,41 +181,70 @@ namespace Dental_Clinic_System.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("ID,AccountID,ClinicID,DegreeID,Description")] Dentist dentist)
-		{
-			if (id != dentist.ID)
-			{
-				return NotFound();
-			}
+        public async Task<IActionResult> Edit(int id, [Bind("DentistId, AccountId, LastName, FirstName, Gender, PhoneNumber, Email, DegreeID, Description")] EditDentistVM dentistForm)
+        {
+            if (id != dentistForm.DentistId)
+            {
+                return NotFound();
+            }
 
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(dentist);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!DentistExists(dentist.ID))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			ViewData["AccountID"] = new SelectList(_context.Accounts, "ID", "AccountStatus", dentist.AccountID);
-			ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "ID", dentist.ClinicID);
-			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "ID", dentist.DegreeID);
-			return View(dentist);
-		}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var account = _context.Accounts.Find(dentistForm.AccountId);
+                    if (account != null) 
+                    {
+                        account.LastName = dentistForm.LastName;
+                        account.FirstName = dentistForm.FirstName;
+                        account.Gender = dentistForm.Gender;
+                        account.PhoneNumber = dentistForm.PhoneNumber;
+                        account.Email = dentistForm.Email;
+                    };
+                    _context.Update(account);
+                    await _context.SaveChangesAsync();
 
-		// GET: Dentists/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+                    var dentist = _context.Dentists.Find(dentistForm.DentistId);
+                    if (dentist != null)
+                    {
+                        dentist.DegreeID = dentistForm.DegreeID;
+                        dentist.Description = dentistForm.Description;
+                    }
+                    _context.Update(dentist);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DentistExists(dentistForm.DentistId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentistForm.DegreeID);
+            //List<string> errors = new List<string>();
+            //foreach (var value in ModelState.Values)
+            //{
+            //    foreach (var error in value.Errors)
+            //    {
+            //        errors.Add(error.ErrorMessage);
+            //    }
+            //}
+            //string errorMessage = string.Join("\n", errors);
+            //return BadRequest(errorMessage);
+
+            return View(dentistForm);
+        }
+ 
+
+        // GET: Dentists/Delete/5
+        public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
 			{

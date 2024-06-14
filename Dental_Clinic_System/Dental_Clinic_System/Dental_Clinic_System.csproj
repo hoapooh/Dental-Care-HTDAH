@@ -7,22 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Areas\Admin\Views\Account\EditAccount.cshtml" />
-    <None Include="Areas\Admin\Views\Account\ListAccount.cshtml" />
-    <None Include="Areas\Admin\Views\Account\ListLockedAccount.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerClinic\CreateClinic.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerClinic\ListClinic.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerSpecialty\EditSpecialty.cshtml" />
-    <None Include="Areas\Admin\Views\ManagerSpecialty\ListSpecialty.cshtml" />
-    <None Include="Areas\Admin\Views\Shared\_AdminSideBar.cshtml" />
-    <None Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Create.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Details.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Edit - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Edit.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Index.cshtml" />
+    <None Include="Areas\Manager\Views\Dentists\Create - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Create.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Details.cshtml" />
@@ -373,6 +364,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="ZXing.Net" Version="0.16.9" />
   </ItemGroup>
 
   <ItemGroup>

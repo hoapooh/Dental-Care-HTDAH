@@ -1,10 +1,119 @@
-﻿@model Dental_Clinic_System.Models.Data.Dentist
+﻿@model Dental_Clinic_System.Areas.Manager.ViewModels.EditDentistVM
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_LayoutManager";
 }
+@section Styles {
+    <style>
+        .sidebar .nav-item a.Quan_ly_nha_si {
+            color: #fff;
+            background: #4880ff;
+        }
 
-<h1>Edit</h1>
+        .manager__management__header {
+            justify-content: space-around;
+        }
+
+        .form-modal-styles {
+            width: 1000px;
+        }
+
+        .modal-footer {
+            gap: 10px;
+        }
+
+        .form-modal-styles .modal-body .modal-body-card2 {
+            flex: 0 30%;
+            padding: 0 10px;
+        }
+
+        .form-modal-styles .modal-body .modal-body-card3 {
+            flex: 0 20%;
+            padding: 0 10px;
+        }
+    </style>
+}
+<!--header -->
+<div class="manager__management__header">
+    <div class="title">Chỉnh sửa nha sĩ</div>
+</div>
+<h1></h1>
+<!--Form create -->
+<div class="modal-dialog modal-dialog-centered form-modal-styles">
+    @* enctype: để thêm hình ảnh *@
+    <form asp-action="Edit" enctype="multipart/form-data" class="modal-content" style="font-size: 2rem">
+
+        @* Kiểm tra dữ liệu đầu vào, dựa trên VM *@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="DentistId" />
+        <input type="hidden" asp-for="AccountId" />
+        <div class="modal-body ">
+            @* <div class="user-name modal-body-card">
+                <label for="username">Tên đăng nhập</label>
+                <input asp-for="Username" type="text" required />
+            </div>
+            <div class="user-password modal-body-card">
+                <label for="Password">Mật khẩu</label>
+                <input asp-for="Password" type="password" required />
+            </div> *@
+            <div class="user-name modal-body-card">
+                <label for="LastName">Họ (Tên đệm)</label>
+                <input asp-for="LastName" type="text" required />
+            </div>
+            <div class="user-password modal-body-card2">
+                <label for="FirstName">Tên</label>
+                <input asp-for="FirstName" type="text" required />
+            </div>
+            <div class="user-password modal-body-card3">
+                <label for="Gender">Giới tính</label>
+                <select asp-for="Gender" required>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+            </div>
+            <div class="user-mail modal-body-card">
+                <label for="Email">Email</label>
+                <input type="email" asp-for="Email" required />
+            </div>
+            <div class="user-tel modal-body-card">
+                <label for="PhoneNumber">Số điện thoại</label>
+                <input type="tel" asp-for="PhoneNumber" required />
+            </div>
+
+            <div class="user-address modal-body-card">
+                <label for="DegreeID">Bằng cấp</label>
+                <select asp-items="ViewBag.DegreeID" asp-for="DegreeID" required></select>
+            </div>
+            <div class="user-address modal-body-card">
+                <label for="Description">Mô tả nha sĩ</label>
+                <div id="container">
+                    <div id="editor">
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+            |
+            <button type="submit" class="submit-btn btn">
+                Cập nhật mới
+            </button>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @* Dùng editor *@
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+    <script src="~/assets/js/richtexteditor2.js"></script>
+}
+@* <h1>Edit</h1>
 
 <h4>Dentist</h4>
 <hr />
@@ -43,4 +152,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+ *@

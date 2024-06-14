@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.Areas.Manager.ViewModels;
 
 namespace Dental_Clinic_System.Areas.Manager.Controllers
 {
@@ -91,7 +92,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ManagerID,Name,Province,Ward,District,Address,Basis,PhoneNumber,Email,Description,Image,ClinicStatus")] Clinic clinic)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ManagerID,Name,Province,Ward,District,Address,Basis,PhoneNumber,Email,Description,Image,ClinicStatus")] ClinicVM clinic)
         {
             if (id != clinic.ID)
             {
@@ -102,7 +103,21 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             {
                 try
                 {
-                    _context.Update(clinic);
+                    var upClinic = await _context.Clinics.FindAsync(id);
+                    if (upClinic != null)
+                    {
+                        upClinic.Name = clinic.Name;
+                        upClinic.Basis = clinic.Basis;
+                        upClinic.Image = clinic.Image ?? "";
+                        upClinic.Province = clinic.Province;
+                        upClinic.Ward = clinic.Ward;
+                        upClinic.District = clinic.District;
+                        upClinic.Address = clinic.Address;
+                        upClinic.Email = clinic.Email;
+                        upClinic.PhoneNumber = clinic.PhoneNumber;
+                        upClinic.Description = clinic.Description;
+                    }
+                    _context.Update(upClinic);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

@@ -85,6 +85,13 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseCors(builder =>
+{
+    builder.WithOrigins("https://your-allowed-origin.com")
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+});
+
 app.UseEndpoints(endpoints =>
 {
 	endpoints.MapControllerRoute(

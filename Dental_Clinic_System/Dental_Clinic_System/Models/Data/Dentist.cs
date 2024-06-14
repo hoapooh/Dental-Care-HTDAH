@@ -26,15 +26,15 @@ namespace Dental_Clinic_System.Models.Data
 
 		[ForeignKey("AccountID")]
         [InverseProperty("Dentists")]
-        public virtual Account? Account { get; set; } = null!;
+        public virtual Account Account { get; set; } = null!;
 
         [ForeignKey("ClinicID")]
         [InverseProperty("Dentists")]
-        public virtual Clinic? Clinic { get; set; } = null!;
+        public virtual Clinic Clinic { get; set; } = null!;
 
         [ForeignKey("DegreeID")]
         [InverseProperty("Dentists")]
-        public virtual Degree? Degree { get; set; }
+        public virtual Degree Degree { get; set; }
 
 		#endregion
 
