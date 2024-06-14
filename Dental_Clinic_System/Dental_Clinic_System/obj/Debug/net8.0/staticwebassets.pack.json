@@ -9,11 +9,15 @@
       "PackagePath": "staticwebassets\\about.html"
     },
     {
+<<<<<<< Updated upstream
       "Id": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\Bill.css",
       "PackagePath": "staticwebassets\\assets\\css\\Bill.css"
     },
     {
       "Id": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\about.css",
+=======
+      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\about.css",
+>>>>>>> Stashed changes
       "PackagePath": "staticwebassets\\assets\\css\\about.css"
     },
     {
@@ -65,6 +69,7 @@
       "PackagePath": "staticwebassets\\assets\\css\\headerAd.css"
     },
     {
+<<<<<<< Updated upstream
       "Id": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\icons_mobiscroll.ttf",
       "PackagePath": "staticwebassets\\assets\\css\\icons_mobiscroll.ttf"
     },
@@ -74,6 +79,13 @@
     },
     {
       "Id": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\login.css",
+=======
+      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\invoice.css",
+      "PackagePath": "staticwebassets\\assets\\css\\invoice.css"
+    },
+    {
+      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\login.css",
+>>>>>>> Stashed changes
       "PackagePath": "staticwebassets\\assets\\css\\login.css"
     },
     {

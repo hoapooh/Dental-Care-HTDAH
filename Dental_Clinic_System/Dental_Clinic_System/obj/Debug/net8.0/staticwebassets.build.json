@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< Updated upstream
   "Hash": "tkwtuAt/ceitcoi3gUUPpnFdQy4iSX/xHOPh58jmve0=",
+=======
+  "Hash": "d2F489srGsqS+BbA7ablWpQqzNs98euaJayWEFITGM8=",
+>>>>>>> Stashed changes
   "Source": "Dental_Clinic_System",
   "BasePath": "_content/Dental_Clinic_System",
   "Mode": "Default",
@@ -131,6 +135,7 @@
       "OriginalItemSpec": "wwwroot\\assets\\css\\authentication.css"
     },
     {
+<<<<<<< Updated upstream
       "Identity": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\Bill.css",
       "SourceId": "Dental_Clinic_System",
       "SourceType": "Discovered",
@@ -151,6 +156,9 @@
     },
     {
       "Identity": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\booking.css",
+=======
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\booking.css",
+>>>>>>> Stashed changes
       "SourceId": "Dental_Clinic_System",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
@@ -340,7 +348,30 @@
       "OriginalItemSpec": "wwwroot\\assets\\css\\headerAd.css"
     },
     {
+<<<<<<< Updated upstream
       "Identity": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\icons_mobiscroll.ttf",
+=======
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\invoice.css",
+      "SourceId": "Dental_Clinic_System",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
+      "BasePath": "_content/Dental_Clinic_System",
+      "RelativePath": "assets/css/invoice.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\css\\invoice.css"
+    },
+    {
+      "Identity": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\login.css",
+>>>>>>> Stashed changes
       "SourceId": "Dental_Clinic_System",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\",
