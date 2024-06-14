@@ -46,6 +46,7 @@ document.getElementById('clinicForm').addEventListener('submit', function (event
     } else {
         //console.log('No file selected');
         //alert('No file selected');
-        document.getElementById('clinicForm').submit();
+        //document.getElementById('clinicForm').submit();
+        form.submit();
     }
 });
