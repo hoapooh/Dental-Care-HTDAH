@@ -25,11 +25,11 @@
             <span asp-validation-for="Password" class="text-danger"></span>
 		</div>
 		<div class="col-md-3">
-			<label for="firstname">Họ</label>
+			<label for="firstname">Tên</label>
 			<input type="text" name="Firstname" id="firstname" value="@Model.FirstName" />
 		</div>
 		<div class="col-md-3">
-			<label for="lastname">Tên</label>
+			<label for="lastname">Họ</label>
 			<input type="text" name="Lastname" id="lastname" value="@Model.LastName" />
 		</div>
 		<div class="col-md-6">
@@ -39,7 +39,7 @@
 		</div>
 		<div class="col-md-6">
 			<label for="dateofbirth">Ngày sinh</label>
-			<input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")"
+			<input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" required
                    max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")"/>
 		</div>
 		<div class="col-md-6">

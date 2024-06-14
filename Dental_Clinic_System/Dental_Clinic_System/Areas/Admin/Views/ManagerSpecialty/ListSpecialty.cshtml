@@ -19,6 +19,7 @@
 }
 
 
+<!--TÌM KIẾM (SEARCH)-->
 <div class="account__management__header">
 	<h1 class="title mb-0">Quản lý chuyên khoa</h1>
 	<div class="action-btn">
@@ -35,6 +36,7 @@
 		</button>
 	</div>
 
+	<!--THÊM MỚI CHUYÊN KHOA (ADD)-->
 	<!-- =========== MODAL FOR ADD =========== -->
 	<div class="modal fade"
 		 id="myModalAdd"
@@ -82,6 +84,8 @@
 
 </div>
 
+
+<!--SHOW LIST-->
 <!-- =========== TABLE =========== -->
 <table class="table table-striped mt-5" style="font-size: 1.7rem">
 	<thead>
@@ -106,9 +110,11 @@
 					<td><img src="@account.Image" alt="" /></td>
 					<td>@account.Description</td>
 					<td>
+						<!--EDIT-->
 						<a href="@Url.Action("EditSpecialty", new { id = account.Id })" class="btn btn-primary">
 							<i class="bx bxs-edit"></i>
 						</a>
+						<!--DELETE-->
 						<button type="button" onclick="location.href='@Url.Action("DeleteSpecialty", new {id = account.Id})'">
 							<i class="bx bxs-trash"></i>
 						</button>

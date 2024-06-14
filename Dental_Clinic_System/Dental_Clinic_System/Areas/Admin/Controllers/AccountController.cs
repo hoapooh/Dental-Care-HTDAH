@@ -211,18 +211,18 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				return RedirectToAction(nameof(ListAccount), new { role = role });
 			}
 
-            //List<string> errors = new List<string>();
-            //foreach (var value in ModelState.Values)
-            //{
-            //	foreach (var error in value.Errors)
-            //	{
-            //		errors.Add(error.ErrorMessage);
-            //	}
-            //}
-            //string errorMessage = string.Join("\n", errors);
-            //return BadRequest(errorMessage);
+			//List<string> errors = new List<string>();
+			//foreach (var value in ModelState.Values)
+			//{
+			//	foreach (var error in value.Errors)
+			//	{
+			//		errors.Add(error.ErrorMessage);
+			//	}
+			//}
+			//string errorMessage = string.Join("\n", errors);
+			//return BadRequest(errorMessage);
 
-            ViewBag.Role = role;
+			ViewBag.Role = role;
             return View(model);
 		}
 
