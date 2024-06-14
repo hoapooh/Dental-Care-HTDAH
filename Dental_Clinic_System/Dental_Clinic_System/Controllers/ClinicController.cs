@@ -90,37 +90,104 @@ namespace Dental_Clinic_System.Controllers
             return View("ClinicDentist", dentists);
         }
 
+        //Hàm nhận tất cả schedule của dentistID truyền vào từ URL 
         [HttpGet]
-        public async Task<IActionResult> BookDentist(int clinicID, int specialtyID, int dentistID)
+        public async Task<IActionResult> ClinicDentistCalendar(int clinicID, int specialtyID, int dentistID)
         {
-            var dentistBooking = await _context.Dentists.Include(d => d.Account)
-                                                  .Include(d => d.Clinic)
-                                                  .Include(d => d.DentistSpecialties).ThenInclude(ds => ds.Specialty)
-                                                  .Where(d => d.ClinicID == clinicID && d.ID == dentistID && d.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID))
-                                                  .FirstOrDefaultAsync();
+            var schedule = await _context.Schedules
+                                .Include(s => s.TimeSlot)
+                                .Include(s => s.Appointments)
+                                .Include(s => s.Dentist)
+                                    .ThenInclude(d => d.DentistSpecialties)
+                                    .ThenInclude(ds => ds.Specialty)
+								.Include(s => s.Dentist)
+                                    .ThenInclude(d => d.Account)
+								.Where(s => s.DentistID == dentistID)
+                                .ToListAsync();
+			ViewBag.clinicID = clinicID;
+			ViewBag.specialtyID = specialtyID;
+            ViewBag.dentistID = dentistID;
+			return View(schedule);
+        }
 
-            ViewBag.clinicID = clinicID;
+        //Hàm trả về JSON tất cả schedule của dentist hiện tại có status là "Còn Trống"
+		public IActionResult GetSchedules(int dentistID)
+		{
+            var schedules = _context.Schedules
+                .Include(s => s.TimeSlot)
+                .Include(s => s.Dentist)
+                .Where(s => s.Dentist.ID == dentistID && s.ScheduleStatus == "Còn Trống")
+                .Select(s => new
+                {
+                    Date = s.Date.ToString("yyyy-MM-dd"),
+                    StartTime = s.TimeSlot.StartTime.ToString(@"hh\:mm"),
+                    EndTime = s.TimeSlot.EndTime.ToString(@"hh\:mm"),
+                    scheduleID = s.ID
+                })
+				.ToList();
+            foreach(var s in schedules)
+            {
+                Console.WriteLine(s);
+            }
+			return Json(schedules);
+		}
+
+        [Authorize(Roles = "Bệnh Nhân")]
+		[HttpGet]
+        public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string selectedDate, string scheduleID)
+        {
+            var username = User.Identity.Name;
+            Console.WriteLine($"{username}");
+            var patientRecord = await _context.PatientRecords
+                                        .Include(pr => pr.Account)
+                                        .Include(pr => pr.Appointments)
+                                        .Where(pr => pr.Account.Email == username)
+                                        .ToListAsync();
+            foreach (var p in patientRecord)
+            {
+                Console.WriteLine(p.ID);
+
+			}
+            ViewBag.scheduleID = 2;
             ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;
-            return View("ClinicDentistCalendar", dentistBooking);
+            ViewBag.clinicID = clinicID;
+            return View(patientRecord);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> CreateNewPatientRecord()
+        {
+
+            return View();
+        }
+
+        //Hàm nhận dữ liệu hồ sơ bệnh nhân (patient record) nếu chưa có hoặc tạo thêm hồ sơ bệnh nhân
+        [HttpPost]
+        public async Task<IActionResult> AddPatientRecord()
+        {
+
+            return View();
         }
 
         // Choose a patient record for booking (Method GET is here)
-
         [HttpGet]
-        [Authorize(Roles = "Bệnh Nnhân")]
+        [Authorize(Roles = "Bệnh Nhân")]
         // Route
-        public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit)
+        public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
         {
             var appointment = new Dictionary<string, object>
             {
-                {"Schedule", _context.Schedules.FirstOrDefaultAsync(s => s.ID == scheduleID)},
-                { "PatientRecord", _context.PatientRecords.FirstOrDefaultAsync(p => p.ID == patientRecordID)},
-                { "Specialty", _context.Specialties.FirstOrDefaultAsync(s => s.ID == specialtyID)}
+                { "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
+                { "PatientRecord", await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID)},
+                { "Specialty", await _context.Specialties.FirstOrDefaultAsync(sp => sp.ID == specialtyID)},
+                { "Dentist", await _context.Dentists.Include(d => d.Account). FirstOrDefaultAsync(d => d.ID == dentistID)},
+                { "Clinic", await _context.Clinics. FirstOrDefaultAsync(c => c.ID == clinicID) }
             };
 
             
-            ViewBag.totalDeposit = totalDeposit;
+            //ViewBag.totalDeposit = totalDeposit;
 			return View(appointment);
         }
     }

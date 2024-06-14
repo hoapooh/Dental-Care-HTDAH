@@ -552,6 +552,10 @@ namespace Dental_Clinic_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<decimal>("Deposit")
+                        .HasColumnType("money")
+                        .HasColumnName("Deposit");
+
                     b.Property<string>("Description")
                         .HasColumnType("ntext")
                         .HasColumnName("Description");

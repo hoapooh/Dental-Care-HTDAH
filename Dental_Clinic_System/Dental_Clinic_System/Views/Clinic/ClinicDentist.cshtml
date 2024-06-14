@@ -123,7 +123,7 @@
 					<div class="booking__dentist">
 						@foreach (var dentist in Model)
 						{
-							<a asp-controller="clinic" asp-action="bookdentist" asp-route-clinicID="@dentist.Clinic.ID" asp-route-specialtyID="@ViewBag.Specialty?.ID" asp-route-dentistID="@dentist.ID">
+							<a asp-controller="clinic" asp-action="clinicdentistcalendar" asp-route-clinicID="@dentist.Clinic.ID" asp-route-specialtyID="@ViewBag.Specialty?.ID" asp-route-dentistID="@dentist.ID">
 								<div class="booking__dentist__card">
 									<div class="booking__dentist__card__style">
 

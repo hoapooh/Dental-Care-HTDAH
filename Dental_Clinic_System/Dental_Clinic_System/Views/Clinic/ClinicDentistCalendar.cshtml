@@ -1,8 +1,8 @@
-﻿@model Dental_Clinic_System.Models.Data.Dentist
+﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Schedule>
 
 @{
 	ViewData["Title"] = "DentistBookingCalendar";
-	var dentistBooking = ViewBag.dentistBooking as IEnumerable<Dental_Clinic_System.Models.Data.Dentist>;
+	//var dentistBooking = ViewBag.dentistBooking as IEnumerable<Dental_Clinic_System.Models.Data.Dentist>;
 }
 
 <head>
@@ -19,18 +19,22 @@
 		  rel="stylesheet"
 		  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 		  crossorigin="anonymous" />
+	<link rel="stylesheet" href="~/assets/css/mobiscroll.javascript.min.css" />
 	<link rel="stylesheet" href="~/assets/css/header.css" />
 	<link rel="stylesheet" href="~/assets/css/footer.css" />
 	<link rel="stylesheet" href="~/assets/css/clinic.css" />
+	<link rel="stylesheet" href="~/assets/css/schedule.css" />
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <div class="clinic">
 	<h1 class="clinic__title text-center fw-bold">Chọn Ngày Khám</h1>
 	<div class="text-center">
-		<img src="~/assets/images/separate.png" alt="" />
+		<img src="~/assets/images/separate.png" alt="seperate" />
 	</div>
 	<div class="clinic__dentist__container">
-		<div class="info">
+		@*<div class="info">
 			<div class="info-style">
 				<div class="info-title">Thông tin cơ sở y tế</div>
 				<div class="info-body">
@@ -38,103 +42,186 @@
 						<li>
 							<i class="fa-solid fa-hospital"></i>
 							<div class="text">
-								<span>@Model.Clinic.Name</span>
+								<span>@Model.First()?.Dentist?.Clinic?.Name</span>
 								<p class="address">
-									@Model.Clinic.Address
+									@Model.First()?.Dentist?.Clinic?.Address
 								</p>
 							</div>
 						</li>
 						<li>
 							<i class="fa-solid fa-tooth"></i>
-							<div class="text"><span>Chuyên khoa: @Model.DentistSpecialties.FirstOrDefault(ds => ds.SpecialtyID == ViewBag.specialtyID)?.Specialty.Name</span></div>
+							<div class="text"><span>Chuyên khoa: @Model.First().Dentist.DentistSpecialties?.FirstOrDefault(ds => ds.SpecialtyID == ViewBag.specialtyID)?.Specialty.Name</span></div>
 						</li>
 						<li>
 							<i class="fa-solid fa-stethoscope"></i>
 							<div class="text">
-								<span>Bác sĩ: @Model.Account.LastName @Model.Account.FirstName</span>
+								<span>Bác sĩ: @Model.First().Dentist?.Account?.LastName @Model.First().Dentist?.Account?.FirstName</span>
 							</div>
 						</li>
 					</ul>
 				</div>
 			</div>
-		</div>
+		</div>*@
+
+		<!-- =========== BOOKING =========== -->
 		<div class="booking">
-			<div class="booking-style">
-				<div class="booking-title">Vui lòng chọn ngày khám</div>
-				<div class="booking-calender">
-					<div class="year-month__container">
-						<div class="year-month__container__style">
-							<div>
-								<button type="button" disabled>
-									<i class="fa-solid fa-circle-left"></i>
-								</button>
-							</div>
-							<div><div class="year-month__time">THÁNG 05-2024</div></div>
-							<div>
-								<button type="button">
-									<i class="fa-solid fa-circle-right"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-					<div class="week__container">
-						<div class="week__cell">CN</div>
-						<div class="week__cell">Hai</div>
-						<div class="week__cell">Ba</div>
-						<div class="week__cell">Tư</div>
-						<div class="week__cell">Năm</div>
-						<div class="week__cell">Sáu</div>
-						<div class="week__cell">Bảy</div>
-					</div>
-					<div class="date__container">
-						<div class="date__container__style">
-							<div class="date__cell"><span>1</span></div>
-							<div class="date__cell"><span>2</span></div>
-							<div class="date__cell"><span>3</span></div>
-							<div class="date__cell"><span>4</span></div>
-							<div class="date__cell"><span>5</span></div>
-							<div class="date__cell"><span>6</span></div>
-							<div class="date__cell"><span>7</span></div>
-							<div class="date__cell"><span>8</span></div>
-							<div class="date__cell"><span>9</span></div>
-							<div class="date__cell"><span>10</span></div>
-							<div class="date__cell"><span>11</span></div>
-							<div class="date__cell"><span>12</span></div>
-							<div class="date__cell"><span>13</span></div>
-							<div class="date__cell"><span>14</span></div>
-							<div class="date__cell"><span>15</span></div>
-							<div class="date__cell"><span>16</span></div>
-							<div class="date__cell"><span>17</span></div>
-							<div class="date__cell"><span>18</span></div>
-							<div class="date__cell"><span>19</span></div>
-							<div class="date__cell"><span>20</span></div>
-							<div class="date__cell"><span>21</span></div>
-							<div class="date__cell"><span>22</span></div>
-							<div class="date__cell"><span>23</span></div>
-							<div class="date__cell"><span>24</span></div>
-							<div class="date__cell"><span>25</span></div>
-							<div class="date__cell"><span>26</span></div>
-							<div class="date__cell"><span>27</span></div>
-							<div class="date__cell"><span>28</span></div>
-							<div class="date__cell"><span>29</span></div>
-							<div class="date__cell available-day"><span>30</span></div>
-							<div class="date__cell"><span>31</span></div>
-							<div class="date__cell"><span>01</span></div>
-							<div class="date__cell available-day"><span>02</span></div>
-							<div class="date__cell"><span>03</span></div>
-							<div class="date__cell"><span>04</span></div>
+			<form asp-controller="clinic" asp-action="patientrecord" method="get">
+				<div class="booking-style">
+					<div class="booking-title">Vui lòng chọn ngày và giờ khám</div>
+
+					<!-- THẺ NÀY ĐỂ HIỂN THỊ LỊCH THEO GIAO DIỆN MOBISCROLL  -->
+
+					<div class="mbsc-col-sm-12 mbsc-col-md-4">
+						<div class="mbsc-form-group">
+							<div id="demo-single-day"></div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="back-btn">
-				<a href="/clinic/choosedentist?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID">
-					<button type="button">
-						Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
-					</button>
-				</a>
-			</div>
+				<input type="hidden" name="clinicID" value="@ViewBag.clinicID" />
+				<input type="hidden" name="specialtyID" value="@ViewBag.specialtyID" />
+				<input type="hidden" name="dentistID" value="@ViewBag.dentistID" />
+
+				<input type="hidden" id="scheduleID" name="scheduleID" value="2"/>
+				<div class="btn-wrapper">
+					<a>
+						<button type="button" class="back-btn">
+							Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
+						</button>
+					</a>
+					<a>
+						<button type="submit" class="add-record-btn">
+							Tiếp tục <i class="fa-solid fa-arrow-right"></i>
+						</button>
+					</a>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
+
+<script src="~/assets/js/mobiscroll.javascript.min.js"></script>
+@* <script src="~/assets/js/mobiscroll-calendar.js"></script> *@
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		mobiscroll.setOptions({
+			stepMinute: 30,
+			theme: "ios",
+			themeVariant: "light"
+		});
+
+		// mobiscroll.datepicker('#demo-single-day', {
+		// 	controls: ['calendar', 'timegrid'],
+		// 	min: '2024-06-14T00:00',
+		// 	max: '2024-12-14T00:00',
+		// 	display: 'inline',
+		// 	minTime: '08:00',
+		// 	maxTime: '19:59',
+		// 	stepMinute: 60,
+		// 	// example for today's labels and invalids
+		// 	labels: [{
+		// 		start: '2024-06-14',
+		// 		textColor: '#e1528f',
+		// 		title: '4 SPOTS'
+		// 	}],
+		// 	valid: [{
+		// 		start: '2024-06-14T08:00',
+		// 		end: '2024-06-14T13:00',
+		// 		title: 1
+				
+		// 	}, {
+		// 		start: '2024-06-14T15:00',
+		// 		end: '2024-06-14T17:00',
+		// 		title: 2
+		// 	}, {
+		// 		start: '2024-06-14T19:00',
+		// 		end: '2024-06-14T20:00',
+		// 		title: 3
+		// 	}],
+		// 	onChange: function (inst, event, val) {
+		// 		const selectedDate = new Date(val);
+		// 		const hours = selectedDate.getHours();
+		// 		const minutes = selectedDate.getMinutes();
+		// 		const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+		// 		let scheduleValue;
+
+		// 		switch (timeString) {
+		// 			case '08:00':
+		// 				scheduleValue = 1;
+		// 				break;
+		// 			case '09:00':
+		// 				scheduleValue = 2;
+		// 				break;
+		// 			case '10:00':
+		// 				scheduleValue = 3;
+		// 				break;
+		// 			// Thêm các trường hợp khác nếu cần
+		// 			default:
+		// 				scheduleValue = 0;
+		// 		}
+
+		// 		document.getElementById('scheduleID').value = scheduleValue;
+		// 	}
+		// });
+
+		//fetch schedules from the server
+		fetch('/clinic/getschedules?dentistID='+ @ViewBag.dentistID)
+			.then(response => response.json())
+			.then(data => {
+				// map the data to the mobiscroll valid format
+				var schedules = data.map(function (item) {
+					return {
+						start: item.date + 'T' + item.startTime,
+						end: item.date + 'T' + item.startTime,
+						title: item.scheduleID,
+						recurring: {
+							repeat: 'none'
+						}
+					};
+				});
+				console.log(schedules);
+
+				//initialize mobiscroll calendar with the valid dates
+				mobiscroll.datepicker("#demo-single-day", {
+					controls: ["calendar", "timegrid"],
+					display: "inline",
+					touchUI: true,
+					selectMultiple: false,
+					// valid: data.map(item => ({
+					// 	start: item.date + 'T' + item.startTime,
+					// 	end: item.date + 'T' + item.startTime,
+					valid: schedules.map(item => ({
+						start: item.start,
+						end: item.end
+					})),
+						
+						// onset: function (event, inst) {
+						// 	document.getelementbyid('scheduleid').value = item.scheduleid;  // set scheduleid
+						// 	console.log(item.scheduleid);
+						// }
+					onSet: function (event, inst) {
+						var selectedDateTime = event.valueText; // Get the selected date and time
+
+						// Find the schedule with the selected date and time
+						var selectedSchedule = schedules.find(schedule =>
+							selectedDateTime === schedule.date + 'T' + schedule.startTime
+						);
+
+						if (selectedSchedule) {
+							// If a matching schedule is found, log its scheduleId
+							document.getElementById('scheduleID').value = selectedSchedule.scheduleID;
+							console.log('Schedule ID:', selectedSchedule.scheduleID);
+						} else {
+							console.log('No matching schedule found');
+						}
+					}
+					
+				})
+			})
+			.catch(error => {
+				alert('failed to load schedules');
+				console.error('error:', error);
+			});
+	});
+	</script>
 

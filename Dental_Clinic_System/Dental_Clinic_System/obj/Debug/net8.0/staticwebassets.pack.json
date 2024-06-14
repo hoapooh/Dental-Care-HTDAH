@@ -61,12 +61,24 @@
       "PackagePath": "staticwebassets\\assets\\css\\headerAd.css"
     },
     {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\icons_mobiscroll.ttf",
+      "PackagePath": "staticwebassets\\assets\\css\\icons_mobiscroll.ttf"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\icons_mobiscroll.woff",
+      "PackagePath": "staticwebassets\\assets\\css\\icons_mobiscroll.woff"
+    },
+    {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\login.css",
       "PackagePath": "staticwebassets\\assets\\css\\login.css"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\manager.css",
       "PackagePath": "staticwebassets\\assets\\css\\manager.css"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\mobiscroll.javascript.min.css",
+      "PackagePath": "staticwebassets\\assets\\css\\mobiscroll.javascript.min.css"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\patientrecord.css",
@@ -79,6 +91,10 @@
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\register.css",
       "PackagePath": "staticwebassets\\assets\\css\\register.css"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\schedule.css",
+      "PackagePath": "staticwebassets\\assets\\css\\schedule.css"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\sidebar.css",
@@ -407,6 +423,14 @@
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\fullcalendar.js",
       "PackagePath": "staticwebassets\\assets\\js\\fullcalendar.js"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\mobiscroll-calendar.js",
+      "PackagePath": "staticwebassets\\assets\\js\\mobiscroll-calendar.js"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\mobiscroll.javascript.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\mobiscroll.javascript.min.js"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\myswiper.js",
@@ -2323,6 +2347,10 @@
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\managerspecialty.html",
       "PackagePath": "staticwebassets\\managerspecialty.html"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\patientrecordchoose.html",
+      "PackagePath": "staticwebassets\\patientrecordchoose.html"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\patientsrecordconfirm.html",

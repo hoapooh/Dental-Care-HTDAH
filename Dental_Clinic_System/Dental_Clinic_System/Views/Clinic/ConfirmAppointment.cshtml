@@ -6,8 +6,9 @@
     var schedule = Model["Schedule"] as Schedule;
     var patientRecord = Model["PatientRecord"] as PatientRecord;
     var specialty = Model["Specialty"] as Specialty;
+    var dentist = Model["Dentist"] as Dentist;
+    var clinic = Model["Clinic"] as Clinic;
 
-    
 }
 
 <head>
@@ -49,8 +50,8 @@
                             <div class="clinic__info">
                                 <i class="fa-solid fa-hospital"></i>
                                 <div class="clinic__info__details">
-                                    <span>@schedule?.Dentist.Clinic.Name</span>
-                                    <p>@schedule?.Dentist.Clinic.Address</p>
+                                    <span>@clinic?.Name</span>
+                                    <p>@clinic?.Address</p>
                                 </div>
                             </div>
                         </div>
@@ -79,12 +80,12 @@
                                             <td class="style__col__sub__other">
                                                 @specialty?.Name
                                             </td>
-                                            <td class="style__col__sub__other">@schedule?.Dentist.Account.FirstName @schedule?.Dentist.Account.FirstName</td>
+                                            <td class="style__col__sub__other">@dentist.Account.LastName @dentist.Account.FirstName</td>
                                             <td class="style__col__sub__other">
-                                                <p>@schedule?.TimeSlot.StartTime - @schedule?.TimeSlot.EndTime</p>
+                                                <p>@schedule?.TimeSlot?.StartTime.ToString("HH:mm") - @schedule?.TimeSlot?.EndTime.ToString("HH:mm")</p>
                                                 <p>@schedule?.Date.ToString("dd/MM/yyyy")</p>
                                             </td>
-                                            <td class="style__col__sub__other">ViewBag.totalDeposit đ</td>
+                                            <td class="style__col__sub__other">@specialty?.Deposit đ</td>
                                             <td>
                                                 <button type="button" class="delete-btn">
                                                     <i class="fa-solid fa-trash-can"></i>
@@ -154,9 +155,10 @@
                                 Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
                             </button>
                         </a>
-                        <a asp-controller="payment" asp-action="ProcessCheckout" asp-route-scheduleID="@ViewBag.scheduleID" asp-route-patientRecordID="@ViewBag.patientRecordID" asp-route-specialtyID="@specialty.ID" asp-route-totalDeposit="@ViewBag.totalDeposit">
-                            <button type="button" class="add-record-btn">Xác nhận</button> @* ------------------------------------------- *@
+                        <a asp-controller="payment" asp-action="ProcessCheckout" asp-route-scheduleID="@ViewBag.scheduleID" asp-route-patientRecordID="@ViewBag.patientRecordID" asp-route-specialtyID="@specialty.ID">
+                            <button type="button" class="add-record-btn">Xác nhận</button> @* -------------------------------------------*@
                         </a>
+                        
                     </div>
                 </div>
             </div>

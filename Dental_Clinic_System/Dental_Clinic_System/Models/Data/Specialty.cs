@@ -20,6 +20,9 @@ namespace Dental_Clinic_System.Models.Data
         [Column("Image", TypeName = "varchar(256)")]
         public string? Image { get; set; }
 
+        [Column("Deposit", TypeName = "money")]
+        public  decimal Deposit {  get; set; }
+
 		#region Entity Mapping
 
 		[InverseProperty("Specialty")]
