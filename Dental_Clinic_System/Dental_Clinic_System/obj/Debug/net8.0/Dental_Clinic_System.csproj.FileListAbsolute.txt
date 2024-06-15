@@ -1021,3 +1021,4 @@ D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.pdb
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\Dental_Clinic_System.genruntimeconfig.cache
 D:\Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\obj\Debug\net8.0\ref\Dental_Clinic_System.dll
+E:\1_SWP391\Team_Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\zxing.dll
