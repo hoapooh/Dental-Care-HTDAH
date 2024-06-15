@@ -74,7 +74,7 @@ namespace Dental_Clinic_System.Controllers
                         SpecialtyID = specialtyID
                     };
                     TempData.SetObjectAsJson("MOMOPaymentRequestModel", momoModel);
-                    return Redirect(_momoPayment.CreateMOMOPayment(momoModel).Result);
+                    return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
             }
             return View();
         }
@@ -93,17 +93,31 @@ namespace Dental_Clinic_System.Controllers
                 PatientRecordID = 0,
                 SpecialtyID = 0
             };
-            return Redirect(_momoPayment.CreateMOMOPayment(momoModel).Result);
+            var vnpayModel = new VNPaymentRequestModel
+            {
+                Amount = 50000,
+                CreatedDate = DateTime.Now,
+                FullName = "aaaa",
+                Description = "Thanh toán tiền đặt cọc",
+
+                // For Appointment Info
+                ScheduleID = 0,
+                PatientRecordID = 0,
+                SpecialtyID = 0
+
+            };
+            //return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
+            return Redirect(_vnPayment.CreatePaymentURL(HttpContext, vnpayModel));
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
-        public IActionResult PaymentSuccess()
+        public IActionResult PaymentResult()
         {
             return View();
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
-        public IActionResult PaymentFail()
+        public IActionResult PaymentInvoice()
         {
             return View();
         }
@@ -133,46 +147,51 @@ namespace Dental_Clinic_System.Controllers
 
             if (response == null || response.VnPayResponseCode != "00")
             {
-                TempData["Message"] = $"Lỗi thanh toán VN Pay: {response.VnPayResponseCode}";
-                return RedirectToAction("PaymentFail");
+                ViewBag.VnPayResponseCode = response.VnPayResponseCode;
+                ViewBag.Message = "Lỗi thanh toán VN Pay";
+                return View("PaymentResult");
             }
+
+            // Đang test nên tạm thời chưa lưu vào database
 
             // Lưu đơn hàng vô database
             // Truy xuất đối tượng từ TempData
-            var vnpayModel = TempData.GetObjectFromJson<VNPaymentRequestModel>("VNPaymentRequestModel");
-            var appointment = new Appointment
-            {
-                ScheduleID = vnpayModel.ScheduleID,
-                PatientRecordID = vnpayModel.PatientRecordID,
-                SpecialtyID = vnpayModel.SpecialtyID,
-                TotalPrice = vnpayModel.Amount,
-                CreatedDate = DateTime.Now,
-                AppointmentStatus = "Chờ Xác Nhận"
-            };
+            //var vnpayModel = TempData.GetObjectFromJson<VNPaymentRequestModel>("VNPaymentRequestModel");
+            //var appointment = new Appointment
+            //{
+            //    ScheduleID = vnpayModel.ScheduleID,
+            //    PatientRecordID = vnpayModel.PatientRecordID,
+            //    SpecialtyID = vnpayModel.SpecialtyID,
+            //    TotalPrice = vnpayModel.Amount,
+            //    CreatedDate = DateTime.Now,
+            //    AppointmentStatus = "Chờ Xác Nhận"
+            //};
 
-            _context.Appointments.Add(appointment);
-            _context.SaveChanges();
+            //_context.Appointments.Add(appointment);
+            //_context.SaveChanges();
 
-            var transaction = new Transaction
-            {
-                AppointmentID = appointment.ID,
-                Date = DateTime.Now,
-                BankName = response.BankCode,
-                TransactionCode = response.TransactionId,
-                PaymentMethod = response.PaymentMethod,
-                TotalPrice = response.Amount,
-                BankAccountNumber = "9704198526191432198",
-                FullName = vnpayModel.FullName,
-                Message = response.OrderDescription,
-                Status = "Thành Công"
-            };
+            //var transaction = new Transaction
+            //{
+            //    AppointmentID = appointment.ID,
+            //    Date = DateTime.Now,
+            //    BankName = response.BankCode,
+            //    TransactionCode = response.TransactionId,
+            //    PaymentMethod = response.PaymentMethod,
+            //    TotalPrice = response.Amount,
+            //    BankAccountNumber = "9704198526191432198",
+            //    FullName = vnpayModel.FullName,
+            //    Message = response.OrderDescription,
+            //    Status = "Thành Công"
+            //};
 
-            _context.Transactions.Add(transaction);
-            _context.SaveChanges();
+            //_context.Transactions.Add(transaction);
+            //_context.SaveChanges();
 
 
-            TempData["Message"] = $"Thanh toán VNPay thành công";
-            return RedirectToAction("PaymentSuccess");
+            string responseCode = response.VnPayResponseCode;
+            ViewBag.VnPayResponseCode = responseCode;
+            ViewBag.Message = "Thanh toán VNPay thành công";
+            return View("PaymentResult");
         }
 
 
@@ -202,7 +221,7 @@ namespace Dental_Clinic_System.Controllers
                 return View("PaymentFail");
             }
 
-            if (resultCode == 0)
+            if (resultCode == 0 && message == "")
             {
                 // Đang test nên tạm thời chưa lưu vào database
                 // Thanh toán thành công
@@ -254,19 +273,22 @@ namespace Dental_Clinic_System.Controllers
                 //_context.Transactions.Add(transaction);
                 //_context.SaveChanges();
 
-
-                return View("PaymentSuccess");
+                ViewBag.ResultCode = resultCode;
+                ViewBag.Message = message.ToUpper();
+                return View("PaymentResult");
             }
             else
             {
                 // Thanh toán thất bại
-                return View("PaymentFail");
+                ViewBag.ResultCode = resultCode;
+                ViewBag.Message = message.ToUpper();
+                return View("PaymentResult");
             }
         }
 
         #region RefundPayment MOMO API
         //[HttpPost]
-        //public async Task<IActionResult> RefundPayment(long amount = 10000, long transId = 4057102283, string description = "")
+        //public async Task<IActionResult> RefundPayment(long amount = 10000, long transId = 4058788926, string description = "")
         //{
         //    string endpoint = _configuration["MomoAPI:MomoApiRefundUrl"];
         //    string partnerCode = _configuration["MomoAPI:PartnerCode"];

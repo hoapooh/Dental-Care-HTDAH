@@ -20,7 +20,7 @@ namespace Dental_Clinic_System.Services.MOMO
         }
 
         [HttpPost]
-        public async Task<string> CreateMOMOPayment(MOMOPaymentRequestModel model)
+        public async Task<string> CreatePaymentURL(MOMOPaymentRequestModel model)
         {
             string endpoint = _configuration["MomoAPI:MomoApiUrl"];
             string partnerCode = _configuration["MomoAPI:PartnerCode"];
@@ -34,9 +34,10 @@ namespace Dental_Clinic_System.Services.MOMO
             string orderId = model.OrderID;
             string requestId = orderId;
             string extraData = "";
+			string lang = "vi"; // or "vi"
 
-            // Tạo chữ ký (signature)
-            string rawHash = $"partnerCode={partnerCode}&accessKey={accessKey}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={notifyUrl}&extraData=";
+			// Tạo chữ ký (signature)
+			string rawHash = $"partnerCode={partnerCode}&accessKey={accessKey}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={notifyUrl}&extraData=";
 
             string signature = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
             //var signatureJson = JsonConvert.SerializeObject(new SignatureModelForJSON { Signature = signature });
@@ -54,7 +55,8 @@ namespace Dental_Clinic_System.Services.MOMO
                 returnUrl,
                 notifyUrl,
                 extraData,
-                requestType,
+				lang,
+				requestType,
                 signature
             };
 
