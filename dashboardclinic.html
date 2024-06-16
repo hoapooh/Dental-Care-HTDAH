@@ -156,7 +156,12 @@
 						aria-hidden="true"
 					>
 						<div class="modal-dialog modal-dialog-centered form-modal-styles">
-							<form action="" method="POST" class="modal-content">
+							<form
+								action=""
+								method="POST"
+								id="uploadForm"
+								class="modal-content"
+							>
 								<div class="modal-header">
 									<h1 class="modal-title fs-10" id="mainTitle">
 										Thêm mới phòng khám
@@ -216,8 +221,47 @@
 										</select>
 									</div>
 									<div class="clinic-image col-md-12">
-										<label for="image">Hình ảnh</label
-										><input type="file" name="image" id="image" />
+										<div class="container__image__preview">
+											<div class="style__image__preview row">
+												<div class="preview-image col-md-6">
+													<h3 class="title">Preview Image</h3>
+													<img
+														src=""
+														alt=""
+														id="imagePreview"
+														style="
+															display: block;
+															max-width: 100%;
+															text-align: center;
+															border-radius: 10px;
+														"
+													/>
+												</div>
+												<div class="final-image col-md-6">
+													<h3 class="title">Final Image</h3>
+													<img
+														src=""
+														alt=""
+														id="imageDisplay"
+														style="
+															display: block;
+															max-width: 100%;
+															text-align: center;
+															border-radius: 10px;
+														"
+													/>
+												</div>
+											</div>
+										</div>
+										<br />
+										<label for="imageInput">Hình ảnh</label>
+										<input
+											class="form-control"
+											type="file"
+											name="imageInput"
+											id="imageInput"
+										/>
+										<input type="hidden" id="imageUrl" />
 									</div>
 									<div class="clinic-desc col-md-12">
 										<label for="desc">Mô tả</label>
@@ -328,5 +372,6 @@
 		<script src="./assets/js/pagination-clinic.js"></script>
 		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 		<script src="assets\js\richtexteditor.js"></script>
+		<script src="./assets/js/upload-image-firebase.js" type="module"></script>
 	</body>
 </html>
