@@ -1,9 +1,12 @@
 using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
-using Dental_Clinic_System.Services;
+using Dental_Clinic_System.Services.EmailSender;
+using Dental_Clinic_System.Services.EmailVerification;
+using Dental_Clinic_System.Services.GoogleSecurity;
 using Dental_Clinic_System.Services.MOMO;
 using Dental_Clinic_System.Services.VNPAY;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -42,7 +45,22 @@ builder.Services.AddAuthentication(options =>
 {
 	options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
 	options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+    options.SaveTokens = true;
+    options.Events.OnCreatingTicket = async context =>
+    {
+        var tokens = context.Properties.GetTokens().ToList();
+        tokens.Add(new AuthenticationToken()
+        {
+            Name = "TicketCreated",
+            Value = DateTime.UtcNow.ToString()
+        });
+        context.Properties.StoreTokens(tokens);
+    };
 });
+
+// Register Google Security Service API
+builder.Services.AddScoped<GoogleSecurity>();
+
 
 // Register the email sender service
 builder.Services.AddScoped<IEmailSenderCustom, EmailSender>();
@@ -64,6 +82,9 @@ builder.Services.AddScoped<IMOMOPayment, MOMOPayment>();
 
 // Configure HttpClient
 builder.Services.AddHttpClient();
+
+// Register EmailVerification (ZeroBounce) Service for Verificating Email  
+builder.Services.AddSingleton<IEmailVerification, EmailVerification>();
 
 var app = builder.Build();
 

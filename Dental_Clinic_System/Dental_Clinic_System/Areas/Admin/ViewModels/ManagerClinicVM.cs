@@ -4,7 +4,9 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 {
     public class ManagerClinicVM
     {
-        public string ClinicName { get; set; }
+		public int Id { get; set; }
+
+		public string ClinicName { get; set; }
 
 		public string? Address { get; set; }
 

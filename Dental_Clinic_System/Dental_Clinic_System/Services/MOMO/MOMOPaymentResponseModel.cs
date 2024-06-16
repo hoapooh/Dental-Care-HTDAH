@@ -17,6 +17,9 @@
         public string Signature { get; set; }
         public string payUrl { get; set; } = string.Empty;
         public decimal Amount { get; internal set; }
+
+        // For Single Disbursement
+        public long? Balance { get; internal set; }
         //public string deeplink { get; set; } = string.Empty;
         //public string qrCodeUrl { get; set; } = string.Empty;
     }

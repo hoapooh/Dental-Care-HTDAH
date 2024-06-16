@@ -100,46 +100,6 @@
 </div>
 
 
-<!--SHOW THÔNG TIN CHI TIẾT PHÒNG KHÁM-->
-<!-- Modal -->
-<div class="modal fade" id="clinicModal" tabindex="-1" aria-labelledby="clinicModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="clinicModalLabel">Thông tin chi tiết phòng khám</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				
-				<div class="row">
-					<div class="col-md-6">
-						<img id="clinicImage" src="" alt="Clinic Image" class="img">
-					</div>
-					<div class="col-md-6">
-						<h2 id="clinicName"></h2>
-						<p id="clinicDescription"></p>
-						<p><strong>Tên phòng khám</strong> <span id="clinicName"></span></p>
-						<p><strong>Cơ sở:</strong> <span id="basis"></span></p>
-						<p><strong>Quản lý:</strong> <span id="managerName"></span></p>
-						<p><strong>Hotline:</strong> <span id="phone"></span></p>
-						<p><strong>Email:</strong> <span id="email"></span></p>
-						<p><strong>Địa chỉ:</strong> <span id="address"></span></p>
-						<p><strong>Tỉnh/Thành phố:</strong> <span id="province"></span></p>
-						<p><strong>Quận/ Huyện:</strong> <span id="district"></span></p>
-						<p><strong>Phường/Xã:</strong> <span id="ward"></span></p>
-						<p><strong>Mô tả phòng khám:</strong> <span id="description"></span></p>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				@* <button type="button" class="btn btn-primary">Chỉnh sửa</button> *@
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
 <!--SHOW LIST-->
 <!-- CLINIC LIST MANAGEMENT -->
 <div id="myItem" class="clinic__management__wrapper row">
@@ -148,7 +108,7 @@
 		<div class="clinic-wrap-item col-md-6">
 			<div class="clinic-wrap-item__style row">
 				<div class="img-content col-md-6">
-					<img src="https://eastrosedental.com/Content/Home/images/content/banner-left.jpg" alt="clinic" />
+					<img src="@clinic.Image" alt="Clinic" />
 				</div>
 				<div class="info-content col-md-6">
 					<h2 class="title-Name-Clinic">@clinic.ClinicName</h2>
@@ -158,19 +118,8 @@
 						<a href="tel:0123456789"><i class="fa-solid fa-phone-volume"></i></a>
 						<a href="mailto:example@gmail.com"><i class="fa-solid fa-envelope"></i></a>
 
-						<!--VIEW AND EDIT-->
-						<a href="#!" class="view" data-bs-toggle="modal" data-bs-target="#clinicModal"
-						   data-clinic-name="@clinic.ClinicName"
-						   data-clinic-address="@clinic.Address"
-						   data-clinic-manager="@clinic.ManagerName"
-						   data-clinic-phone="@clinic.PhoneNumber"
-						   data-clinic-email="@clinic.Email"
-						   data-clinic-province="@clinic.Province"
-						   data-clinic-district="@clinic.District"
-						   data-clinic-ward="@clinic.Ward"
-						   data-clinic-basis="@clinic.Basis"
-						   data-clinic-description="@clinic.Description"
-						   data-clinic-image="@clinic.Image">
+						<!--EDIT-->
+						<a href="~/Admin/ManagerClinic/EditClinic/@clinic.Id" class="view">
 							<i class="fa-solid fa-eye"></i>
 						</a>
 
@@ -191,9 +140,7 @@
 
 <!-- ========== PAGINATION  ========== -->
 <ul class="pagination" id="pagination">
-
 </ul>
-
 
 <script>
 	//Đợi cho document được tải hoàn chỉnh
@@ -211,6 +158,3 @@
 		}
 	});
 </script>
-
-
-<script src="~/assets/js/view-information-clinic.js"></script>

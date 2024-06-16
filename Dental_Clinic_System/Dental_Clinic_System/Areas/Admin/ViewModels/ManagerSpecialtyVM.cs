@@ -8,8 +8,11 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
 		public string Name { get; set; } = null!;
 
-		public string Image { get; set; } = null!;
+		public string Image { get; set; } 
+
 		public string? Description { get; set; }
-        public IFormFile? ImageFile { get; set; }
+
+		public decimal Deposit {  get; set; }
+
     }
 }

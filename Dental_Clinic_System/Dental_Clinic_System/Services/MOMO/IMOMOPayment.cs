@@ -4,5 +4,6 @@
     {
         Task<string> CreatePaymentURL(MOMOPaymentRequestModel model);
         Task<MOMORefundResponseModel?> RefundPayment(long amount, long transId, string description);
+        Task<MOMOPaymentResponseModel?> DisburseSingle(MOMOPaymentRequestModel model);
     }
 }

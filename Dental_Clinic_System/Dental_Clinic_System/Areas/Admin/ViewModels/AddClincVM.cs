@@ -5,8 +5,9 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 {
 	public class AddClincVM
 	{
-		//public int ID { get; set; }
+		public int ID { get; set; }
 
+		[Required(ErrorMessage = "Vui lòng tên phòng khám.")]
 		public string Name { get; set; }
 
 		public string? Description { get; set; }
@@ -16,7 +17,7 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
 		[Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
 		[Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
-		[RegularExpression(@"^\d{9,11}$", ErrorMessage = "Số điện thoại phải có độ dài từ 9 đến 11 số.")]
+		[RegularExpression(@"^\d{8,11}$", ErrorMessage = "Số điện thoại phải có độ dài từ 8 đến 11 số.")]
 		public string PhoneNumber { get; set; }
 
 		[Required(ErrorMessage = "Vui lòng nhập email.")]
@@ -33,8 +34,10 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
 		public int ManagerID { get; set; }
 
+		[Required(ErrorMessage = "Vui lòng nhập Tỉnh/ Thành phố.")]
 		public int? Province { get; set; }
 
+		[Required(ErrorMessage = "Vui lòng nhập Quận/ Huyện.")]
 		public int? District { get; set; }
 
 		public int? Ward { get; set; }

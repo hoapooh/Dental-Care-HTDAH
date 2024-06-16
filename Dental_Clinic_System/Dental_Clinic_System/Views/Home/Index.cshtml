@@ -1,4 +1,5 @@
-﻿@using Dental_Clinic_System.Models.Data
+﻿@using Dental_Clinic_System.Helper
+@using Dental_Clinic_System.Models.Data
 @{
     // ViewData["Title"] = "Home Page";
     // Layout = null;
@@ -23,7 +24,6 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous" />
     <link rel="stylesheet" href="~/assets/css/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="~/assets/css/header.css" />
     <link rel="stylesheet" href="~/assets/css/footer.css" />
     <link rel="stylesheet" href="~/assets/css/styles.css" />
 </head>
@@ -87,26 +87,30 @@
             <div class="special__separate">
                 <img src="~/assets/images/separate-01.png" alt="" />
             </div>
-            <div class="special__cards">
-                @foreach (var specialty in specialties)
-                {
-                    <a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
-                        <div class="special__cards__card">
-                            <img src="@specialty.Image" alt="@specialty.Name" />
-                            <h3 class="title">@specialty.Name</h3>
-                        </div>
-                    </a>
-                }
+            <div class="special__container">
+                <div class="special__container__wrapper swiper">
+                    <div class="special__content">
+                        <div class="special__cards swiper-wrapper">
+                            @foreach (var specialty in specialties)
+                            {
 
+                                <div class="special__cards__card swiper-slide" style="height: initial">
+                                    <a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
+                                        <img src="@specialty.Image" alt="@specialty.Name" />
+                                        <h3 class="title">@specialty.Name</h3>
+                                    </a>
+                                </div>
+
+                            }
+
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
             </div>
-            <div class="special__navigate">
-                <button class="previous">
-                    <img src="~/assets/images/arrow-left.png" alt="" />
-                </button>
-                <button class="next">
-                    <img src="~/assets/images/arrow-right.png" alt="" />
-                </button>
-            </div>
+
         </div>
 
         <!-- CLINIC -->
@@ -133,8 +137,8 @@
                                     <div class="card-content">
                                         <h2 class="name">@clinic.Name</h2>
                                         <p class="work-place">
-                                            <i class="fa-solid fa-location-dot"></i>Thành phố Hồ Chí
-                                            Minh
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            @(LocalAPIReverseString.GetProvinceNameById((int)clinic.Province).Result)
                                         </p>
                                         <a asp-controller="clinic" asp-action="ClinicDetail" asp-route-clinicID="@clinic.ID" class="button">Xem chi tiết</a>
                                     </div>

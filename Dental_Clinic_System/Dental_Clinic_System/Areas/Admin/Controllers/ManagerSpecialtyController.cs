@@ -39,7 +39,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				Id = s.ID,
 				Name = s.Name,
 				Image = s.Image,
-				Description = s.Description
+				Description = s.Description,
+				Deposit = s.Deposit
 			}).ToList();
 
 			return View("ListSpecialty", specialtyList);
@@ -60,7 +61,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				Id = s.ID,
 				Name = s.Name,
 				Image = s.Image,
-				Description = s.Description
+				Description = s.Description,
+				Deposit = s.Deposit
 			}).ToList();
 
 			return View(nameof(ListSpecialty), specialtyList);
@@ -82,7 +84,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				Id = specialty.ID,
 				Name = specialty.Name,
 				Image = specialty.Image,
-				Description = specialty.Description
+				Description = specialty.Description,
+				Deposit = specialty.Deposit
 			};
 
 			return View(viewModel);
@@ -92,7 +95,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		[Route("EditSpecialty")]
 		public async Task<IActionResult> EditSpecialty(ManagerSpecialtyVM model)
 		{
-			if (!ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 				var specialty = await _context.Specialties.FindAsync(model.Id);
 
@@ -102,34 +105,18 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				}
 
 				// Kiểm tra tên chuyên khoa có bị trùng không
-				bool isDuplicateName = await _context.Specialties.AnyAsync(s => s.Name == model.Name);
-				if (isDuplicateName)
+				var isDuplicateName = await _context.Specialties
+					.FirstOrDefaultAsync(s => s.Name == model.Name);
+				if(isDuplicateName != null)
 				{
-					ModelState.AddModelError("Name", "Tên chuyên khoa đã tồn tại.");
+                    ModelState.AddModelError("Name", "Tên chuyên khoa đã tồn tại.");
 					return View("EditSpecialty", model);
 				}
 
-				specialty.Name = model.Name;
+                specialty.Name = model.Name;
 				specialty.Description = model.Description;
-
-				if (model.ImageFile != null)
-				{
-					//Check xem thư mục imagespecialty có tồn tại trong wwwroot không
-					//Nếu không, tạo thư mục có tên là imagespecialty
-					var imageDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "imagespecialty");
-					if (!Directory.Exists(imageDirectory))
-					{
-						Directory.CreateDirectory(imageDirectory);
-					}
-
-					//Lưu tệp vào thư mục 
-					var filePath = Path.Combine(imageDirectory, model.ImageFile.FileName);
-					using (var stream = new FileStream(filePath, FileMode.Create))
-					{
-						await model.ImageFile.CopyToAsync(stream);
-					}
-					specialty.Image = "/imagespecialty/" + model.ImageFile.FileName;
-				}
+				specialty.Deposit = model.Deposit;
+				specialty.Image = model.Image;
 
 				_context.Specialties.Update(specialty);
 				await _context.SaveChangesAsync();
@@ -163,15 +150,15 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		//===================THÊM CHUYÊN KHOA===================
 		[HttpPost]
 		[Route("AddSpecialty")]
-		public async Task<IActionResult> AddSpecialty(string name, string description, IFormFile imageSpecialty)
+		public async Task<IActionResult> AddSpecialty(string name, string description, string imageUrl, decimal deposit)
 		{
-			//Check thông tin trùng lặp
+			//Check Tên chuyên khoa có bị trùng không
 			var existingName = await _context.Specialties.FirstOrDefaultAsync(s => s.Name == name);
 
 			if (existingName != null)
 			{
-				//Thấy thông tin bị trùng, thông báo lỗi
-				ModelState.AddModelError(string.Empty, "Tên chuyên khoa đã tồn tại");
+				//Thấy tên bị trùng, thông báo lỗi
+				ModelState.AddModelError("Name", "Tên chuyên khoa đã tồn tại. Vui lòng chọn tên khác.");
 
 				//Lấy lại list specialty để hiển thị
 				var specialties = await _context.Specialties.ToListAsync();
@@ -181,7 +168,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 					Id = s.ID,
 					Name = s.Name,
 					Image = s.Image,
-					Description = s.Description
+					Description = s.Description,
+					Deposit = s.Deposit
 				}).ToList();
 
 				return View(nameof(ListSpecialty), listSpecialty);
@@ -190,28 +178,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			var specialty = new Specialty
 			{
 				Name = name,
-				Description = description
+				Description = description,
+				Image = imageUrl,
+				Deposit = deposit
 			};
-
-			//Check có file ảnh không
-			if (imageSpecialty != null && imageSpecialty.Length > 0)
-			{
-				//Check xem thư mục imagespecialty có tồn tại trong wwwroot không
-				//Nếu không, tạo thư mục có tên là imagespecialty
-				var imageDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "imagespecialty");
-				if (!Directory.Exists(imageDirectory))
-				{
-					Directory.CreateDirectory(imageDirectory);
-				}
-
-				//Lưu file ảnh vào thư mục imagespecialty
-				var filePath = Path.Combine(imageDirectory, imageSpecialty.FileName);
-				using (var stream = new FileStream(filePath, FileMode.Create))
-				{
-					await imageSpecialty.CopyToAsync(stream);
-				}
-				specialty.Image = "/imagespecialty/" + imageSpecialty.FileName;
-			}
 
 			_context.Specialties.Add(specialty);
 			await _context.SaveChangesAsync();

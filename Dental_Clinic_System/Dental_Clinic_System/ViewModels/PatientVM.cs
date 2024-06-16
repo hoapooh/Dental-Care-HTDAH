@@ -14,6 +14,8 @@ namespace Dental_Clinic_System.ViewModels
         [RegularExpression(@"^\d{9,11}$", ErrorMessage = "Số điện thoại phải có độ dài từ 9 đến 11 ký tự và chỉ chứa các chữ số.")]
         public string? PhoneNumber { get; set; }
 		public string? Gender { get; set; }
+
+
 		public string Email { get; set; }
 		public DateOnly? DateOfBirth { get; set; }
         public int? Province { get; set; }

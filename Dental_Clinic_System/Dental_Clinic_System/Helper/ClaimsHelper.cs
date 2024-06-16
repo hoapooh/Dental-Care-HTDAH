@@ -57,18 +57,27 @@ namespace Dental_Clinic_System.Helper
 
 		public static void AddOrUpdateClaim(this List<Claim> claims, string claimType, string claimValue)
 		{
-			if (!string.IsNullOrEmpty(claimValue))
-			{
-				var existingClaim = claims.FirstOrDefault(c => c.Type == claimType);
-				if (existingClaim != null)
-				{
-					// Update existing claim by removing the old one
-					claims.Remove(existingClaim);
-				}
-				// Add new claim
-				claims.Add(new Claim(claimType, claimValue));
-			}
-		}
+            //if (!string.IsNullOrEmpty(claimValue))
+            //{
+            //	var existingClaim = claims.FirstOrDefault(c => c.Type == claimType);
+            //	if (existingClaim != null)
+            //	{
+            //		// Update existing claim by removing the old one
+            //		claims.Remove(existingClaim);
+            //	}
+            //	// Add new claim
+            //	claims.Add(new Claim(claimType, claimValue));
+            //}
+
+            var existingClaim = claims.FirstOrDefault(c => c.Type == claimType);
+            if (existingClaim != null)
+            {
+                // Update existing claim by removing the old one
+                claims.Remove(existingClaim);
+            }
+            // Add new claim
+            claims.Add(new Claim(claimType, claimValue ?? string.Empty));
+        }
 
 		public static void AddOrUpdateClaimForLinkWithGoogle(this List<Claim> claims, string claimType, string claimValue)
 		{
