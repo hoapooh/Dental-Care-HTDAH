@@ -99,30 +99,16 @@
 									<label for="dateofbirth"
 										>Ngày sinh (năm/tháng/ngày) <sup>*</sup></label
 									>
-									<div class="row">
-										<div class="col-md-4">
-											<select name="dateofbirth" id="dateofbirth">
-												<option value="" disabled selected>Năm</option>
-												<option value="2000">2000</option>
-												<option value="2009">2009</option>
-											</select>
-										</div>
-										<div class="col-md-4">
-											<select>
-												<option value="" disabled selected>Tháng</option>
-												<option value="1">1</option>
-											</select>
-										</div>
-										<div class="col-md-4">
-											<select>
-												<option value="" disabled selected>Ngày</option>
-												<option value="1">1</option>
-											</select>
-										</div>
-									</div>
+									<input
+										name="dateofbirth"
+										id="dateofbirth"
+										type="date"
+										style="width: 100%"
+									/>
 								</div>
 								<div class="col-md-6">
-									<label for="phonenumber">Số điện thoại <sup>*</sup></label
+									<label for="phonenumber"
+										>Số điện thoại <sup id="phoneSup">*</sup></label
 									><input
 										name="phonenumber"
 										id="phonenumber"
@@ -323,16 +309,26 @@
 			document
 				.getElementById("dateofbirth")
 				.addEventListener("change", function () {
-					var selectedYear = this.value;
-					var currentYear = new Date().getFullYear();
-					var age = currentYear - selectedYear;
-					var ageCheckDiv = document.getElementById("age__check");
+					const dob = new Date(this.value);
+					const today = new Date();
+					const age = today.getFullYear() - dob.getFullYear();
+					const ageCheck = document.getElementById("age__check");
+					const phoneSup = document.getElementById("phoneSup");
 
 					if (age < 16) {
-						ageCheckDiv.style.display = "inherit";
+						ageCheck.style.display = "inherit";
+						phoneSup.style.display = "none";
 					} else {
-						ageCheckDiv.style.display = "none";
+						ageCheck.style.display = "none";
+						phoneSup.style.display = "inline";
 					}
+				});
+
+			document
+				.querySelector(".reset-btn")
+				.addEventListener("click", function () {
+					document.getElementById("age__check").style.display = "none";
+					document.getElementById("phoneSup").style.display = "inline";
 				});
 		</script>
 	</body>

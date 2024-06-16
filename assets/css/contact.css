@@ -67,7 +67,8 @@ body::-webkit-scrollbar {
 	border: 1px solid #d9d9d9;
 }
 
-.contact__form input:focus {
+.contact__form input:focus,
+.contact__form textarea:focus {
 	border-color: #47bfff;
 	box-shadow: 0 0 0 4px rgba(29, 161, 242, 0.2);
 	outline: 0;

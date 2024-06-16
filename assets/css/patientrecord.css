@@ -46,6 +46,45 @@ input:focus {
 	outline: 0;
 }
 
+/* ========= MODAL ========= */
+.modal-content {
+	padding: 10px;
+}
+
+.modal-header {
+	border-bottom: none;
+	color: #1376f8;
+	font-weight: bold;
+}
+
+.modal-body .list__item:not(:first-child) {
+	margin-top: 20px;
+}
+
+.modal-body .style__item p {
+	font-size: 1.6rem;
+}
+
+.modal-body .style__item__key {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 600;
+}
+
+.modal-body .style__item__key i {
+	color: #b1b1b1;
+}
+
+.modal-body .style__item__value.name {
+	text-transform: uppercase;
+	font-size: 1.8rem;
+	color: #1376f8;
+	font-weight: bold;
+}
+
+/* ========= PATIENT RECORD ========= */
+
 .pt__record,
 .pt__rcd__confirm {
 	background: #d8e9f2;
@@ -117,11 +156,7 @@ input:focus {
 }
 
 .btn-wrapper .back-btn:hover {
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
+	background: #1376f8 !important;
 	color: #fff;
 }
 
@@ -135,17 +170,14 @@ input:focus {
 	font-size: 1.6rem;
 	font-weight: 600;
 	color: #fff;
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
+	background: #1376f8 !important;
 	border-radius: 8px;
+	transition: all 0.25s ease;
 }
 
 .btn-wrapper .add-record-btn:hover {
 	box-shadow: 0 4px 30px 0 rgba(116, 157, 206, 0.2);
-	background: linear-gradient(40deg, #07aae0, #00c6e1) !important;
+	background: #1da1f2 !important;
 }
 
 .service__table__style .delete-btn {
@@ -286,7 +318,7 @@ input:focus {
 	cursor: pointer !important;
 	box-shadow: 0 4px 30px 0 rgba(116, 157, 206, 0.2);
 	transform: translateY(-0.2rem);
-	border-color: #00b5f1 !important;
+	border-color: #1376f8 !important;
 }
 
 .record__container__card__style .record__card ::after {
@@ -313,8 +345,8 @@ input:focus {
 .record__container__card__style .record__card:hover ::after {
 	right: -20px;
 	top: -20px;
-	background-color: #00b5f1;
-	box-shadow: 0 1px 2px 0 #00b5f1, 0 1px 3px 1px #00b5f1;
+	background-color: #1376f8;
+	box-shadow: 0 1px 2px 0 #1376f8, 0 1px 3px 1px #1376f8;
 }
 
 .record__container__card__style .card__body__style {
@@ -332,14 +364,8 @@ input:focus {
 	word-wrap: break-word;
 	font-size: 1.6rem !important;
 	font-style: normal !important;
-	font-weight: 500 !important;
-	background: var(
-		--primary-gradient-title,
-		linear-gradient(40deg, #00b5f1 0, #00e0ff 100%)
-	) !important;
-	background-clip: text !important;
-	-webkit-background-clip: text !important;
-	color: transparent !important;
+	font-weight: 600 !important;
+	color: #1376f8 !important;
 	text-transform: uppercase;
 }
 
@@ -422,10 +448,9 @@ input:focus {
 .pt__rcd__payment .pt__rcd__title,
 .pt__rcd__service .pt__rcd__title,
 .pt__rcd__details .pt__rcd__title {
-	background: #1da1f2;
 	color: #fff;
 	padding: 12px 16px;
-	background: linear-gradient(36deg, #00b5f1, #00e0ff);
+	background: #1376f8;
 	font-size: 2rem;
 	font-weight: 500;
 	line-height: 1.1;
@@ -837,8 +862,6 @@ input:focus {
 
 .record__add__form input,
 .record__add__form select {
-	display: flex;
-	align-items: center;
 	width: 100%;
 	font-size: 1.8rem;
 	font-weight: 400;

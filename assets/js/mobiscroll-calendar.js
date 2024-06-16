@@ -42,29 +42,27 @@ mobiscroll.datepicker("#demo-single-day", {
 	touchUi: true,
 	selectMultiple: false,
 	valid: [
-		{
-			start: formattedDate,
-			end: futureFormattedDate,
-		},
+		{ start: "2024-06-14T02:00", end: "2024-06-14T02:00" },
+		{ start: "2024-06-14T09:00", end: "2024-06-14T09:00" },
+		{ start: "2024-06-19T02:00", end: "2024-06-19T02:00" },
+		{ start: "2024-06-19T09:00", end: "2024-06-19T09:00" },
 	],
-	valid: [
-		{
-			start: "02:00",
-			end: "06:30",
-			recurring: {
-				repeat: "weekly",
-				weekDays: "MO, WE",
-				interval: 1,
-			},
-		},
-		{
-			start: "13:00",
-			end: "14:00",
-			recurring: {
-				repeat: "daily",
-			},
-		},
-	],
+	// {
+	// 	start: "02:00",
+	// 	end: "06:30",
+	// 	recurring: {
+	// 		repeat: "weekly",
+	// 		weekDays: "MO, WE",
+	// 		interval: 1,
+	// 	},
+	// },
+	// {
+	// 	start: "13:00",
+	// 	end: "14:00",
+	// 	recurring: {
+	// 		repeat: "daily",
+	// 	},
+	// },
 });
 
 mobiscroll.datepicker("#demo-max-days", {

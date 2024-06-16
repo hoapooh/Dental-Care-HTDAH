@@ -65,11 +65,7 @@ body::-webkit-scrollbar {
 }
 
 .btn-wrapper .back-btn:hover {
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
+	background: #1376f8 !important;
 	color: #fff;
 }
 
@@ -83,17 +79,14 @@ body::-webkit-scrollbar {
 	font-size: 1.6rem;
 	font-weight: 600;
 	color: #fff;
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
+	background: #1376f8 !important;
 	border-radius: 8px;
+	transition: all 0.25s ease;
 }
 
 .btn-wrapper .add-record-btn:hover {
 	box-shadow: 0 4px 30px 0 rgba(116, 157, 206, 0.2);
-	background: linear-gradient(40deg, #07aae0, #00c6e1) !important;
+	background: #1da1f2 !important;
 }
 
 .clinic {
@@ -391,7 +384,7 @@ body::-webkit-scrollbar {
 	text-align: center;
 	color: #fff;
 	padding: 12px 16px;
-	background: linear-gradient(36deg, #00b5f1, #00e0ff);
+	background: #1376f8;
 	font-size: 2rem;
 	font-weight: 500;
 	line-height: normal;
@@ -437,7 +430,7 @@ body::-webkit-scrollbar {
 .clinic__dentist__container .booking-title {
 	color: #fff;
 	padding: 12px 16px;
-	background: linear-gradient(36deg, #00b5f1, #00e0ff);
+	background: #1376f8;
 	font-size: 2rem;
 	font-weight: 500;
 	line-height: normal;
@@ -540,16 +533,11 @@ body::-webkit-scrollbar {
 }
 
 .clinic__dentist__container .booking-body .filter select {
-	border: none;
-	outline: none;
 	min-width: 139px;
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
+	background: #1376f8 !important;
 	color: #fff !important;
 	border: none !important;
+	outline: none !important;
 	border-radius: 5px !important;
 	padding: 0 11px;
 	font-size: 2rem;
@@ -558,6 +546,7 @@ body::-webkit-scrollbar {
 
 .clinic__dentist__container .booking-body .filter select option {
 	color: #111c63;
+	background: #fff !important;
 }
 
 .clinic__dentist__container .booking__dentist {

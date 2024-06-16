@@ -72,11 +72,9 @@
 				aria-hidden="true"
 			>
 				<div class="modal-dialog modal-dialog-centered form-modal-styles">
-					<form action="" method="POST" class="modal-content">
+					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-10" id="mainTitle">
-								Thêm mới người dùng
-							</h1>
+							<h1 class="modal-title fs-10" id="mainTitle">Chi tiết hồ sơ</h1>
 							<button
 								type="button"
 								class="btn-close"
@@ -85,34 +83,77 @@
 							></button>
 						</div>
 						<div class="modal-body">
-							<div class="user-name">
-								<label for="nameSpecialty">Tên người dùng</label
-								><input type="text" name="nameSpecialty" id="nameSpecialty" />
-							</div>
-							<div class="user-tel">
-								<label for="telSpecialty">Số điện thoại</label
-								><input type="tel" name="telSpecialty" id="telSpecialty" />
-							</div>
-							<div class="user-mail">
-								<label for="mailSpecialty">Email</label
-								><input type="email" name="mailSpecialty" id="mailSpecialty" />
-							</div>
-							<div class="user-address">
-								<label for="addrSpecialty">Địa chỉ</label
-								><input type="text" name="addrSpecialty" id="addrSpecialty" />
-							</div>
+							<ul>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-circle-user"></i> Họ và tên
+										</p>
+										<p class="style__item__value name col-md-8">An Phuc Hoa</p>
+									</div>
+								</li>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-cake-candles"></i> Ngày sinh
+										</p>
+										<p class="style__item__value col-md-8">An Phuc Hoa</p>
+									</div>
+								</li>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-phone"></i> Số điện thoại
+										</p>
+										<p class="style__item__value col-md-8">An Phuc Hoa</p>
+									</div>
+								</li>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-mars-and-venus"></i> Giới tính
+										</p>
+										<p class="style__item__value col-md-8">An Phuc Hoa</p>
+									</div>
+								</li>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-id-card"></i> CMND/CCCD
+										</p>
+										<p class="style__item__value col-md-8">An Phuc Hoa</p>
+									</div>
+								</li>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-at"></i> Email
+										</p>
+										<p class="style__item__value col-md-8">An Phuc Hoa</p>
+									</div>
+								</li>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-briefcase"></i> Nghề nghiệp
+										</p>
+										<p class="style__item__value col-md-8">An Phuc Hoa</p>
+									</div>
+								</li>
+								<li class="list__item">
+									<div class="style__item row">
+										<p class="style__item__key col-md-4">
+											<i class="fa-solid fa-map-location-dot"></i> Địa chỉ
+										</p>
+										<p class="style__item__value col-md-8">
+											An Phuc Hoa, An Phuc Hoa Ward, An Phuc Hoa District, An
+											Phuc Hoa City, An Phuc Hoa Planet
+										</p>
+									</div>
+								</li>
+							</ul>
 						</div>
-						<div class="modal-footer">
-							<button
-								type="button"
-								class="close-btn btn"
-								data-bs-dismiss="modal"
-							>
-								Close
-							</button>
-							<button type="submit" class="submit-btn btn">Save changes</button>
-						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 
