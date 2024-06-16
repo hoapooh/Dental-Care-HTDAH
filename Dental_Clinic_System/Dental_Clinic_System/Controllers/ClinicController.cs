@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -143,11 +144,6 @@ namespace Dental_Clinic_System.Controllers
                                         .Include(pr => pr.Appointments)
                                         .Where(pr => pr.Account.Email == username)
                                         .ToListAsync();
-            foreach (var p in patientRecord)
-            {
-                Console.WriteLine(p.ID);
-
-			}
             ViewBag.scheduleID = 2;
             ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;
