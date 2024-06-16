@@ -7,7 +7,7 @@
 
 <div class="modal fade show" style="display:block;" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered form-modal-styles">
-        <form action="~/Admin/ManagerSpecialty/EditSpecialty" method="post" class="modal-content" enctype="multipart/form-data">
+        <form id="clinicForm" action="~/Admin/ManagerSpecialty/EditSpecialty" method="post" class="modal-content" enctype="multipart/form-data">
             <div class="modal-header">
                 <h1 class="modal-title fs-10">Chỉnh sửa thông tin chuyên khoa</h1>
                 <a href="~/Admin/ManagerSpecialty/ListSpecialty" class="btn-close" aria-label="Close"></a>
@@ -17,14 +17,12 @@
                 <div class="special-name">
                     <label for="nameSpecialty">Tên chuyên khoa</label>
                     <input type="text" name="Name" id="nameSpecialty" value="@Model.Name" required />
-                    @if (ViewData.ModelState["Name"] != null)
-                    {
-                        <span class="text-danger">@ViewData.ModelState["Name"].Errors.FirstOrDefault().ErrorMessage</span>
-                    }
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
                 <div class="special-image">
-                    <label for="imageSpecialty">Hình ảnh</label>
-                    <input type="file" name="ImageFile" id="imageSpecialty" required/>
+                    <label>Hình ảnh</label>
+                    <input type="file" name="Image" id="fileInput" class="form-control" required />
+                    <input type="hidden" name="Image" id="imageUrl" value="@Model.Image" />
                 </div>
                 <div class="special-desc">
                     <label for="descSpecialty">Mô tả</label>
@@ -38,3 +36,6 @@
         </form>
     </div>
 </div>
+
+@* Đưa ảnh lên firebase *@
+<script src="~/assets/js/firebase_script2.js" type="module"></script>
