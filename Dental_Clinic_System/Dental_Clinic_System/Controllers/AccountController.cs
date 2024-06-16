@@ -184,7 +184,7 @@ namespace Dental_Clinic_System.Controllers
             if (ModelState.IsValid)
             {
                 var patient = _context.Accounts.SingleOrDefault(p => p.Username == model.Username);
-                if (patient == null)
+                if (patient == null || patient.Role != "Bệnh Nhân")
                 {
                     ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
                 }
@@ -400,13 +400,13 @@ namespace Dental_Clinic_System.Controllers
                 string districtName = await LocalAPIReverseString.GetDistrictNameById(user.Province ?? 0, user.District ?? 0);
                 string wardName = await LocalAPIReverseString.GetWardNameById(user.District ?? 0, user.Ward ?? 0);
 
-                updatedClaims.AddOrUpdateClaim("ProvinceID", user.Province.ToString());
-                updatedClaims.AddOrUpdateClaim("WardID", user.Ward.ToString());
-                updatedClaims.AddOrUpdateClaim("DistrictID", user.District.ToString());
+                updatedClaims.AddClaimIfNotNull("ProvinceID", user.Province.ToString());
+                updatedClaims.AddClaimIfNotNull("WardID", user.Ward.ToString());
+                updatedClaims.AddClaimIfNotNull("DistrictID", user.District.ToString());
 
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.StateOrProvince, provinceName);
-                updatedClaims.AddOrUpdateClaim("Ward", wardName);
-                updatedClaims.AddOrUpdateClaim("District", districtName);
+                updatedClaims.AddClaimIfNotNull(ClaimTypes.StateOrProvince, provinceName);
+                updatedClaims.AddClaimIfNotNull("Ward", wardName);
+                updatedClaims.AddClaimIfNotNull("District", districtName);
 
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, user.Address);
                 updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, user.Gender);

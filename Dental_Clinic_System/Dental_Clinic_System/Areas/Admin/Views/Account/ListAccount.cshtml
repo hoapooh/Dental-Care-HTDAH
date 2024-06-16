@@ -36,11 +36,11 @@
 </style>
 
 
+<!-- TÌM KIẾM (SEARCH)-->
 <!-- account management header -->
 <div class="account__management__header">
 	<div class="title">Quản lý tài khoản</div>
 	<div class="action-btn">
-		<!-- TÌM KIẾM -->
 		<form action="~/Admin/Account/SearchAccount" method="get">
 			<input type="hidden" name="role" value="@ViewBag.role" />
 			<div class="search__bar">
@@ -59,7 +59,7 @@
 
 
 <!-- Modal For Add new User -->
-<!-- THÊM MỚI NGƯỜI DÙNG-->
+<!-- THÊM MỚI NGƯỜI DÙNG (ADD)-->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="mainTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered form-modal-styles">
 		<form action="~/Admin/Account/AddAccount" method="POST" class="modal-content" onsubmit="return validateForm()">
@@ -85,7 +85,7 @@
 				</div>
 				<div class="user-tel">
 					<label for="phonenumber">Số điện thoại</label>
-					<input type="tel" name="PhoneNumber" id="phonenumber" />
+					<input type="tel" name="PhoneNumber" id="phonenumber" required />
 					<span id="phoneNumberError" class="text-danger"></span>
 				</div>
 				<div class="user-mail">
@@ -113,6 +113,7 @@
 </div>
 
 
+<!--SHOW LIST-->
 <table class="table table-striped mt-5" style="font-size: 1.6rem">
 	<thead>
 		<tr>
@@ -142,12 +143,14 @@
 					<td>@account.Role</td>
 					@* <td>@account.Status</td> *@
 					<td>
+						<!--EDIT-->
 						<a href="@Url.Action("EditAccount", "Account", new {id = account.Id})" class="inline-block">
 							<button type="button">
 								<i class="bx bxs-edit"></i>
 							</button>
 						</a>
 
+						<!--DELETE-->
 						<form action="~/Admin/Account/HiddenAccountStatus" method="post" class="form-inline">
 							<input type="hidden" name="username" value="@account.Username" />
 							<input type="hidden" name="status" value="Bị khóa" />

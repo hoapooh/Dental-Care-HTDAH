@@ -92,9 +92,15 @@ app.UseCors(builder =>
            .AllowAnyMethod();
 });
 
+//============ ADMIN ================
 app.UseEndpoints(endpoints =>
 {
-	endpoints.MapControllerRoute(
+	//_ = endpoints.MapControllerRoute(
+	//   name: "admin_default",
+	//   pattern: "Admin",
+	//   defaults: new { area = "Admin", controller = "Account", action = "ListAccount" });
+
+	_ = endpoints.MapControllerRoute(
 	  name: "areas",
 	  pattern: "{area:exists}/{controller=Admin}/{action=ListAccount}/{id?}"
 	);
