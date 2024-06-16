@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -135,6 +136,20 @@ namespace Dental_Clinic_System.Helper
 			var hash = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(data));
 			return BitConverter.ToString(hash).Replace("-", "").ToLower();
 		}
-	}
+
+        public static string EncryptRSA(object data, string publicKey)
+        {
+            string jsonData = JsonConvert.SerializeObject(data);
+            byte[] dataBytes = Encoding.UTF8.GetBytes(jsonData);
+
+            using (var rsa = new RSACryptoServiceProvider())
+            {
+                rsa.FromXmlString(publicKey); // Load your public key here
+                byte[] encryptedData = rsa.Encrypt(dataBytes, false);
+                return Convert.ToBase64String(encryptedData);
+            }
+        }
+
+    }
 
 }

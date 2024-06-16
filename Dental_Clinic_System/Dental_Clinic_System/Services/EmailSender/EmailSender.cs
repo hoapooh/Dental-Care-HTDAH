@@ -38,13 +38,13 @@ namespace Dental_Clinic_System.Services.EmailSender
             try
             {
                 // Verify email before sending
-                bool isValidEmail = await _emailVerification.VerifyEmailAsync(email);
+                //bool isValidEmail = await _emailVerification.VerifyEmailAsync(email);
 
-                if (!isValidEmail)
-                {
-                    _logger.LogWarning($"Email {email} is not valid. Aborting email send.");
-                    return;
-                }
+                //if (!isValidEmail)
+                //{
+                //    _logger.LogWarning($"Email {email} is not valid. Aborting email send.");
+                //    return;
+                //}
 
                 var smtpClient = new SmtpClient(_configuration["Email:Smtp:Host"])
                 {

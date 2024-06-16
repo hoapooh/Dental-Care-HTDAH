@@ -34,10 +34,10 @@ namespace Dental_Clinic_System.Services.MOMO
             string orderId = model.OrderID;
             string requestId = orderId;
             string extraData = "";
-			string lang = "vi"; // or "vi"
+            string lang = "vi"; // or "vi"
 
-			// Tạo chữ ký (signature)
-			string rawHash = $"partnerCode={partnerCode}&accessKey={accessKey}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={notifyUrl}&extraData=";
+            // Tạo chữ ký (signature)
+            string rawHash = $"partnerCode={partnerCode}&accessKey={accessKey}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={notifyUrl}&extraData=";
 
             string signature = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
             //var signatureJson = JsonConvert.SerializeObject(new SignatureModelForJSON { Signature = signature });
@@ -55,8 +55,8 @@ namespace Dental_Clinic_System.Services.MOMO
                 returnUrl,
                 notifyUrl,
                 extraData,
-				lang,
-				requestType,
+                lang,
+                requestType,
                 signature
             };
 
@@ -84,6 +84,80 @@ namespace Dental_Clinic_System.Services.MOMO
                     return "PaymentFail";
                 }
             }
+        }
+
+        public async Task<MOMOPaymentResponseModel?> DisburseSingle(MOMOPaymentRequestModel model)
+        {
+            string endpoint = _configuration["MomoAPI:MomoApiDisbursementUrl"]; //
+            string partnerCode = _configuration["MomoAPI:PartnerCode"];         //
+            string accessKey = _configuration["MomoAPI:AccessKey"];
+            string secretKey = _configuration["MomoAPI:SecretKey"];
+            string orderInfo = model.OrderInformation;
+            string returnUrl = _configuration["MomoAPI:ReturnUrl"];
+            string notifyUrl = _configuration["MomoAPI:NotifyUrl"];
+            string requestType = model.RequestType;                             //
+            string amount = model.Amount.ToString();                            // Số tiền thanh toán
+            string orderId = model.OrderID;                                     //
+            string requestId = orderId;
+            string extraData = "";
+            string lang = "vi"; // or "vi"
+            var disbursementMethod = new Dictionary<string, string>()
+            {
+                // Disburse To Bank
+                { "BankAccountNo", model.BankAccountNo ?? ""},
+                { "BankCardNo", model.BankCardNo ?? "" },
+                { "BankAccountHolderName", model.BankAccountHolderName ?? "" },
+                { "BankCode", model.BankCode },
+
+                // Disburse To Wallet
+                { "WalletId", model.WalletId ?? ""},
+                { "WalletName", model.WalletName ?? "" }
+            };
+
+            model.DisbursementMethodRSA = DataEncryptionExtensions.EncryptRSA(disbursementMethod, _configuration["MomoAPI:PublicKey"]);
+
+            // Tạo chữ ký (signature)
+            string rawHash = $"accessKey={accessKey}&amount={amount.ToString()}&disbursementMethod={model.DisbursementMethodRSA}&extraData=&orderId={orderId}&orderInfo={orderInfo}&partnerCode={partnerCode}&requestId={requestId}&requestType={requestType}";
+            string signature = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
+
+            var disbursementRequest = new
+            {
+                partnerCode,
+                orderId,
+                amount,
+                requestId,
+                requestType,
+                model.DisbursementMethodRSA,
+                extraData,
+                orderInfo,
+                lang,
+                signature
+            };
+
+            string jsonPaymentRequest = JsonConvert.SerializeObject(disbursementRequest);
+            Console.WriteLine("JSON Request: " + jsonPaymentRequest);
+
+            using (var client = new HttpClient())
+            {
+                var content = new StringContent(jsonPaymentRequest, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(endpoint, content);
+                var responseString = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("JSON Response: " + responseString);
+
+                var responseObject = JsonConvert.DeserializeObject<MOMOPaymentResponseModel>(responseString);
+
+                if (responseObject != null && !string.IsNullOrEmpty(responseObject.payUrl))
+                {
+                    return responseObject;
+                }
+                else
+                {
+                    Console.WriteLine("Fail!!!");
+                    // Xử lý lỗi
+                    return null;
+                }
+            }
+
         }
 
         [HttpPost]
