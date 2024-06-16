@@ -1,39 +1,20 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {}
+    "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {}
   },
   "projects": {
-    "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {
+    "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
+        "projectUniqueName": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
         "projectName": "Dental_Clinic_System",
-        "projectPath": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
-        "packagesPath": "C:\\Users\\sator\\.nuget\\packages\\",
-        "outputPath": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\",
-=======
-    "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {}
-  },
-  "projects": {
-    "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
-        "projectName": "Dental_Clinic_System",
-        "projectPath": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
-        "packagesPath": "C:\\Users\\Admins\\.nuget\\packages\\",
-        "outputPath": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\",
->>>>>>> 669fade44d30413c5dd3046d394015846df12575
+        "projectPath": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Dental_Clinic_System.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Github\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-<<<<<<< HEAD
-          "C:\\Users\\sator\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-=======
-          "C:\\Users\\Admins\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> 669fade44d30413c5dd3046d394015846df12575
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -150,7 +131,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
