@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Dental Care</title>
+		<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
@@ -29,7 +30,11 @@
 		<header class="header">
 			<nav class="header__navbar">
 				<a href="#!">
-					<img src="./assets/images/logo.png" class="navbar__logo" alt="logo" />
+					<img
+						src="https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=b98bc2f0-f603-4b85-bd1b-764d8679baf0"
+						class="navbar__logo"
+						alt="logo"
+					/>
 				</a>
 				<ul class="navbar__list">
 					<li>
@@ -53,32 +58,27 @@
 				</ul>
 				<!-- ============== ACCESS PROFILE HERE ============== -->
 				<div class="navbar__auth">
-					<div class="dropdown">
-						<a
-							class="btn navbar__auth__avatar"
-							href="#"
-							role="button"
-							data-bs-toggle="dropdown"
-							aria-expanded="false"
-						>
-							<img src="./assets/images/avatar.jpg" alt="" />
-						</a>
-
-						<ul
-							class="dropdown-menu dropdown-menu-end"
-							aria-labelledby="dropdownMenuLink"
-						>
-							<li>
-								<a class="dropdown-item" href="./profile.html"
-									><strong>An Phuc Hoa</strong> <br />
-									anphuchoa2912@gmail.com</a
-								>
-							</li>
-							<li><hr class="dropdown-divider" /></li>
-							<li><a class="dropdown-item" href="#">Logout</a></li>
-						</ul>
-					</div>
-					<a href="/" class="navbar__auth__booking"> Đặt lịch khám </a>
+					<ul class="navbar__auth__dropdown">
+						<li class="outer">
+							<div class="name"><i class="fa-solid fa-user"></i> Phúc Hoà</div>
+							<ul class="sub-menu">
+								<li>
+									<a href="./profile.html" class="account">Tài khoản</a>
+								</li>
+								<li>
+									<a href="./patientrecord.html" class="record"
+										>Hồ sơ bệnh nhân</a
+									>
+								</li>
+								<div class="divider"></div>
+								<li>
+									<a href="" class="logout-btn"
+										><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a
+									>
+								</li>
+							</ul>
+						</li>
+					</ul>
 
 					<!-- <a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
 					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a> -->
@@ -147,28 +147,41 @@
 				<div class="special__separate">
 					<img src="./assets/images/separate-01.png" alt="" />
 				</div>
-				<div class="special__cards">
-					<div class="special__cards__card">
-						<img src="./assets/images/special1.png" alt="" />
-						<h3 class="title">Nha Khoa Tổng Quát</h3>
-					</div>
-					<div class="special__cards__card">
-						<img src="./assets/images/special2.png" alt="" />
-						<h3 class="title">Niềng răng</h3>
-					</div>
-					<div class="special__cards__card">
-						<img src="./assets/images/special3.png" alt="" />
-						<h3 class="title">Bọc răng sứ</h3>
+				<div class="special__container">
+					<div class="special__container__wrapper swiper">
+						<div class="special__content">
+							<div class="special__cards swiper-wrapper">
+								<div class="special__cards__card swiper-slide">
+									<img src="./assets/images/special1.png" alt="" />
+									<h3 class="title">Nha Khoa Tổng Quát</h3>
+								</div>
+								<div class="special__cards__card swiper-slide">
+									<img src="./assets/images/special2.png" alt="" />
+									<h3 class="title">Niềng răng</h3>
+								</div>
+								<div class="special__cards__card swiper-slide">
+									<img src="./assets/images/special3.png" alt="" />
+									<h3 class="title">Bọc răng sứ</h3>
+								</div>
+								<div class="special__cards__card swiper-slide">
+									<img src="./assets/images/special3.png" alt="" />
+									<h3 class="title">Bọc răng sứ</h3>
+								</div>
+							</div>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+							<div class="swiper-pagination"></div>
+						</div>
 					</div>
 				</div>
-				<div class="special__navigate">
+				<!-- <div class="special__navigate">
 					<button class="previous">
 						<img src="./assets/images/arrow-left.png" alt="" />
 					</button>
 					<button class="next">
 						<img src="./assets/images/arrow-right.png" alt="" />
 					</button>
-				</div>
+				</div> -->
 			</div>
 
 			<!-- CLINIC -->
@@ -346,7 +359,11 @@
 		<footer class="footer">
 			<div class="footer__navigation">
 				<a href="/">
-					<img src="./assets/images/logo.png" class="navbar__logo" alt="logo" />
+					<img
+						src="https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=b98bc2f0-f603-4b85-bd1b-764d8679baf0"
+						class="navbar__logo"
+						alt="logo"
+					/>
 				</a>
 				<ul class="footer__navigation__list">
 					<li>

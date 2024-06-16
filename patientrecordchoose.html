@@ -22,8 +22,9 @@
 		/>
 		<link rel="stylesheet" href="./assets/css/header.css" />
 		<link rel="stylesheet" href="./assets/css/footer.css" />
-		<link rel="stylesheet" href="./assets/css/clinic.css" />
+		<link rel="stylesheet" href="./assets/css/patientrecord.css" />
 	</head>
+
 	<body>
 		<header class="header">
 			<nav class="header__navbar">
@@ -62,55 +63,97 @@
 		</header>
 
 		<main>
-			<div class="clinic">
-				<h1 class="clinic__title text-center fw-bold">Các phòng khám</h1>
+			<div class="pt__record">
+				<h1 class="pt__record__title text-center fw-bold">
+					Chọn hồ sơ bệnh nhân
+				</h1>
 				<div class="text-center">
 					<img src="./assets/images/separate.png" alt="" />
 				</div>
-				<div class="clinic__container">
-					<h2 class="clinic__container__title">
-						<img src="./assets/images/clinic-icon.svg" alt="" /><span
-							>Chọn Phòng Khám</span
-						>
-					</h2>
-					<div class="clinic__container__card">
-						<div class="row">
-							<div class="col-md-8">
-								<h3 class="clinic__container__card__title">
-									M Plaza Smart Clinic
-								</h3>
-								<p class="location">
-									<i class="fa-solid fa-location-dot"></i>Tầng 1, M Plaza -39 Lê
-									Duẩn, Bến Nghé, Quận 1, TP.HCM
-								</p>
-								<p class="time">
-									<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
-								</p>
-								<div class="notification">
-									Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
-								</div>
-								<br />
-								<div class="buttons">
-									<a href="./clinicspecialty.html" class="button-book"
-										>Đặt khám</a
-									>
-									<a href="./clinicdetail.html" class="button-more"
-										>Xem chi tiết</a
-									>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="clinic__gallery">
-									<div class="gallery-item">
-										<img
-											src="./assets/images/clinic-test.png"
-											alt=""
-											class="gallery-image"
-											style="height: 200px"
-										/>
+				<div class="style__container">
+					<div class="style__container__choose">
+						<div class="record__container">
+							<!-- ======= RECORD CONTAINER WITH RECORD AVAILABLE ======= -->
+							<div class="record__container__card__style">
+								<a href="./patientrecordconfirm.html">
+									<div class="record__card">
+										<div class="record__card__body">
+											<div class="card__body__style">
+												<p class="style__label">
+													<i class="bx bxs-user-circle"></i>
+													<span>An Phuc Hoa</span>
+												</p>
+											</div>
+											<div class="card__body__style">
+												<p class="style__label">
+													<i class="fa-solid fa-cake-candles"></i>
+													<span>Ngày sinh:</span>
+												</p>
+												<span class="style__text">dd/mm/yyyy</span>
+											</div>
+											<div class="card__body__style">
+												<p class="style__label">
+													<i class="fa-solid fa-phone"></i>
+													<span>Số điện thoại:</span>
+												</p>
+												<span class="style__text">0XXX XXX XXX</span>
+											</div>
+											<div class="card__body__style">
+												<p class="style__label">
+													<i class="fa-solid fa-location-dot"></i>
+													<span>Địa chỉ:</span>
+												</p>
+												<span class="style__text"
+													>XY đường XZ Quận XYZ Thành Phố XXX</span
+												>
+											</div>
+											<!-- === CHỖ NÀY ĐỂ HIỂN THỊ MŨI TÊN CHẠY DỌC XUỐNG -- HƠI MÀU MÈ -->
+											<svg
+												stroke="currentColor"
+												fill="currentColor"
+												stroke-width="0"
+												version="1.2"
+												baseProfile="tiny"
+												viewBox="0 0 24 24"
+												class="style__icon"
+												height="20"
+												width="20"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M16.707 13.293c-.391-.391-1.023-.391-1.414 0l-2.293 2.293v-7.586c0-.552-.447-1-1-1s-1 .448-1 1v7.586l-2.293-2.293c-.391-.391-1.023-.391-1.414 0s-.391 1.023 0 1.414l4.707 4.707 4.707-4.707c.391-.391.391-1.023 0-1.414z"
+												></path>
+											</svg>
+										</div>
 									</div>
-								</div>
+								</a>
 							</div>
+
+							<!-- ======= RECORD CONTAINER WHEN THERE IS NO RECORD AVAILABLE ======= -->
+							<!-- <div class="record__container__style">
+								<span
+									>Bạn chưa có hồ sơ bệnh nhân, vui lòng thêm hồ sơ để được đặt
+									khám.</span
+								>
+								<span>
+									<img
+										src="https://medpro.vn/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FEmptyList.a1f0b7f8.png&w=640&q=75"
+										alt=""
+									/>
+								</span>
+							</div> -->
+						</div>
+						<div class="btn-wrapper">
+							<a href="./cliniccalender.html">
+								<button type="button" class="back-btn">
+									Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
+								</button>
+							</a>
+							<a href="./patientrecordadd.html">
+								<button type="button" class="add-record-btn">
+									<i class="fa-solid fa-user-plus"></i> Thêm hồ sơ
+								</button>
+							</a>
 						</div>
 					</div>
 				</div>

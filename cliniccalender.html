@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Dental Care | login</title>
+		<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
@@ -20,6 +21,8 @@
 			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 			crossorigin="anonymous"
 		/>
+		<link rel="stylesheet" href="./assets/css/mobiscroll.javascript.min.css" />
+		<link rel="stylesheet" href="./assets/css/schedule.css" />
 		<link rel="stylesheet" href="./assets/css/header.css" />
 		<link rel="stylesheet" href="./assets/css/footer.css" />
 		<link rel="stylesheet" href="./assets/css/clinic.css" />
@@ -69,6 +72,7 @@
 					<img src="./assets/images/separate.png" alt="" />
 				</div>
 				<div class="clinic__dentist__container">
+					<!-- =========== INFO =========== -->
 					<div class="info">
 						<div class="info-style">
 							<div class="info-title">Thông tin cơ sở y tế</div>
@@ -98,10 +102,21 @@
 							</div>
 						</div>
 					</div>
+
+					<!-- =========== BOOKING =========== -->
 					<div class="booking">
 						<div class="booking-style">
-							<div class="booking-title">Vui lòng chọn ngày khám</div>
-							<div class="booking-calender">
+							<div class="booking-title">Vui lòng chọn ngày và giờ khám</div>
+
+							<!-- THẺ NÀY ĐỂ HIỂN THỊ LỊCH THEO GIAO DIỆN MOBISCROLL  -->
+							<div class="mbsc-col-sm-12 mbsc-col-md-4">
+								<div class="mbsc-form-group">
+									<div id="demo-single-day"></div>
+								</div>
+							</div>
+
+							<!-- DIV NÀY ĐỂ HIỂN THỊ GIAO DIỆN GIỐNG MEDPRO -->
+							<!-- <div class="booking-calender">
 								<div class="year-month__container">
 									<div class="year-month__container__style">
 										<div>
@@ -165,12 +180,17 @@
 										<div class="date__cell"><span>04</span></div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
-						<div class="back-btn">
+						<div class="btn-wrapper">
 							<a href="./clinicdentist.html">
-								<button type="button">
+								<button type="button" class="back-btn">
 									Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
+								</button>
+							</a>
+							<a href="./patientrecordchoose.html">
+								<button type="submit" class="add-record-btn">
+									Tiếp tục <i class="fa-solid fa-arrow-right"></i>
 								</button>
 							</a>
 						</div>
@@ -178,6 +198,20 @@
 				</div>
 			</div>
 		</main>
+
+		<!-- ================== MOBISCROLL SINGLE SELECT DATE ==================  -->
+		<!-- <label>
+			Date
+			<input id="demo-single-select-date" mbsc-input data-input-style="box" data-label-style="stacked" placeholder="Please Select..." />
+		</label>
+		<label>
+			Date & time
+			<input id="demo-single-select-datetime" mbsc-input data-input-style="box" data-label-style="stacked" placeholder="Please Select..." />
+		</label>
+		<label>
+			Date & timegrid
+			<input id="demo-single-select-timegrid" mbsc-input data-input-style="box" data-label-style="stacked" placeholder="Please Select..." />
+		</label> -->
 
 		<footer class="footer">
 			<div class="footer__navigation">
@@ -237,5 +271,7 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script src="./assets/js/mobiscroll.javascript.min.js"></script>
+		<script src="./assets/js/mobiscroll-calendar.js"></script>
 	</body>
 </html>

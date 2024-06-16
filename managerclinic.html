@@ -85,7 +85,12 @@
 					<div class="manager__management__header">
 						<div class="title">Quản lý phòng khám</div>
 					</div>
-					<form method="post" action="" class="manager__management__clinic row">
+					<form
+						method="post"
+						action=""
+						id="uploadForm"
+						class="manager__management__clinic row"
+					>
 						<div class="col-md-6">
 							<label for="name">Tên phòng khám</label>
 							<input type="text" name="name" id="name" />
@@ -102,9 +107,49 @@
 							<label for="phone">Số điện thoại liên hệ</label>
 							<input type="tel" name="phone" id="phone" />
 						</div>
+						<!-- UPLOAD -->
 						<div class="col-md-12 image-file">
-							<label for="image">Hình ảnh</label>
-							<input type="file" name="image" id="image" />
+							<div class="container__image__preview">
+								<div class="style__image__preview row">
+									<div class="preview-image col-md-6">
+										<h3 class="title">Preview Image</h3>
+										<img
+											src=""
+											alt=""
+											id="imagePreview"
+											style="
+												display: block;
+												max-width: 100%;
+												text-align: center;
+												border-radius: 10px;
+											"
+										/>
+									</div>
+									<div class="final-image col-md-6">
+										<h3 class="title">Final Image</h3>
+										<img
+											src=""
+											alt=""
+											id="imageDisplay"
+											style="
+												display: block;
+												max-width: 100%;
+												text-align: center;
+												border-radius: 10px;
+											"
+										/>
+									</div>
+								</div>
+							</div>
+							<br />
+							<label for="imageInput">Hình ảnh</label>
+							<input
+								class="form-control"
+								type="file"
+								name="imageInput"
+								id="imageInput"
+							/>
+							<input type="hidden" id="imageUrl" />
 						</div>
 						<div class="col-md-12">
 							<label for="container">Mô tả phòng khám</label>
@@ -133,5 +178,6 @@
 		<script src="assets\js\tinymce\js\tinymce\tinymce.min.js"></script>
 		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 		<script src="assets\js\richtexteditor.js"></script>
+		<script src="./assets/js/upload-image-firebase.js" type="module"></script>
 	</body>
 </html>

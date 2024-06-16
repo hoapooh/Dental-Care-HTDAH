@@ -32,6 +32,63 @@ body::-webkit-scrollbar {
 	background-color: #b2b2b2;
 }
 
+/* ======== BUTTON ========= */
+.btn-wrapper {
+	margin-bottom: 24px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 24px;
+	margin-bottom: 28px;
+}
+
+.btn-wrapper.payment {
+	margin-bottom: 0;
+}
+
+.btn-wrapper .back-btn {
+	border: none;
+	outline: none;
+	color: #003553;
+	font-size: 1.6rem;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	border-color: transparent;
+	background: transparent;
+	box-shadow: none;
+	gap: 5px;
+	cursor: pointer;
+	padding: 8px 15px;
+	border-radius: 8px;
+	transition: all 0.25s ease;
+}
+
+.btn-wrapper .back-btn:hover {
+	background: #1376f8 !important;
+	color: #fff;
+}
+
+.btn-wrapper .add-record-btn {
+	padding: 8px 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	gap: 5px;
+	font-size: 1.6rem;
+	font-weight: 600;
+	color: #fff;
+	background: #1376f8 !important;
+	border-radius: 8px;
+	transition: all 0.25s ease;
+}
+
+.btn-wrapper .add-record-btn:hover {
+	box-shadow: 0 4px 30px 0 rgba(116, 157, 206, 0.2);
+	background: #1da1f2 !important;
+}
+
 .clinic {
 	margin-top: 60px;
 }
@@ -42,13 +99,17 @@ body::-webkit-scrollbar {
 }
 
 .clinic__container {
-	width: 970px;
+	width: 779px;
 	border-radius: 30px;
 	margin: 0 auto;
 	margin-top: 60px;
 	padding: 30px 52px 40px;
 	position: relative;
 	background: #fff;
+}
+
+.clinic__container__special {
+	width: 970px;
 }
 
 .clinic__container__title {
@@ -64,7 +125,7 @@ body::-webkit-scrollbar {
 }
 
 .clinic__container__card {
-	width: 870px;
+	width: 674px;
 	background: #fff;
 	border-radius: 20px;
 	padding: 15px 17px;
@@ -102,7 +163,7 @@ body::-webkit-scrollbar {
 	font-size: 1.8rem;
 	background: #e8f1ff;
 	border-radius: 1000px;
-	margin: 8px 0 0 16px;
+	margin-top: 8px;
 	padding: 7px 22px 7px 16px;
 	color: #111c63;
 }
@@ -323,7 +384,7 @@ body::-webkit-scrollbar {
 	text-align: center;
 	color: #fff;
 	padding: 12px 16px;
-	background: linear-gradient(36deg, #00b5f1, #00e0ff);
+	background: #1376f8;
 	font-size: 2rem;
 	font-weight: 500;
 	line-height: normal;
@@ -369,7 +430,7 @@ body::-webkit-scrollbar {
 .clinic__dentist__container .booking-title {
 	color: #fff;
 	padding: 12px 16px;
-	background: linear-gradient(36deg, #00b5f1, #00e0ff);
+	background: #1376f8;
 	font-size: 2rem;
 	font-weight: 500;
 	line-height: normal;
@@ -472,16 +533,11 @@ body::-webkit-scrollbar {
 }
 
 .clinic__dentist__container .booking-body .filter select {
-	border: none;
-	outline: none;
 	min-width: 139px;
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
+	background: #1376f8 !important;
 	color: #fff !important;
 	border: none !important;
+	outline: none !important;
 	border-radius: 5px !important;
 	padding: 0 11px;
 	font-size: 2rem;
@@ -490,6 +546,7 @@ body::-webkit-scrollbar {
 
 .clinic__dentist__container .booking-body .filter select option {
 	color: #111c63;
+	background: #fff !important;
 }
 
 .clinic__dentist__container .booking__dentist {
@@ -531,6 +588,7 @@ body::-webkit-scrollbar {
 	width: 6px;
 	display: block;
 	background-color: #b2b2b2;
+	border-radius: 5px;
 }
 
 .booking__dentist::-webkit-scrollbar-thumb {
@@ -544,40 +602,6 @@ body::-webkit-scrollbar {
 	text-align: center;
 	color: #00559c;
 	font-size: 2rem;
-}
-
-.clinic .booking .back-btn {
-	margin-bottom: 24px;
-	display: flex;
-	justify-content: space-between;
-	border-radius: 5px;
-}
-
-.clinic .booking .back-btn button {
-	border: none;
-	outline: none;
-	color: #003553;
-	font-size: 2rem;
-	font-weight: 600;
-	display: flex;
-	align-items: center;
-	border-color: transparent;
-	background: transparent;
-	box-shadow: none;
-	gap: 5px;
-	cursor: pointer;
-	padding: 8px 15px;
-	border-radius: 5px;
-	transition: all 0.25s ease;
-}
-
-.clinic .booking .back-btn button:hover {
-	background: linear-gradient(
-		83.63deg,
-		#00b5f1 33.34%,
-		#00e0ff 113.91%
-	) !important;
-	color: #fff;
 }
 
 /* ========= Booking Calender ========== */
@@ -725,19 +749,33 @@ body::-webkit-scrollbar {
 	margin: 0 auto;
 }
 
-.clinic__detail__info__images {
-	height: 422px;
-}
-
 .clinic__detail__info__images .info {
 	background: #fff;
 	box-shadow: #ccd6ef 5px 20px 40px 0px;
 	border-radius: 20px;
 	padding: 35px 35px 20px;
-	height: 100%;
 }
 
-.clinic__detail__info__images .images {
+.clinic__detail__info__images .desc {
+	margin-top: 30px;
+	padding: 35px;
+	background: #fff;
+	box-shadow: #ccd6ef 5px 20px 40px 0px;
+	border-radius: 20px;
+}
+
+.clinic__detail__info__images .desc h2 {
+	font-size: 2.4rem;
+	font-weight: 700;
+	color: #2d9cfd;
+}
+
+.clinic__detail__info__images .desc p {
+	font-size: 1.8rem;
+	color: #003553;
+}
+
+/* .clinic__detail__info__images .images {
 	height: 100%;
 }
 
@@ -745,7 +783,7 @@ body::-webkit-scrollbar {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-}
+} */
 
 .clinic__detail__info__images .info-title {
 	text-align: center;
@@ -793,24 +831,7 @@ body::-webkit-scrollbar {
 	line-height: 18.75px;
 }
 
-.clinic__detail__desc__map {
+.clinic__detail__desc__map .map {
 	margin-top: 30px;
-}
-
-.clinic__detail__desc__map .desc {
-	padding: 35px;
-	background: #fff;
-	box-shadow: #ccd6ef 5px 20px 40px 0px;
-	border-radius: 20px;
-}
-
-.clinic__detail__desc__map .desc h2 {
-	font-size: 2.4rem;
-	font-weight: 700;
-	color: #2d9cfd;
-}
-
-.clinic__detail__desc__map .desc p {
-	font-size: 1.8rem;
-	color: #003553;
+	height: 30%;
 }
