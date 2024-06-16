@@ -106,8 +106,8 @@ namespace Dental_Clinic_System.Controllers
                 SpecialtyID = 0
 
             };
-            //return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
-            return Redirect(_vnPayment.CreatePaymentURL(HttpContext, vnpayModel));
+            return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
+            //return Redirect(_vnPayment.CreatePaymentURL(HttpContext, vnpayModel));
         }
 
         [Authorize(Roles = "Bệnh Nhân")]

@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
-using Dental_Clinic_System.Services;
+using Dental_Clinic_System.Services.EmailSender;
+using Dental_Clinic_System.Services.GoogleSecurity;
 using Dental_Clinic_System.ViewModels;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.PeopleService.v1;
+using Google.Apis.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -28,12 +32,14 @@ namespace Dental_Clinic_System.Controllers
         private readonly DentalClinicDbContext _context;
         private readonly IMapper _mapper;
         private readonly IEmailSenderCustom _emailSender;
+        private readonly GoogleSecurity _googleSecurity;
 
-        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSenderCustom emailSender)
+        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSenderCustom emailSender, GoogleSecurity googleSecurity)
         {
             _context = context;
             _mapper = mapper;
             _emailSender = emailSender;
+            _googleSecurity = googleSecurity;
         }
 
         [HttpGet]
@@ -291,146 +297,159 @@ namespace Dental_Clinic_System.Controllers
 
         public async Task<IActionResult> GoogleResponse()
         {
-            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            if (result?.Principal?.Identities == null)
+            try
             {
-                // Handle the error when authentication fails
+                var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                if (result?.Principal?.Identities == null || !result.Principal.Identities.Any())
+                {
+                    // Handle the error when authentication fails
+                    return RedirectToAction("Login", "Account");
+                }
+
+                var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
+                {
+                    claim.Issuer,
+                    claim.OriginalIssuer,
+                    claim.Type,
+                    claim.Value
+                }).ToList();
+
+                var emailClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+                if (emailClaim != null)
+                {
+                    var email = emailClaim.Value;
+                    var user = await _context.Accounts.SingleOrDefaultAsync(u => u.Email == email);
+
+                    if (user == null)
+                    {
+
+                        string randomKey = Util.GenerateRandomKey();
+                        var dateOfBirthClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth)?.Value;
+
+                        // Parse the Date of Birth claim value
+                        DateOnly? dateOfBirth = null;
+                        if (DateOnly.TryParse(dateOfBirthClaim, out var parsedDateOfBirth))
+                        {
+                            dateOfBirth = parsedDateOfBirth;
+                        }
+                        // User does not exist in the database, add new one
+                        var newUser = new Account
+                        {
+                            Email = email,
+                            AccountStatus = "Hoạt Động",
+                            Role = "Bệnh Nhân",
+                            Username = DataEncryptionExtensions.ToSHA256Hash(email, randomKey),
+                            Password = DataEncryptionExtensions.ToMd5Hash(randomKey, randomKey),
+                            // Get other information from claim
+                            FirstName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value,
+                            LastName = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value,
+                            IsLinked = null
+                        };
+
+                        _context.Accounts.Add(newUser);
+                        await _context.SaveChangesAsync();
+                        user = newUser;
+                    }
+
+
+
+                    if (user.IsLinked is false)
+                    {
+                        Console.WriteLine("GET HERE!!!");
+                        return RedirectToAction("LinkWithGoogleView", "account", new { emailLinked = DataEncryptionExtensions.Encrypt(email) });
+                    }
+
+                    if (user.IsLinked is true)
+                    {
+                        // Get identity first
+                        var identity = result.Principal.Identities.FirstOrDefault();
+
+                        if (identity != null)
+                        {
+                            // Create a list to store updated claims
+                            var updatedGoogleClaims = new List<Claim>();
+
+                            // Iterate over existing claims and update the issuer
+                            foreach (var claim in identity.Claims)
+                            {
+                                var newClaim = new Claim(
+                                    claim.Type,
+                                    claim.Value,
+                                    claim.ValueType,
+                                    "IsLinkedWithGoogle", // New issuer value
+                                    claim.OriginalIssuer
+                                );
+                                updatedGoogleClaims.Add(newClaim);
+                            }
+
+                            // Remove old claims and add updated claims
+                            foreach (var claim in identity.Claims.ToList())
+                            {
+                                identity.RemoveClaim(claim);
+                            }
+
+                            foreach (var newClaim in updatedGoogleClaims)
+                            {
+                                identity.AddClaim(newClaim);
+                            }
+                        }
+                    }
+
+                    // Populate the PatientVM view model
+
+                    var updatedClaims = ClaimsHelper.GetCurrentClaims(User);
+
+                    // Update or add new claims
+                    updatedClaims.AddOrUpdateClaim(ClaimTypes.NameIdentifier, user.ID.ToString());
+                    updatedClaims.AddOrUpdateClaim(ClaimTypes.Role, "Bệnh Nhân");
+                    updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.GivenName, user.LastName);
+                    updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.Surname, user.FirstName);
+                    updatedClaims.AddOrUpdateClaim(ClaimTypes.MobilePhone, user.PhoneNumber);
+
+                    string provinceName = await LocalAPIReverseString.GetProvinceNameById(user.Province ?? 0);
+                    string districtName = await LocalAPIReverseString.GetDistrictNameById(user.Province ?? 0, user.District ?? 0);
+                    string wardName = await LocalAPIReverseString.GetWardNameById(user.District ?? 0, user.Ward ?? 0);
+
+                    updatedClaims.AddClaimIfNotNull("ProvinceID", user.Province.ToString());
+                    updatedClaims.AddClaimIfNotNull("WardID", user.Ward.ToString());
+                    updatedClaims.AddClaimIfNotNull("DistrictID", user.District.ToString());
+
+                    updatedClaims.AddClaimIfNotNull(ClaimTypes.StateOrProvince, provinceName);
+                    updatedClaims.AddClaimIfNotNull("Ward", wardName);
+                    updatedClaims.AddClaimIfNotNull("District", districtName);
+
+                    updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, user.Address);
+                    updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, user.Gender);
+                    updatedClaims.AddOrUpdateClaim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString());
+
+                    await ClaimsHelper.UpdateClaimsAsync(HttpContext, updatedClaims);
+
+
+                    // Store the PatientVM in TempData to pass it to the next request
+                    //TempData["PatientVM"] = JsonConvert.SerializeObject(patientVM);
+
+                    // User login
+                    var claimsIdentity = new ClaimsIdentity(result.Principal.Identities.First().Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    // Ensure the identity has a unique Name claim
+                    if (!claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name))
+                    {
+                        claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, email));
+                    }
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    await HttpContext.SignInAsync(claimsPrincipal);
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (AuthenticationFailureException ex)
+            {
+                // Log the exception details (optional)
+                await Console.Out.WriteLineAsync(ex + "Google authentication failed.");
+
+                // Redirect to the home page with an error message
                 return RedirectToAction("Login", "Account");
             }
-
-            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
-            {
-                claim.Issuer,
-                claim.OriginalIssuer,
-                claim.Type,
-                claim.Value
-            }).ToList();
-
-            var emailClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-            if (emailClaim != null)
-            {
-                var email = emailClaim.Value;
-                var user = await _context.Accounts.SingleOrDefaultAsync(u => u.Email == email);
-
-                if (user == null)
-                {
-                    string randomKey = Util.GenerateRandomKey();
-                    var dateOfBirthClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth)?.Value;
-
-                    // Parse the Date of Birth claim value
-                    DateOnly? dateOfBirth = null;
-                    if (DateOnly.TryParse(dateOfBirthClaim, out var parsedDateOfBirth))
-                    {
-                        dateOfBirth = parsedDateOfBirth;
-                    }
-                    // User does not exist in the database, add new one
-                    var newUser = new Account
-                    {
-                        Email = email,
-                        AccountStatus = "Hoạt Động",
-                        Role = "Bệnh Nhân",
-                        Username = DataEncryptionExtensions.ToSHA256Hash(email, randomKey),
-                        Password = DataEncryptionExtensions.ToMd5Hash(randomKey, randomKey),
-                        // Get other information from claim
-                        FirstName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value,
-                        LastName = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value,
-                        IsLinked = null
-                    };
-
-                    _context.Accounts.Add(newUser);
-                    await _context.SaveChangesAsync();
-                    user = newUser;
-                }
-
-                if (user.IsLinked is false)
-                {
-                    Console.WriteLine("GET HERE!!!");
-                    return RedirectToAction("LinkWithGoogleView", "account", new { emailLinked = DataEncryptionExtensions.Encrypt(email) });
-                }
-
-                if(user.IsLinked is true)
-                {
-                    // Get identity first
-                    var identity = result.Principal.Identities.FirstOrDefault();
-
-                    if (identity != null)
-                    {
-                        // Create a list to store updated claims
-                        var updatedGoogleClaims = new List<Claim>();
-
-                        // Iterate over existing claims and update the issuer
-                        foreach (var claim in identity.Claims)
-                        {
-                            var newClaim = new Claim(
-                                claim.Type,
-                                claim.Value,
-                                claim.ValueType,
-                                "IsLinkedWithGoogle", // New issuer value
-                                claim.OriginalIssuer
-                            );
-                            updatedGoogleClaims.Add(newClaim);
-                        }
-
-                        // Remove old claims and add updated claims
-                        foreach (var claim in identity.Claims.ToList())
-                        {
-                            identity.RemoveClaim(claim);
-                        }
-
-                        foreach (var newClaim in updatedGoogleClaims)
-                        {
-                            identity.AddClaim(newClaim);
-                        }
-                    }
-                }
-
-                // Populate the PatientVM view model
-
-                var updatedClaims = ClaimsHelper.GetCurrentClaims(User);
-
-                // Update or add new claims
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.NameIdentifier, user.ID.ToString());
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.Role, "Bệnh Nhân");
-                updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.GivenName, user.LastName);
-                updatedClaims.AddOrUpdateClaimForLinkWithGoogle(ClaimTypes.Surname, user.FirstName);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.MobilePhone, user.PhoneNumber);
-
-                string provinceName = await LocalAPIReverseString.GetProvinceNameById(user.Province ?? 0);
-                string districtName = await LocalAPIReverseString.GetDistrictNameById(user.Province ?? 0, user.District ?? 0);
-                string wardName = await LocalAPIReverseString.GetWardNameById(user.District ?? 0, user.Ward ?? 0);
-
-                updatedClaims.AddClaimIfNotNull("ProvinceID", user.Province.ToString());
-                updatedClaims.AddClaimIfNotNull("WardID", user.Ward.ToString());
-                updatedClaims.AddClaimIfNotNull("DistrictID", user.District.ToString());
-
-                updatedClaims.AddClaimIfNotNull(ClaimTypes.StateOrProvince, provinceName);
-                updatedClaims.AddClaimIfNotNull("Ward", wardName);
-                updatedClaims.AddClaimIfNotNull("District", districtName);
-
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.StreetAddress, user.Address);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.Gender, user.Gender);
-                updatedClaims.AddOrUpdateClaim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString());
-
-                await ClaimsHelper.UpdateClaimsAsync(HttpContext, updatedClaims);
-
-
-                // Store the PatientVM in TempData to pass it to the next request
-                //TempData["PatientVM"] = JsonConvert.SerializeObject(patientVM);
-
-                // User login
-                var claimsIdentity = new ClaimsIdentity(result.Principal.Identities.First().Claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                // Ensure the identity has a unique Name claim
-                if (!claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name))
-                {
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, email));
-                }
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                await HttpContext.SignInAsync(claimsPrincipal);
-            }
-
-            ViewBag.IsGoogleUser = true;
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -634,10 +653,7 @@ namespace Dental_Clinic_System.Controllers
 
                 }
 
-
-
-
-				user.FirstName = model.FirstName;
+                user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.PhoneNumber = model.PhoneNumber;
                 user.Gender = model.Gender;
@@ -693,17 +709,17 @@ namespace Dental_Clinic_System.Controllers
             return View(model);
         }
 
-		[HttpGet]
-		public async Task<IActionResult> ConfirmEmailChange(int userId, string oldEmail, string newEmail, string code)
-		{
-			var user = await _context.Accounts.FindAsync(userId);
-			if (user == null)
-			{
-				return NotFound("User not found.");
-			}
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmailChange(int userId, string oldEmail, string newEmail, string code)
+        {
+            var user = await _context.Accounts.FindAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
 
-			var savedCode = TempData["ConfirmationCodeUpdateProfile"] as string;
-			var savedNewEmail = TempData["NewEmail"] as string;
+            var savedCode = TempData["ConfirmationCodeUpdateProfile"] as string;
+            var savedNewEmail = TempData["NewEmail"] as string;
 
             // Debugging Data
             //await Console.Out.WriteLineAsync($"Confirmation Code = {savedCode}");
@@ -711,31 +727,31 @@ namespace Dental_Clinic_System.Controllers
 
             // Should add checking savedCode == code for avoiding attack, hacker can get code from the outside
             if (savedNewEmail == newEmail)
-			{
-				user.Email = newEmail;
-				_context.Update(user);
-				await _context.SaveChangesAsync();
+            {
+                user.Email = newEmail;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
 
-				// Update the email claim
-				var updatedClaims = ClaimsHelper.GetCurrentClaims(User);
-				updatedClaims.AddOrUpdateClaim(ClaimTypes.Email, newEmail);
-				await ClaimsHelper.UpdateClaimsAsync(HttpContext, updatedClaims);
+                // Update the email claim
+                var updatedClaims = ClaimsHelper.GetCurrentClaims(User);
+                updatedClaims.AddOrUpdateClaim(ClaimTypes.Email, newEmail);
+                await ClaimsHelper.UpdateClaimsAsync(HttpContext, updatedClaims);
 
                 // Send confirmation email
                 await _emailSender.SendEmailUpdatedAsync(oldEmail, user.Email, "Bạn Đã Thay Đổi Địa Chỉ Email Của Mình", "");
 
                 TempData["EmailChangeMessage"] = "Email updated successfully.";
-			}
-			else
-			{
-				TempData["EmailChangeMessage"] = "Invalid confirmation code.";
-			}
+            }
+            else
+            {
+                TempData["EmailChangeMessage"] = "Invalid confirmation code.";
+            }
 
-			return RedirectToAction("Profile", "Account");
-		}
+            return RedirectToAction("Profile", "Account");
+        }
 
 
-		[Authorize]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
@@ -758,7 +774,7 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
-            if(DataEncryptionExtensions.ToMd5Hash(model.Password) != user.Password)
+            if (DataEncryptionExtensions.ToMd5Hash(model.Password) != user.Password)
             {
                 TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
                 return RedirectToAction("Profile", "Account");
