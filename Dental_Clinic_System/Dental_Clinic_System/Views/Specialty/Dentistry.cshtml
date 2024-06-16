@@ -71,21 +71,21 @@
 					</div>
 					<div class="separate"></div>
 					<div class="dentistry__info__card--schedule">
-						<select name="calendar" id="">
-							<option value="Thứ 4 - 22/05">Thứ 4 - 22/05</option>
-							<option value="Thứ 4 - 22/05">Thứ 5 - 23/05</option>
-							<option value="Thứ 4 - 22/05">Thứ 6 - 24/05</option>
-							<option value="Thứ 4 - 22/05">Thứ 7 - 25/05</option>
-							<option value="Thứ 4 - 22/05">CN - 26/05</option>
-							<option value="Thứ 4 - 22/05">Thứ 2 - 27/05</option>
-							<option value="Thứ 4 - 22/05">Thứ 3 - 28/05</option>
-						</select>
-						<p class="sub-title">
-							<i class="fa-regular fa-calendar"></i>Đặt lịch khám
-						</p>
-						<div class="card--schedule__wrapper">
-							<a asp-controller="specialty" asp-action="bookdentist" asp-route-specialtyID="@ViewBag.specialtyID" asp-route-dentistID="@dentistry.ID">08:00 - 08:30</a>
-						</div>
+
+							<select name="calendar" id="">
+								<option value="">Thứ Hai 22/06/2024</option>
+							</select>
+							<p class="sub-title">
+								<i class="fa-regular fa-calendar"></i>Đặt lịch khám
+							</p>
+						
+							<div class="card--schedule__wrapper">
+							@foreach (var schedule in dentistry.Schedules)
+							{
+								<a asp-controller="patientrecord" asp-action="patientrecord" asp-route-specialtyID="@ViewBag.specialtyID" asp-route-dentistID="@dentistry.ID" asp-route-clinicID="@dentistry.Clinic.ID" asp-route-scheduleID="@schedule.ID">@schedule.TimeSlot.StartTime - @schedule.TimeSlot.EndTime</a>
+							}
+							</div>
+						
 						<p class="note">
 							Chọn <i class="fa-regular fa-hand-point-up"></i> và đặt.
 							&#10088;Phí đặt lịch ...&#10089;

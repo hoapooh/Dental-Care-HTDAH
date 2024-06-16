@@ -30,6 +30,7 @@ namespace Dental_Clinic_System.Controllers
 									.Include(d => d.DentistSpecialties).ThenInclude( ds => ds.Specialty)
 									.Include(d => d.Account)
 									.Include(d => d.Clinic)
+									.Include(d => d.Schedules).ThenInclude(s => s.TimeSlot)
 									.Where(w => w.DentistSpecialties.Any(c => c.SpecialtyID == specialtyID))
 									.ToList();
 
