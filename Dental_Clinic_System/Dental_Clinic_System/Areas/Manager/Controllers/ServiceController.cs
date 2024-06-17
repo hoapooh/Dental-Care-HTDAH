@@ -168,7 +168,7 @@ namespace Dental_Clinic_System.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = id });
             }
             ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);

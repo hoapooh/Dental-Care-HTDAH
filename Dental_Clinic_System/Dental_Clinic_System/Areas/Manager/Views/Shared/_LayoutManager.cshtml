@@ -21,10 +21,13 @@
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
 
+
+	<link rel="stylesheet" href="~/assets/css/mobiscroll.javascript.min.css" />
 	<link rel="stylesheet" href="~/assets/css/sidebar.css" />
 	<link rel="stylesheet" href="~/assets/css/headerAd.css" />
 	<link rel="stylesheet" href="~/assets/css/manager.css" />
 
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	@RenderSection("Styles", required: false)
 </head>
 
@@ -38,8 +41,8 @@
 							<span class="menu-icon"><i class="bx bxs-user"></i></span>Quản lý nha sĩ</a>
 					</li>
 					<li class="nav-item">
-						<a href="#!"
-							><span class="menu-icon"
+					<a asp-controller="Schedules" asp-action="Index" class="Lich_lam_viec">
+							<span class="menu-icon"
 								><i class="fa-solid fa-calendar-days"></i></span
 							>Lịch làm việc</a>
 					</li>

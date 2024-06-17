@@ -11,6 +11,15 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 
         public string LastName { get; set; }
         public string Gender { get; set; }
+        public int? Province { get; set; } = null!;
+
+        public int? Ward { get; set; } = null!;
+
+        public int? District { get; set; } = null!;
+
+        public string? Address { get; set; } = null!;
+
+        public DateOnly? DateOfBirth { get; set; }
 
         public string Email { get; set; } = null!;
 

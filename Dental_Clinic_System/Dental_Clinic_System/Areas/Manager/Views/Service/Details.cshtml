@@ -2,47 +2,94 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "_LayoutManager";
+}
+@section Styles {
+    <style>
+        .sidebar .nav-item a.Dich_vu_kham {
+            color: #fff;
+            background: #4880ff;
+        }
+
+        .chinhle {
+            width: 1000px;
+        }
+
+        .button {
+            padding: 6px 20px;
+        }
+
+        .manager__management__header .action-btn .add__new1 {
+            background: #dc3545;
+            border: none;
+            outline: none;
+            color: white;
+            font-weight: 600;
+            padding: 6px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+            .manager__management__header .action-btn .add__new1:hover {
+                background: #bb2d3b;
+            }
+    </style>
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Service</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+<!--header -->
+<div class="manager__management__header">
+    <div class="title">Chi tiết dịch vụ</div>
+</div>
+<!--body -->
+<hr /> @* Đường phân cách *@
+<dl class="row" style="padding-left: 100px; font-size: 2rem">
+        <dt class="col-sm-2">Dịch vụ</dt>
+        <dd class="col-sm-10"> @Model.Name</dd>
+
+        <dt class="col-sm-2">Đơn giá</dt>
+        <dd class="col-sm-10">
+            @Model.Price
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+
+        <dt class="col-sm-2">
+            Phòng khám
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+        <dd class="col-sm-10">
+            @Model.Clinic?.Name
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+
+        <dt class="col-sm-2">
+            Chuyên khoa
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+        <dd class="col-sm-10">
+            @Model.Specialty?.Name
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Clinic)
+
+        <dt class="col-sm-2">
+            Mô tả
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Clinic.ID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Specialty)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Specialty.ID)
+        <dd class="col-sm-10">
+            @Model.Description
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<hr />
+<div class="manager__management__header">
+    <h1></h1>
+    <div class="action-btn">
+
+        <a asp-action="Index">Back to List</a>
+        |
+        <a asp-action="Edit" asp-route-id="@Model.ID">
+            <button class="add__new">
+                Chỉnh sửa
+            </button>
+        </a>
+        <a asp-action="Delete" asp-route-id="@Model.ID">
+            <button class="add__new1">
+                Xóa
+            </button>
+        </a>
+    </div>
 </div>

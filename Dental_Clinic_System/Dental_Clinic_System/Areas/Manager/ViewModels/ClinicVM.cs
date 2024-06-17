@@ -17,7 +17,7 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 
         public int? District { get; set; } = null!;
 
-        public string Address { get; set; } = null!;
+        public string? Address { get; set; } = null!;
 
         public string? Basis { get; set; } = null;
 
