@@ -1,4 +1,5 @@
-﻿using Dental_Clinic_System.Models.Data;
+﻿using Dental_Clinic_System.Helper;
+using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -105,7 +106,13 @@ namespace Dental_Clinic_System.Controllers
                                     .ThenInclude(d => d.Account)
 								.Where(s => s.DentistID == dentistID)
                                 .ToListAsync();
-			ViewBag.clinicID = clinicID;
+
+            var clinic = _context.Clinics.First(c => c.ID == clinicID);
+
+            ViewBag.clinicName = clinic.Name;
+            ViewBag.clinicAddress = clinic.Address + ", " + await LocalAPIReverseString.GetWardNameById(clinic.District ?? 0, clinic.Ward?? 0) + ", " + await LocalAPIReverseString.GetDistrictNameById(clinic.Province ?? 0, clinic.District ?? 0) + ", " + await LocalAPIReverseString.GetProvinceNameById(clinic.Province ?? 0);
+
+            ViewBag.clinicID = clinicID;
 			ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;
 			return View(schedule);

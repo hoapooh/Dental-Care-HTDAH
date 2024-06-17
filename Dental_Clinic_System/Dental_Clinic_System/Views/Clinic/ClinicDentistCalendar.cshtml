@@ -2,8 +2,6 @@
 
 @{
 	ViewData["Title"] = "DentistBookingCalendar";
-	//var dentistBooking = ViewBag.dentistBooking as IEnumerable<Dental_Clinic_System.Models.Data.Dentist>;
-	var button_defined = "";
 }
 
 <head>
@@ -43,9 +41,9 @@
 						<li>
 							<i class="fa-solid fa-hospital"></i>
 							<div class="text">
-								<span>@Model.First()?.Dentist?.Clinic?.Name</span>
+								<span>@ViewBag.clinicName</span>
 								<p class="address">
-									@Model.First()?.Dentist?.Clinic?.Address
+									@ViewBag.clinicAddress
 								</p>
 							</div>
 						</li>
@@ -84,7 +82,7 @@
 
 				<input type="hidden" id="scheduleID" name="scheduleID" />
 				<div class="btn-wrapper">
-					<a>
+					<a href="/clinic/choosedentist?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID">
 						<button type="button" class="back-btn">
 							Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
 						</button>
@@ -135,10 +133,11 @@
 				//console.log(schedules);
 				console.log(scheduleMap);
 
+				let current = new Date(); 
 				//initialize mobiscroll calendar with the valid dates
 				mobiscroll.datepicker("#demo-single-day", {
 					controls: ["calendar", "timegrid"],
-					min: new Date(),
+					min: current.setHours(current.getHours() + 4),
 					display: "inline",
 					touchUI: true,
 					selectMultiple: false,
@@ -148,6 +147,8 @@
 						item: item.title,
 
 					})),
+
+					locale: mobiscroll.localeVi,
 
 					onChange: function (event, inst) {
 						console.log(formatDate(event.value));

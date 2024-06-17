@@ -1031,3 +1031,8 @@ input:focus {
 	.record__item__style .list__action .info {
 		color: #ffb54a;
 	}
+
+.btn-wrapper .add-record-btn.disabled-btn {
+	background-color: #cccccc !important;
+	cursor: not-allowed;
+}

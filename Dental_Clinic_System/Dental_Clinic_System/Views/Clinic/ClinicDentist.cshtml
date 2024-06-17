@@ -1,17 +1,18 @@
 ﻿@using Dental_Clinic_System.Models.Data
+@using Dental_Clinic_System.Helper
 @model IEnumerable<Dental_Clinic_System.Models.Data.Dentist>
 
 @{
 	ViewData["Title"] = "DentistList";
 	var degreeList = Model.Select(d => d.Degree).ToList();
 	var genderList = Model.Select(g => g.Account).ToList();
-
+	var clinic = Model.First().Clinic;
 }
 
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Dental Care | login</title>
+	<title>Danh Sách Nha Sĩ</title>
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,7 +44,7 @@
 							<div class="text">
 								<span>@Model.FirstOrDefault()?.Clinic.Name</span>
 								<p class="address">
-									@Model.FirstOrDefault()?.Clinic.Address
+									@clinic.Address, @await LocalAPIReverseString.GetWardNameById(clinic.District ?? 0, clinic.Ward ?? 0), @await LocalAPIReverseString.GetDistrictNameById(clinic.Province ?? 0, clinic.District ?? 0), @await LocalAPIReverseString.GetProvinceNameById(clinic.Province ?? 0)
 								</p>
 							</div>
 						</li>
@@ -144,9 +145,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="back-btn">
+			<div class="btn-wrapper">
 				<a href="/clinic/chooseclinicspecialty?clinicID=@ViewBag.clinicID">
-					<button type="button">
+					<button type="button" class="back-btn">
 						Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
 					</button>
 				</a>

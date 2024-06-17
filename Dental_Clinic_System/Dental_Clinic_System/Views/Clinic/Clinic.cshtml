@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Clinic>
+﻿@using Dental_Clinic_System.Helper
+@model IEnumerable<Dental_Clinic_System.Models.Data.Clinic>
 
 @{
     ViewData["Title"] = "Clinic";
@@ -42,7 +43,7 @@
 						</h3>
 						<p class="location">
 							<i class="fa-solid fa-location-dot"></i>
-							@clinic.Address
+							@clinic.Address, @await LocalAPIReverseString.GetWardNameById(clinic.District ?? 0, clinic.Ward ?? 0), @await LocalAPIReverseString.GetDistrictNameById(clinic.Province ?? 0, clinic.District ?? 0), @await LocalAPIReverseString.GetProvinceNameById(clinic.Province ?? 0)
 						</p>
 						<p class="time">
 							<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày

@@ -38,7 +38,7 @@ namespace Dental_Clinic_System.Controllers
 
         [Authorize(Roles = "Bệnh Nhân")]
         [HttpPost]
-        public async Task<IActionResult> ProcessCheckout(string paymentMethod, int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit)
+        public async Task<IActionResult> ProcessCheckout(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit, string paymentMethod)
         {
             var patient = _context.PatientRecords.FirstOrDefault(p => p.ID == patientRecordID);
 
@@ -248,36 +248,36 @@ namespace Dental_Clinic_System.Controllers
                 };
 
                 // Truy xuất đối tượng từ TempData
-                //var momoModel = TempData.GetObjectFromJson<MOMOPaymentRequestModel>("MOMOPaymentRequestModel");
-                //var appointment = new Appointment
-                //{
-                //    ScheduleID = momoModel.ScheduleID,
-                //    PatientRecordID = momoModel.PatientRecordID,
-                //    SpecialtyID = momoModel.SpecialtyID,
-                //    TotalPrice = momoModel.Amount,
-                //    CreatedDate = DateTime.Now,
-                //    AppointmentStatus = "Chờ Xác Nhận"
-                //};
+                var momoModel = TempData.GetObjectFromJson<MOMOPaymentRequestModel>("MOMOPaymentRequestModel");
+                var appointment = new Appointment
+                {
+                    ScheduleID = momoModel.ScheduleID,
+                    PatientRecordID = momoModel.PatientRecordID,
+                    SpecialtyID = momoModel.SpecialtyID,
+                    TotalPrice = momoModel.Amount,
+                    CreatedDate = DateTime.Now,
+                    AppointmentStatus = "Chờ Xác Nhận"
+                };
 
-                //_context.Appointments.Add(appointment);
-                //_context.SaveChanges();
+                _context.Appointments.Add(appointment);
+                _context.SaveChanges();
 
-                //var transaction = new Transaction
-                //{
-                //    AppointmentID = appointment.ID,
-                //    Date = DateTime.Now,
-                //    BankName = response.OrderType,
-                //    TransactionCode = response.TransId,
-                //    PaymentMethod = "MOMO",
-                //    TotalPrice = response.Amount,
-                //    BankAccountNumber = "9704198526191432198",
-                //    FullName = momoModel.FullName,
-                //    Message = response.OrderInfo,
-                //    Status = "Thành Công"
-                //};
+                var transaction = new Transaction
+                {
+                    AppointmentID = appointment.ID,
+                    Date = DateTime.Now,
+                    BankName = response.OrderType,
+                    TransactionCode = response.TransId,
+                    PaymentMethod = "MOMO",
+                    TotalPrice = response.Amount,
+                    BankAccountNumber = "9704198526191432198",
+                    FullName = momoModel.FullName,
+                    Message = response.OrderInfo,
+                    Status = "Thành Công"
+                };
 
-                //_context.Transactions.Add(transaction);
-                //_context.SaveChanges();
+                _context.Transactions.Add(transaction);
+                _context.SaveChanges();
 
                 ViewBag.ResultCode = resultCode;
                 ViewBag.Message = message.ToUpper();

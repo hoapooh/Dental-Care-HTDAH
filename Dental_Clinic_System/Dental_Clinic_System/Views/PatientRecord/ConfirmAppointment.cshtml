@@ -1,4 +1,6 @@
 ﻿@using Dental_Clinic_System.Models.Data
+@using Dental_Clinic_System.Helper
+@using System.Globalization
 @model Dictionary<string, object>
 
 @{
@@ -14,7 +16,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dental Care | login</title>
+    <title>Xác Nhận Đặt Lịch</title>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,7 +53,7 @@
                                 <i class="fa-solid fa-hospital"></i>
                                 <div class="clinic__info__details">
                                     <span>@clinic?.Name</span>
-                                    <p>@clinic?.Address</p>
+                                    <p>@patientRecord?.Address, @await LocalAPIReverseString.GetWardNameById(patientRecord?.District ?? 0, patientRecord?.Ward ?? 0), @await LocalAPIReverseString.GetDistrictNameById(patientRecord?.Province ?? 0, patientRecord?.District ?? 0), @await LocalAPIReverseString.GetProvinceNameById(patientRecord?.Province ?? 0)</p>
                                 </div>
                             </div>
                         </div>
@@ -85,12 +87,12 @@
                                                 <p>@schedule?.TimeSlot?.StartTime.ToString("HH:mm") - @schedule?.TimeSlot?.EndTime.ToString("HH:mm")</p>
                                                 <p>@schedule?.Date.ToString("dd/MM/yyyy")</p>
                                             </td>
-                                            <td class="style__col__sub__other">@specialty?.Deposit đ</td>
-                                            <td>
+                                            <td class="style__col__sub__other">@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", specialty?.Deposit)</td>
+                                             @* <td>
                                                 <button type="button" class="delete-btn">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
-                                            </td>
+                                            </td> *@
                                         </tr>
                                     </tbody>
                                 </table>
@@ -150,12 +152,16 @@
                         </div>
                     </div>
                     <div class="btn-wrapper">
-                        <a href="~/patientrecordchoose.html">
+                        <a href="/patientrecord/patientrecord?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID&dentistID=@ViewBag.dentistID&scheduleID=@ViewBag.scheduleID">
                             <button type="button" class="back-btn">
                                 Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
                             </button>
                         </a>
-                        <a asp-controller="payment" asp-action="ProcessCheckout" asp-route-scheduleID="@ViewBag.scheduleID" asp-route-patientRecordID="@ViewBag.patientRecordID" asp-route-specialtyID="@specialty.ID">
+                        <a asp-controller="patientrecord" asp-action="patientrecordpaymentchoosing" asp-route-specialtyID="@ViewBag.specialtyID" 
+                                                                                                    asp-route-dentistID="@ViewBag.dentistID" 
+                                                                                                    asp-route-patientRecordID="@ViewBag.patientRecordID" 
+                                                                                                    asp-route-scheduleID="@ViewBag.scheduleID" 
+                                                                                                    asp-route-clinicID="@ViewBag.clinicID">
                             <button type="button" class="add-record-btn">Xác nhận</button> @* -------------------------------------------*@
                         </a>
                         

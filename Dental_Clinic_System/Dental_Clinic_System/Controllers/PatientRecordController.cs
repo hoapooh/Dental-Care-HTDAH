@@ -1,8 +1,10 @@
-﻿using Dental_Clinic_System.Models.Data;
+﻿using Dental_Clinic_System.Areas.Manager.ViewModels;
+using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -56,6 +58,18 @@ namespace Dental_Clinic_System.Controllers
 				ModelState.Remove(nameof(record.FMEmail));
 				ModelState.Remove(nameof(record.FMPhoneNumber));
 				ModelState.Remove(nameof(record.FMRelationship));
+				if(record.Province == 0 || string.IsNullOrEmpty(record.Province.ToString()))
+				{
+					ModelState.AddModelError(nameof(record.Province), "Vui lòng chọn tỉnh thành");
+				}
+				if (record.District == 0 || string.IsNullOrEmpty(record.District.ToString()))
+				{
+					ModelState.AddModelError(nameof(record.District), "Vui lòng chọn tỉnh thành");
+				}
+				if (record.Ward == 0 || string.IsNullOrEmpty(record.Ward.ToString()))
+				{
+					ModelState.AddModelError(nameof(record.Ward), "Vui lòng chọn tỉnh thành");
+				}
 			}
 			else if (age < 14)
 			{
@@ -136,20 +150,45 @@ namespace Dental_Clinic_System.Controllers
 		}
 		#endregion
 
+
 		// Choose a patient record for booking (Method GET is here)
 		[HttpGet]
 		[Route("/appointment/confirm")]
 		public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
 		{
 			var appointment = new Dictionary<string, object>
-			{
-				{ "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
-				{ "PatientRecord", await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID)},
-				{ "Specialty", await _context.Specialties.FirstOrDefaultAsync(sp => sp.ID == specialtyID)},
-				{ "Dentist", await _context.Dentists.Include(d => d.Account). FirstOrDefaultAsync(d => d.ID == dentistID)},
-				{ "Clinic", await _context.Clinics. FirstOrDefaultAsync(c => c.ID == clinicID) }
-			};
-			return View(appointment);
+            {
+                { "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
+                { "PatientRecord", await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID)},
+                { "Specialty", await _context.Specialties.FirstOrDefaultAsync(sp => sp.ID == specialtyID)},
+                { "Dentist", await _context.Dentists.Include(d => d.Account). FirstOrDefaultAsync(d => d.ID == dentistID)},
+                { "Clinic", await _context.Clinics. FirstOrDefaultAsync(c => c.ID == clinicID) }
+            };
+
+            ViewBag.scheduleID = scheduleID;
+			ViewBag.patientRecordID = patientRecordID;
+			ViewBag.specialtyID = specialtyID;
+			ViewBag.clinicID = clinicID;
+			ViewBag.dentistID = dentistID;
+            return View(appointment);
+        }
+        [HttpGet]
+		public async Task<IActionResult> PatientRecordPaymentChoosing(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
+		{
+            var appointment = new Dictionary<string, object>
+            {
+                { "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
+                { "PatientRecord", await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID)},
+                { "Specialty", await _context.Specialties.FirstOrDefaultAsync(sp => sp.ID == specialtyID)},
+                { "Dentist", await _context.Dentists.Include(d => d.Account). FirstOrDefaultAsync(d => d.ID == dentistID)},
+                { "Clinic", await _context.Clinics. FirstOrDefaultAsync(c => c.ID == clinicID) }
+            };
+            ViewBag.scheduleID = scheduleID;
+			ViewBag.patientRecordID = patientRecordID;
+			ViewBag.specialtyID = specialtyID;
+			ViewBag.dentistID = dentistID;
+			ViewBag.clinicID = clinicID;
+            return View(appointment);
 		}
 	}
 }
