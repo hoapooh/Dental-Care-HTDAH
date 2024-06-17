@@ -114,7 +114,7 @@ namespace Dental_Clinic_System.Services.MOMO
                 //{ "WalletName", model.WalletName ?? "" }
             };
 
-            model.DisbursementMethodRSA = DataEncryptionExtensions.EncryptRSA(disbursementMethod, _configuration["MomoAPI:PublicKey"]);
+            //model.DisbursementMethodRSA = DataEncryptionExtensions.EncryptRSA(disbursementMethod, _configuration["MomoAPI:PublicKey"]);
 
             // Tạo chữ ký (signature)
             string rawHash = $"accessKey={accessKey}&amount={amount.ToString()}&disbursementMethod={model.DisbursementMethodRSA}&extraData=&orderId={orderId}&orderInfo={orderInfo}&partnerCode={partnerCode}&requestId={requestId}&requestType={requestType}";
