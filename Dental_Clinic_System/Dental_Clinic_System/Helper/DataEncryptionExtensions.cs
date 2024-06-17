@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Parameters;
 using System.Globalization;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Dental_Clinic_System.Helper
@@ -137,34 +141,41 @@ namespace Dental_Clinic_System.Helper
 			return BitConverter.ToString(hash).Replace("-", "").ToLower();
 		}
 
-		public static string EncryptRSA(object data, string hexPublicKey)
+		public static string EncryptRSA(string data, string publicKeyHex)
 		{
-			string jsonData = JsonConvert.SerializeObject(data);
-			byte[] dataBytes = Encoding.UTF8.GetBytes(jsonData);
+			byte[] dataBytes = Encoding.UTF8.GetBytes(data);
+			RsaKeyParameters publicKey = CreateRsaKeyParametersFromHex(publicKeyHex);
 
-			using (var rsa = new RSACryptoServiceProvider())
+			var encryptEngine = new Pkcs1Encoding(new RsaEngine());
+			encryptEngine.Init(true, publicKey);
+
+			var encryptedData = encryptEngine.ProcessBlock(dataBytes, 0, dataBytes.Length);
+			return Convert.ToBase64String(encryptedData);
+		}
+
+		private static RsaKeyParameters CreateRsaKeyParametersFromHex(string publicKeyHex)
+		{
+			byte[] publicKeyBytes = ConvertHexToBytes(publicKeyHex);
+
+			// Convert the byte array to BigInteger
+			var modulus = new Org.BouncyCastle.Math.BigInteger(1, publicKeyBytes);
+			var exponent = Org.BouncyCastle.Math.BigInteger.ValueOf(65537);
+
+			return new RsaKeyParameters(false, modulus, exponent);
+		}
+
+		private static byte[] ConvertHexToBytes(string hex)
+		{
+			if (hex.Length % 2 != 0)
 			{
-				// Convert the hexadecimal public key to Base64
-				string base64Key = ConvertHexToBase64(hexPublicKey);
-
-				// Create the XML formatted key
-				string publicKeyXml = CreateRsaPublicKeyXml(base64Key);
-
-				// Load the public key
-				rsa.FromXmlString(publicKeyXml);
-				byte[] encryptedData = rsa.Encrypt(dataBytes, false);
-				return Convert.ToBase64String(encryptedData);
+				hex = "0" + hex; // Pad with a leading zero if the length is odd
 			}
+
+			return Enumerable.Range(0, hex.Length / 2)
+							 .Select(x => Convert.ToByte(hex.Substring(x * 2, 2), 16))
+							 .ToArray();
 		}
 
-		private static string ConvertHexToBase64(string hex)
-		{
-			byte[] bytes = Enumerable.Range(0, hex.Length)
-									  .Where(x => x % 2 == 0)
-									  .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-									  .ToArray();
-			return Convert.ToBase64String(bytes);
-		}
 
 		private static string CreateRsaPublicKeyXml(string base64Key)
 		{
