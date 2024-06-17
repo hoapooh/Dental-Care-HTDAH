@@ -10,6 +10,7 @@ html {
 
 body {
 	font-family: "Baloo Paaji 2";
+	scroll-behavior: smooth;
 }
 
 ul {
@@ -30,6 +31,11 @@ body::-webkit-scrollbar {
 	width: 6px;
 	display: block;
 	background-color: #b2b2b2;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: #1376f8;
+	border-radius: 10px;
 }
 
 /* ========== DROPDOWN HOVER ========== */
