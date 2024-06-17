@@ -91,8 +91,14 @@ namespace Dental_Clinic_System.Controllers
                 // For Appointment Info
                 ScheduleID = 0,
                 PatientRecordID = 0,
-                SpecialtyID = 0
-            };
+                SpecialtyID = 0,
+
+                // For Disbursement Info
+                RequestType = "disburseToBank",
+                BankAccountNo = "000000000",
+                BankAccountHolderName = "NGUYEN VAN A",
+                BankCode = "VCB"
+			};
             var vnpayModel = new VNPaymentRequestModel
             {
                 Amount = 50000,
@@ -348,127 +354,210 @@ namespace Dental_Clinic_System.Controllers
 
 
 
-        //private string ComputeHmacSha256(string message, string secretKey)
-        //{
-        //	var keyBytes = Encoding.UTF8.GetBytes(secretKey);
-        //	var messageBytes = Encoding.UTF8.GetBytes(message);
+        #region Disbursement MOMO API
 
-        //	byte[] hashBytes;
+        [HttpPost]
+		public async Task<IActionResult> DisburseSingle(MOMOPaymentRequestModel model)
+		{
+			string endpoint = _configuration["MomoAPI:MomoApiDisbursementUrl"]; //
+			string partnerCode = _configuration["MomoAPI:PartnerCode"];         //
+			string accessKey = _configuration["MomoAPI:AccessKey"];
+			string secretKey = _configuration["MomoAPI:SecretKey"];
+			string orderInfo = model.OrderInformation;
+			string returnUrl = _configuration["MomoAPI:ReturnUrl"];
+			string notifyUrl = _configuration["MomoAPI:NotifyUrl"];
+			string requestType = "disburseToBank";                             //
+			string amount = model.Amount.ToString();                            // Số tiền thanh toán
+			string orderId = model.OrderID;                                     //
+			string requestId = orderId;
+			string extraData = "";
+			string lang = "vi"; // or "vi"
 
-        //	using (var hmac = new HMACSHA256(keyBytes))
-        //	{
-        //		hashBytes = hmac.ComputeHash(messageBytes);
-        //	}
+			var disbursementMethod = new Dictionary<string, string>()
+			{
+                // Disburse To Bank
+                { "BankAccountNo", "000000000" ?? ""},
+                //{ "BankCardNo", model.BankCardNo ?? "" },
+                { "BankAccountHolderName", "NGUYEN VAN A" ?? "" },
+				{ "BankCode", "VCB" },
 
-        //	var hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                // Disburse To Wallet
+                //{ "WalletId", model.WalletId ?? ""},
+                //{ "WalletName", model.WalletName ?? "" }
+            };
 
-        //	return hashString;
-        //}
+			var rsa = DataEncryptionExtensions.EncryptRSA(disbursementMethod, _configuration["MomoAPI:PublicKey"]);
 
-        // ----------------------------------------------------------------------- //
-        // Re-Fun VNPAY START
+			// Tạo chữ ký (signature)
+			string rawHash = $"accessKey={accessKey}&amount={amount.ToString()}&disbursementMethod={rsa}&extraData=&orderId={orderId}&orderInfo={orderInfo}&partnerCode={partnerCode}&requestId={requestId}&requestType={requestType}";
+			string signature = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
 
-        //[HttpPost]
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //public async Task<IActionResult> ProcessRefund(string txnRef = "638536559852904902", long amount = 20000)
-        //{
-        //	var requestId = Guid.NewGuid().ToString();
-        //	var version = _configuration["VNPAY:Version"];
-        //	var command = _configuration["VNPAY:RefundCommand"];
-        //	var tmnCode = _configuration["VNPAY:TmnCode"];
-        //	var transactionType = "02"; // hoặc "03" cho hoàn trả một phần
-        //	var orderInfo = "Refund for order";
-        //	var transactionDate = DateTime.Now.ToString("yyyyMMddHHmmss");
-        //	var createBy = "admin";
-        //	var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
-        //	var ipAddr = HttpContext.Connection.RemoteIpAddress.ToString();
-        //	var secureHash = _configuration["VNPAY:HashSecret"];
+			var disbursementRequest = new
+			{
+				partnerCode,
+				orderId,
+				amount,
+				requestId,
+				requestType,
+				model.DisbursementMethodRSA,
+				extraData,
+				orderInfo,
+				lang,
+				signature
+			};
 
-        //	// Tạo chuỗi dữ liệu để tính checksum
-        //	string data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}|{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
+			string jsonPaymentRequest = JsonConvert.SerializeObject(disbursementRequest);
+			Console.WriteLine("JSON Request: " + jsonPaymentRequest);
 
-        //	// Tính checksum
-        //	string secureHashed = ComputeSHA256Hash(secureHash, data);
+			using (var client = new HttpClient())
+			{
+				client.Timeout = TimeSpan.FromSeconds(30);
+				var content = new StringContent(jsonPaymentRequest, Encoding.UTF8, "application/json");
+				var response = await client.PostAsync(endpoint, content);
+				var responseString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("JSON Response: " + responseString);
 
-        //	var jsonData = new JObject
-        //	{
-        //		["vnp_RequestId"] = requestId,
-        //		["vnp_Version"] = version,
-        //		["vnp_Command"] = command,
-        //		["vnp_TmnCode"] = tmnCode,
-        //		["vnp_TransactionType"] = transactionType,
-        //		["vnp_TxnRef"] = txnRef,
-        //		["vnp_Amount"] = amount.ToString(),
-        //		["vnp_OrderInfo"] = orderInfo,
-        //		["vnp_TransactionDate"] = transactionDate,
-        //		["vnp_CreateBy"] = createBy,
-        //		["vnp_CreateDate"] = createDate,
-        //		["vnp_IpAddr"] = ipAddr,
-        //		["vnp_SecureHash"] = secureHashed
-        //	};
+				var responseObject = JsonConvert.DeserializeObject<MOMOPaymentResponseModel>(responseString);
 
-        //	var jsonString = JsonConvert.SerializeObject(jsonData);
-        //	var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-        //	Console.WriteLine("JSON STRING: " + jsonString);
+				if (responseObject != null && !string.IsNullOrEmpty(responseObject.payUrl))
+				{
+					return View("RefundSuccess");
+				}
+				else
+				{
+					Console.WriteLine("Fail!!!");
+					// Xử lý lỗi
+					return View("RefundFail");
+				}
+			}
 
-        //	using (var client = _httpClientFactory.CreateClient())
-        //	{
-        //		var response = await client.PostAsync(_configuration["VNPAY:RefundURL"], content);
-        //		var responseString = await response.Content.ReadAsStringAsync();
-        //		return ProcessResponse(responseString);
-        //	}
-        //}
+		}
 
-
-
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //private IActionResult ProcessResponse(string responseString)
-        //{
-        //	var jsonResponse = JObject.Parse(responseString);
-        //	Console.WriteLine(jsonResponse.ToString());
-        //	var responseCode = jsonResponse["vnp_ResponseCode"].ToString();
-        //	Console.WriteLine($"Response Code = {responseCode}");
-        //	if (responseCode == "00")
-        //	{
-        //		return RedirectToAction("RefundSuccess");
-        //	}
-        //	else
-        //	{
-        //		return RedirectToAction("RefundFail");
-        //	}
-        //}
-
-        //public static string ComputeSHA256Hash(string secretKey, string rawData)
-        //{
-        //	using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
-        //	{
-        //		byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-        //		StringBuilder builder = new StringBuilder();
-        //		for (int i = 0; i < bytes.Length; i++)
-        //		{
-        //			builder.Append(bytes[i].ToString("x2"));
-        //		}
-        //		return builder.ToString();
-        //	}
-        //}
+		#endregion
 
 
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //public IActionResult RefundCallBack()
-        //{
-        //    var response = _vnPayment.RefundExecute(Request.Query);
-        //    Console.WriteLine($"Response Code = {response.VnPayResponseCode}");
 
-        //    if (response == null || response.VnPayResponseCode != "00")
-        //    {
-        //        TempData["Message"] = $"Lỗi hoàn tiền VN Pay: {response.VnPayResponseCode}";
-        //        return RedirectToAction("RefundFail");
-        //    }
+		//private string ComputeHmacSha256(string message, string secretKey)
+		//{
+		//	var keyBytes = Encoding.UTF8.GetBytes(secretKey);
+		//	var messageBytes = Encoding.UTF8.GetBytes(message);
 
-        //    TempData["Message"] = $"Hoàn tiền VNPay thành công";
-        //    return RedirectToAction("RefundSuccess");
-        //}
+		//	byte[] hashBytes;
 
-        // Re-Fun VNPAY END
-    }
+		//	using (var hmac = new HMACSHA256(keyBytes))
+		//	{
+		//		hashBytes = hmac.ComputeHash(messageBytes);
+		//	}
+
+		//	var hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+
+		//	return hashString;
+		//}
+
+		// ----------------------------------------------------------------------- //
+		// Re-Fun VNPAY START
+
+		//[HttpPost]
+		//[Authorize(Roles = "Bệnh Nhân")]
+		//public async Task<IActionResult> ProcessRefund(string txnRef = "638536559852904902", long amount = 20000)
+		//{
+		//	var requestId = Guid.NewGuid().ToString();
+		//	var version = _configuration["VNPAY:Version"];
+		//	var command = _configuration["VNPAY:RefundCommand"];
+		//	var tmnCode = _configuration["VNPAY:TmnCode"];
+		//	var transactionType = "02"; // hoặc "03" cho hoàn trả một phần
+		//	var orderInfo = "Refund for order";
+		//	var transactionDate = DateTime.Now.ToString("yyyyMMddHHmmss");
+		//	var createBy = "admin";
+		//	var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
+		//	var ipAddr = HttpContext.Connection.RemoteIpAddress.ToString();
+		//	var secureHash = _configuration["VNPAY:HashSecret"];
+
+		//	// Tạo chuỗi dữ liệu để tính checksum
+		//	string data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}|{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
+
+		//	// Tính checksum
+		//	string secureHashed = ComputeSHA256Hash(secureHash, data);
+
+		//	var jsonData = new JObject
+		//	{
+		//		["vnp_RequestId"] = requestId,
+		//		["vnp_Version"] = version,
+		//		["vnp_Command"] = command,
+		//		["vnp_TmnCode"] = tmnCode,
+		//		["vnp_TransactionType"] = transactionType,
+		//		["vnp_TxnRef"] = txnRef,
+		//		["vnp_Amount"] = amount.ToString(),
+		//		["vnp_OrderInfo"] = orderInfo,
+		//		["vnp_TransactionDate"] = transactionDate,
+		//		["vnp_CreateBy"] = createBy,
+		//		["vnp_CreateDate"] = createDate,
+		//		["vnp_IpAddr"] = ipAddr,
+		//		["vnp_SecureHash"] = secureHashed
+		//	};
+
+		//	var jsonString = JsonConvert.SerializeObject(jsonData);
+		//	var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+		//	Console.WriteLine("JSON STRING: " + jsonString);
+
+		//	using (var client = _httpClientFactory.CreateClient())
+		//	{
+		//		var response = await client.PostAsync(_configuration["VNPAY:RefundURL"], content);
+		//		var responseString = await response.Content.ReadAsStringAsync();
+		//		return ProcessResponse(responseString);
+		//	}
+		//}
+
+
+
+		//[Authorize(Roles = "Bệnh Nhân")]
+		//private IActionResult ProcessResponse(string responseString)
+		//{
+		//	var jsonResponse = JObject.Parse(responseString);
+		//	Console.WriteLine(jsonResponse.ToString());
+		//	var responseCode = jsonResponse["vnp_ResponseCode"].ToString();
+		//	Console.WriteLine($"Response Code = {responseCode}");
+		//	if (responseCode == "00")
+		//	{
+		//		return RedirectToAction("RefundSuccess");
+		//	}
+		//	else
+		//	{
+		//		return RedirectToAction("RefundFail");
+		//	}
+		//}
+
+		//public static string ComputeSHA256Hash(string secretKey, string rawData)
+		//{
+		//	using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
+		//	{
+		//		byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+		//		StringBuilder builder = new StringBuilder();
+		//		for (int i = 0; i < bytes.Length; i++)
+		//		{
+		//			builder.Append(bytes[i].ToString("x2"));
+		//		}
+		//		return builder.ToString();
+		//	}
+		//}
+
+
+		//[Authorize(Roles = "Bệnh Nhân")]
+		//public IActionResult RefundCallBack()
+		//{
+		//    var response = _vnPayment.RefundExecute(Request.Query);
+		//    Console.WriteLine($"Response Code = {response.VnPayResponseCode}");
+
+		//    if (response == null || response.VnPayResponseCode != "00")
+		//    {
+		//        TempData["Message"] = $"Lỗi hoàn tiền VN Pay: {response.VnPayResponseCode}";
+		//        return RedirectToAction("RefundFail");
+		//    }
+
+		//    TempData["Message"] = $"Hoàn tiền VNPay thành công";
+		//    return RedirectToAction("RefundSuccess");
+		//}
+
+		// Re-Fun VNPAY END
+	}
 }
