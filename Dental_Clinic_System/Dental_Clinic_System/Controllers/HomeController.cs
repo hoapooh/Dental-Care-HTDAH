@@ -15,7 +15,7 @@ namespace Dental_Clinic_System.Controllers
 		public HomeController(ILogger<HomeController> logger, DentalClinicDbContext context)
 		{
 			_logger = logger;
-			_context = context;
+			_context = context;	
 		}
 
 		public IActionResult Index()

@@ -72,8 +72,12 @@
 					<div class="separate"></div>
 					<div class="dentistry__info__card--schedule">
 
+						@*========================THỬ NGHIỆM=============================*@
 							<select name="calendar" id="">
-								<option value="">Thứ Hai 22/06/2024</option>
+							@foreach (var schedule in dentistry.Schedules)
+							{
+								<option value="">@schedule.Date</option>
+							}
 							</select>
 							<p class="sub-title">
 								<i class="fa-regular fa-calendar"></i>Đặt lịch khám

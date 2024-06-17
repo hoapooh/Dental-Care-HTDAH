@@ -1,7 +1,6 @@
 {
   "Files": [
     {
-<<<<<<< HEAD
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Dental_Clinic_System.bundle.scp.css",
       "PackagePath": "staticwebassets\\Dental_Clinic_System.bundle.scp.css"
     },
@@ -20,6 +19,10 @@
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\authentication.css",
       "PackagePath": "staticwebassets\\assets\\css\\authentication.css"
+    },
+    {
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\bill.css",
+      "PackagePath": "staticwebassets\\assets\\css\\bill.css"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\booking.css",
@@ -91,101 +94,6 @@
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\paymentresult.css",
-=======
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Dental_Clinic_System.bundle.scp.css",
-      "PackagePath": "staticwebassets\\Dental_Clinic_System.bundle.scp.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\about.html",
-      "PackagePath": "staticwebassets\\about.html"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\about.css",
-      "PackagePath": "staticwebassets\\assets\\css\\about.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\accountDash.css",
-      "PackagePath": "staticwebassets\\assets\\css\\accountDash.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\authentication.css",
-      "PackagePath": "staticwebassets\\assets\\css\\authentication.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\bill.css",
-      "PackagePath": "staticwebassets\\assets\\css\\bill.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\booking.css",
-      "PackagePath": "staticwebassets\\assets\\css\\booking.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\clinic.css",
-      "PackagePath": "staticwebassets\\assets\\css\\clinic.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\contact.css",
-      "PackagePath": "staticwebassets\\assets\\css\\contact.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\contentDash.css",
-      "PackagePath": "staticwebassets\\assets\\css\\contentDash.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\dentist.css",
-      "PackagePath": "staticwebassets\\assets\\css\\dentist.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\dentistpatients.css",
-      "PackagePath": "staticwebassets\\assets\\css\\dentistpatients.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\dentistry.css",
-      "PackagePath": "staticwebassets\\assets\\css\\dentistry.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\footer.css",
-      "PackagePath": "staticwebassets\\assets\\css\\footer.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\header.css",
-      "PackagePath": "staticwebassets\\assets\\css\\header.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\headerAd.css",
-      "PackagePath": "staticwebassets\\assets\\css\\headerAd.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\icons_mobiscroll.ttf",
-      "PackagePath": "staticwebassets\\assets\\css\\icons_mobiscroll.ttf"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\icons_mobiscroll.woff",
-      "PackagePath": "staticwebassets\\assets\\css\\icons_mobiscroll.woff"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\invoice.css",
-      "PackagePath": "staticwebassets\\assets\\css\\invoice.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\login.css",
-      "PackagePath": "staticwebassets\\assets\\css\\login.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\manager.css",
-      "PackagePath": "staticwebassets\\assets\\css\\manager.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\mobiscroll.javascript.min.css",
-      "PackagePath": "staticwebassets\\assets\\css\\mobiscroll.javascript.min.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\patientrecord.css",
-      "PackagePath": "staticwebassets\\assets\\css\\patientrecord.css"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\css\\paymentresult.css",
->>>>>>> 669fade44d30413c5dd3046d394015846df12575
       "PackagePath": "staticwebassets\\assets\\css\\paymentresult.css"
     },
     {
@@ -229,15 +137,11 @@
       "PackagePath": "staticwebassets\\assets\\images\\Calling.png"
     },
     {
-<<<<<<< HEAD
-      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\Google.png",
-=======
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\DentalCare.png",
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\DentalCare.png",
       "PackagePath": "staticwebassets\\assets\\images\\DentalCare.png"
     },
     {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\Google.png",
->>>>>>> 669fade44d30413c5dd3046d394015846df12575
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\images\\Google.png",
       "PackagePath": "staticwebassets\\assets\\images\\Google.png"
     },
     {
@@ -537,19 +441,11 @@
       "PackagePath": "staticwebassets\\assets\\js\\firebase_script.js"
     },
     {
-<<<<<<< HEAD
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\firebase_script2.js",
       "PackagePath": "staticwebassets\\assets\\js\\firebase_script2.js"
     },
     {
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\fullcalendar.js",
-=======
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\firebase_script2.js",
-      "PackagePath": "staticwebassets\\assets\\js\\firebase_script2.js"
-    },
-    {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\assets\\js\\fullcalendar.js",
->>>>>>> 669fade44d30413c5dd3046d394015846df12575
       "PackagePath": "staticwebassets\\assets\\js\\fullcalendar.js"
     },
     {
@@ -2077,15 +1973,11 @@
       "PackagePath": "staticwebassets\\assets\\tinymce\\js\\tinymce\\tinymce.min.js"
     },
     {
-<<<<<<< HEAD
-      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\booking.html",
-=======
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\bill.html",
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\bill.html",
       "PackagePath": "staticwebassets\\bill.html"
     },
     {
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\booking.html",
->>>>>>> 669fade44d30413c5dd3046d394015846df12575
+      "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\booking.html",
       "PackagePath": "staticwebassets\\booking.html"
     },
     {
@@ -2513,11 +2405,7 @@
       "PackagePath": "staticwebassets\\register.html"
     },
     {
-<<<<<<< HEAD
       "Id": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\speciality.html",
-=======
-      "Id": "G:\\My Project .NET\\Github-Team\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\wwwroot\\speciality.html",
->>>>>>> 669fade44d30413c5dd3046d394015846df12575
       "PackagePath": "staticwebassets\\speciality.html"
     },
     {

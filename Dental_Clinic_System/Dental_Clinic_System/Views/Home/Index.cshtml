@@ -4,7 +4,7 @@
     // ViewData["Title"] = "Home Page";
     // Layout = null;
     var specialties = ViewBag.Specialities as List<Specialty>;
-    var clinics = ViewBag.Clinics as List<Clinic>;
+    //var clinics = ViewBag.Clinics as List<Clinic>;
 }
 
 <!DOCTYPE html>
@@ -123,7 +123,7 @@
                 <div class="clinic-container__wrapper swiper mySwiper">
                     <div class="clinic__content">
                         <div class="clinic__wrapper swiper-wrapper">
-                            @foreach (var clinic in clinics)
+                            @*foreach (var clinic in clinics)
                             {
                                 <div class="clinic__wrapper__card swiper-slide">
                                     <div class="image-content">
@@ -143,7 +143,7 @@
                                         <a asp-controller="clinic" asp-action="ClinicDetail" asp-route-clinicID="@clinic.ID" class="button">Xem chi tiết</a>
                                     </div>
                                 </div>
-                            }
+                            }*@
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>

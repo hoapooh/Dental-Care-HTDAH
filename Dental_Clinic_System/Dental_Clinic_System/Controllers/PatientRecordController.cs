@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dental_Clinic_System.Controllers
 {
+	[Authorize(Roles = "Bệnh Nhân")]
 	public class PatientRecordController : Controller
 	{
 		private readonly DentalClinicDbContext _context;
@@ -15,12 +16,12 @@ namespace Dental_Clinic_System.Controllers
 			_context = context;
 		}
 
-		[Authorize(Roles = "Bệnh Nhân")]
+		//=============================== PHẦN XỬ LÝ =========================================
+
 		[HttpGet]
 		public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string scheduleID)
 		{
 			var username = User.Identity.Name;
-			Console.WriteLine($"{username}");
 			var patientRecord = await _context.PatientRecords
 										.Include(pr => pr.Account)
 										.Include(pr => pr.Appointments)
@@ -43,7 +44,7 @@ namespace Dental_Clinic_System.Controllers
 			return View("createnewpatientrecord");
 		}
 
-		//Hàm nhận dữ liệu hồ sơ bệnh nhân (patient record) nếu chưa có hoặc tạo thêm hồ sơ bệnh nhân (thử nghiệm)
+		#region Hàm nhận dữ liệu hồ sơ bệnh nhân (patient record) nếu chưa có hoặc tạo thêm hồ sơ bệnh nhân (thử nghiệm)
 		[HttpPost]
 		public async Task<IActionResult> CreateNewPatientRecord(PatientRecordVM record)
 		{
@@ -133,10 +134,10 @@ namespace Dental_Clinic_System.Controllers
 
 			return View(record); // Trả lại view với các lỗi validation nếu có
 		}
+		#endregion
 
 		// Choose a patient record for booking (Method GET is here)
 		[HttpGet]
-		[Authorize(Roles = "Bệnh Nhân")]
 		[Route("/appointment/confirm")]
 		public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
 		{

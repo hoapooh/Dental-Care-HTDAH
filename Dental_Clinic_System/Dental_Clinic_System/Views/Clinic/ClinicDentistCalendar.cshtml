@@ -3,6 +3,7 @@
 @{
 	ViewData["Title"] = "DentistBookingCalendar";
 	//var dentistBooking = ViewBag.dentistBooking as IEnumerable<Dental_Clinic_System.Models.Data.Dentist>;
+	var button_defined = "";
 }
 
 <head>
@@ -65,7 +66,7 @@
 
 		<!-- =========== BOOKING =========== -->
 		<div class="booking">
-			<form asp-controller="clinic" asp-action="patientrecord" method="get">
+			<form asp-controller="patientrecord" asp-action="patientrecord" method="get">
 				<div class="booking-style">
 					<div class="booking-title">Vui lòng chọn ngày và giờ khám</div>
 
@@ -81,7 +82,7 @@
 				<input type="hidden" name="specialtyID" value="@ViewBag.specialtyID" />
 				<input type="hidden" name="dentistID" value="@ViewBag.dentistID" />
 
-				<input type="hidden" id="scheduleID" name="scheduleID" value="2"/>
+				<input type="hidden" id="scheduleID" name="scheduleID" />
 				<div class="btn-wrapper">
 					<a>
 						<button type="button" class="back-btn">
@@ -89,9 +90,11 @@
 						</button>
 					</a>
 					<a>
+
 						<button type="submit" class="add-record-btn">
 							Tiếp tục <i class="fa-solid fa-arrow-right"></i>
 						</button>
+
 					</a>
 				</div>
 			</form>
@@ -109,63 +112,8 @@
 			themeVariant: "light"
 		});
 
-		// mobiscroll.datepicker('#demo-single-day', {
-		// 	controls: ['calendar', 'timegrid'],
-		// 	min: '2024-06-14T00:00',
-		// 	max: '2024-12-14T00:00',
-		// 	display: 'inline',
-		// 	minTime: '08:00',
-		// 	maxTime: '19:59',
-		// 	stepMinute: 60,
-		// 	// example for today's labels and invalids
-		// 	labels: [{
-		// 		start: '2024-06-14',
-		// 		textColor: '#e1528f',
-		// 		title: '4 SPOTS'
-		// 	}],
-		// 	valid: [{
-		// 		start: '2024-06-14T08:00',
-		// 		end: '2024-06-14T13:00',
-		// 		title: 1
-				
-		// 	}, {
-		// 		start: '2024-06-14T15:00',
-		// 		end: '2024-06-14T17:00',
-		// 		title: 2
-		// 	}, {
-		// 		start: '2024-06-14T19:00',
-		// 		end: '2024-06-14T20:00',
-		// 		title: 3
-		// 	}],
-		// 	onChange: function (inst, event, val) {
-		// 		const selectedDate = new Date(val);
-		// 		const hours = selectedDate.getHours();
-		// 		const minutes = selectedDate.getMinutes();
-		// 		const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-
-		// 		let scheduleValue;
-
-		// 		switch (timeString) {
-		// 			case '08:00':
-		// 				scheduleValue = 1;
-		// 				break;
-		// 			case '09:00':
-		// 				scheduleValue = 2;
-		// 				break;
-		// 			case '10:00':
-		// 				scheduleValue = 3;
-		// 				break;
-		// 			// Thêm các trường hợp khác nếu cần
-		// 			default:
-		// 				scheduleValue = 0;
-		// 		}
-
-		// 		document.getElementById('scheduleID').value = scheduleValue;
-		// 	}
-		// });
-
 		//fetch schedules from the server
-		fetch('/clinic/getschedules?dentistID='+ @ViewBag.dentistID)
+		fetch('/clinic/getschedules?dentistID=' + @ViewBag.dentistID)
 			.then(response => response.json())
 			.then(data => {
 				// map the data to the mobiscroll valid format
@@ -179,49 +127,62 @@
 						}
 					};
 				});
-				console.log(schedules);
+
+				var scheduleMap = new Map();
+				data.forEach(function (item) {
+					scheduleMap.set(item.date + 'T' + item.startTime, item.scheduleID);
+				});
+				//console.log(schedules);
+				console.log(scheduleMap);
 
 				//initialize mobiscroll calendar with the valid dates
 				mobiscroll.datepicker("#demo-single-day", {
 					controls: ["calendar", "timegrid"],
+					min: new Date(),
 					display: "inline",
 					touchUI: true,
 					selectMultiple: false,
-					// valid: data.map(item => ({
-					// 	start: item.date + 'T' + item.startTime,
-					// 	end: item.date + 'T' + item.startTime,
 					valid: schedules.map(item => ({
 						start: item.start,
-						end: item.end
+						end: item.end,
+						item: item.title,
+
 					})),
-						
-						// onset: function (event, inst) {
-						// 	document.getelementbyid('scheduleid').value = item.scheduleid;  // set scheduleid
-						// 	console.log(item.scheduleid);
-						// }
-					onSet: function (event, inst) {
-						var selectedDateTime = event.valueText; // Get the selected date and time
 
-						// Find the schedule with the selected date and time
-						var selectedSchedule = schedules.find(schedule =>
-							selectedDateTime === schedule.date + 'T' + schedule.startTime
-						);
-
-						if (selectedSchedule) {
-							// If a matching schedule is found, log its scheduleId
-							document.getElementById('scheduleID').value = selectedSchedule.scheduleID;
-							console.log('Schedule ID:', selectedSchedule.scheduleID);
-						} else {
-							console.log('No matching schedule found');
+					onChange: function (event, inst) {
+						console.log(formatDate(event.value));
+						document.getElementById('scheduleID').value = scheduleMap.get(formatDate(event.value));
+						//Ẩn hoặc hiện button submit theo giá trị scheduleID
+						if (document.getElementById('scheduleID').value === 'undefined') {
+							document.querySelectorAll('.add-record-btn').forEach(btn => {
+								btn.classList.add('hidding');
+							})
+						}
+						else {
+							document.querySelectorAll('.add-record-btn').forEach(btn => {
+								btn.classList.remove('hidding');
+							})
 						}
 					}
-					
-				})
+				});
+
 			})
 			.catch(error => {
-				alert('failed to load schedules');
+				alert('Không tải được lịch tương ứng!');
 				console.error('error:', error);
 			});
 	});
-	</script>
+
+	// Hàm này nhận value của ngày trong event và trả về theo định dạng
+	function formatDate(date) {
+		const pad = (number) => (number < 10 ? '0' : '') + number;
+		const day = pad(date.getDate());
+		const month = pad(date.getMonth() + 1); // Months are zero-based
+		const year = date.getFullYear();
+		const hours = pad(date.getHours());
+		const minutes = pad(date.getMinutes());
+
+		return `${year}-${month}-${day}T${hours}:${minutes}`;
+	}
+</script>
 

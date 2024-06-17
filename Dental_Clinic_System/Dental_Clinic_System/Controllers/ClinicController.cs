@@ -133,59 +133,6 @@ namespace Dental_Clinic_System.Controllers
 			return Json(schedules);
 		}
 
-        [Authorize(Roles = "Bệnh Nhân")]
-		[HttpGet]
-        public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string selectedDate, string scheduleID)
-        {
-            var username = User.Identity.Name;
-            Console.WriteLine($"{username}");
-            var patientRecord = await _context.PatientRecords
-                                        .Include(pr => pr.Account)
-                                        .Include(pr => pr.Appointments)
-                                        .Where(pr => pr.Account.Email == username)
-                                        .ToListAsync();
-            ViewBag.scheduleID = 2;
-            ViewBag.specialtyID = specialtyID;
-            ViewBag.dentistID = dentistID;
-            ViewBag.clinicID = clinicID;
-            return View(patientRecord);
-        }
-
-
-        [HttpGet]
-        public async Task<IActionResult> CreateNewPatientRecord()
-        {
-
-            return View();
-        }
-
-        //Hàm nhận dữ liệu hồ sơ bệnh nhân (patient record) nếu chưa có hoặc tạo thêm hồ sơ bệnh nhân
-        [HttpPost]
-        public async Task<IActionResult> AddPatientRecord()
-        {
-
-            return View();
-        }
-
-        // Choose a patient record for booking (Method GET is here)
-        [HttpGet]
-        [Authorize(Roles = "Bệnh Nhân")]
-        // Route
-        public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
-        {
-            var appointment = new Dictionary<string, object>
-            {
-                { "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
-                { "PatientRecord", await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID)},
-                { "Specialty", await _context.Specialties.FirstOrDefaultAsync(sp => sp.ID == specialtyID)},
-                { "Dentist", await _context.Dentists.Include(d => d.Account). FirstOrDefaultAsync(d => d.ID == dentistID)},
-                { "Clinic", await _context.Clinics. FirstOrDefaultAsync(c => c.ID == clinicID) }
-            };
-
-            
-            //ViewBag.totalDeposit = totalDeposit;
-			return View(appointment);
-        }
     }
 
 }
