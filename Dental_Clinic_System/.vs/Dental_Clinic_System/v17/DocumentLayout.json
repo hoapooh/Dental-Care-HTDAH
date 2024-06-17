@@ -3,15 +3,19 @@
   "WorkspaceRootPath": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|e:\\fpt\\summer_2024\\swp391\\backend_notconflict\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|e:\\fpt\\summer_2024\\swp391\\backend_notconflict\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\views\\clinic\\clinicdentistcalendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\views\\clinic\\clinicdentistcalendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|e:\\fpt\\summer_2024\\swp391\\backend_notconflict\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\controllers\\cliniccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\dental_clinic_system\\controllers\\cliniccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\controllers\\cliniccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|e:\\fpt\\summer_2024\\swp391\\backend_notconflict\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\views\\patientrecord\\patientrecord.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\dental_clinic_system\\views\\patientrecord\\patientrecord.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\views\\patientrecord\\patientrecord.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
@@ -51,6 +55,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\Home\\Index.cshtml",
+              "ToolTip": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Dental_Clinic_System\\Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-17T04:07:53.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ClinicDentistCalendar.cshtml",
               "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Clinic\\ClinicDentistCalendar.cshtml",
               "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\Clinic\\ClinicDentistCalendar.cshtml",
@@ -63,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ClinicController.cs",
               "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\ClinicController.cs",
               "RelativeDocumentMoniker": "Dental_Clinic_System\\Controllers\\ClinicController.cs",
@@ -71,12 +88,11 @@
               "RelativeToolTip": "Dental_Clinic_System\\Controllers\\ClinicController.cs",
               "ViewState": "AQIAAEsAAAAAAAAAAAAuwGIAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-17T03:59:01.468Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-17T03:59:01.468Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "PatientRecord.cshtml",
               "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\PatientRecord\\PatientRecord.cshtml",
               "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\PatientRecord\\PatientRecord.cshtml",
@@ -84,12 +100,11 @@
               "RelativeToolTip": "Dental_Clinic_System\\Views\\PatientRecord\\PatientRecord.cshtml",
               "ViewState": "AQIAABcAAAAAAAAAAAAAwFcAAADgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-17T03:44:58.532Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-17T03:44:58.532Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Specialty.cshtml",
               "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Specialty\\Specialty.cshtml",
               "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\Specialty\\Specialty.cshtml",
@@ -97,12 +112,11 @@
               "RelativeToolTip": "Dental_Clinic_System\\Views\\Specialty\\Specialty.cshtml",
               "ViewState": "AQIAABgAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-16T18:45:16.727Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-16T18:45:16.727Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "PatientRecord.cs",
               "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Models\\Data\\PatientRecord.cs",
               "RelativeDocumentMoniker": "Dental_Clinic_System\\Models\\Data\\PatientRecord.cs",
@@ -110,12 +124,11 @@
               "RelativeToolTip": "Dental_Clinic_System\\Models\\Data\\PatientRecord.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAABAAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T17:26:31.776Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-16T17:26:31.776Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "DentistInformation.cshtml",
               "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Views\\Specialty\\DentistInformation.cshtml",
               "RelativeDocumentMoniker": "Dental_Clinic_System\\Views\\Specialty\\DentistInformation.cshtml",
@@ -123,12 +136,11 @@
               "RelativeToolTip": "Dental_Clinic_System\\Views\\Specialty\\DentistInformation.cshtml",
               "ViewState": "AQIAACAAAAAAAAAAAAAAABYAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-16T12:59:15.205Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-16T12:59:15.205Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PatientRecordController.cs",
               "DocumentMoniker": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\PatientRecordController.cs",
               "RelativeDocumentMoniker": "Dental_Clinic_System\\Controllers\\PatientRecordController.cs",
@@ -136,8 +148,7 @@
               "RelativeToolTip": "Dental_Clinic_System\\Controllers\\PatientRecordController.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAJcAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T09:46:24.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-16T09:46:24.401Z"
             }
           ]
         }
