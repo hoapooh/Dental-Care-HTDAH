@@ -19,10 +19,15 @@
                     <input type="text" name="Name" id="nameSpecialty" value="@Model.Name" required />
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
+                <div class="special-deposis">
+                    <label for="deposisSpecialty">Tiền cọc</label>
+                    <input type="number" name="Deposit" id="deposisSpecialty" value="@Model.Deposit" step="0.01" required />
+                    <span asp-validation-for="Deposit" class="text-danger"></span>
+                </div>
                 <div class="special-image">
                     <label>Hình ảnh</label>
-                    <input type="file" name="Image" id="fileInput" class="form-control" required />
-                    <input type="hidden" name="Image" id="imageUrl" value="@Model.Image" />
+                    <input type="file" name="Image" id="fileInput" class="form-control" value="@Model.Image" required />
+                    <input type="hidden" name="Image" id="imageUrl"/>
                 </div>
                 <div class="special-desc">
                     <label for="descSpecialty">Mô tả</label>

@@ -18,17 +18,17 @@ namespace Dental_Clinic_System.Helper
 			return Convert.ToBase64String(encryptedSHA256).Substring(0, 30);
 		}
 
-        public static string ToSHA256Hash(this string password)
-        {
-            string? saltKey = "DONOTTOUCHOURPASSWORD!!!";
-            var sha256 = SHA256.Create();
-            byte[] encryptedSHA256 = sha256.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(password, saltKey)));
-            sha256.Clear();
+		public static string ToSHA256Hash(this string password)
+		{
+			string? saltKey = "DONOTTOUCHOURPASSWORD!!!";
+			var sha256 = SHA256.Create();
+			byte[] encryptedSHA256 = sha256.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(password, saltKey)));
+			sha256.Clear();
 
-            return Convert.ToBase64String(encryptedSHA256).Substring(0, 20);
-        }
+			return Convert.ToBase64String(encryptedSHA256).Substring(0, 20);
+		}
 
-        public static string ToSHA512Hash(this string password, string? saltKey)
+		public static string ToSHA512Hash(this string password, string? saltKey)
 		{
 			SHA512Managed sha512 = new SHA512Managed();
 			byte[] encryptedSHA512 = sha512.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(password, saltKey)));
@@ -52,70 +52,70 @@ namespace Dental_Clinic_System.Helper
 			}
 		}
 
-        public static string ToMd5Hash(this string password)
-        {
-            using (var md5 = MD5.Create())
-            {
+		public static string ToMd5Hash(this string password)
+		{
+			using (var md5 = MD5.Create())
+			{
 				string? saltKey = "KATH&DATH2&LUCIA";
-                byte[] data = md5.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(password, saltKey)));
-                StringBuilder sBuilder = new StringBuilder();
-                for (int i = 0; i < data.Length; i++)
-                {
-                    sBuilder.Append(data[i].ToString("x2"));
-                }
+				byte[] data = md5.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(password, saltKey)));
+				StringBuilder sBuilder = new StringBuilder();
+				for (int i = 0; i < data.Length; i++)
+				{
+					sBuilder.Append(data[i].ToString("x2"));
+				}
 
-                return sBuilder.ToString().Substring(0, 30);
-            }
-        }
+				return sBuilder.ToString().Substring(0, 30);
+			}
+		}
 
-        #endregion
-
-
-        public static string Encrypt(string plainText, in string key = "DONOTTOUCHOURPASSWORD!!!", in string iv = "1234567890123456")
-        {
-            using (Aes aes = Aes.Create())
-            {
-                aes.Key = Encoding.UTF8.GetBytes(key);
-                aes.IV = Encoding.UTF8.GetBytes(iv);
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter sw = new StreamWriter(cs))
-                        {
-                            sw.Write(plainText);
-                        }
-                    }
-                    return Convert.ToBase64String(ms.ToArray());
-                }
-            }
-        }
-
-        public static string Decrypt(string cipherText, in string key = "DONOTTOUCHOURPASSWORD!!!", in string iv = "1234567890123456")
-        {
-            using (Aes aes = Aes.Create())
-            {
-                aes.Key = Encoding.UTF8.GetBytes(key);
-                aes.IV = Encoding.UTF8.GetBytes(iv);
-
-                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(cipherText)))
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read))
-                    {
-                        using (StreamReader sr = new StreamReader(cs))
-                        {
-                            return sr.ReadToEnd();
-                        }
-                    }
-                }
-            }
-        }
+		#endregion
 
 
-        // For MOMO API
+		public static string Encrypt(string plainText, in string key = "DONOTTOUCHOURPASSWORD!!!", in string iv = "1234567890123456")
+		{
+			using (Aes aes = Aes.Create())
+			{
+				aes.Key = Encoding.UTF8.GetBytes(key);
+				aes.IV = Encoding.UTF8.GetBytes(iv);
 
-        // Not mine
+				using (MemoryStream ms = new MemoryStream())
+				{
+					using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+					{
+						using (StreamWriter sw = new StreamWriter(cs))
+						{
+							sw.Write(plainText);
+						}
+					}
+					return Convert.ToBase64String(ms.ToArray());
+				}
+			}
+		}
+
+		public static string Decrypt(string cipherText, in string key = "DONOTTOUCHOURPASSWORD!!!", in string iv = "1234567890123456")
+		{
+			using (Aes aes = Aes.Create())
+			{
+				aes.Key = Encoding.UTF8.GetBytes(key);
+				aes.IV = Encoding.UTF8.GetBytes(iv);
+
+				using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(cipherText)))
+				{
+					using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read))
+					{
+						using (StreamReader sr = new StreamReader(cs))
+						{
+							return sr.ReadToEnd();
+						}
+					}
+				}
+			}
+		}
+
+
+		// For MOMO API
+
+		// Not mine
 		public static String HmacSHA256(string inputData, string key)
 		{
 			byte[] keyByte = Encoding.UTF8.GetBytes(key);
@@ -137,19 +137,39 @@ namespace Dental_Clinic_System.Helper
 			return BitConverter.ToString(hash).Replace("-", "").ToLower();
 		}
 
-        public static string EncryptRSA(object data, string publicKey)
-        {
-            string jsonData = JsonConvert.SerializeObject(data);
-            byte[] dataBytes = Encoding.UTF8.GetBytes(jsonData);
+		public static string EncryptRSA(object data, string hexPublicKey)
+		{
+			string jsonData = JsonConvert.SerializeObject(data);
+			byte[] dataBytes = Encoding.UTF8.GetBytes(jsonData);
 
-            using (var rsa = new RSACryptoServiceProvider())
-            {
-                rsa.FromXmlString(publicKey); // Load your public key here
-                byte[] encryptedData = rsa.Encrypt(dataBytes, false);
-                return Convert.ToBase64String(encryptedData);
-            }
-        }
+			using (var rsa = new RSACryptoServiceProvider())
+			{
+				// Convert the hexadecimal public key to Base64
+				string base64Key = ConvertHexToBase64(hexPublicKey);
 
-    }
+				// Create the XML formatted key
+				string publicKeyXml = CreateRsaPublicKeyXml(base64Key);
+
+				// Load the public key
+				rsa.FromXmlString(publicKeyXml);
+				byte[] encryptedData = rsa.Encrypt(dataBytes, false);
+				return Convert.ToBase64String(encryptedData);
+			}
+		}
+
+		private static string ConvertHexToBase64(string hex)
+		{
+			byte[] bytes = Enumerable.Range(0, hex.Length)
+									  .Where(x => x % 2 == 0)
+									  .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+									  .ToArray();
+			return Convert.ToBase64String(bytes);
+		}
+
+		private static string CreateRsaPublicKeyXml(string base64Key)
+		{
+			return $"<RSAKeyValue><Modulus>{base64Key}</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
+		}
+	}
 
 }

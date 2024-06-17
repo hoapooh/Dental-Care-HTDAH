@@ -186,10 +186,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				{
 					a.ID,
 					FullName = a.LastName + " " + a.FirstName
-				})
-				.ToListAsync();
+				}).ToListAsync();
 
-			model.UnassignedManagers = new SelectList(unassignedManagers, "ID", "FullName");
+            model.UnassignedManagers = new SelectList(unassignedManagers, "ID", "FullName");
 
 			//List<string> errors = new List<string>();
 			//foreach (var value in ModelState.Values)
@@ -203,22 +202,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			//return BadRequest(errorMessage);
 			return View(model);
 		}
-
-		//===================XÓA PHÒNG KHÁM===================
-		[Route("HiddenClinic")]
-		public async Task<IActionResult> HiddenClinic(string name, string status)
-		{
-			var clinic = await _context.Clinics.SingleOrDefaultAsync(c => c.Name == name);
-
-			if (clinic != null)
-			{
-				clinic.ClinicStatus = status;
-				_context.SaveChanges();
-			}
-
-			return RedirectToAction(nameof(ListClinic));
-		}
-
 
 		//===================CHỈNH SỬA PHÒNG KHÁM===================
 		[HttpGet]
@@ -264,7 +247,38 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var clinic = await _context.Clinics.FindAsync(model.ID);
+				////Kiểm tra Tên phòng khám đã tồn tại chưa
+				//bool existingName = await _context.Clinics.AnyAsync(c => c.Name == model.Name);
+				//if(existingName)
+				//	ModelState.AddModelError("Name", "Tên phòng khám đã tồn tại.");
+				
+				////Kiểm tra Email đã tồn tại chưa
+				//bool existingEmail = await _context.Clinics.AnyAsync(c => c.Email == model.Email);
+				//if (existingEmail)
+				//	ModelState.AddModelError("Email", "Email đã tồn tại.");
+				
+				////Kiểm tra Số điện thoại đã tồn tại chưa
+				//bool existingPhone = await _context.Clinics.AnyAsync(c => c.PhoneNumber == model.PhoneNumber);
+				//if (existingPhone)
+				//	ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
+
+    //            //Nếu đã tồn tại, load lại danh sách người quản lý chưa có gắn phòng khám
+				//if(!ModelState.IsValid)
+				//{
+    //                var unassignedManager = await _context.Accounts
+    //                    .Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+    //                    .Select(a => new
+    //                    {
+    //                        a.ID,
+    //                        FullName = a.LastName + " " + a.FirstName
+    //                    })
+    //                    .ToListAsync();
+
+    //                model.UnassignedManagers = new SelectList(unassignedManager, "ID", "FullName");
+    //                return View(model);
+    //            }
+
+                var clinic = await _context.Clinics.FindAsync(model.ID);
 				if (clinic == null)
 				{
 					return NotFound();
@@ -287,7 +301,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				return RedirectToAction(nameof(ListClinic));
 			}
 
-			// Repopulate the UnassignedManagers list
+			//Ghi lại List Manager chưa được chỉ định phòng khám nào
 			model.UnassignedManagers = new SelectList(await _context.Accounts
 				.Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
 				.Select(a => new
@@ -311,6 +325,20 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			return View(model);
 		}
 
+        //===================XÓA PHÒNG KHÁM===================
+        [Route("HiddenClinic")]
+        public async Task<IActionResult> HiddenClinic(string name, string status)
+        {
+            var clinic = await _context.Clinics.SingleOrDefaultAsync(c => c.Name == name);
 
-	}
+            if (clinic != null)
+            {
+                clinic.ClinicStatus = status;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(ListClinic));
+        }
+
+    }
 }

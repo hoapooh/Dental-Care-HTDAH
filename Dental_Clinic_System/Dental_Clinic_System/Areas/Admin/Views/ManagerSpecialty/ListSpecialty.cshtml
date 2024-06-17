@@ -9,6 +9,7 @@
 {
 	<div class="alert alert-danger" role="alert">
 		@Html.ValidationMessage("Name")
+		@Html.ValidationMessage("Deposit")
 	</div>
 }
 
@@ -52,6 +53,10 @@
 					<div class="special-name">
 						<label for="name">Tên chuyên khoa</label>
 						<input type="text" name="name" id="name" required />
+					</div>
+					<div class="special-deposis">
+						<label for="deposis">Tiền cọc</label>
+						<input type="number" id="deposis" name="deposit" step="0.01" required />
 					</div>
 					<div class="special-image">
 						<label>Hình ảnh</label>

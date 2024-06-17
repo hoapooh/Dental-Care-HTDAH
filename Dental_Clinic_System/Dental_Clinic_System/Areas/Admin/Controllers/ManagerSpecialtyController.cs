@@ -124,18 +124,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				return RedirectToAction(nameof(ListSpecialty));
 			}
 
-			//KIẾM TRA LỖI
-			//List<string> errors = new List<string>();
-			//foreach (var value in ModelState.Values)
-			//{
-			//	foreach (var error in value.Errors)
-			//	{
-			//		errors.Add(error.ErrorMessage);
-			//	}
-			//}
-			//string errorMessage = string.Join("\n", errors);
-			//return BadRequest(errorMessage);
-
 			return View("EditSpecialty", model);
 		}
 
@@ -175,6 +163,26 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				return View(nameof(ListSpecialty), listSpecialty);
 			}
 
+			//Check Deposis không được âm
+			if (deposit <= 0)
+			{
+				//Thấy Tiền cọc âm, thông báo lỗi
+				ModelState.AddModelError("Deposit", "Tiền cọc phải lớn hơn 0!!!");
+
+				//Lấy lại list specialty để hiển thị
+				var specialties = await _context.Specialties.ToListAsync();
+				var specialtyList = specialties.Select(s => new ManagerSpecialtyVM
+				{
+					Id = s.ID,
+					Name = s.Name,
+					Image = s.Image,
+					Description = s.Description,
+					Deposit = s.Deposit
+				}).ToList();
+
+				return View(nameof(ListSpecialty), specialtyList);
+			}
+
 			var specialty = new Specialty
 			{
 				Name = name,
@@ -190,3 +198,16 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		}
 	}
 }
+
+
+//KIẾM TRA LỖI
+//List<string> errors = new List<string>();
+//foreach (var value in ModelState.Values)
+//{
+//	foreach (var error in value.Errors)
+//	{
+//		errors.Add(error.ErrorMessage);
+//	}
+//}
+//string errorMessage = string.Join("\n", errors);
+//return BadRequest(errorMessage);

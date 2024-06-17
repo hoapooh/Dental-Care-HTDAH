@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
 using System.Configuration;
+using static Dental_Clinic_System.Helper.LocalAPIReverseString;
+using Dental_Clinic_System.Helper;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -60,8 +62,27 @@ namespace Dental_Clinic_System.Controllers
 			{
 				return NotFound();
 			}
+            ViewBag.Address = dentist.Account.Address;
+            if (ViewBag.Address != null)
+            {
+                ViewBag.Address += ", ";
+            }
 
-			return View(dentist);
+            ViewBag.Province = null;
+            ViewBag.District = null;
+            ViewBag.Ward = null;
+            if (dentist.Account.Province != null)
+			{
+                ViewBag.Province = ", " + await LocalAPIReverseString.GetProvinceNameById((int)(dentist.Account.Province));
+                if (dentist.Account.District != null)
+				{
+                    ViewBag.District = ", " + await LocalAPIReverseString.GetDistrictNameById((int)(dentist.Account.Province), (int)(dentist.Account.District));
+                    if (dentist.Account.Ward != null)
+                        ViewBag.Ward = await LocalAPIReverseString.GetWardNameById((int)(dentist.Account.District), (int)(dentist.Account.Ward));
+                }
+            }
+				
+            return View(dentist);
 		}
         
 
@@ -170,7 +191,13 @@ namespace Dental_Clinic_System.Controllers
 				FirstName = dentist.Account.FirstName ?? "",
 				Gender = dentist.Account.Gender ?? "",
 				PhoneNumber = dentist.Account.PhoneNumber ?? "",
-				Email = dentist.Account.Email ?? ""
+				Email = dentist.Account.Email ?? "",
+                Province = dentist.Account.Province ?? 0,
+                District = dentist.Account.District ?? 0,
+                Ward = dentist.Account?.Ward ?? 0,
+                Address = dentist.Account?.Address,
+                DateOfBirth = dentist.Account?.DateOfBirth,
+                Description = dentist.Description ?? ""
 			};
 			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
 			return View(dentistForm);
@@ -181,7 +208,7 @@ namespace Dental_Clinic_System.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DentistId, AccountId, LastName, FirstName, Gender, PhoneNumber, Email, DegreeID, Description")] EditDentistVM dentistForm)
+        public async Task<IActionResult> Edit(int id, [Bind("DentistId, AccountId, LastName, FirstName, Gender, Province, Ward, District, Address, DateOfBirth, PhoneNumber, Email, DegreeID, Description")] EditDentistVM dentistForm)
         {
             if (id != dentistForm.DentistId)
             {
@@ -200,6 +227,11 @@ namespace Dental_Clinic_System.Controllers
                         account.Gender = dentistForm.Gender;
                         account.PhoneNumber = dentistForm.PhoneNumber;
                         account.Email = dentistForm.Email;
+                        account.Province = dentistForm.Province;
+                        account.District = dentistForm.District;
+                        account.Ward = dentistForm.Ward;
+                        account.Address = dentistForm.Address;
+                        account.DateOfBirth = dentistForm.DateOfBirth;
                     };
                     _context.Update(account);
                     await _context.SaveChangesAsync();
@@ -224,7 +256,7 @@ namespace Dental_Clinic_System.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = id });
             }
 
             ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentistForm.DegreeID);

@@ -24,12 +24,22 @@
         }
 
         .form-modal-styles .modal-body .modal-body-card2 {
-            flex: 0 30%;
+            flex: 0 40%;
             padding: 0 10px;
         }
 
         .form-modal-styles .modal-body .modal-body-card3 {
             flex: 0 20%;
+            padding: 0 10px;
+        }
+
+        .form-modal-styles .modal-body .modal-body-card4 {
+            flex: 0 34%;
+            padding: 0 10px;
+        }
+
+        .form-modal-styles .modal-body .modal-body-card5 {
+            flex: 0 33%;
             padding: 0 10px;
         }
     </style>
@@ -57,7 +67,7 @@
                 <label for="Password">Mật khẩu</label>
                 <input asp-for="Password" type="password" required />
             </div> *@
-            <div class="user-name modal-body-card">
+            <div class="user-name modal-body-card2">
                 <label for="LastName">Họ (Tên đệm)</label>
                 <input asp-for="LastName" type="text" required />
             </div>
@@ -72,6 +82,35 @@
                     <option value="Nữ">Nữ</option>
                 </select>
             </div>
+            <div class="user-name modal-body-card4">
+                <label for="province">Tỉnh / Thành phố </label>
+                <select id="tinh" title="Chọn Tỉnh Thành" asp-for="Province" class="form-control">
+                    <option value="0">Tỉnh Thành</option>
+                </select>
+            </div>
+            <div class="user-name modal-body-card5">
+                <label for="district">Quận / Huyện </label>
+                <select id="quan" title="Chọn Quận Huyện" asp-for="District" class="form-control">
+                    <option value="0">Quận Huyện</option>
+                </select>
+            </div>
+            <div class="user-name modal-body-card5">
+                <label for="ward">Phường / Xã </label>
+                <select id="phuong" title="Chọn Phường Xã" asp-for="Ward" class="form-control">
+                    <option value="0">Phường Xã</option>
+                </select>
+            </div>
+
+            <div class="user-name modal-body-card">
+                <label>Địa chỉ</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="user-mail modal-body-card">
+                <label for="dateofbirth">Ngày sinh</label>
+                <input type="date" name="DateOfBirth" value="@(Model.DateOfBirth?.ToString("yyyy-MM-dd"))" id="dateofbirth" />
+            </div>
+
             <div class="user-mail modal-body-card">
                 <label for="Email">Email</label>
                 <input type="email" asp-for="Email" required />
@@ -112,44 +151,122 @@
     @* Dùng editor *@
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
     <script src="~/assets/js/richtexteditor2.js"></script>
+
+    @* Call API from https://esgoo.net to get data*@
+    <script src="https://esgoo.net/scripts/jquery.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var savedProvince = '@Model.Province';
+            var savedDistrict = '@Model.District';
+            var savedWard = '@Model.Ward';
+
+            // Function to format ID with leading zeros based on the length requirement
+            function formatId(id, length) {
+                return id.toString().padStart(length, '0');
+            }
+
+            var savedProvinceId = savedProvince ? formatId(parseInt(savedProvince, 10), 2) : null;
+            var savedDistrictId = savedDistrict ? formatId(parseInt(savedDistrict, 10), 3) : null;
+            var savedWardId = savedWard ? formatId(parseInt(savedWard, 10), 5) : null;
+
+            function loadWards(idquan, callback) {
+                var formattedId = formatId(idquan, 3);
+                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + formattedId + '.htm', function (data_phuong) {
+                    if (data_phuong.error == 0) {
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                            var selected = (val_phuong.id == savedWardId) ? ' selected' : '';
+                            $("#phuong").append('<option value="' + val_phuong.id + '" data-fullname="' + val_phuong.full_name + '"' + selected + '>' + val_phuong.full_name + '</option>');
+                        });
+
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function loadDistricts(idtinh, callback) {
+                var formattedId = formatId(idtinh, 2);
+                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + formattedId + '.htm', function (data_quan) {
+                    if (data_quan.error == 0) {
+                        $("#quan").html('<option value="0">Quận Huyện</option>');
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_quan.data, function (key_quan, val_quan) {
+                            var selected = (val_quan.id == savedDistrictId) ? ' selected' : '';
+                            $("#quan").append('<option value="' + val_quan.id + '" data-fullname="' + val_quan.full_name + '"' + selected + '>' + val_quan.full_name + '</option>');
+                        });
+
+                        if (savedDistrictId) {
+                            loadWards(savedDistrictId, callback);
+                        } else if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function loadProvinces(callback) {
+                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+                    if (data_tinh.error == 0) {
+                        $("#tinh").html('<option value="0">Tỉnh Thành</option>');
+                        $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                            var selected = (val_tinh.id == savedProvinceId) ? ' selected' : '';
+                            $("#tinh").append('<option value="' + val_tinh.id + '" data-fullname="' + val_tinh.full_name + '"' + selected + '>' + val_tinh.full_name + '</option>');
+                        });
+
+                        if (savedProvinceId) {
+                            loadDistricts(savedProvinceId, callback);
+                        } else if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function setInitialValues() {
+                if (savedProvinceId) {
+                    $("#tinh").val(savedProvinceId);
+                    $("#tinh").trigger('change');
+                }
+                if (savedDistrictId) {
+                    $("#quan").val(savedDistrictId);
+                    $("#quan").trigger('change');
+                }
+                if (savedWardId) {
+                    $("#phuong").val(savedWardId);
+                }
+            }
+
+            loadProvinces(setInitialValues);
+
+            $("#tinh").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var idtinh = selectedOption.val();
+                var fullnameTinh = selectedOption.data('fullname');
+                $('#Province').val(fullnameTinh);
+
+                // Load districts based on selected province
+                loadDistricts(idtinh);
+            });
+
+            $("#quan").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var idquan = selectedOption.val();
+                var fullnameQuan = selectedOption.data('fullname');
+                $('#District').val(fullnameQuan);
+
+                // Load wards based on selected district
+                loadWards(idquan);
+            });
+
+            $("#phuong").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var fullnamePhuong = selectedOption.data('fullname');
+                $('#Ward').val(fullnamePhuong);
+            });
+        });
+    </script>
 }
-@* <h1>Edit</h1>
 
-<h4>Dentist</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="AccountID" class="control-label"></label>
-                <select asp-for="AccountID" class="form-control" asp-items="ViewBag.AccountID"></select>
-                <span asp-validation-for="AccountID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClinicID" class="control-label"></label>
-                <select asp-for="ClinicID" class="form-control" asp-items="ViewBag.ClinicID"></select>
-                <span asp-validation-for="ClinicID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DegreeID" class="control-label"></label>
-                <select asp-for="DegreeID" class="form-control" asp-items="ViewBag.DegreeID"></select>
-                <span asp-validation-for="DegreeID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
- *@

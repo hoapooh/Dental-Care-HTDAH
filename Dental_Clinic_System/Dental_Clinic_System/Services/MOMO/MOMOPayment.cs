@@ -105,13 +105,13 @@ namespace Dental_Clinic_System.Services.MOMO
             {
                 // Disburse To Bank
                 { "BankAccountNo", model.BankAccountNo ?? ""},
-                { "BankCardNo", model.BankCardNo ?? "" },
+                //{ "BankCardNo", model.BankCardNo ?? "" },
                 { "BankAccountHolderName", model.BankAccountHolderName ?? "" },
                 { "BankCode", model.BankCode },
 
                 // Disburse To Wallet
-                { "WalletId", model.WalletId ?? ""},
-                { "WalletName", model.WalletName ?? "" }
+                //{ "WalletId", model.WalletId ?? ""},
+                //{ "WalletName", model.WalletName ?? "" }
             };
 
             model.DisbursementMethodRSA = DataEncryptionExtensions.EncryptRSA(disbursementMethod, _configuration["MomoAPI:PublicKey"]);
@@ -139,7 +139,8 @@ namespace Dental_Clinic_System.Services.MOMO
 
             using (var client = new HttpClient())
             {
-                var content = new StringContent(jsonPaymentRequest, Encoding.UTF8, "application/json");
+				client.Timeout = TimeSpan.FromSeconds(30);
+				var content = new StringContent(jsonPaymentRequest, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(endpoint, content);
                 var responseString = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("JSON Response: " + responseString);
