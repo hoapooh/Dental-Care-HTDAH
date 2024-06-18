@@ -47,8 +47,10 @@ document.getElementById("uploadForm").addEventListener("submit", (event) => {
 						const imageUrlElement = document.getElementById("imageUrl");
 						imageUrlElement.value = url;
 
+						// USE TO DISPLAY THE IMAGE FROM NONE TO BLOCK
 						const imageDisplay = document.getElementById("imageDisplay");
 						imageDisplay.src = url;
+						imageDisplay.style.display = "block";
 
 						form.submit();
 
@@ -73,19 +75,23 @@ document.getElementById("imageInput").addEventListener("change", (e) => {
 	const file = e.target.files[0];
 	if (file) {
 		const imageUrl = URL.createObjectURL(file);
+		// USE TO DISPLAY THE IMAGE FROM NONE TO BLOCK
 		document.getElementById("imagePreview").src = imageUrl;
+		document.getElementById("imagePreview").style.display = "block";
 	}
 });
 
 // RESET THE IMAGE PREVIEW
 document.querySelector('button[type="reset"]').addEventListener("click", () => {
 	document.getElementById("imagePreview").src = "";
+	document.getElementById("imagePreview").style.display = "none";
 });
 
 document
 	.querySelector('button[type="submit"]')
 	.addEventListener("click", () => {
 		document.getElementById("imagePreview").src = "";
+		document.getElementById("imagePreview").style.display = "none";
 	});
 
 // Example function to save the image URL to your database

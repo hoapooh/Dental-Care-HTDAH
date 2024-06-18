@@ -29,7 +29,11 @@
 		<header class="header">
 			<nav class="header__navbar">
 				<a href="#!">
-					<img src="./assets/images/logo.png" class="navbar__logo" alt="logo" />
+					<img
+						src="https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=b98bc2f0-f603-4b85-bd1b-764d8679baf0"
+						class="navbar__logo"
+						alt="logo"
+					/>
 				</a>
 				<ul class="navbar__list">
 					<li>
@@ -51,13 +55,32 @@
 						<a href="./contact.html">Liên hệ</a>
 					</li>
 				</ul>
+				<!-- ============== ACCESS PROFILE HERE ============== -->
 				<div class="navbar__auth">
-					<!-- <a href="/" class="navbar__auth__avatar">
-                    <img src="images/avatar.jpg" alt="" />
-                </a>
-                <a href="/" class="navbar__auth__booking"> Đặt lịch khám </a> -->
-					<a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
-					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a>
+					<ul class="navbar__auth__dropdown">
+						<li class="outer">
+							<div class="name"><i class="fa-solid fa-user"></i> Phúc Hoà</div>
+							<ul class="sub-menu">
+								<li>
+									<a href="./profile.html" class="account">Tài khoản</a>
+								</li>
+								<li>
+									<a href="./patientrecord.html" class="record"
+										>Hồ sơ bệnh nhân</a
+									>
+								</li>
+								<div class="divider"></div>
+								<li>
+									<a href="" class="logout-btn"
+										><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a
+									>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<!-- <a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
+					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a> -->
 				</div>
 			</nav>
 		</header>

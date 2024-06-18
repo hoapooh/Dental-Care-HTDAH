@@ -21,6 +21,12 @@ a {
 	text-decoration: none;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
 	margin-bottom: 0;
 }
@@ -37,6 +43,42 @@ body::-webkit-scrollbar {
 	background-color: #b2b2b2;
 }
 
+/* ============== IMAGE PREVIEW ============== */
+.container__image__preview {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #d4d4d4;
+	border-radius: 10px;
+	padding: 10px 7.5px;
+}
+
+.style__image__preview {
+	width: 100%;
+	text-align: center;
+}
+
+.style__image__preview .title {
+	font-size: 2.4rem;
+	color: #4880ff;
+	font-weight: bold;
+}
+
+#imagePreview,
+#imageDisplay {
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.preview-image,
+.final-image {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+/* ======== SIDEBAR ========= */
 .sidebar {
 	display: flex;
 	flex-direction: column;
@@ -57,6 +99,7 @@ body::-webkit-scrollbar {
 	font-weight: bold;
 }
 
+/* =========== PROFILE CONTENT =========== */
 .profile__content {
 	width: 80%;
 	padding: 15px;
@@ -79,6 +122,7 @@ body::-webkit-scrollbar {
 	margin-bottom: 15px;
 }
 
+/* =========== HISTORY CONTENT =========== */
 .history__management .status {
 	text-align: center;
 	padding: 5px 10px;
@@ -105,23 +149,20 @@ body::-webkit-scrollbar {
 	color: #29b18e;
 }
 
+/* =========== ACCOUNT CONTENT =========== */
 .account__content__wrapper {
-	flex-flow: row wrap;
-	align-items: center;
 	margin-left: -5px;
 	margin-right: -5px;
 }
 
 .account__content__wrapper div {
-	display: block;
-	flex: 0 0 50%;
-	max-width: 50%;
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-bottom: 18px;
 }
 
-.account__content__wrapper div.district,
+/* KO CẦN THIẾT NỮA */
+/* .account__content__wrapper div.district,
 .account__content__wrapper div.ward {
 	flex: 0 0 25%;
 	max-width: 25%;
@@ -130,7 +171,7 @@ body::-webkit-scrollbar {
 .account__content__wrapper div.address {
 	flex: 0 0 100%;
 	max-width: 100%;
-}
+} */
 
 .account__content__wrapper label,
 .repass__content__wrapper label {

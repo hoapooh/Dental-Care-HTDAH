@@ -28,7 +28,11 @@
 		<header class="header">
 			<nav class="header__navbar">
 				<a href="#!">
-					<img src="./assets/images/logo.png" class="navbar__logo" alt="logo" />
+					<img
+						src="https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=b98bc2f0-f603-4b85-bd1b-764d8679baf0"
+						class="navbar__logo"
+						alt="logo"
+					/>
 				</a>
 				<ul class="navbar__list">
 					<li>
@@ -50,13 +54,32 @@
 						<a href="./contact.html">Liên hệ</a>
 					</li>
 				</ul>
+				<!-- ============== ACCESS PROFILE HERE ============== -->
 				<div class="navbar__auth">
-					<!-- <a href="/" class="navbar__auth__avatar">
-                    <img src="images/avatar.jpg" alt="" />
-                </a>
-                <a href="/" class="navbar__auth__booking"> Đặt lịch khám </a> -->
-					<a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
-					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a>
+					<ul class="navbar__auth__dropdown">
+						<li class="outer">
+							<div class="name"><i class="fa-solid fa-user"></i> Phúc Hoà</div>
+							<ul class="sub-menu">
+								<li>
+									<a href="./profile.html" class="account">Tài khoản</a>
+								</li>
+								<li>
+									<a href="./patientrecord.html" class="record"
+										>Hồ sơ bệnh nhân</a
+									>
+								</li>
+								<div class="divider"></div>
+								<li>
+									<a href="" class="logout-btn"
+										><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a
+									>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<!-- <a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
+					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a> -->
 				</div>
 			</nav>
 		</header>
@@ -85,8 +108,52 @@
 						<div id="account" class="tab-pane fade show active">
 							<h2>Quản lý tài khoản</h2>
 							<div class="profile__warn">(*) Thông tin bắt buộc nhập</div>
-							<form class="d-flex account__content__wrapper">
-								<div style="width: 50%">
+							<form id="uploadForm" class="account__content__wrapper row">
+								<!-- UPLOAD IMAGE AVATAR -->
+								<div class="col-md-12 image-file">
+									<div class="container__image__preview" style="margin: 0">
+										<div class="style__image__preview row" style="margin: 0">
+											<div class="preview-image col-md-6" style="margin: 0">
+												<h3 class="title">Xem trước hình ảnh</h3>
+												<img
+													src=""
+													alt=""
+													id="imagePreview"
+													style="
+														display: none;
+														width: 200px;
+														height: 200px;
+														text-align: center;
+													"
+												/>
+											</div>
+											<div class="final-image col-md-6" style="margin: 0">
+												<h3 class="title">Ảnh đại diện</h3>
+												<img
+													src=""
+													alt=""
+													id="imageDisplay"
+													style="
+														display: none;
+														width: 200px;
+														height: 200px;
+														text-align: center;
+													"
+												/>
+											</div>
+										</div>
+									</div>
+									<label for="imageInput">Hình ảnh</label>
+									<input
+										class="form-control"
+										type="file"
+										name="imageInput"
+										id="imageInput"
+										style="font-size: 1.8rem"
+									/>
+									<input type="hidden" id="imageUrl" />
+								</div>
+								<div class="col-md-6">
 									<label for="firstname">Tên (Có dấu) <sup>*</sup></label
 									><br /><input
 										type="text"
@@ -96,7 +163,7 @@
 										style="width: 100%"
 									/>
 								</div>
-								<div style="width: 50%">
+								<div class="col-md-6">
 									<label for="lastname"
 										>Họ và tên đệm (Có dấu) <sup>*</sup></label
 									><br /><input
@@ -107,7 +174,7 @@
 										style="width: 100%"
 									/>
 								</div>
-								<div style="width: 50%">
+								<div class="col-md-6">
 									<label for="phone">Số điện thoại <sup>*</sup></label
 									><br /><input
 										type="text"
@@ -117,7 +184,7 @@
 										style="width: 100%"
 									/>
 								</div>
-								<div style="width: 50%">
+								<div class="col-md-6">
 									<label for="gender">Giới tính <sup>*</sup></label
 									><br />
 									<select name="gender" id="gender" style="width: 100%">
@@ -128,7 +195,7 @@
 										<option value="female">Nữ</option>
 									</select>
 								</div>
-								<div style="width: 50%">
+								<div class="col-md-6">
 									<label for="mail">Email <sup>*</sup></label
 									><br /><input
 										type="email"
@@ -138,7 +205,7 @@
 										style="width: 100%"
 									/>
 								</div>
-								<div style="width: 50%">
+								<div class="col-md-6">
 									<label for="birth">Ngày sinh <sup>*</sup></label
 									><br /><input
 										type="date"
@@ -148,7 +215,7 @@
 										style="width: 100%"
 									/>
 								</div>
-								<div style="width: 50%">
+								<div class="col-md-6">
 									<label for="province">Tỉnh / Thành phố <sup>*</sup></label
 									><br />
 									<select name="province" id="province">
@@ -156,7 +223,7 @@
 										<option value="hn">Ha Noi</option>
 									</select>
 								</div>
-								<div style="width: 25%" class="district">
+								<div class="col-md-3" class="district">
 									<label for="district">Quận / Huyện <sup>*</sup></label
 									><br />
 									<select name="district" id="district">
@@ -164,7 +231,7 @@
 										<option value="bdinh">Ba Dinh</option>
 									</select>
 								</div>
-								<div style="width: 25%" class="ward">
+								<div class="col-md-3" class="ward">
 									<label for="ward">Phường / Xã <sup>*</sup></label
 									><br />
 									<select name="ward" id="ward">
@@ -172,7 +239,7 @@
 										<option value="btho">Binh Tho</option>
 									</select>
 								</div>
-								<div style="width: 100%" class="address">
+								<div class="col-md-12" class="address">
 									<label for="address">Địa chỉ <sup>*</sup></label
 									><br /><input
 										type="text"
@@ -279,50 +346,123 @@
 		</main>
 
 		<footer class="footer">
-			<div class="footer__navigation">
-				<a href="/">
-					<img src="./assets/images/logo.png" class="navbar__logo" alt="logo" />
-				</a>
-				<ul class="footer__navigation__list">
-					<li>
-						<a href="/#">Trang chủ</a>
-					</li>
-					<li>
-						<a href="#!">Giới thiệu</a>
-					</li>
-					<li>
-						<a href="#!">Chuyên khoa</a>
-					</li>
-					<li>
-						<a href="#!">Nha Khoa</a>
-					</li>
-					<li>
-						<a href="#!">Blogs</a>
-					</li>
-					<li>
-						<a href="#!">Liên hệ</a>
-					</li>
-				</ul>
-			</div>
-			<div class="footer__separate"></div>
-			<div class="footer__condition__social">
-				<p class="footer__condition__social--copyright">® 2024 Dental Care</p>
-				<div class="footer__condition__social--media">
-					<a href="#!">
-						<img src="./assets/images/facebook.png" alt="facebook" />
+			<div class="footer__container">
+				<div class="footer__navigation">
+					<a href="/">
+						<img
+							src="https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=b98bc2f0-f603-4b85-bd1b-764d8679baf0"
+							class="navbar__logo"
+							alt="logo"
+						/>
 					</a>
-					<a href="#!">
-						<img src="./assets/images/instagram.png" alt="facebook" />
-					</a>
-					<a href="#!">
-						<img src="./assets/images/youtube.png" alt="facebook" />
-					</a>
-					<a href="#!">
-						<img src="./assets/images/linkedin.png" alt="facebook" />
-					</a>
-					<a href="#!">
-						<img src="./assets/images/X.png" alt="facebook" />
-					</a>
+					<ul class="footer__navigation__list">
+						<li>
+							<a href="./index.html">Trang chủ</a>
+						</li>
+						<li>
+							<a href="./about.html">Giới thiệu</a>
+						</li>
+						<li>
+							<a href="./clinic.html">Phòng khám</a>
+						</li>
+						<li>
+							<a href="./speciality.html">Chuyên khoa</a>
+						</li>
+						<li>
+							<a href="#!">Blogs</a>
+						</li>
+						<li>
+							<a href="./contact.html">Liên hệ</a>
+						</li>
+					</ul>
+				</div>
+				<div class="footer__separate"></div>
+				<div class="footer__terms row">
+					<div class="footer__terms__address__contact col-md-6">
+						<div class="phone__number footer__terms__list">
+							<span>Số điện thoại: </span
+							><a href="tel:0123456789" class="footer__terms__links">00 có</a>
+						</div>
+						<div class="email__contact footer__terms__list">
+							<span>Email: </span
+							><a
+								href="mailto:dentalcare@gmail.com"
+								class="footer__terms__links"
+								>dentalcare@gmail.com</a
+							>
+						</div>
+						<div class="address footer__terms__list">
+							<span>Địa chỉ: </span>Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ,
+							Thành Phố Thủ Đức, Thành phố Hồ Chí Minh
+						</div>
+					</div>
+					<div class="footer__terms__services col-md-2 text-start">
+						<div class="footer__terms__title">Dịch vụ Y tế</div>
+						<ul>
+							<li>
+								<a href="./clinic.html" class="footer__terms__links"
+									>Đặt khám tại cơ sở</a
+								>
+							</li>
+							<li>
+								<a href="./speciality.html" class="footer__terms__links"
+									>Đặt khám theo chuyên khoa</a
+								>
+							</li>
+						</ul>
+					</div>
+					<div class="footer__terms__instruction col-md-2 text-start">
+						<div class="footer__terms__title">Hướng dẫn</div>
+						<ul>
+							<li>
+								<a href="#!" class="footer__terms__links">Đặt lịch khám</a>
+							</li>
+							<li>
+								<a href="#!" class="footer__terms__links">Câu hỏi thường gặp</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer__terms__about__us col-md-2 text-start">
+						<div class="footer__terms__title">Về DentalCare</div>
+						<ul>
+							<li>
+								<a href="./about.html" class="footer__terms__links"
+									>Giới thiệu</a
+								>
+							</li>
+							<li>
+								<a href="#!" class="footer__terms__links">Điều khoản dịch vụ</a>
+							</li>
+							<li>
+								<a href="#!" class="footer__terms__links">Chính sách bảo mật</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer__condition__social">
+					<p class="footer__condition__social--copyright">
+						® 2024 Dental Care | All rights reserved.
+					</p>
+					<div class="footer__condition__social--media">
+						<div style="font-size: 2rem; font-weight: bold">
+							Liên hệ với chúng tôi:
+						</div>
+						<a href="#!">
+							<img src="./assets/images/facebook.png" alt="facebook" />
+						</a>
+						<a href="#!">
+							<img src="./assets/images/instagram.png" alt="facebook" />
+						</a>
+						<a href="#!">
+							<img src="./assets/images/youtube.png" alt="facebook" />
+						</a>
+						<a href="#!">
+							<img src="./assets/images/linkedin.png" alt="facebook" />
+						</a>
+						<a href="#!">
+							<img src="./assets/images/X.png" alt="facebook" />
+						</a>
+					</div>
 				</div>
 			</div>
 		</footer>
@@ -336,5 +476,6 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script src="./assets/js/upload-image-firebase.js" type="module"></script>
 	</body>
 </html>
