@@ -15,6 +15,7 @@ using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Azure;
 using Microsoft.CodeAnalysis;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -74,7 +75,18 @@ namespace Dental_Clinic_System.Controllers
                         SpecialtyID = specialtyID
                     };
                     TempData.SetObjectAsJson("MOMOPaymentRequestModel", momoModel);
-                    return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
+                    TempData["ScheduleIDTempData"] = scheduleID;
+                    TempData["SpecialtyIDTempData"] = specialtyID;
+                    TempData["PatientRecordIDTempData"] = patientRecordID;
+
+                    var paymentResult = _momoPayment.CreatePaymentURL(momoModel).Result;
+                    if(!paymentResult.payUrl.IsNullOrEmpty())
+                    {
+                        return Redirect(paymentResult.payUrl);
+                    }
+                    ViewBag.ResultCode = paymentResult.errorCode;
+                    ViewBag.Message = paymentResult.localMessage;
+                    return View("PaymentResult");
             }
             return View();
         }
@@ -112,7 +124,7 @@ namespace Dental_Clinic_System.Controllers
                 SpecialtyID = 0
 
             };
-            return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
+            return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result.payUrl ?? "paymentresult");
             //return Redirect(_vnPayment.CreatePaymentURL(HttpContext, vnpayModel));
         }
 
@@ -211,10 +223,10 @@ namespace Dental_Clinic_System.Controllers
             string secretKey = _configuration["MomoAPI:SecretKey"];
             
             string signatureCheck = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
-            //string signatureFromRequest = signatureJSON.Signature;
             string signatureFromRequest = signatureCheck;
-            Console.WriteLine($"Signature Check : {signatureCheck}");
-            Console.WriteLine($"Signature from Request: {signatureFromRequest}");
+
+            //Console.WriteLine($"Signature Check : {signatureCheck}");
+            //Console.WriteLine($"Signature from Request: {signatureFromRequest}");
 
             // Debug HERE if you get trouble LOL
             Console.WriteLine("----------------------------------------------------------------");
@@ -227,11 +239,21 @@ namespace Dental_Clinic_System.Controllers
                 return View("PaymentFail");
             }
 
-            if (resultCode == 0 && message == "")
+            if (resultCode == 0 && message == "Success")
             {
-                // Đang test nên tạm thời chưa lưu vào database
                 // Thanh toán thành công
                 // Lưu vào database
+
+                int scheduleID = (int)TempData["ScheduleIDTempData"];
+                int patientRecordID = (int)TempData["PatientRecordIDTempData"];
+                int specialtyID = (int)TempData["SpecialtyIDTempData"];
+
+                if(_context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus == "Đã Đặt")
+                {
+                    ViewBag.ResultCode = 999;
+                    ViewBag.Message = "Slot này đã có người đặt".ToUpper();
+                    return View("PaymentResult");
+                }
 
                 var response = new MOMOPaymentResponseModel
                 {
@@ -249,11 +271,20 @@ namespace Dental_Clinic_System.Controllers
 
                 // Truy xuất đối tượng từ TempData
                 var momoModel = TempData.GetObjectFromJson<MOMOPaymentRequestModel>("MOMOPaymentRequestModel");
+                //Console.WriteLine("==================================");
+                //await Console.Out.WriteLineAsync($"ScheduleID = {momoModel.ScheduleID}");
+                //Console.WriteLine($"ScheduleID from Tempdata = {(int)TempData["SchduleIDTempData"]}");
+                //Console.WriteLine($"Amount = {momoModel.Amount}");
+                //Console.WriteLine("==================================");
+
+                
+
+                Console.WriteLine($"ScheduleID = {scheduleID} | PatientRecordID = {patientRecordID} | SpecialtyID = {specialtyID}");
                 var appointment = new Appointment
                 {
-                    ScheduleID = momoModel.ScheduleID,
-                    PatientRecordID = momoModel.PatientRecordID,
-                    SpecialtyID = momoModel.SpecialtyID,
+                    ScheduleID = scheduleID,
+                    PatientRecordID = patientRecordID,
+                    SpecialtyID = specialtyID,
                     TotalPrice = momoModel.Amount,
                     CreatedDate = DateTime.Now,
                     AppointmentStatus = "Chờ Xác Nhận"
@@ -279,6 +310,9 @@ namespace Dental_Clinic_System.Controllers
                 _context.Transactions.Add(transaction);
                 _context.SaveChanges();
 
+                _context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus = "Đã Đặt";
+                _context.SaveChanges();
+
                 ViewBag.ResultCode = resultCode;
                 ViewBag.Message = message.ToUpper();
                 return View("PaymentResult");
@@ -286,6 +320,7 @@ namespace Dental_Clinic_System.Controllers
             else
             {
                 // Thanh toán thất bại
+                await Console.Out.WriteLineAsync("Fail from Payment Controller");
                 ViewBag.ResultCode = resultCode;
                 ViewBag.Message = message.ToUpper();
                 return View("PaymentResult");

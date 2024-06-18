@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -23,7 +24,8 @@ namespace Dental_Clinic_System.Controllers
 		[HttpGet]
 		public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string scheduleID)
 		{
-			var username = User.Identity.Name;
+            var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var username = claimsEmailValue;
 			var patientRecord = await _context.PatientRecords
 										.Include(pr => pr.Account)
 										.Include(pr => pr.Appointments)
@@ -50,8 +52,16 @@ namespace Dental_Clinic_System.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CreateNewPatientRecord(PatientRecordVM record)
 		{
-			var user = _context.Accounts.First(u => u.Email == User.Identity.Name);
-			var age = DateTime.Now.Year - record.DateOfBirdth.Year;
+            var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = _context.Accounts.FirstOrDefault(u => u.Email == claimsEmailValue);
+			if (user == null)
+			{
+                await Console.Out.WriteLineAsync("=========================================");
+                await Console.Out.WriteLineAsync("NULLLLLLLLLLLLLLLLLLLLLLLLLL");
+                await Console.Out.WriteLineAsync("===========================================================");
+
+            }
+            var age = DateTime.Now.Year - record.DateOfBirdth.Year;
 			if(age >= 14)
 			{
 				ModelState.Remove(nameof(record.FMFullName));
@@ -142,8 +152,11 @@ namespace Dental_Clinic_System.Controllers
 
 				 _context.PatientRecords.Add(patientrecord);
 				 await _context.SaveChangesAsync();
-				Console.WriteLine("Everything seem be like good!");
-				return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang khác sau khi lưu thành công
+                await Console.Out.WriteLineAsync("===========================================================");
+                await Console.Out.WriteLineAsync("Everything seem be like good!");
+                await Console.Out.WriteLineAsync("===========================================================");
+
+                return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang khác sau khi lưu thành công
 			}
 
 			return View(record); // Trả lại view với các lỗi validation nếu có

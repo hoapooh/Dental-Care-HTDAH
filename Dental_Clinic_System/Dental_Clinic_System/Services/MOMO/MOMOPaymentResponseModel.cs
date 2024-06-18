@@ -12,11 +12,18 @@
         public string ResultCode { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
         public string PayType { get; set; }
+        public decimal Amount { get; internal set; }
         public long ResponseTime { get; set; }
         public string ExtraData { get; set; }
         public string Signature { get; set; }
+
+        // For MOMO Response API
         public string payUrl { get; set; } = string.Empty;
-        public decimal Amount { get; internal set; }
+        public int errorCode { get; set; }
+        public string message { get; set; } = string.Empty;
+        public string localMessage { get; set; } = string.Empty;
+
+        
 
         // For Single Disbursement
         public long? Balance { get; internal set; }
