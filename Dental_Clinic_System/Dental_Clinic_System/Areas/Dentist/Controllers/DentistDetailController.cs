@@ -1,4 +1,5 @@
-﻿using Dental_Clinic_System.Helper;
+﻿using Azure;
+using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services.MOMO;
 using Dental_Clinic_System.ViewModels;
@@ -192,27 +193,44 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             var appointment = await _context.Appointments.Include(a => a.Transactions).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
             appointment.AppointmentStatus = appointmentStatus;
 
-            //var a = appointment.Transactions.FirstOrDefault().TransactionCode;
-
             _context.Update(appointment);
             await _context.SaveChangesAsync();
 
             // HERE
             #region Refund MOMO API
-            //if (appointment.AppointmentStatus == "Đã Khám")
-            //{
-            //    // Invoke the refund method from payment controller
-            //    // Hoàn tiền thành công
-            //    //return View("RefundSuccess", responseObject);
+            if (appointment.AppointmentStatus == "Đã Khám")
+            {
+                // Invoke the refund method from payment controller
+                // Hoàn tiền thành công
+                //return View("RefundSuccess", responseObject);
+                var transactionCode = appointment.Transactions.FirstOrDefault()?.TransactionCode;
+                var amount = appointment.Transactions.FirstOrDefault()?.TotalPrice;
+                var bankName = appointment.Transactions.FirstOrDefault()?.BankName;
+                var fullName = appointment.Transactions.FirstOrDefault()?.FullName;
+                if (_momoPayment.RefundPayment(long.Parse(amount.ToString()), long.Parse(transactionCode.ToString()), "Hoàn tiền đặt cọc") != null)
+                {
+                    TempData["RefundMessage"] = "Hoàn tiền thành công";
 
-            //    if (_momoPayment.RefundPayment != null)
-            //    {
-            //        var response = _momoPayment.RefundPayment;
-            //        return RedirectToAction("RefundSuccess", "payment");
-            //    }
 
+                    var transaction = new Transaction
+                    {
+                        AppointmentID = appointment.ID,
+                        Date = DateTime.Now,
+                        BankName = bankName,
+                        TransactionCode = transactionCode,
+                        PaymentMethod = "MOMO",
+                        TotalPrice = amount,
+                        BankAccountNumber = "9704198526191432198",
+                        FullName = fullName,
+                        Message = "Hoàn tiền thành công",
+                        Status = "Thành Công"
+                    };
 
-            //}
+                    _context.Transactions.Add(transaction);
+                    _context.SaveChanges();
+                }
+
+            }
             #endregion
 
             TempData["message"] = "success";

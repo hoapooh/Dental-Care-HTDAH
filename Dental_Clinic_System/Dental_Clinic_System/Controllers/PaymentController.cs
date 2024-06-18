@@ -16,6 +16,8 @@ using Dental_Clinic_System.Models.Data;
 using Azure;
 using Microsoft.CodeAnalysis;
 using Microsoft.IdentityModel.Tokens;
+using Dental_Clinic_System.Services.EmailSender;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -26,20 +28,21 @@ namespace Dental_Clinic_System.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly DentalClinicDbContext _context;
+        private readonly IEmailSenderCustom _emailSender;
 
-        public PaymentController(IVNPayment vnPayment, IMOMOPayment momoPayment, IHttpClientFactory httpClientFactory, IConfiguration config, DentalClinicDbContext context)
+        public PaymentController(IVNPayment vnPayment, IMOMOPayment momoPayment, IHttpClientFactory httpClientFactory, IConfiguration config, DentalClinicDbContext context, IEmailSenderCustom emailSender)
         {
             _vnPayment = vnPayment;
             _httpClientFactory = httpClientFactory;
             _configuration = config;
             _context = context;
             _momoPayment = momoPayment;
-
+            _emailSender = emailSender;
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
         [HttpPost]
-        public async Task<IActionResult> ProcessCheckout(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit, string paymentMethod)
+        public async Task<IActionResult> ProcessCheckout(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit, string paymentMethod, int clinicID)
         {
             var patient = _context.PatientRecords.FirstOrDefault(p => p.ID == patientRecordID);
 
@@ -78,6 +81,7 @@ namespace Dental_Clinic_System.Controllers
                     TempData["ScheduleIDTempData"] = scheduleID;
                     TempData["SpecialtyIDTempData"] = specialtyID;
                     TempData["PatientRecordIDTempData"] = patientRecordID;
+                    TempData["ClinicIDTempData"] = clinicID;
 
                     var paymentResult = _momoPayment.CreatePaymentURL(momoModel).Result;
                     if(!paymentResult.payUrl.IsNullOrEmpty())
@@ -135,9 +139,13 @@ namespace Dental_Clinic_System.Controllers
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
-        public IActionResult PaymentInvoice()
+        public IActionResult PaymentInvoice(Appointment specialtySchedulePatientRecord, Transaction transaction, int clinicID)
         {
-            return View();
+            ViewBag.specialtySchedulePatientRecord = specialtySchedulePatientRecord;
+            ViewBag.transaction = transaction;
+			ViewBag.clinic = _context.Clinics.FirstOrDefault(c => c.ID == clinicID);
+
+			return View();
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
@@ -247,9 +255,11 @@ namespace Dental_Clinic_System.Controllers
                 int scheduleID = (int)TempData["ScheduleIDTempData"];
                 int patientRecordID = (int)TempData["PatientRecordIDTempData"];
                 int specialtyID = (int)TempData["SpecialtyIDTempData"];
+                int clinicID = (int)TempData["ClinicIDTempData"];
 
                 if(_context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus == "Đã Đặt")
                 {
+                    await _momoPayment.RefundPayment(long.Parse(amount), long.Parse(transId), message);
                     ViewBag.ResultCode = 999;
                     ViewBag.Message = "Slot này đã có người đặt".ToUpper();
                     return View("PaymentResult");
@@ -277,9 +287,6 @@ namespace Dental_Clinic_System.Controllers
                 //Console.WriteLine($"Amount = {momoModel.Amount}");
                 //Console.WriteLine("==================================");
 
-                
-
-                Console.WriteLine($"ScheduleID = {scheduleID} | PatientRecordID = {patientRecordID} | SpecialtyID = {specialtyID}");
                 var appointment = new Appointment
                 {
                     ScheduleID = scheduleID,
@@ -312,6 +319,14 @@ namespace Dental_Clinic_System.Controllers
 
                 _context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus = "Đã Đặt";
                 _context.SaveChanges();
+
+				var specialtySchedulePatientRecord = await _context.Appointments.Include(s => s.Specialty).Include(sc => sc.Schedule).ThenInclude(t => t.TimeSlot).Include(p => p.PatientRecords).ThenInclude(a => a.Account).FirstOrDefaultAsync(a => a.ID == appointment.ID);
+
+                ViewBag.specialtySchedulePatientRecord = specialtySchedulePatientRecord;
+                ViewBag.transaction = transaction;
+                ViewBag.clinicID = clinicID;
+
+				await _emailSender.SendInvoiceEmailAsync(appointment, transaction, clinicID, "Xác Nhận Phiếu Khám");
 
                 ViewBag.ResultCode = resultCode;
                 ViewBag.Message = message.ToUpper();

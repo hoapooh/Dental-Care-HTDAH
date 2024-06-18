@@ -161,7 +161,7 @@ namespace Dental_Clinic_System.Services.MOMO
         }
 
         [HttpPost]
-        public async Task<MOMORefundResponseModel?> RefundPayment(long amount = 10000, long transId = 4057102283, string description = "")
+        public async Task<MOMORefundResponseModel?> RefundPayment(long amount, long transId, string description = "")
         {
             string endpoint = _configuration["MomoAPI:MomoApiRefundUrl"];
             string partnerCode = _configuration["MomoAPI:PartnerCode"];
