@@ -14,6 +14,8 @@
 
     // var address = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value;
     // if (mobilePhone is null) Console.WriteLine("NO mobilephone");
+
+    var appointments = ViewBag.Appointment["Appointment"] as List<Dental_Clinic_System.Models.Data.Appointment>;
 }
 
 
@@ -269,6 +271,8 @@
                             </div>
                         </div>
                     }
+
+                    @* Lịch sử đặt khám *@
                     <div id="history" class="tab-pane fade">
                         <h2>Lịch sử đặt khám</h2>
                         <div class="history__management">

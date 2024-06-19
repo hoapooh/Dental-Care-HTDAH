@@ -18,7 +18,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.IdentityModel.Tokens;
 using Dental_Clinic_System.Services.EmailSender;
 using Microsoft.EntityFrameworkCore;
-
+using static Dental_Clinic_System.Services.VNPAY.VNPAYLibrary;
 namespace Dental_Clinic_System.Controllers
 {
     public class PaymentController : Controller
@@ -489,111 +489,99 @@ namespace Dental_Clinic_System.Controllers
 
         #endregion
 
-
-
-        //private string ComputeHmacSha256(string message, string secretKey)
-        //{
-        //	var keyBytes = Encoding.UTF8.GetBytes(secretKey);
-        //	var messageBytes = Encoding.UTF8.GetBytes(message);
-
-        //	byte[] hashBytes;
-
-        //	using (var hmac = new HMACSHA256(keyBytes))
-        //	{
-        //		hashBytes = hmac.ComputeHash(messageBytes);
-        //	}
-
-        //	var hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-
-        //	return hashString;
-        //}
-
         // ----------------------------------------------------------------------- //
         // Re-Fun VNPAY START
 
-        //[HttpPost]
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //public async Task<IActionResult> ProcessRefund(string txnRef = "638536559852904902", long amount = 20000)
-        //{
-        //	var requestId = Guid.NewGuid().ToString();
-        //	var version = _configuration["VNPAY:Version"];
-        //	var command = _configuration["VNPAY:RefundCommand"];
-        //	var tmnCode = _configuration["VNPAY:TmnCode"];
-        //	var transactionType = "02"; // hoặc "03" cho hoàn trả một phần
-        //	var orderInfo = "Refund for order";
-        //	var transactionDate = DateTime.Now.ToString("yyyyMMddHHmmss");
-        //	var createBy = "admin";
-        //	var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
-        //	var ipAddr = HttpContext.Connection.RemoteIpAddress.ToString();
-        //	var secureHash = _configuration["VNPAY:HashSecret"];
+        [HttpPost]
+        [Authorize(Roles = "Bệnh Nhân")]
+        public async Task<IActionResult> ProcessRefund(string txnRef = "638543936617919359", int amount = 50000)
+        {
+            var requestId = DateTime.Now.Ticks.ToString();
+            var version = _configuration["VNPAY:Version"];
+            var command = _configuration["VNPAY:RefundCommand"];
+            var tmnCode = _configuration["VNPAY:TmnCode"];
+            var transactionType = "02"; // hoặc "03" cho hoàn trả một phần
+            var orderInfo = "Refund for order";
+            var transactionDate = "20240619113528";
+            var transactionNo = "";
+            var amounta = (amount * 100);
+			var createBy = "admin";
+            var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var ipAddr = Utils.GetIpAddress(HttpContext);
+            var secureHash = _configuration["VNPAY:HashSecret"];
 
-        //	// Tạo chuỗi dữ liệu để tính checksum
-        //	string data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}|{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
+            // Tạo chuỗi dữ liệu để tính checksum
+            string data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}|{transactionNo}|{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
 
-        //	// Tính checksum
-        //	string secureHashed = ComputeSHA256Hash(secureHash, data);
+            // Tính checksum
+            string secureHashed = ComputeSHA256Hash(secureHash, data);
 
-        //	var jsonData = new JObject
-        //	{
-        //		["vnp_RequestId"] = requestId,
-        //		["vnp_Version"] = version,
-        //		["vnp_Command"] = command,
-        //		["vnp_TmnCode"] = tmnCode,
-        //		["vnp_TransactionType"] = transactionType,
-        //		["vnp_TxnRef"] = txnRef,
-        //		["vnp_Amount"] = amount.ToString(),
-        //		["vnp_OrderInfo"] = orderInfo,
-        //		["vnp_TransactionDate"] = transactionDate,
-        //		["vnp_CreateBy"] = createBy,
-        //		["vnp_CreateDate"] = createDate,
-        //		["vnp_IpAddr"] = ipAddr,
-        //		["vnp_SecureHash"] = secureHashed
-        //	};
+            var jsonData = new
+            {
+                vnp_RequestId = requestId,
+                vnp_Version = version,
+               vnp_Command = command,
+                vnp_TmnCode = tmnCode,
+                vnp_TransactionType = transactionType,
+                vnp_TxnRef = txnRef,
+                vnp_Amount = amounta,
+                vnp_OrderInfo = orderInfo,
+                vnp_TransactionNo = transactionNo,
+                vnp_TransactionDate = transactionDate,
+                vnp_CreateBy = createBy,
+                vnp_CreateDate = createDate,
+                vnp_IpAddr = ipAddr,
+                vnp_SecureHash = secureHashed
+            };
 
-        //	var jsonString = JsonConvert.SerializeObject(jsonData);
-        //	var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-        //	Console.WriteLine("JSON STRING: " + jsonString);
+            var jsonString = JsonConvert.SerializeObject(jsonData);
+            var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            Console.WriteLine("JSON STRING: " + jsonString);
 
-        //	using (var client = _httpClientFactory.CreateClient())
-        //	{
-        //		var response = await client.PostAsync(_configuration["VNPAY:RefundURL"], content);
-        //		var responseString = await response.Content.ReadAsStringAsync();
-        //		return ProcessResponse(responseString);
-        //	}
-        //}
+            using (var client = _httpClientFactory.CreateClient())
+            {
+                //var response = await client.PostAsync(_configuration["VNPAY:RefundAPI"], content);
+                var response = await client.PostAsync(_configuration["VNPAY:RefundURL"], content);
+                var responseString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("JSON Response: " + responseString);
+                return RedirectToAction("index", "home");
+				//return ProcessResponse(responseString);
+            }
+        }
 
 
 
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //private IActionResult ProcessResponse(string responseString)
-        //{
-        //	var jsonResponse = JObject.Parse(responseString);
-        //	Console.WriteLine(jsonResponse.ToString());
-        //	var responseCode = jsonResponse["vnp_ResponseCode"].ToString();
-        //	Console.WriteLine($"Response Code = {responseCode}");
-        //	if (responseCode == "00")
-        //	{
-        //		return RedirectToAction("RefundSuccess");
-        //	}
-        //	else
-        //	{
-        //		return RedirectToAction("RefundFail");
-        //	}
-        //}
+        [Authorize(Roles = "Bệnh Nhân")]
+        private IActionResult ProcessResponse(string responseString)
+        {
+			//var jsonResponse = JObject.Parse(responseString);
+			var jsonResponse = JsonConvert.DeserializeObject<VNPaymentRefundRequestModel>(responseString);
+			//Console.WriteLine("JSON Response: " + responseString);
+			var responseCode = jsonResponse.OrderInfo;
+			Console.WriteLine($"Response Code = {responseCode}");
+            if (responseCode == "00")
+            {
+                return RedirectToAction("RefundSuccess");
+            }
+            else
+            {
+                return RedirectToAction("RefundFail");
+            }
+        }
 
-        //public static string ComputeSHA256Hash(string secretKey, string rawData)
-        //{
-        //	using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
-        //	{
-        //		byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-        //		StringBuilder builder = new StringBuilder();
-        //		for (int i = 0; i < bytes.Length; i++)
-        //		{
-        //			builder.Append(bytes[i].ToString("x2"));
-        //		}
-        //		return builder.ToString();
-        //	}
-        //}
+        public static string ComputeSHA256Hash(string secretKey, string rawData)
+        {
+            using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
+            {
+                byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
 
 
         //[Authorize(Roles = "Bệnh Nhân")]

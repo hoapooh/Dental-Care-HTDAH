@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services.EmailSender;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -591,9 +593,16 @@ namespace Dental_Clinic_System.Controllers
 
                 Address = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value,
                 DateOfBirth = dateOfBirth
-            };
+			};
 
-            return View(model);
+			var appointment = new Dictionary<string, object>
+			{
+                { "Appointment", await _context.Accounts.Include(p => p.PatientRecords).ThenInclude(a => a.Appointments).FirstOrDefaultAsync(u => u.Email == model.Email) }
+			};
+
+			ViewBag.Appointment = appointment;
+
+			return View(model);
         }
 
 

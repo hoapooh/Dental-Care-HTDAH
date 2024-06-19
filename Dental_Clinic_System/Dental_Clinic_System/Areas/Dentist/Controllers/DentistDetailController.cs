@@ -207,7 +207,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 var amount = appointment.Transactions.FirstOrDefault()?.TotalPrice;
                 var bankName = appointment.Transactions.FirstOrDefault()?.BankName;
                 var fullName = appointment.Transactions.FirstOrDefault()?.FullName;
-                if (_momoPayment.RefundPayment(long.Parse(amount.ToString()), long.Parse(transactionCode.ToString()), "Hoàn tiền đặt cọc") != null)
+                if (_momoPayment.RefundPayment((long)decimal.Parse(amount.ToString()), long.Parse(transactionCode.ToString()), "Hoàn tiền đặt cọc") != null)
                 {
                     TempData["RefundMessage"] = "Hoàn tiền thành công";
 
