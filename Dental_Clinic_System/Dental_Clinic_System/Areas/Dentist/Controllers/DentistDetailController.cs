@@ -152,44 +152,37 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             return RedirectToAction("DentistDescription");
         }
 
-        #endregion
+		#endregion
 
-        #region Quản lý lịch đặt khám của bệnh nhân (Bản thử nghiệm và những dữ liệu quan trọng nữa)
+		#region Quản lý lịch đặt khám của bệnh nhân (Bản thử nghiệm và những dữ liệu quan trọng nữa)
 
-        [HttpGet]
-        public async Task<IActionResult> PatientAppointments()
-        {
-            var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
-            if (dentistAccountID == null)
-            {
-                return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
-            }
-<<<<<<< HEAD
-=======
+		[HttpGet]
+		public async Task<IActionResult> PatientAppointments()
+		{
+			var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
+			if (dentistAccountID == null)
+			{
+				return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
+			}
+			var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
+			var appointments = await _context.Appointments
+									.Include(a => a.Schedule).ThenInclude(s => s.TimeSlot)
+									.Include(a => a.PatientRecords)
+									.Include(a => a.Specialty)
+									.Where(a => a.Schedule.DentistID == dentist.ID)
+									.ToListAsync();
 
->>>>>>> e3b9cedac4e8ad3df126b0c0ec8d85987e2d8a30
-            var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
-            var appointments = await _context.Appointments
-                                    .Include(a => a.Schedule).ThenInclude(s => s.TimeSlot)
-                                    .Include(a => a.PatientRecords)
-                                    .Include(a => a.Specialty)
-                                    .Where(a => a.Schedule.DentistID == dentist.ID)
-                                    .ToListAsync();
-<<<<<<< HEAD
-            
-=======
->>>>>>> e3b9cedac4e8ad3df126b0c0ec8d85987e2d8a30
-            ViewBag.DentistAvatar = dentist?.Account.Image;
-            ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
+			ViewBag.DentistAvatar = dentist?.Account.Image;
+			ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
 
-            ViewBag.Message = TempData["Message"];
-            return View("PatientAppointments", appointments);
-        }
+			ViewBag.Message = TempData["Message"];
+			return View("PatientAppointments", appointments);
+		}
 
 
 
 
-        [HttpPost]
+		[HttpPost]
         public async Task<IActionResult> ChangePatientAppointment(int appointmentID, string appointmentStatus)
         {
             var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
