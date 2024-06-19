@@ -146,7 +146,7 @@ namespace Dental_Clinic_System.Controllers
 			var newAccount = new Account
 			{
 				Username = dentist.Username,
-				Password = dentist.Password,
+				Password = DataEncryptionExtensions.ToMd5Hash(dentist.Password),
 				LastName = dentist.LastName,
 				FirstName = dentist.FirstName,
 				Gender = dentist.Gender,

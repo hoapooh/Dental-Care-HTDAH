@@ -249,37 +249,44 @@
             const headers = collapse.querySelectorAll(".collapse__item__header");
             const contents = collapse.querySelectorAll(".collapse__item__content");
 
-
             headers.forEach((header, index) => {
                 header.addEventListener("click", () => {
-                    // If the corresponding content is already active, collapse it
+                    // Nếu nội dung tương ứng đang hoạt động, thu gọn nó lại
                     if (contents[index].classList.contains("active")) {
                         contents[index].classList.remove("active");
-                        header.classList.remove("active"); // Remove 'active' class from the header
+                        header.classList.remove("active"); // Xóa lớp 'active' khỏi tiêu đề
+
+                        // Xóa giá trị của phần tử có id là 'payment'
+                        document.getElementById('payment').value = '';
+
+                        // Vô hiệu hóa nút xác nhận
+                        var confirmButton = document.getElementsByClassName("add-record-btn");
+                        confirmButton[0].classList.add("disabled-btn");
+                        confirmButton[0].setAttribute('disabled', 'disabled');
                     } else {
-                        // Otherwise, collapse all contents and expand the corresponding one
+                        // Nếu không, thu gọn tất cả nội dung và mở rộng nội dung tương ứng
                         collapses.forEach((collapse) => {
                             collapse
                                 .querySelectorAll(".collapse__item__content")
                                 .forEach((content) => content.classList.remove("active"));
                             collapse
                                 .querySelectorAll(".collapse__item__header")
-                                .forEach((header) => header.classList.remove("active")); // Remove 'active' class from all headers
+                                .forEach((header) => header.classList.remove("active")); // Xóa lớp 'active' khỏi tất cả tiêu đề
                         });
                         contents[index].classList.add("active");
-                        header.classList.add("active"); // Add 'active' class to the header
-                    }
+                        header.classList.add("active"); // Thêm lớp 'active' vào tiêu đề
 
-                    // Set the value of the element with id 'payment' based on the index
-                    var confirmButton = document.getElementsByClassName("add-record-btn");
-                    if (collapseIndex === 0) {
-                        document.getElementById('payment').value = 'VNPAY';
-                        confirmButton[0].className = confirmButton[0].className.replace(" disabled-btn", "");
-                        confirmButton[0].removeAttribute('disabled');
-                    } else if(collapseIndex === 1) {
-                        document.getElementById('payment').value = 'MOMO';
-                        confirmButton[0].className = confirmButton[0].className.replace(" disabled-btn", "");
-                        confirmButton[0].removeAttribute('disabled');
+                        // Đặt giá trị của phần tử có id là 'payment' dựa trên index
+                        var confirmButton = document.getElementsByClassName("add-record-btn");
+                        if (collapseIndex === 0) {
+                            document.getElementById('payment').value = 'VNPAY';
+                            confirmButton[0].classList.remove("disabled-btn");
+                            confirmButton[0].removeAttribute('disabled');
+                        } else if (collapseIndex === 1) {
+                            document.getElementById('payment').value = 'MOMO';
+                            confirmButton[0].classList.remove("disabled-btn");
+                            confirmButton[0].removeAttribute('disabled');
+                        }
                     }
                 });
             });

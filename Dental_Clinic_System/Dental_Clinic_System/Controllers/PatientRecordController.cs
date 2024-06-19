@@ -47,16 +47,16 @@ namespace Dental_Clinic_System.Controllers
         #region Hàm này chỉ show ra View tạo mới patient record
         [HttpGet]
         [Route("/createnewpatientrecord")]
-        public async Task<IActionResult> ShowFormCreatingNewPatientRecord(string? returnUrl)
+        public async Task<IActionResult> ShowFormCreatingNewPatientRecord()
         {
-            ViewBag.returnUrl = returnUrl;
+            //ViewBag.returnUrl = returnUrl;
             return View("createnewpatientrecord");
         }
         #endregion
 
         #region Hàm nhận dữ liệu hồ sơ bệnh nhân (patient record) nếu chưa có hoặc tạo thêm hồ sơ bệnh nhân (đã release)
         [HttpPost]
-        public async Task<IActionResult> CreateNewPatientRecord(PatientRecordVM patient, string? returnUrl)
+        public async Task<IActionResult> CreateNewPatientRecord(PatientRecordVM patient)
         {
             var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var user = _context.Accounts.FirstOrDefault(u => u.Email == claimsEmailValue);
@@ -151,10 +151,10 @@ namespace Dental_Clinic_System.Controllers
                 };
                 await _context.PatientRecords.AddAsync(patientRecord);
                 await _context.SaveChangesAsync();
-                if (!string.IsNullOrEmpty(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
+                //if (!string.IsNullOrEmpty(returnUrl))
+                //{
+                //    return Redirect(returnUrl);
+                //}
                 return RedirectToAction("PatientRecordInProfile");
             }
 
