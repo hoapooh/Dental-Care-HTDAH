@@ -18,5 +18,7 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 		public string PhoneNumber { get; set; }
         public int DegreeID { get; set; }
         public string? Description { get; set; }
+
+
     }
 }

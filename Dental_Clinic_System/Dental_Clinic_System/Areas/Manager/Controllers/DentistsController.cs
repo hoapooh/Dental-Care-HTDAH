@@ -143,8 +143,9 @@ namespace Dental_Clinic_System.Controllers
                 PhoneNumber = dentist.PhoneNumber,
                 Email = dentist.Email,
                 Role = "Nha Sĩ",
-                AccountStatus = "Hoạt động"
-            };
+                AccountStatus = "Hoạt động",
+                Image = "https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=762f2f04-4f0d-447d-bb0a-6fed99eda354"
+			};
 
             _context.Accounts.Add(newAccount);
             await _context.SaveChangesAsync();

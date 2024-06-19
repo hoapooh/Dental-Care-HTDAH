@@ -19,19 +19,28 @@
 
         .modal-footer {
             gap: 10px;
+            padding: 0 10px;
+        }
+
+        .modal-content {
+            --mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
+            border: 0;
+            box-shadow: var(--mdb-modal-box-shadow);
+            padding: 24px 48px !important; /* Reduced padding for top/bottom and left/right */
+            border-radius: 10px; /* Adjust this value to change the roundness of the corners */
         }
     </style>
 }
-<!--header -->
-<div class="manager__management__header">
-    <div class="title" >Thêm dịch vụ làm răng</div>
-</div>
-<h1></h1>
-<!--Form create -->
+
 <div class="modal-dialog modal-dialog-centered form-modal-styles">
                                         @* enctype: để thêm hình ảnh *@
     <form asp-action="Create" enctype="multipart/form-data" class="modal-content" style="font-size: 2rem">
-        
+        <!--header -->
+        <div class="manager__management__header">
+            <div class="title">Thêm dịch vụ làm răng</div>
+        </div>
+        <h1></h1>
+        <!--body -->
         @* Kiểm tra dữ liệu đầu vào, dựa trên ServiceVM *@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         
@@ -75,7 +84,7 @@
         </div>
     </form>
 </div>
-
+<br />
 
 @section Scripts {
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>

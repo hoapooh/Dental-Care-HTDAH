@@ -56,7 +56,7 @@ input:focus {
 	align-items: center;
 	justify-content: center;
 	border: 1px solid #d4d4d4;
-	border-radius: 10px;
+	border-radius: 5px;
 	padding: 10px 7.5px;
 }
 
@@ -303,18 +303,19 @@ input:focus {
 	font-weight: 500;
 }
 
-.manager__management__clinic input,
-.manager__management__clinic textarea {
-	width: 100%;
-	font-size: 2rem;
-	margin-bottom: 20px;
-	padding: 5px 10px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-}
+	.manager__management__clinic input,
+	.manager__management__clinic textarea,
+	.manager__management__clinic select {
+		width: 100%;
+		font-size: 2rem;
+		margin-bottom: 10px;
+		padding: 5px 10px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+	}
 
 .manager__management__clinic input:not(#image) {
-	padding: 8px 10px;
+	padding: 5px 10px;
 }
 
 /* ========== RICHTEXT EDITOR =========== */

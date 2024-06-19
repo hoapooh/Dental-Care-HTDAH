@@ -88,7 +88,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         //    ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID", schedule.TimeSlotID);
         //    return View(schedule);
         //}
-        public async Task<IActionResult> Create([Bind("DentistID, Dates, TimeSlots")] ScheduleVM schedule)
+        public async Task<IActionResult> Create([Bind("DentistIDs, Dates, TimeSlots")] ScheduleVM schedule)
         {
 			var dentists = _context.Dentists
 						   .Join(_context.Accounts,
@@ -100,31 +100,36 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 									 FullName = account.LastName + " " + account.FirstName
 								 })
 						   .ToList();
-			ViewData["DentistID"] = new SelectList(dentists, "DentistID", "FullName", schedule.DentistID);
+			ViewData["DentistID"] = new SelectList(dentists, "DentistID", "FullName", schedule.DentistIDs);
 			//----------------------------------------------------
 			List<DateOnly> dateList = ConvertStringToDateOnlyList(schedule.Dates);
-            //----
+			//----
 			if (ModelState.IsValid)
             {
-                foreach (var date in dateList)
+                foreach (var dentist in schedule.DentistIDs)
                 {
-                    foreach (var slot in schedule.TimeSlots)
-                    {
-                        var existSchedule = await _context.Schedules.FirstOrDefaultAsync(
-                            a => a.DentistID == schedule.DentistID && a.Date == date && a.TimeSlotID == slot);
-                        if (existSchedule == null)
-                        {
-                            var newSchedule = new Schedule
-                            {
-                                DentistID = schedule.DentistID,
-                                Date = date,
-                                TimeSlotID = slot,
-                                ScheduleStatus = "Còn Trống"
-							};
-							_context.Add(newSchedule);
+					foreach (var date in dateList)
+					{
+						foreach (var slot in schedule.TimeSlots)
+						{
+							var existSchedule = await _context.Schedules.FirstOrDefaultAsync(
+								a => a.DentistID == dentist && a.Date == date && a.TimeSlotID == slot);
+							if (existSchedule == null)
+							{
+								var newSchedule = new Schedule
+								{
+									//DentistID = schedule.DentistIDs,
+                                    DentistID = dentist,
+									Date = date,
+									TimeSlotID = slot,
+									ScheduleStatus = "Còn Trống"
+								};
+								_context.Add(newSchedule);
+							}
 						}
 					}
-                }
+				}
+                
                 //------------
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

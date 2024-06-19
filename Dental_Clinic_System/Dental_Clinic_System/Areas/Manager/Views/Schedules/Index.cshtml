@@ -49,11 +49,32 @@
 			color: white;
 		}
 
-			.manager__management table a.button-link:last-child:hover,
-			.manager__management .close-btn:hover {
-				background: #f81f1f;
-			}
+		.manager__management table a.button-link:last-child:hover,
+		.manager__management .close-btn:hover {
+			background: #f81f1f;
+		}
+
+		.manager__management .work__schedule .time_ChuaDat {
+			background: #4880ff;
+			color: #fff;
+			padding: 0.4rem 0.4rem;
+			border-radius: 5px;
+			font-weight: 500;
+			text-align: center;
+			margin-bottom: 0;
+		}
+
+		.manager__management .work__schedule .time_Dat {
+			background: #86e49d;
+			color: #006b21;
+			padding: 0.4rem 0.4rem;
+			border-radius: 5px;
+			font-weight: 500;
+			text-align: center;
+			margin-bottom: 0;
+		}
 	</style>
+
 }
 <!-- account management header -->
 <div class="manager__management__header">
@@ -101,10 +122,10 @@
 							{
 								if (item.ScheduleStatus == "Đã Đặt")
 								{
-									<p class="status complete">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
+									<p class="time_Dat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
 
 								}
-								<a href="#!" class="time"><div>@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</div></a>
+								<a href="#!" class="time_ChuaDat"><div>@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</div></a>
 							}
 						</div>
 					</td>
