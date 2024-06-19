@@ -6,8 +6,9 @@ namespace Dental_Clinic_System.ViewModels
 	{
 		[Display(Name = "Họ và Tên")]
 		[Required(ErrorMessage = "Vui lòng nhập đầy đủ họ tên!")]
-		[RegularExpression("^[a-zA-Z]*$", ErrorMessage = "Tên chỉ được chứa chữ cái!")]
+		[RegularExpression(@"^[\p{L} ]*$", ErrorMessage = "Tên chỉ được chứa chữ cái và dấu cách!")]
 		public string FullName { get; set; }
+
 
 		[Display(Name = "Ngày sinh")]
 		[Required(ErrorMessage = "Vui lòng chọn ngày tháng năm sinh!")]
@@ -24,10 +25,12 @@ namespace Dental_Clinic_System.ViewModels
 		public string Gender { get; set; }
 
 		[Display(Name = "Nghề nghiệp")]
+		[Required(ErrorMessage = "Vui lòng chọn nghề nghiệp!")]
 		public string Job { get; set; }
 
 		[Display(Name = "Mã định danh")]
-		public string IdentifyNumber { get; set; }
+		[RegularExpression(@"^\d{12}$", ErrorMessage = "Số CCCD phải có độ dài 12 ký tự và chỉ chứa các chữ số.")]
+		public string? IdentifyNumber { get; set; }
 
 		[Display(Name = "Email")]
 		[EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ")]
@@ -52,22 +55,18 @@ namespace Dental_Clinic_System.ViewModels
 
 		//Định nghĩa các Relationship liên quan đến patient record và cho nó giá trị mặc định là null
 		[Display(Name = "Họ tên nhân thân")]
-		[Required(ErrorMessage = "Vui lòng nhập đầy đủ họ tên!")]
-		[RegularExpression("^[a-zA-Z]*$", ErrorMessage = "Tên chỉ được chứa chữ cái!")]
+		[RegularExpression(@"^[\p{L} ]*$", ErrorMessage = "Tên chỉ được chứa chữ cái và dấu cách!")]
 		public string? FMFullName { get; set; } = null;
 
 		[Display(Name = "Quan hệ với bệnh nhân")]
-		[Required(ErrorMessage = "Vui lòng không bỏ trống quan hệ với bệnh nhân!")]
 		public string? FMRelationship { get; set; } = null;
 
 		[Display(Name = "Số điện thoại")]
-		[Required(ErrorMessage = "Vui lòng nhập số điện thoại nhân thân!")]
 		[Phone(ErrorMessage = "Số điện thoại không hợp lệ!")]
 		[RegularExpression(@"^\d{9,11}$", ErrorMessage = "Số điện thoại phải có độ dài từ 9 đến 11 ký tự và chỉ chứa các chữ số.")]
 		public string? FMPhoneNumber { get; set; } = null;
 
 		[Display(Name = "Email")]
-		[Required(ErrorMessage = "Vui lòng nhập email nhân thâni!")]
 		[EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ")]
 		[StringLength(50, ErrorMessage = "Email không được vượt quá 50 ký tự")]
 		public string? FMEmail { get; set; } = null;

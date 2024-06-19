@@ -53,9 +53,9 @@
 								data-patient-gender="@appointment.PatientRecords.Gender"
 								data-patient-phone="@appointment.PatientRecords.PhoneNumber"
 								data-patient-email="@appointment.PatientRecords.EmailReceiver"
-								data-patient-province="@await LocalAPIReverseString.GetProvinceNameById(appointment.PatientRecords.Province ?? 0)"
-								data-patient-district="@await LocalAPIReverseString.GetDistrictNameById(appointment.PatientRecords.Province ?? 0, appointment.PatientRecords.District ?? 0)"
-								data-patient-ward="@await LocalAPIReverseString.GetWardNameById(appointment.PatientRecords.District ?? 0, appointment.PatientRecords.Ward ?? 0)"
+								data-patient-province="@await LocalAPIReverseString.GetProvinceNameById(appointment.PatientRecords.Province)"
+								data-patient-district="@await LocalAPIReverseString.GetDistrictNameById(appointment.PatientRecords.Province, appointment.PatientRecords.District)"
+								data-patient-ward="@await LocalAPIReverseString.GetWardNameById(appointment.PatientRecords.District, appointment.PatientRecords.Ward)"
 								data-patient-address="@appointment.PatientRecords.Address"
 								data-appointment-price="@Math.Round(appointment.TotalPrice)"
 								data-appointment-status="@appointment.AppointmentStatus">

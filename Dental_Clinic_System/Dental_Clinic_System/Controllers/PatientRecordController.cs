@@ -1,10 +1,14 @@
 ﻿using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.ViewModels;
+using Google.Apis.PeopleService.v1.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.Security.Claims;
+using System.Security.Policy;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -18,16 +22,17 @@ namespace Dental_Clinic_System.Controllers
 			_context = context;
 		}
 
-		//=============================== PHẦN XỬ LÝ =========================================
-
+		//=============================== PATIENT RECORD - CLINIC PART =========================================
+		#region Hàm lấy tất cả patient record có liên quan đến user hiện tại
 		[HttpGet]
 		public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string scheduleID)
 		{
-			var username = User.Identity.Name;
+			var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+			var username = claimsEmailValue;
 			var patientRecord = await _context.PatientRecords
 										.Include(pr => pr.Account)
 										.Include(pr => pr.Appointments)
-										.Where(pr => pr.Account.Email == username)
+										.Where(pr => pr.Account.Email == username && pr.PatientRecordStatus == "Đang Tồn Tại")
 										.ToListAsync();
 			TempData["Patient Amount"] = patientRecord.Count;
 			ViewBag.scheduleID = scheduleID;
@@ -36,123 +41,128 @@ namespace Dental_Clinic_System.Controllers
 			ViewBag.clinicID = clinicID;
 			return View(patientRecord);
 		}
+		#endregion
 
-
+		#region Hàm này chỉ show ra View tạo mới patient record
 		[HttpGet]
 		[Route("/createnewpatientrecord")]
-		public async Task<IActionResult> ShowFormCreatingNewPatientRecord()
+		public async Task<IActionResult> ShowFormCreatingNewPatientRecord(string? returnUrl)
 		{
-
+			ViewBag.returnUrl = returnUrl;
 			return View("createnewpatientrecord");
 		}
+		#endregion
 
-		#region Hàm nhận dữ liệu hồ sơ bệnh nhân (patient record) nếu chưa có hoặc tạo thêm hồ sơ bệnh nhân (thử nghiệm)
+		#region Hàm nhận dữ liệu hồ sơ bệnh nhân (patient record) nếu chưa có hoặc tạo thêm hồ sơ bệnh nhân (đã release)
 		[HttpPost]
-		public async Task<IActionResult> CreateNewPatientRecord(PatientRecordVM record)
+		public async Task<IActionResult> CreateNewPatientRecord(PatientRecordVM patient, string? returnUrl)
 		{
-			var user = _context.Accounts.First(u => u.Email == User.Identity.Name);
-			var age = DateTime.Now.Year - record.DateOfBirdth.Year;
-			if(age >= 14)
+			var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+			var user = _context.Accounts.FirstOrDefault(u => u.Email == claimsEmailValue);
+			if(user == null)
 			{
-				ModelState.Remove(nameof(record.FMFullName));
-				ModelState.Remove(nameof(record.FMEmail));
-				ModelState.Remove(nameof(record.FMPhoneNumber));
-				ModelState.Remove(nameof(record.FMRelationship));
-				if(record.Province == 0 || string.IsNullOrEmpty(record.Province.ToString()))
-				{
-					ModelState.AddModelError(nameof(record.Province), "Vui lòng chọn tỉnh thành");
-				}
-				if (record.District == 0 || string.IsNullOrEmpty(record.District.ToString()))
-				{
-					ModelState.AddModelError(nameof(record.District), "Vui lòng chọn tỉnh thành");
-				}
-				if (record.Ward == 0 || string.IsNullOrEmpty(record.Ward.ToString()))
-				{
-					ModelState.AddModelError(nameof(record.Ward), "Vui lòng chọn tỉnh thành");
-				}
+				return NotFound("Không tìm thấy người dùng!!");
 			}
-			else if (age < 14)
-			{
-				// Xóa các lỗi liên quan đến PhoneNumber, IdentifyNumber, Job
-				ModelState.Remove(nameof(record.PhoneNumber));
-				ModelState.Remove(nameof(record.IdentifyNumber));
-				ModelState.Remove(nameof(record.Job));
+			var today = DateOnly.FromDateTime(DateTime.Now);
+			var age = DateTime.Now.Year - patient.DateOfBirdth.Year;
+			if (patient.DateOfBirdth > today.AddYears(-age)) age--;
 
-				// Kiểm tra validation cho các trường FMFullName, FMRelationship, FMPhoneNumber, FMEmail
-				if (string.IsNullOrWhiteSpace(record.FMFullName))
-				{
-					ModelState.AddModelError(nameof(record.FMFullName), "Vui lòng nhập đầy đủ họ tên nhân thân!");
-				}
-				if (string.IsNullOrWhiteSpace(record.FMRelationship))
-				{
-					ModelState.AddModelError(nameof(record.FMRelationship), "Vui lòng không bỏ trống quan hệ với bệnh nhân!");
-				}
-				if (string.IsNullOrWhiteSpace(record.FMPhoneNumber))
-				{
-					ModelState.AddModelError(nameof(record.FMPhoneNumber), "Vui lòng nhập số điện thoại nhân thân!");
-				}
-				if (string.IsNullOrWhiteSpace(record.FMEmail))
-				{
-					ModelState.AddModelError(nameof(record.FMEmail), "Vui lòng nhập email nhân thân!");
-				}
+			//Phần check xem đã  nhập Tỉnh thành, quận huyện, phường xã hay chưa
+			if (patient.Province == 0)
+			{
+				ModelState.AddModelError("Province", "Yêu cầu nhập tỉnh / thành!");
+				return View(patient);
+			}
+			if (patient.District == 0)
+			{
+				ModelState.AddModelError("District", "Yêu cầu nhập quận / huyện!");
+				return View(patient);
+			}
+			if (patient.Ward == 0)
+			{
+				ModelState.AddModelError("Ward", "Yêu cầu nhập phường / xã!");
+				return View(patient);
+			}
+
+			//Check theo độ tuổi
+			if (age >= 14)
+			{
+				patient.FMFullName = null;
+				patient.FMRelationship = null;
+				patient.FMEmail = null;
+				patient.FMPhoneNumber = null;
 			}
 			else
 			{
-				// Xóa các lỗi liên quan đến FMFullName, FMRelationship, FMPhoneNumber, FMEmail
-				ModelState.Remove(nameof(record.FMFullName));
-				ModelState.Remove(nameof(record.FMRelationship));
-				ModelState.Remove(nameof(record.FMPhoneNumber));
-				ModelState.Remove(nameof(record.FMEmail));
+				ModelState.Remove(nameof(patient.PhoneNumber));
+				ModelState.Remove(nameof(patient.Job));
+				ModelState.Remove(nameof(patient.IdentifyNumber));
 
-				// Kiểm tra validation cho các trường PhoneNumber, IdentifyNumber, Job
-				if (string.IsNullOrWhiteSpace(record.PhoneNumber))
+				if (string.IsNullOrEmpty(patient.FMFullName))
 				{
-					ModelState.AddModelError(nameof(record.PhoneNumber), "Vui lòng nhập số điện thoại!");
+					ModelState.AddModelError("FMFullName", "FMFullName is required.");
+					return View(patient);
 				}
-				if (string.IsNullOrWhiteSpace(record.IdentifyNumber))
+
+				if (string.IsNullOrEmpty(patient.FMRelationship))
 				{
-					ModelState.AddModelError(nameof(record.IdentifyNumber), "Vui lòng nhập mã định danh!");
+					ModelState.AddModelError("FMRelationship", "FMRelationship is required.");
+					return View(patient);
 				}
-				if (string.IsNullOrWhiteSpace(record.Job))
+
+				if (string.IsNullOrEmpty(patient.FMEmail))
 				{
-					ModelState.AddModelError(nameof(record.Job), "Vui lòng nhập nghề nghiệp!");
+					ModelState.AddModelError("FMEmail", "FMEmail is required.");
+					return View(patient);
 				}
+
+				if (string.IsNullOrEmpty(patient.FMPhoneNumber))
+				{
+					ModelState.AddModelError("FMPhoneNumber", "FMPhoneNumber is required.");
+					return View(patient);
+				}
+				patient.Job = "Còn nhỏ";
 			}
 
 			if (ModelState.IsValid)
 			{
-				var patientrecord = new PatientRecord() 
-				{ 
-					FullName = record.FullName,
+				var patientRecord = new PatientRecord()
+				{
+					FullName = patient.FullName,
 					AccountID = user.ID,
-					DateOfBirth = record.DateOfBirdth,
-					Gender = record.Gender,
-					EmailReceiver = record.Email,
-					PhoneNumber = record.PhoneNumber,
-					Province = record.Province,
-					District = record.District,
-					Ward = record.Ward,
-					Address = record.Address,
-					IdentityNumber = record.IdentifyNumber,
-					Job = record.Job,
-					FMName = record.FMFullName,
-					FMPhoneNumber = record.FMPhoneNumber,
-					FMRelationship = record.FMRelationship,
-				};
+					DateOfBirth = patient.DateOfBirdth,
+					PhoneNumber = patient.PhoneNumber,
+					Gender = patient.Gender,
+					Job = patient.Job,
+					IdentityNumber = patient.IdentifyNumber,
+					EmailReceiver = patient.Email,
+					Province = patient.Province,
+					District = patient.District,
+					Ward = patient.Ward,
+					Address = patient.Address,
+					PatientRecordStatus = "Đang Tồn Tại",
+					//===== Family Member Part ====
+					FMName = patient.FMFullName,
+					FMEmail = patient.FMEmail,
+					FMPhoneNumber = patient.FMPhoneNumber,
+					FMRelationship = patient.FMRelationship
 
-				 _context.PatientRecords.Add(patientrecord);
-				 await _context.SaveChangesAsync();
-				Console.WriteLine("Everything seem be like good!");
-				return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang khác sau khi lưu thành công
+				};
+				await _context.PatientRecords.AddAsync(patientRecord);
+				await _context.SaveChangesAsync();
+				if (!string.IsNullOrEmpty(returnUrl))
+				{
+					return Redirect(returnUrl);
+				}
+				return RedirectToAction("PatientRecordInProfile");
 			}
 
-			return View(record); // Trả lại view với các lỗi validation nếu có
+			return View(patient); // Trả lại view với các lỗi validation nếu có
 		}
-		#endregion
+        #endregion
 
-
-		// Choose a patient record for booking (Method GET is here)
-		[HttpGet]
+        #region Hàm hiện ra thông tin xác nhận tất cả thông tin về clinic, dentist và patient record
+        [HttpGet]
 		[Route("/appointment/confirm")]
 		public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
 		{
@@ -172,7 +182,10 @@ namespace Dental_Clinic_System.Controllers
 			ViewBag.dentistID = dentistID;
             return View(appointment);
         }
-        [HttpGet]
+		#endregion
+
+		#region Hàm lấy thông tin liên quan đến việc tạo appointment, show ra và chọn phương thức thanh toán
+		[HttpGet]
 		public async Task<IActionResult> PatientRecordPaymentChoosing(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
 		{
             var appointment = new Dictionary<string, object>
@@ -190,5 +203,194 @@ namespace Dental_Clinic_System.Controllers
 			ViewBag.clinicID = clinicID;
             return View(appointment);
 		}
+		#endregion
+
+		//============================== PATIENT RECORD - PROFILE PART ====================================
+		#region Hàm lấy thông tin patient record từ account
+		[HttpGet]
+		public async Task<IActionResult> PatientRecordInProfile()
+		{
+			var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+			var user = _context.Accounts.FirstOrDefault(u => u.Email == claimsEmailValue);
+			if (user == null)
+			{
+				return NotFound("Không tìm thấy người dùng hợp lệ");
+			}
+			var patientRecord = _context.PatientRecords.Where(pr => pr.AccountID == user.ID && pr.PatientRecordStatus == "Đang Tồn Tại").ToList();
+			//if(patientRecord == null)
+			//{
+			//	return NotFound("Không tìm thấy dữ liệu hồ sơ tương ứng!");
+			//}
+			
+			return View(patientRecord);
+		}
+		#endregion
+
+		#region Hàm Set lại Status của patient record cụ thể
+		public async Task<IActionResult> DeletePatientRecord(int patientRecordID)
+		{
+			var patientRecord = await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID);
+			if(patientRecord == null)
+			{
+				TempData["Message"] = "Xóa thất bại, không tìm thấy hồ sơ tương ứng!";
+				return RedirectToAction("PatientRecordInProfile");
+			}
+			patientRecord.PatientRecordStatus = "Đã Xóa";
+			_context.PatientRecords.Update(patientRecord);
+			await _context.SaveChangesAsync();
+			TempData["Message"] = "success";
+			return RedirectToAction("PatientRecordInProfile");
+		}
+		#endregion
+
+		#region Show ra thông tin của patient record cần thay đổi
+		[HttpGet]
+		public async Task<IActionResult> EditPatientRecord(int patientRecordID)
+		{
+			var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+			var user = _context.Accounts.FirstOrDefault(u => u.Email == claimsEmailValue);
+			if (user == null)
+			{
+				return NotFound("Không tìm thấy người dùng hợp lệ");
+			}
+			var patientRecord = _context.PatientRecords.FirstOrDefault(pr => pr.ID == patientRecordID);
+			if(patientRecord == null)
+			{
+				return NotFound("Không tìm thấy hồ sơ cụ thể!");
+			}
+            //============= RECORD PART=================
+            PatientRecordVM patientRecordVM;
+			int age = DateTime.Now.Year - patientRecord.DateOfBirth.Year;
+			patientRecordVM = new()
+			{
+				FullName = patientRecord.FullName,
+				DateOfBirdth = patientRecord.DateOfBirth,
+				PhoneNumber = patientRecord.PhoneNumber,
+				Gender = patientRecord.Gender,
+				Job = patientRecord.Job,
+				IdentifyNumber = patientRecord.IdentityNumber,
+				Email = patientRecord.EmailReceiver,
+				Province = patientRecord.Province,
+				District = patientRecord.District,
+				Ward = patientRecord.Ward,
+				Address = patientRecord.Address,
+				//===== FM Part =====
+				FMFullName = patientRecord.FMName,
+				FMEmail = patientRecord.FMEmail,
+				FMRelationship = patientRecord.FMRelationship,
+				FMPhoneNumber = patientRecord.FMPhoneNumber
+			};
+            return View(patientRecordVM);
+		}
+		#endregion
+
+		#region Thay đổi thông tin patient record
+		[HttpPost]
+		public async Task<ActionResult> EditPatientRecord(int patientRecordID, PatientRecordVM patient)
+		{
+			var patientRecord = await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID && pr.PatientRecordStatus == "Đang Tồn Tại");
+			if(patientRecord == null)
+			{
+				return NotFound("Không tìm thấy hồ sơ");
+			}
+			var today = DateOnly.FromDateTime(DateTime.Now);
+			var age = DateTime.Now.Year - patient.DateOfBirdth.Year;
+			if (patient.DateOfBirdth > today.AddYears(-age)) age--;
+
+			//Phần check xem đã  nhập Tỉnh thành, quận huyện, phường xã hay chưa
+			if (patient.Province == 0)
+			{
+				ModelState.AddModelError("Province", "Yêu cầu nhập tỉnh / thành!");
+				return View(patient);
+			}
+			if (patient.District == 0)
+			{
+				ModelState.AddModelError("District", "Yêu cầu nhập quận / huyện!");
+				return View(patient);
+			}
+			if (patient.Ward == 0)
+			{
+				ModelState.AddModelError("Ward", "Yêu cầu nhập phường / xã!");
+				return View(patient);
+			}
+
+			//Check theo độ tuổi
+			if (age < 14)
+			{
+				ModelState.Remove(nameof(patient.PhoneNumber));
+				ModelState.Remove(nameof(patient.Job));
+				ModelState.Remove(nameof(patient.IdentifyNumber));
+
+				if (string.IsNullOrEmpty(patient.FMFullName))
+				{
+					ModelState.AddModelError("FMFullName", "FMFullName is required.");
+					return View(patient);
+				}
+
+				if (string.IsNullOrEmpty(patient.FMRelationship))
+				{
+					ModelState.AddModelError("FMRelationship", "FMRelationship is required.");
+					return View(patient);
+				}
+
+				if (string.IsNullOrEmpty(patient.FMEmail))
+				{
+					ModelState.AddModelError("FMEmail", "FMEmail is required.");
+					return View(patient);
+				}
+
+				if (string.IsNullOrEmpty(patient.FMPhoneNumber))
+				{
+					ModelState.AddModelError("FMPhoneNumber", "FMPhoneNumber is required.");
+					return View(patient);
+				}
+
+				patient.Job = "Còn nhỏ";
+			}
+			else
+			{ 
+				// Xóa family member info nếu age > 14 
+				patient.FMFullName = null;
+				patient.FMRelationship = null;
+				patient.FMEmail = null;
+				patient.FMPhoneNumber = null;
+			}
+
+			if (ModelState.IsValid)
+			{
+				patientRecord.FullName = patient.FullName;
+				patientRecord.DateOfBirth = patient.DateOfBirdth;
+				patientRecord.PhoneNumber = patient.PhoneNumber;
+				patientRecord.Gender = patient.Gender;
+				patientRecord.Job = patient.Job;
+				patientRecord.IdentityNumber = patient.IdentifyNumber;
+				patientRecord.EmailReceiver = patient.Email;
+				patientRecord.Province = patient.Province;
+				patientRecord.District = patient.District;
+				patientRecord.Ward = patient.Ward;
+				patientRecord.Address = patient.Address;
+				//===== Family Member Part ====
+				patientRecord.FMName = patient.FMFullName;
+				patientRecord.FMEmail = patient.FMEmail;
+				patientRecord.FMPhoneNumber = patient.FMPhoneNumber;
+				patientRecord.FMRelationship = patient.FMRelationship;
+
+				if (age >= 14)
+				{
+					patientRecord.FMName = null;
+					patientRecord.FMEmail = null;
+					patientRecord.FMPhoneNumber = null;
+					patientRecord.FMRelationship = null;
+				}
+
+
+				_context.PatientRecords.Update(patientRecord);
+				await _context.SaveChangesAsync();
+				return RedirectToAction("PatientRecordInProfile");
+			}
+			return View(patient);
+		}
+		#endregion
+
 	}
 }

@@ -39,21 +39,26 @@ namespace Dental_Clinic_System.Models.Data
 		public string? EmailReceiver { get; set; } = null;
 
 		[Column("Province", TypeName = "int")]
-		public int? Province { get; set; } = null!;
+		public int Province { get; set; } = default;
 
 		[Column("District", TypeName = "int")]
-		public int? District { get; set; } = null!;
+		public int District { get; set; } = default;
 
 		[Column("Ward", TypeName = "int")]
-		public int? Ward { get; set; } = null!;
+		public int Ward { get; set; } = default;
 
 		[Column("Address", TypeName = "nvarchar(50)")]
 		public string Address { get; set; } = null!;
+
+		[Column("PatientRecordStatus", TypeName = "nvarchar(50)")]
+		public string PatientRecordStatus { get; set; } = null!;
 
 		//Family Member------------------------------------------
 
 		[Column("FMName", TypeName = "nvarchar(75)")]
 		public string? FMName { get; set; } = null;
+		[Column("FMEmail", TypeName = "varchar(50)")]
+		public string? FMEmail { get; set; } = null;
 
 		[Column("FMRelationship", TypeName = "nvarchar(30)")]
 		public string? FMRelationship { get; set; } = null;

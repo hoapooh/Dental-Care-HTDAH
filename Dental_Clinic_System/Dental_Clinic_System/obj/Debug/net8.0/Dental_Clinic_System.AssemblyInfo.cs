@@ -14,19 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Dental_Clinic_System")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+622bdd4ebc657507e8b027046288a4265eb60e4a")]
-=======
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b1c1f283b253c1a9df574f410ce804d8329f400")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b8be600b17f419cfa030510ef5d4158151e52ea")]
->>>>>>> 04e1cde9d88058c1f9441da7ec0b7071868950c3
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b8be600b17f419cfa030510ef5d4158151e52ea")]
->>>>>>> Stashed changes
->>>>>>> 425538083cc9be2167880a40000a3f9195a36446
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3851a0a8f47a40f3247bdc02eeed3b541d5405a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Dental_Clinic_System")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Dental_Clinic_System")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

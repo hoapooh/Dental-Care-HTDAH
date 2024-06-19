@@ -163,13 +163,14 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             {
                 return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
             }
+            var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
             var appointments = await _context.Appointments
                                     .Include(a => a.Schedule).ThenInclude(s => s.TimeSlot)
                                     .Include(a => a.PatientRecords)
                                     .Include(a => a.Specialty)
-                                    .Where(a => a.Schedule.DentistID == 1)
+                                    .Where(a => a.Schedule.DentistID == dentist.ID)
                                     .ToListAsync();
-            var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
+            
             ViewBag.DentistAvatar = dentist?.Account.Image;
             ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
 

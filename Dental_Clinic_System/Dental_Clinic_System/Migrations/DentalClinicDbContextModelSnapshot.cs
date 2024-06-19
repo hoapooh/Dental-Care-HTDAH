@@ -357,13 +357,17 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("date")
                         .HasColumnName("DateOfBirth");
 
-                    b.Property<int?>("District")
+                    b.Property<int>("District")
                         .HasColumnType("int")
                         .HasColumnName("District");
 
                     b.Property<string>("EmailReceiver")
                         .HasColumnType("varchar(50)")
                         .HasColumnName("EmailReceiver");
+
+                    b.Property<string>("FMEmail")
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("FMEmail");
 
                     b.Property<string>("FMName")
                         .HasColumnType("nvarchar(75)")
@@ -401,15 +405,20 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnName("MemberCard")
                         .IsFixedLength();
 
+                    b.Property<string>("PatientRecordStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("PatientRecordStatus");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("varchar(11)")
                         .HasColumnName("PhoneNumber");
 
-                    b.Property<int?>("Province")
+                    b.Property<int>("Province")
                         .HasColumnType("int")
                         .HasColumnName("Province");
 
-                    b.Property<int?>("Ward")
+                    b.Property<int>("Ward")
                         .HasColumnType("int")
                         .HasColumnName("Ward");
 
@@ -422,7 +431,10 @@ namespace Dental_Clinic_System.Migrations
                         .IsUnique()
                         .HasFilter("[MemberCard] IS NOT NULL");
 
-                    b.ToTable("PatientRecord");
+                    b.ToTable("PatientRecord", t =>
+                        {
+                            t.HasCheckConstraint("CK_Valid_PatientRecord_Status", "PatientRecordStatus = N'Đã Xóa' OR PatientRecordStatus = N'Đang Tồn Tại'");
+                        });
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Review", b =>
@@ -671,7 +683,7 @@ namespace Dental_Clinic_System.Migrations
                     b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecords")
                         .WithMany("Appointments")
                         .HasForeignKey("PatientRecordID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .HasConstraintName("FK__Appointment__PatientRecord");
 
                     b.HasOne("Dental_Clinic_System.Models.Data.Schedule", "Schedule")

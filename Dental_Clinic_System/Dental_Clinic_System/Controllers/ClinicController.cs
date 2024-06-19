@@ -103,15 +103,16 @@ namespace Dental_Clinic_System.Controllers
                                     .ThenInclude(d => d.DentistSpecialties)
                                     .ThenInclude(ds => ds.Specialty)
 								.Include(s => s.Dentist)
-                                    .ThenInclude(d => d.Account)
 								.Where(s => s.DentistID == dentistID)
                                 .ToListAsync();
 
             var clinic = _context.Clinics.First(c => c.ID == clinicID);
-
+            var specialty = _context.Specialties.First(s => s.ID == specialtyID);
+            var dentist = _context.Dentists.Include(d => d.Account).First(d => d.ID == dentistID);
             ViewBag.clinicName = clinic.Name;
             ViewBag.clinicAddress = clinic.Address + ", " + await LocalAPIReverseString.GetWardNameById(clinic.District ?? 0, clinic.Ward?? 0) + ", " + await LocalAPIReverseString.GetDistrictNameById(clinic.Province ?? 0, clinic.District ?? 0) + ", " + await LocalAPIReverseString.GetProvinceNameById(clinic.Province ?? 0);
-
+            ViewBag.dentistName = dentist.Account.LastName + dentist.Account.FirstName;
+            ViewBag.specialtyName = specialty.Name;
             ViewBag.clinicID = clinicID;
 			ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;

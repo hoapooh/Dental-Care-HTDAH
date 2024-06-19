@@ -106,7 +106,7 @@
 				</a>
 				@if (patientRecordAmount < 10)
 				{
-					<a asp-controller="patientrecord" asp-action="ShowFormCreatingNewPatientRecord">
+					<a asp-controller="patientrecord" asp-action="ShowFormCreatingNewPatientRecord" asp-route-returnUrl="/patientrecord/patientrecord?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID&dentistID=@ViewBag.dentistID&scheduleID=@ViewBag.scheduleID">
 						<button type="button" class="add-record-btn">
 							<i class="fa-solid fa-user-plus"></i> Thêm hồ sơ
 						</button>

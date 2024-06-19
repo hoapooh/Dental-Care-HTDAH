@@ -290,8 +290,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFJlY29yZFxDcmVhdGVOZXdQYXRpZW50UmVjb3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/PatientRecord/EditPatientRecord.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFJlY29yZFxFZGl0UGF0aWVudFJlY29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/PatientRecord/PatientRecord.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFJlY29yZFxQYXRpZW50UmVjb3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/PatientRecord/PatientRecordInProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFJlY29yZFxQYXRpZW50UmVjb3JkSW5Qcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/FPT/SUMMER_2024/SWP391/BackEnd_NotConflict/Dental-Care-HTDAH/Dental_Clinic_System/Dental_Clinic_System/Views/PatientRecord/PatientRecordPaymentChoosing.cshtml]

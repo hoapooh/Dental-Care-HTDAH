@@ -49,12 +49,12 @@
 						</li>
 						<li>
 							<i class="fa-solid fa-tooth"></i>
-							<div class="text"><span>Chuyên khoa: @Model.First().Dentist.DentistSpecialties?.FirstOrDefault(ds => ds.SpecialtyID == ViewBag.specialtyID)?.Specialty.Name</span></div>
+							<div class="text"><span>Chuyên khoa: @ViewBag.specialtyName</span></div>
 						</li>
 						<li>
 							<i class="fa-solid fa-stethoscope"></i>
 							<div class="text">
-								<span>Bác sĩ: @Model.First().Dentist?.Account?.LastName @Model.First().Dentist?.Account?.FirstName</span>
+								<span>Bác sĩ: @ViewBag.dentistName</span>
 							</div>
 						</li>
 					</ul>
@@ -137,6 +137,7 @@
 				//initialize mobiscroll calendar with the valid dates
 				mobiscroll.datepicker("#demo-single-day", {
 					controls: ["calendar", "timegrid"],
+					firstDay: 1,
 					min: current.setHours(current.getHours() + 4),
 					display: "inline",
 					touchUI: true,

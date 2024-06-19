@@ -63,7 +63,7 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.HasCheckConstraint("CK_Valid_Status_Appointment", "[AppointmentStatus] = 'Pending' OR [AppointmentStatus] = 'Canceled' OR [AppointmentStatus] = 'Approved' OR [AppointmentStatus] = 'Completed' OR [AppointmentStatus] = N'Chờ Xác Nhận' OR [AppointmentStatus] = N'Đã Hủy' OR [AppointmentStatus] = N'Đã Chấp Nhận' OR [AppointmentStatus] = N'Đã Khám'");
 
-				entity.HasOne(d => d.PatientRecords).WithMany(p => p.Appointments).IsRequired(false).HasConstraintName("FK__Appointment__PatientRecord").OnDelete(DeleteBehavior.Cascade);
+				entity.HasOne(d => d.PatientRecords).WithMany(p => p.Appointments).IsRequired(false).HasConstraintName("FK__Appointment__PatientRecord").OnDelete(DeleteBehavior.NoAction);
 
 				entity.HasOne(d => d.Schedule).WithOne(p => p.Appointments).IsRequired(true).HasConstraintName("FK__Appointment__Schedule").OnDelete(DeleteBehavior.NoAction);
 
@@ -126,6 +126,8 @@ namespace Dental_Clinic_System.Models.Data
 				entity.HasIndex(e => e.MemberCard).IsUnique();
 
 				entity.HasOne(d => d.Account).WithMany(p => p.PatientRecords).IsRequired(false).HasConstraintName("FK__Patient__Account").OnDelete(DeleteBehavior.Cascade);
+
+				entity.HasCheckConstraint("CK_Valid_PatientRecord_Status", "PatientRecordStatus = N'Đã Xóa' OR PatientRecordStatus = N'Đang Tồn Tại'");
 			});
 
 			modelBuilder.Entity<Review>(entity =>
@@ -175,6 +177,7 @@ namespace Dental_Clinic_System.Models.Data
 			modelBuilder.Entity<TimeSlot>(entity =>
 			{
 				entity.HasKey(e => e.ID).HasName("PK_TimeSlot");
+
 				entity.Property(e => e.ID).ValueGeneratedOnAdd();
 			});
 
