@@ -20,19 +20,22 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			_context = context;
 		}
 
-		//===================LIST ACCOUNT===================
-		[Route("ListClinic")]
+        #region Show List Clinic
+        //===================LIST CLINIC===================
+        [Route("ListClinic")]
 		public async Task<IActionResult> ListClinic()
 		{
 			//Lấy dữ liệu từ cơ sở dữ liệu
 			var clinics = await (from clinic in _context.Clinics
 								 join account in _context.Accounts
 								 on clinic.ManagerID equals account.ID
+								 
 								 where account.Role == "Quản lý" && clinic.ClinicStatus == "Hoạt động"
 								 select new ManagerClinicVM
 								 {
 									 ClinicName = clinic.Name,
-									 Address = clinic.Address,
+									 //Address = clinic.Address,
+									 Province = clinic.Province,
 									 Image = clinic.Image,
 									 Id = clinic.ID,
 									 ManagerName = account.LastName + " " + account.FirstName
@@ -40,8 +43,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View(clinics);
 		}
+		#endregion
 
-
+		#region Tìm kiếm phòng khám (Search)
 		//===================TÌM KIẾM===================
 		[Route("SearchClinic")]
 		public async Task<IActionResult> SearchClinic(string search)
@@ -81,7 +85,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View(nameof(ListClinic), clinics);
 		}
+		#endregion
 
+		#region Thêm phòng khám (ADD)
 		//===================THÊM PHÒNG KHÁM===================
 		[HttpGet]
 		[Route("CreateClinic")]
@@ -202,7 +208,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			//return BadRequest(errorMessage);
 			return View(model);
 		}
+		#endregion
 
+		#region Chỉnh sửa (Edit Clinic)
 		//===================CHỈNH SỬA PHÒNG KHÁM===================
 		[HttpGet]
 		[Route("EditClinic/{id}")]
@@ -324,9 +332,11 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			//return BadRequest(errorMessage);
 			return View(model);
 		}
+		#endregion
 
-        //===================XÓA PHÒNG KHÁM===================
-        [Route("HiddenClinic")]
+		#region Ẩn phòng khám (Delete)
+		//===================XÓA PHÒNG KHÁM===================
+		[Route("HiddenClinic")]
         public async Task<IActionResult> HiddenClinic(string name, string status)
         {
             var clinic = await _context.Clinics.SingleOrDefaultAsync(c => c.Name == name);
@@ -339,6 +349,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(ListClinic));
         }
+        #endregion
 
     }
 }

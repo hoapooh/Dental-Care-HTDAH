@@ -13,6 +13,11 @@
 	.form-modal-styles {
 		width: 70%;
 	}
+
+	.sidebar .nav-item a.Quan_ly_phong_kham {
+		color: #fff;
+		background: #4880ff;
+	}
 </style>
 
 
@@ -78,13 +83,15 @@
 				<input type="text" name="Address" id="addrSpecialty" class="form-control" />
 				<span asp-validation-for="Address" class="text-danger"></span>
 			</div>
+
 			<div class="clinic-image col-md-12">
-				<label>Hình ảnh</label>
-				<img src="@Model.Image" alt="" style="max-width: 300px; max-height: 300px;" />
-                <input type="file" id="fileInput" class="form-control" />
-				<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />
-				<span asp-validation-for="Image" class="text-danger"></span>
-            </div>
+			<label>Hình ảnh</label>
+			<img src="@Model.Image" alt="" style="max-width: 300px; max-height: 300px;" />
+			<input type="file" id="fileInput" class="form-control" />
+			<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />
+			<span asp-validation-for="Image" class="text-danger"></span>
+			</div>
+
 			<div class="clinic-desc col-md-12">
 				<label>Mô tả phòng khám</label>
 				<div id="container">
@@ -93,8 +100,8 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
+
 		<div class="modal-footer">
 			<button type="button"
 					class="close-btn btn"

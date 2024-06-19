@@ -33,6 +33,11 @@
 		background: rgb(255, 66, 66); /* Nền đỏ */
 		color: white; /* Màu chữ trắng */
 	}
+
+	.sidebar .nav-item a.Quan_ly_tai_khoan {
+		color: #fff;
+		background: #4880ff;
+	}
 </style>
 
 
@@ -151,7 +156,7 @@
 						</a>
 
 						<!--DELETE-->
-						<form action="~/Admin/Account/HiddenAccountStatus" method="post" class="form-inline">
+						<form action="~/Admin/Account/HiddenAccountStatus" method="post" class="form-inline" onsubmit="return confirm('Bạn có chắc chắn muốn khóa tài khoản này không?');">
 							<input type="hidden" name="username" value="@account.Username" />
 							<input type="hidden" name="status" value="Bị khóa" />
 							<input type="hidden" name="role" value="@ViewBag.Role" />

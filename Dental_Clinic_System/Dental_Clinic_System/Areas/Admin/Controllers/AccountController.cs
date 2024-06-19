@@ -25,9 +25,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			_context = context;
 		}
 
-		//===================LIST ACCOUNT===================
-		//Hiển thị List Account với tùy chọn Parameter Role
-		[Route("ListAccount")]
+        #region Show List Account với tùy chọn Parameter Role
+        //===================LIST ACCOUNT===================
+        [Route("ListAccount")]
 		public async Task<IActionResult> ListAccount(string Role)
 		{
 			ViewBag.Role = Role;
@@ -56,7 +56,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View(accountList);
 		}
+		#endregion
 
+		#region Tìm kiếm (Search)
 		//===================TÌM KIẾM===================
 		[Route("SearchAccount")]
 		public async Task<IActionResult> SearchAccount(string keyword, string role)
@@ -92,7 +94,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View("ListAccount", accountList);
 		}
+		#endregion
 
+		#region Thêm tài khoản (Add Account)
 		//===================THÊM TÀI KHOẢN===================
 		[Route("AddAccount")]
 		[HttpPost]
@@ -143,7 +147,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(ListAccount), new { role });
 		}
+		#endregion
 
+		#region Chỉnh sửa (Edit Account)
 		//===================CHỈNH SỬA TÀI KHOẢN===================
 
 		[Route("EditAccount/{id}")]
@@ -225,7 +231,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			ViewBag.Role = role;
             return View(model);
 		}
+		#endregion
 
+		#region Tài khoản bị khóa (Delete)
 		//===================KHÓA TÀI KHOẢN===================
 		[Route("HiddenAccountStatus")]
 		[HttpPost]
@@ -240,11 +248,11 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			}
 			return RedirectToAction(nameof(ListAccount), new { Role = role });
 		}
+        #endregion
 
-
-
-		//================================LIST TÀI KHOẢN BỊ KHÓA================================
-		[Route("ListLockedAccount")]
+        //================================LIST TÀI KHOẢN BỊ KHÓA================================
+        #region Show List Account bị khóa
+        [Route("ListLockedAccount")]
 		public async Task<IActionResult> ListLockedAccount()
 		{
 			var lockedAccount = await _context.Accounts
@@ -264,9 +272,11 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View(lockedAccountList);
 		}
+        #endregion
 
-		//===================TÌM KIẾM TÀI KHOẢN BỊ KHÓA===================
-		[Route("SearchLockedAccount")]
+        #region Tìm kiêm trong List Account bị khóa
+        //===================TÌM KIẾM TÀI KHOẢN BỊ KHÓA===================
+        [Route("SearchLockedAccount")]
 		public async Task<IActionResult> SearchLockedAccount(string keyword)
 		{
 			//Nếu keyword rỗng, chuyển hướng đến ListLockedAccount
@@ -292,6 +302,21 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View(nameof(ListLockedAccount), accountLockedList);
 		}
+		#endregion
 
+		#region Bỏ Chặn
+		public async Task<IActionResult> UnlockAccount(int id)
+		{
+			var account = await _context.Accounts.FindAsync(id);
+
+			if(account != null && account.AccountStatus == "Bị khóa")
+			{
+				account.AccountStatus = "Hoạt động";
+				await _context.SaveChangesAsync();
+			}
+
+			return RedirectToAction(nameof(ListLockedAccount));
+		}
+		#endregion
 	}
 }
