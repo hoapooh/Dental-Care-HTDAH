@@ -10,16 +10,13 @@
     <None Include="Areas\Manager\Views\Clinics\Create.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Details.cshtml" />
-    <None Include="Areas\Manager\Views\Clinics\Edit - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Edit.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Index.cshtml" />
-    <None Include="Areas\Manager\Views\Dentists\Create - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Create.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Details.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Edit.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Index.cshtml" />
-    <None Include="Areas\Manager\Views\Schedules\Create - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Schedules\Create.cshtml" />
     <None Include="Areas\Manager\Views\Schedules\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Schedules\Details.cshtml" />

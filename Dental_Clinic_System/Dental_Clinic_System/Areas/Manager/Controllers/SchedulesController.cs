@@ -91,23 +91,10 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         //}
         public async Task<IActionResult> Create([Bind("DentistIDs, Dates, TimeSlots")] ScheduleVM schedule)
         {
-			var dentists = _context.Dentists
-						   .Join(_context.Accounts,
-								 dentist => dentist.AccountID,
-								 account => account.ID,
-								 (dentist, account) => new
-								 {
-									 DentistID = dentist.ID,
-									 FullName = account.LastName + " " + account.FirstName
-								 })
-						   .ToList();
-			ViewData["DentistID"] = new SelectList(dentists, "DentistID", "FullName", schedule.DentistIDs);
-			//----------------------------------------------------
-			List<DateOnly> dateList = ConvertStringToDateOnlyList(schedule.Dates);
-			//----
 			if (ModelState.IsValid)
             {
-                foreach (var dentist in schedule.DentistIDs)
+				List<DateOnly> dateList = ConvertStringToDateOnlyList(schedule.Dates);
+				foreach (var dentist in schedule.DentistIDs)
                 {
 					foreach (var date in dateList)
 					{
