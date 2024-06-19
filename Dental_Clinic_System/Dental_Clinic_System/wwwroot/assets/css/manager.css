@@ -1,4 +1,4 @@
-* {
+﻿* {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -56,7 +56,7 @@ input:focus {
 	align-items: center;
 	justify-content: center;
 	border: 1px solid #d4d4d4;
-	border-radius: 10px;
+	border-radius: 5px;
 	padding: 10px 7.5px;
 }
 
@@ -303,18 +303,19 @@ input:focus {
 	font-weight: 500;
 }
 
-.manager__management__clinic input,
-.manager__management__clinic textarea {
-	width: 100%;
-	font-size: 2rem;
-	margin-bottom: 20px;
-	padding: 5px 10px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-}
+	.manager__management__clinic input,
+	.manager__management__clinic textarea,
+	.manager__management__clinic select {
+		width: 100%;
+		font-size: 2rem;
+		margin-bottom: 10px;
+		padding: 5px 10px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+	}
 
 .manager__management__clinic input:not(#image) {
-	padding: 8px 10px;
+	padding: 5px 10px;
 }
 
 /* ========== RICHTEXT EDITOR =========== */
@@ -396,3 +397,68 @@ input:focus {
 .manager__management__add__schedule input {
 	padding: 8.5px 10px;
 }
+
+/* ============ LIST CHECK BOX - MUTISELECT ============ */
+.form-check,
+.form-modal-styles .modal-body .user-address .form-check {
+	display: flex;
+	align-items: center;
+	margin-left: 0;
+}
+
+/* .form-check-input {
+			margin-right: 10px;
+			font-size: 2rem;
+			font-weight: 500;
+		} */
+
+.form-check-label, .form-modal-styles .modal-body .user-address .form-check-label {
+	margin-bottom: 0;
+	font-size: 2rem;
+	font-weight: 500;
+}
+
+.form-check .form-check-input, .form-modal-styles .modal-body .user-address .form-check .form-check-input {
+	float: left;
+	margin-left: 0;
+}
+
+
+
+.form-check-input, .form-modal-styles .modal-body .user-address .form-check-input {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+	.form-check-input[type="checkbox"] {
+		appearance: none;
+		-webkit-appearance: none;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		cursor: pointer;
+		outline: none;
+	}
+
+		.form-check-input[type="checkbox"]:checked {
+			background-color: #007bff;
+			border-color: #007bff;
+		}
+
+			.form-check-input[type="checkbox"]:checked::before {
+				content: '✔';
+				display: block;
+				color: #fff;
+				font-size: 16px;
+				text-align: center;
+				width: 100%;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}

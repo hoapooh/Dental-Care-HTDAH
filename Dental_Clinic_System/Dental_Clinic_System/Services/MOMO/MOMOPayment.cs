@@ -20,7 +20,7 @@ namespace Dental_Clinic_System.Services.MOMO
         }
 
         [HttpPost]
-        public async Task<string> CreatePaymentURL(MOMOPaymentRequestModel model)
+        public async Task<MOMOPaymentResponseModel?> CreatePaymentURL(MOMOPaymentRequestModel model)
         {
             string endpoint = _configuration["MomoAPI:MomoApiUrl"];
             string partnerCode = _configuration["MomoAPI:PartnerCode"];
@@ -71,17 +71,16 @@ namespace Dental_Clinic_System.Services.MOMO
                 Console.WriteLine("JSON Response: " + responseString);
 
                 var responseObject = JsonConvert.DeserializeObject<MOMOPaymentResponseModel>(responseString);
-
                 if (responseObject != null && !string.IsNullOrEmpty(responseObject.payUrl))
                 {
-                    var paymentURL = responseObject.payUrl;
-                    return paymentURL;
+                    //var paymentURL = responseObject.payUrl;
+                    return responseObject;
                 }
                 else
                 {
-                    Console.WriteLine("Fail!!!");
+                    Console.WriteLine("Fail from MOMO Payment");
                     // Xử lý lỗi
-                    return "PaymentFail";
+                    return responseObject;
                 }
             }
         }
@@ -162,7 +161,7 @@ namespace Dental_Clinic_System.Services.MOMO
         }
 
         [HttpPost]
-        public async Task<MOMORefundResponseModel?> RefundPayment(long amount = 10000, long transId = 4057102283, string description = "")
+        public async Task<MOMORefundResponseModel?> RefundPayment(long amount, long transId, string description = "")
         {
             string endpoint = _configuration["MomoAPI:MomoApiRefundUrl"];
             string partnerCode = _configuration["MomoAPI:PartnerCode"];

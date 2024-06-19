@@ -8,8 +8,7 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
 		[Required(ErrorMessage = "Vui lòng nhập tên chuyên khoa.")]
 		[StringLength(50, ErrorMessage = "Tên không được vượt quá 50 ký tự.")]
-		[RegularExpression(@"^[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Tên chuyên khoa bắt đầu bằng chữ cái, và không chứa các ký tự đặc biệt.")]
-		public string Name { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
 		public string Image { get; set; } 
 

@@ -1,6 +1,4 @@
-﻿//=======================================QUẢN LÝ CHUYÊN KHOA=======================================
-
-using Dental_Clinic_System.Areas.Admin.Models;
+﻿using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Areas.Admin.ViewModels;
 using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Mvc;

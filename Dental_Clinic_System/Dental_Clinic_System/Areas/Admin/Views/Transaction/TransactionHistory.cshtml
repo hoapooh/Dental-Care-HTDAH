@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.TransactionVM>
+
+@{
+	ViewData["Title"] = "TransactionHistory";
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- account management header -->
+<div class="account__management__header">
+	<div class="title">Lịch sử giao dịch</div>
+	<div class="action-btn">
+		<!-- TÌM KIẾM -->
+		@* <form action="~/Admin/Account/SearchLockedAccount" method="get">
+			<input type="hidden" name="role" />
+			<div class="search__bar">
+				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
+			</div>
+		</form> *@
+
+	</div>
+</div>
+
+
+<table class="table table-striped mt-5" style="font-size: 1.6rem">
+	<thead>
+		<tr>
+			<th class="text-center">STT</th>
+			<th>Mã giao dịch</th>
+			<th class="text-center">Thời gian</th>
+			<th>Tên ngân hàng</th>
+			<th>Số tài khoản</th>
+			<th>Tổng tiền</th>
+			<th>Nội dung</th>
+			<th>Trạng thái</th>
+		</tr>
+	</thead>
+	<tbody id="myTableBody">
+		@if (Model != null && Model.Any())
+		{
+			int stt = 1;
+
+			@foreach (var transaction in Model)
+			{
+				<tr style="vertical-align: middle">
+					<td style="text-align: center">@stt</td>
+					<td>@transaction.TransactionCode</td>
+					<td style="text-align: center">@transaction.Date</td>
+					<td>@transaction.BankName</td>
+					<td>@transaction.BankAccountNumber</td>
+					<td>@transaction.TotalPrice</td>
+					<td>@transaction.Message</td>
+					<td>@transaction.Status</td>
+				</tr>
+				stt++;
+			}
+		}
+	</tbody>
+</table>
+
+
+<!-- ========== PAGINATION  ========== -->
+<ul class="pagination" id="pagination">
+</ul>

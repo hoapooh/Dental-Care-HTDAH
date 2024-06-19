@@ -15,18 +15,31 @@
             justify-content: space-around;
         }
 
-        .manager__management__clinic select {
-            font-size: 2rem;
-            padding: 8px 10px;
-            background: #FFFFF;
-        } 
+        .modal-footer {
+            gap: 5px;
+            padding: 0 10px;
+        }
+
+        .manager__management__clinic {
+            width: 90%;
+            margin: 0 auto;
+            --mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
+            border: 0;
+            box-shadow: var(--mdb-modal-box-shadow);
+            padding: 24px 60px !important; /* Reduced padding for top/bottom and left/right */
+            border-radius: 10px; /* Adjust this value to change the roundness of the corners */
+        }
     </style>
 }
-<div class="manager__management">
-    <div class="manager__management__header">
-        <div class="title">Quản lý phòng khám</div>
-    </div>
-    <form asp-action="Edit" class="manager__management__clinic row" id="uploadForm">
+
+<form asp-action="Edit" class="manager__management__clinic row" id="uploadForm">
+        <!--header -->
+        <div class="manager__management__header">
+            <div class="title">Thông tin phòng khám</div>
+        </div>
+        <br />
+        <!--body -->
+
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="ID" />
 
@@ -62,7 +75,7 @@
 												display: block;
 												max-width: 100%;
 												text-align: center;
-												border-radius: 10px;
+												border-radius: 5px;
                                             " />
                     </div>
                     <div class="preview-image col-md-6">
@@ -74,7 +87,7 @@
 												display: block;
 												max-width: 100%;
 												text-align: center;
-												border-radius: 10px;
+												border-radius: 5px;
                                             " />
                     </div>
                     
@@ -133,14 +146,13 @@
         <div class="col-md-6">
             <input asp-for="ManagerID" class="form-control" type="hidden" />
         </div>
-        <div class="col-md-12">
+        <div class="modal-footer">
             <button type="submit" class="btn">Lưu</button>
             <button type="reset" class="btn">Đặt lại</button>
         </div>
     </form>
-
+<br />
    
-</div>
 
 
 @section Scripts {
@@ -271,5 +283,4 @@
 
 }
 
-<div style="height: 20px;"></div>
 

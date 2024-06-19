@@ -4,6 +4,7 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 {
 	public class AddDentistVM
 	{
+		public List<int> SpecialtyIDs { get; set; } = new List<int>();
 		public string Username { get; set; }
 
 		public string Password { get; set; }
@@ -18,5 +19,7 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 		public string PhoneNumber { get; set; }
         public int DegreeID { get; set; }
         public string? Description { get; set; }
+
+
     }
 }

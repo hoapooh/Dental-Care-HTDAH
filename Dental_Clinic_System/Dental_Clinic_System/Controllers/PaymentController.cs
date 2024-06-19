@@ -15,7 +15,10 @@ using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Azure;
 using Microsoft.CodeAnalysis;
-
+using Microsoft.IdentityModel.Tokens;
+using Dental_Clinic_System.Services.EmailSender;
+using Microsoft.EntityFrameworkCore;
+using static Dental_Clinic_System.Services.VNPAY.VNPAYLibrary;
 namespace Dental_Clinic_System.Controllers
 {
     public class PaymentController : Controller
@@ -25,20 +28,21 @@ namespace Dental_Clinic_System.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly DentalClinicDbContext _context;
+        private readonly IEmailSenderCustom _emailSender;
 
-        public PaymentController(IVNPayment vnPayment, IMOMOPayment momoPayment, IHttpClientFactory httpClientFactory, IConfiguration config, DentalClinicDbContext context)
+        public PaymentController(IVNPayment vnPayment, IMOMOPayment momoPayment, IHttpClientFactory httpClientFactory, IConfiguration config, DentalClinicDbContext context, IEmailSenderCustom emailSender)
         {
             _vnPayment = vnPayment;
             _httpClientFactory = httpClientFactory;
             _configuration = config;
             _context = context;
             _momoPayment = momoPayment;
-
+            _emailSender = emailSender;
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
         [HttpPost]
-        public async Task<IActionResult> ProcessCheckout(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit, string paymentMethod)
+        public async Task<IActionResult> ProcessCheckout(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit, string paymentMethod, int clinicID)
         {
             var patient = _context.PatientRecords.FirstOrDefault(p => p.ID == patientRecordID);
 
@@ -74,7 +78,19 @@ namespace Dental_Clinic_System.Controllers
                         SpecialtyID = specialtyID
                     };
                     TempData.SetObjectAsJson("MOMOPaymentRequestModel", momoModel);
-                    return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
+                    TempData["ScheduleIDTempData"] = scheduleID;
+                    TempData["SpecialtyIDTempData"] = specialtyID;
+                    TempData["PatientRecordIDTempData"] = patientRecordID;
+                    TempData["ClinicIDTempData"] = clinicID;
+
+                    var paymentResult = _momoPayment.CreatePaymentURL(momoModel).Result;
+                    if(!paymentResult.payUrl.IsNullOrEmpty())
+                    {
+                        return Redirect(paymentResult.payUrl);
+                    }
+                    ViewBag.ResultCode = paymentResult.errorCode;
+                    ViewBag.Message = paymentResult.localMessage;
+                    return View("PaymentResult");
             }
             return View();
         }
@@ -112,7 +128,7 @@ namespace Dental_Clinic_System.Controllers
                 SpecialtyID = 0
 
             };
-            return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result);
+            return Redirect(_momoPayment.CreatePaymentURL(momoModel).Result.payUrl ?? "paymentresult");
             //return Redirect(_vnPayment.CreatePaymentURL(HttpContext, vnpayModel));
         }
 
@@ -123,9 +139,13 @@ namespace Dental_Clinic_System.Controllers
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
-        public IActionResult PaymentInvoice()
+        public IActionResult PaymentInvoice(Appointment specialtySchedulePatientRecord, Transaction transaction, int clinicID)
         {
-            return View();
+            ViewBag.specialtySchedulePatientRecord = specialtySchedulePatientRecord;
+            ViewBag.transaction = transaction;
+			ViewBag.clinic = _context.Clinics.FirstOrDefault(c => c.ID == clinicID);
+
+			return View();
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
@@ -211,10 +231,10 @@ namespace Dental_Clinic_System.Controllers
             string secretKey = _configuration["MomoAPI:SecretKey"];
             
             string signatureCheck = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
-            //string signatureFromRequest = signatureJSON.Signature;
             string signatureFromRequest = signatureCheck;
-            Console.WriteLine($"Signature Check : {signatureCheck}");
-            Console.WriteLine($"Signature from Request: {signatureFromRequest}");
+
+            //Console.WriteLine($"Signature Check : {signatureCheck}");
+            //Console.WriteLine($"Signature from Request: {signatureFromRequest}");
 
             // Debug HERE if you get trouble LOL
             Console.WriteLine("----------------------------------------------------------------");
@@ -227,11 +247,23 @@ namespace Dental_Clinic_System.Controllers
                 return View("PaymentFail");
             }
 
-            if (resultCode == 0 && message == "")
+            if (resultCode == 0 && message == "Success")
             {
-                // Đang test nên tạm thời chưa lưu vào database
                 // Thanh toán thành công
                 // Lưu vào database
+
+                int scheduleID = (int)TempData["ScheduleIDTempData"];
+                int patientRecordID = (int)TempData["PatientRecordIDTempData"];
+                int specialtyID = (int)TempData["SpecialtyIDTempData"];
+                int clinicID = (int)TempData["ClinicIDTempData"];
+
+                if(_context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus == "Đã Đặt")
+                {
+                    await _momoPayment.RefundPayment(long.Parse(amount), long.Parse(transId), message);
+                    ViewBag.ResultCode = 999;
+                    ViewBag.Message = "Slot này đã có người đặt".ToUpper();
+                    return View("PaymentResult");
+                }
 
                 var response = new MOMOPaymentResponseModel
                 {
@@ -249,11 +281,17 @@ namespace Dental_Clinic_System.Controllers
 
                 // Truy xuất đối tượng từ TempData
                 var momoModel = TempData.GetObjectFromJson<MOMOPaymentRequestModel>("MOMOPaymentRequestModel");
+                //Console.WriteLine("==================================");
+                //await Console.Out.WriteLineAsync($"ScheduleID = {momoModel.ScheduleID}");
+                //Console.WriteLine($"ScheduleID from Tempdata = {(int)TempData["SchduleIDTempData"]}");
+                //Console.WriteLine($"Amount = {momoModel.Amount}");
+                //Console.WriteLine("==================================");
+
                 var appointment = new Appointment
                 {
-                    ScheduleID = momoModel.ScheduleID,
-                    PatientRecordID = momoModel.PatientRecordID,
-                    SpecialtyID = momoModel.SpecialtyID,
+                    ScheduleID = scheduleID,
+                    PatientRecordID = patientRecordID,
+                    SpecialtyID = specialtyID,
                     TotalPrice = momoModel.Amount,
                     CreatedDate = DateTime.Now,
                     AppointmentStatus = "Chờ Xác Nhận"
@@ -279,6 +317,17 @@ namespace Dental_Clinic_System.Controllers
                 _context.Transactions.Add(transaction);
                 _context.SaveChanges();
 
+                _context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus = "Đã Đặt";
+                _context.SaveChanges();
+
+				var specialtySchedulePatientRecord = await _context.Appointments.Include(s => s.Specialty).Include(sc => sc.Schedule).ThenInclude(t => t.TimeSlot).Include(p => p.PatientRecords).ThenInclude(a => a.Account).FirstOrDefaultAsync(a => a.ID == appointment.ID);
+
+                ViewBag.specialtySchedulePatientRecord = specialtySchedulePatientRecord;
+                ViewBag.transaction = transaction;
+                ViewBag.clinicID = clinicID;
+
+				await _emailSender.SendInvoiceEmailAsync(appointment, transaction, clinicID, "Xác Nhận Phiếu Khám");
+
                 ViewBag.ResultCode = resultCode;
                 ViewBag.Message = message.ToUpper();
                 return View("PaymentResult");
@@ -286,6 +335,7 @@ namespace Dental_Clinic_System.Controllers
             else
             {
                 // Thanh toán thất bại
+                await Console.Out.WriteLineAsync("Fail from Payment Controller");
                 ViewBag.ResultCode = resultCode;
                 ViewBag.Message = message.ToUpper();
                 return View("PaymentResult");
@@ -439,111 +489,99 @@ namespace Dental_Clinic_System.Controllers
 
         #endregion
 
-
-
-        //private string ComputeHmacSha256(string message, string secretKey)
-        //{
-        //	var keyBytes = Encoding.UTF8.GetBytes(secretKey);
-        //	var messageBytes = Encoding.UTF8.GetBytes(message);
-
-        //	byte[] hashBytes;
-
-        //	using (var hmac = new HMACSHA256(keyBytes))
-        //	{
-        //		hashBytes = hmac.ComputeHash(messageBytes);
-        //	}
-
-        //	var hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-
-        //	return hashString;
-        //}
-
         // ----------------------------------------------------------------------- //
         // Re-Fun VNPAY START
 
-        //[HttpPost]
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //public async Task<IActionResult> ProcessRefund(string txnRef = "638536559852904902", long amount = 20000)
-        //{
-        //	var requestId = Guid.NewGuid().ToString();
-        //	var version = _configuration["VNPAY:Version"];
-        //	var command = _configuration["VNPAY:RefundCommand"];
-        //	var tmnCode = _configuration["VNPAY:TmnCode"];
-        //	var transactionType = "02"; // hoặc "03" cho hoàn trả một phần
-        //	var orderInfo = "Refund for order";
-        //	var transactionDate = DateTime.Now.ToString("yyyyMMddHHmmss");
-        //	var createBy = "admin";
-        //	var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
-        //	var ipAddr = HttpContext.Connection.RemoteIpAddress.ToString();
-        //	var secureHash = _configuration["VNPAY:HashSecret"];
+        [HttpPost]
+        [Authorize(Roles = "Bệnh Nhân")]
+        public async Task<IActionResult> ProcessRefund(string txnRef = "638543936617919359", int amount = 50000)
+        {
+            var requestId = DateTime.Now.Ticks.ToString();
+            var version = _configuration["VNPAY:Version"];
+            var command = _configuration["VNPAY:RefundCommand"];
+            var tmnCode = _configuration["VNPAY:TmnCode"];
+            var transactionType = "02"; // hoặc "03" cho hoàn trả một phần
+            var orderInfo = "Refund for order";
+            var transactionDate = "20240619113528";
+            var transactionNo = "";
+            var amounta = (amount * 100);
+			var createBy = "admin";
+            var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var ipAddr = Utils.GetIpAddress(HttpContext);
+            var secureHash = _configuration["VNPAY:HashSecret"];
 
-        //	// Tạo chuỗi dữ liệu để tính checksum
-        //	string data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}|{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
+            // Tạo chuỗi dữ liệu để tính checksum
+            string data = $"{requestId}|{version}|{command}|{tmnCode}|{transactionType}|{txnRef}|{amount}|{transactionNo}|{transactionDate}|{createBy}|{createDate}|{ipAddr}|{orderInfo}";
 
-        //	// Tính checksum
-        //	string secureHashed = ComputeSHA256Hash(secureHash, data);
+            // Tính checksum
+            string secureHashed = ComputeSHA256Hash(secureHash, data);
 
-        //	var jsonData = new JObject
-        //	{
-        //		["vnp_RequestId"] = requestId,
-        //		["vnp_Version"] = version,
-        //		["vnp_Command"] = command,
-        //		["vnp_TmnCode"] = tmnCode,
-        //		["vnp_TransactionType"] = transactionType,
-        //		["vnp_TxnRef"] = txnRef,
-        //		["vnp_Amount"] = amount.ToString(),
-        //		["vnp_OrderInfo"] = orderInfo,
-        //		["vnp_TransactionDate"] = transactionDate,
-        //		["vnp_CreateBy"] = createBy,
-        //		["vnp_CreateDate"] = createDate,
-        //		["vnp_IpAddr"] = ipAddr,
-        //		["vnp_SecureHash"] = secureHashed
-        //	};
+            var jsonData = new
+            {
+                vnp_RequestId = requestId,
+                vnp_Version = version,
+               vnp_Command = command,
+                vnp_TmnCode = tmnCode,
+                vnp_TransactionType = transactionType,
+                vnp_TxnRef = txnRef,
+                vnp_Amount = amounta,
+                vnp_OrderInfo = orderInfo,
+                vnp_TransactionNo = transactionNo,
+                vnp_TransactionDate = transactionDate,
+                vnp_CreateBy = createBy,
+                vnp_CreateDate = createDate,
+                vnp_IpAddr = ipAddr,
+                vnp_SecureHash = secureHashed
+            };
 
-        //	var jsonString = JsonConvert.SerializeObject(jsonData);
-        //	var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-        //	Console.WriteLine("JSON STRING: " + jsonString);
+            var jsonString = JsonConvert.SerializeObject(jsonData);
+            var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            Console.WriteLine("JSON STRING: " + jsonString);
 
-        //	using (var client = _httpClientFactory.CreateClient())
-        //	{
-        //		var response = await client.PostAsync(_configuration["VNPAY:RefundURL"], content);
-        //		var responseString = await response.Content.ReadAsStringAsync();
-        //		return ProcessResponse(responseString);
-        //	}
-        //}
+            using (var client = _httpClientFactory.CreateClient())
+            {
+                //var response = await client.PostAsync(_configuration["VNPAY:RefundAPI"], content);
+                var response = await client.PostAsync(_configuration["VNPAY:RefundURL"], content);
+                var responseString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("JSON Response: " + responseString);
+                return RedirectToAction("index", "home");
+				//return ProcessResponse(responseString);
+            }
+        }
 
 
 
-        //[Authorize(Roles = "Bệnh Nhân")]
-        //private IActionResult ProcessResponse(string responseString)
-        //{
-        //	var jsonResponse = JObject.Parse(responseString);
-        //	Console.WriteLine(jsonResponse.ToString());
-        //	var responseCode = jsonResponse["vnp_ResponseCode"].ToString();
-        //	Console.WriteLine($"Response Code = {responseCode}");
-        //	if (responseCode == "00")
-        //	{
-        //		return RedirectToAction("RefundSuccess");
-        //	}
-        //	else
-        //	{
-        //		return RedirectToAction("RefundFail");
-        //	}
-        //}
+        [Authorize(Roles = "Bệnh Nhân")]
+        private IActionResult ProcessResponse(string responseString)
+        {
+			//var jsonResponse = JObject.Parse(responseString);
+			var jsonResponse = JsonConvert.DeserializeObject<VNPaymentRefundRequestModel>(responseString);
+			//Console.WriteLine("JSON Response: " + responseString);
+			var responseCode = jsonResponse.OrderInfo;
+			Console.WriteLine($"Response Code = {responseCode}");
+            if (responseCode == "00")
+            {
+                return RedirectToAction("RefundSuccess");
+            }
+            else
+            {
+                return RedirectToAction("RefundFail");
+            }
+        }
 
-        //public static string ComputeSHA256Hash(string secretKey, string rawData)
-        //{
-        //	using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
-        //	{
-        //		byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-        //		StringBuilder builder = new StringBuilder();
-        //		for (int i = 0; i < bytes.Length; i++)
-        //		{
-        //			builder.Append(bytes[i].ToString("x2"));
-        //		}
-        //		return builder.ToString();
-        //	}
-        //}
+        public static string ComputeSHA256Hash(string secretKey, string rawData)
+        {
+            using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
+            {
+                byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
 
 
         //[Authorize(Roles = "Bệnh Nhân")]

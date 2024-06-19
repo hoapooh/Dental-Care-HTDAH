@@ -10,6 +10,7 @@ using Dental_Clinic_System.Areas.Manager.ViewModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
+using Google.Apis.PeopleService.v1.Data;
 
 namespace Dental_Clinic_System.Areas.Manager.Controllers
 {
@@ -88,43 +89,35 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         //    ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID", schedule.TimeSlotID);
         //    return View(schedule);
         //}
-        public async Task<IActionResult> Create([Bind("DentistID, Dates, TimeSlots")] ScheduleVM schedule)
+        public async Task<IActionResult> Create([Bind("DentistIDs, Dates, TimeSlots")] ScheduleVM schedule)
         {
-			var dentists = _context.Dentists
-						   .Join(_context.Accounts,
-								 dentist => dentist.AccountID,
-								 account => account.ID,
-								 (dentist, account) => new
-								 {
-									 DentistID = dentist.ID,
-									 FullName = account.LastName + " " + account.FirstName
-								 })
-						   .ToList();
-			ViewData["DentistID"] = new SelectList(dentists, "DentistID", "FullName", schedule.DentistID);
-			//----------------------------------------------------
-			List<DateOnly> dateList = ConvertStringToDateOnlyList(schedule.Dates);
-            //----
 			if (ModelState.IsValid)
             {
-                foreach (var date in dateList)
+				List<DateOnly> dateList = ConvertStringToDateOnlyList(schedule.Dates);
+				foreach (var dentist in schedule.DentistIDs)
                 {
-                    foreach (var slot in schedule.TimeSlots)
-                    {
-                        var existSchedule = await _context.Schedules.FirstOrDefaultAsync(
-                            a => a.DentistID == schedule.DentistID && a.Date == date && a.TimeSlotID == slot);
-                        if (existSchedule == null)
-                        {
-                            var newSchedule = new Schedule
-                            {
-                                DentistID = schedule.DentistID,
-                                Date = date,
-                                TimeSlotID = slot,
-                                ScheduleStatus = "Còn Trống"
-							};
-							_context.Add(newSchedule);
+					foreach (var date in dateList)
+					{
+						foreach (var slot in schedule.TimeSlots)
+						{
+							var existSchedule = await _context.Schedules.FirstOrDefaultAsync(
+								a => a.DentistID == dentist && a.Date == date && a.TimeSlotID == slot);
+							if (existSchedule == null)
+							{
+								var newSchedule = new Schedule
+								{
+									//DentistID = schedule.DentistIDs,
+                                    DentistID = dentist,
+									Date = date,
+									TimeSlotID = slot,
+									ScheduleStatus = "Còn Trống"
+								};
+								_context.Add(newSchedule);
+							}
 						}
 					}
-                }
+				}
+                
                 //------------
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -146,21 +139,32 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		}
 
 		// GET: Manager/Schedules/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+		public async Task<IActionResult> Edit(int? dentistId, DateTime? date)
         {
-            if (id == null)
+            if (dentistId == null || date == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedules.FindAsync(id);
-            if (schedule == null)
-            {
-                return NotFound();
-            }
-            ViewData["DentistID"] = new SelectList(_context.Dentists, "ID", "ID", schedule.DentistID);
-            ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID", schedule.TimeSlotID);
-            return View(schedule);
+            var scheduleSubList = _context.Schedules.Include(s => s.Dentist).ThenInclude(d => d.Account).Include(s => s.TimeSlot).AsQueryable();
+            scheduleSubList = scheduleSubList.Where(p =>
+                p.DentistID == dentistId && p.Date == DateOnly.FromDateTime(date.Value));
+
+            var dentist = await _context.Dentists.Include(d => d.Account).FirstOrDefaultAsync(m => m.ID == dentistId);
+			ViewBag.DentistName = dentist.Account.LastName + " " + dentist.Account.FirstName;
+            ViewBag.Date = DateOnly.FromDateTime(date.Value);
+
+			return View(await scheduleSubList.ToListAsync());
+			
+			//-----
+			//var schedule = await _context.Schedules.FindAsync(dentistId);
+   //         if (schedule == null)
+   //         {
+   //             return NotFound();
+   //         }
+   //         ViewData["DentistID"] = new SelectList(_context.Dentists, "ID", "ID", schedule.DentistID);
+   //         ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID", schedule.TimeSlotID);
+   //         return View(schedule);
         }
 
         // POST: Manager/Schedules/Edit/5
@@ -209,7 +213,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             }
 
             var schedule = await _context.Schedules
-                .Include(s => s.Dentist)
+                .Include(s => s.Dentist).ThenInclude(d => d.Account)
                 .Include(s => s.TimeSlot)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (schedule == null)
@@ -225,14 +229,19 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var schedule = await _context.Schedules.FindAsync(id);
+            var schedule = await _context.Schedules
+				.Include(s => s.Dentist).ThenInclude(d => d.Account)
+				.Include(s => s.TimeSlot)
+				.FirstOrDefaultAsync(m => m.ID == id);
+			var denId = schedule.Dentist.ID;
+            var date = schedule.Date;
             if (schedule != null)
             {
                 _context.Schedules.Remove(schedule);
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Edit", new { dentistId = denId, date = date });
         }
 
         private bool ScheduleExists(int id)

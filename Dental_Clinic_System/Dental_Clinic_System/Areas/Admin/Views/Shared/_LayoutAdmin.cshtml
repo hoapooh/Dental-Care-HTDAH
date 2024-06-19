@@ -18,9 +18,9 @@
 		  crossorigin="anonymous" />
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
-	<link rel="stylesheet" 
-		href="https://kit.fontawesome.com/53f42380b0.css" 
-		crossorigin="anonymous">
+	<link rel="stylesheet"
+		  href="https://kit.fontawesome.com/53f42380b0.css"
+		  crossorigin="anonymous">
 	<link rel="stylesheet" href="~/assets/css/sidebar.css" />
 	<link rel="stylesheet" href="~/assets/css/headerAd.css" />
 	<link rel="stylesheet" href="~/assets/css/accountDash.css" />
@@ -34,18 +34,7 @@
 		@Html.Partial("_AdminSideBar")
 
 		<div class="container-fluid" style="width: 85%; padding: 0">
-			<nav class="nav__header d-flex flex-row justify-content-end">
-				<a href="#!">
-					<div class="d-flex align-items-center nav__header__profile">
-						<img src="~/assets/images/avatar.jpg" alt="" />
-						<p>
-							<span>Hoapooh</span> <br />
-							Admin
-						</p>
-						<i class="bx bx-chevron-down-circle"></i>
-					</div>
-				</a>
-			</nav>
+			@Html.Partial("_AdminAvatar")
 			<div class="account__management">
 
 				@RenderBody()
@@ -71,9 +60,9 @@
 	<script src="~/assets/js/pagination-clinic.js"></script>
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-	
 
-	
+
+
 
 </body>
 </html>

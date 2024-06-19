@@ -10,15 +10,18 @@
     <None Include="Areas\Manager\Views\Clinics\Create.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Details.cshtml" />
-    <None Include="Areas\Manager\Views\Clinics\Edit - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Edit.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Index.cshtml" />
-    <None Include="Areas\Manager\Views\Dentists\Create - Copy.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Create.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Details.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Edit.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Index.cshtml" />
+    <None Include="Areas\Manager\Views\Schedules\Create.cshtml" />
+    <None Include="Areas\Manager\Views\Schedules\Delete.cshtml" />
+    <None Include="Areas\Manager\Views\Schedules\Details.cshtml" />
+    <None Include="Areas\Manager\Views\Schedules\Edit.cshtml" />
+    <None Include="Areas\Manager\Views\Schedules\Index.cshtml" />
     <None Include="Areas\Manager\Views\Service\Create.cshtml" />
     <None Include="Areas\Manager\Views\Service\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Service\Details.cshtml" />
@@ -369,6 +372,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="ZeroBounce.SDK" Version="1.3.2" />
     <PackageReference Include="ZXing.Net" Version="0.16.9" />

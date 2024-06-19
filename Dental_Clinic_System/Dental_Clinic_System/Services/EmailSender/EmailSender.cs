@@ -153,10 +153,28 @@ namespace Dental_Clinic_System.Services.EmailSender
             }
         }
 
-        public async Task SendInvoiceEmailAsync(string email, string subject, string message)
+        public async Task SendInvoiceEmailAsync(Appointment appointment, Transaction transaction, int clinicID, string subject)
         {
+            var clinic = _context.Clinics.FirstOrDefaultAsync(c => c.ID == clinicID).Result;
 
-            string htmlMessage = @"
+            var specialtySchedulePatientRecord = appointment;
+
+            var toEmail = specialtySchedulePatientRecord?.PatientRecords?.EmailReceiver ?? specialtySchedulePatientRecord?.PatientRecords?.Account?.Email;
+
+            try
+            {
+                var smtpClient = new SmtpClient(_configuration["Email:Smtp:Host"])
+                {
+                    Port = int.Parse(_configuration["Email:Smtp:Port"]),
+                    Credentials = new NetworkCredential(_configuration["Email:Smtp:Username"], _configuration["Email:Smtp:Password"]),
+                    EnableSsl = true,
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_configuration["Email:FromAddress"], _configuration["Email:FromName"]),
+                    Subject = subject,
+                    Body = $@"
 <html>
 <head>
     <meta charset='UTF-8' />
@@ -173,11 +191,11 @@ namespace Dental_Clinic_System.Services.EmailSender
         <tr>
             <td style='padding: 20px 0; text-align: center;'>
                 <h1 style='font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;'>PHIẾU KHÁM BỆNH</h1>
-                <p style='font-size: 14px; font-weight: 700; margin-bottom: 5px;'>Nha khoa Thẩm Mỹ Quốc Tế New Gate</p>
-                <p style='font-size: 13px; font-weight: 300; color: #3e3e3e;'>218 Tân Hương, Tân Quý, Tân Phú, Thành phố Hồ Chí Minh</p>
+                <p style='font-size: 26px; font-weight: 700; margin-bottom: 5px;'>{clinic?.Name}</p>
+                <p style='font-size: 20px; font-weight: 300; color: #3e3e3e;'>{clinic?.Address}</p>
                 <h2 style='font-size: 1.4rem; margin-bottom: 10px;'>Mã phiếu</h2>
                 <div class='barcode' style='text-align: center;'>
-                   <img src='https://barcodeapi.org/api/code128/T240611NUBLY2' alt='Barcode' style='max-width: 100%; height: auto;'>
+                   <img src='https://barcodeapi.org/api/code128/{transaction?.MedicalReportID}' alt='Barcode' style='max-width: 100%; height: auto;'>
                 </div>
             </td>
         </tr>
@@ -192,27 +210,27 @@ namespace Dental_Clinic_System.Services.EmailSender
         <tr>
             <td style='padding: 20px 0; text-align: center;'>
                 <div style='color: #1376f8; font-size: 1.4rem; font-weight: 500;'>Giờ khám dự kiến</div>
-                <div style='font-size: 3.2rem; color: #1376f8; font-weight: 700; line-height: normal; margin-bottom: 2rem;'>08:30</div>
+                <div style='font-size: 3.2rem; color: #1376f8; font-weight: 700; line-height: normal; margin-bottom: 2rem;'>{appointment?.Schedule?.TimeSlot?.StartTime.ToString("HH:mm")}</div>
                 <table style='width: 100%; font-size: 1.3rem; padding: 0 20px;'>
                     <tr>
                         <td style='width: 50%; text-align: left;'>Mã phiếu:</td>
-                        <td style='text-align: right;'><b>T240611NUBLY2</b></td>
+                        <td style='text-align: right;'><b>{transaction?.MedicalReportID}</b></td>
                     </tr>
                     <tr>
                         <td style='text-align: left;'>Chuyên khoa:</td>
-                        <td style='text-align: right;'><b>Nha khoa</b></td>
+                        <td style='text-align: right;'><b>{specialtySchedulePatientRecord?.Specialty.Name}</b></td>
                     </tr>
                     <tr>
                         <td style='text-align: left;'>Ngày khám:</td>
-                        <td style='text-align: right; color: #1abc9c;'><b>dd/mm/yyyy</b></td>
+                        <td style='text-align: right; color: #1abc9c;'><b>{specialtySchedulePatientRecord?.Schedule?.Date.ToString("dd/MM/yyyy")}</b></td>
                     </tr>
                     <tr>
                         <td style='text-align: left;'>Giờ khám dự kiến:</td>
-                        <td style='text-align: right; color: #1abc9c;'><b>xx:xx</b></td>
+                        <td style='text-align: right; color: #1abc9c;'><b>{specialtySchedulePatientRecord?.Schedule?.TimeSlot?.StartTime.ToString("HH:mm")}</b></td>
                     </tr>
                     <tr>
                         <td style='text-align: left;'>Phí khám:</td>
-                        <td style='text-align: right;'><b>0 VND</b></td>
+                        <td style='text-align: right;'><b>{appointment?.TotalPrice} VND</b></td>
                     </tr>
                 </table>
             </td>
@@ -223,15 +241,11 @@ namespace Dental_Clinic_System.Services.EmailSender
                 <table style='width: 100%; font-size: 1.3rem; padding: 0 20px;'>
                     <tr>
                         <td style='width: 50%; text-align: left;'>Bệnh nhân:</td>
-                        <td style='text-align: right;'><b>AN PHÚC HOÀ</b></td>
+                        <td style='text-align: right;'><b>{specialtySchedulePatientRecord?.PatientRecords?.FullName.ToString()}</b></td>
                     </tr>
                     <tr>
                         <td style='text-align: left;'>Ngày sinh:</td>
-                        <td style='text-align: right;'><b>29/12/2004</b></td>
-                    </tr>
-                    <tr>
-                        <td style='text-align: left;'>Mã bệnh nhân:</td>
-                        <td style='text-align: right;'><b>??????????</b></td>
+                        <td style='text-align: right;'><b>{specialtySchedulePatientRecord?.PatientRecords?.DateOfBirth.ToString("dd/MM/yyyy")}</b></td>
                     </tr>
                 </table>
             </td>
@@ -250,7 +264,7 @@ namespace Dental_Clinic_System.Services.EmailSender
                 <div style='font-size: 1.3rem;'>
                     <div>Bản quyền thuộc về</div>
                     <div>
-                        <img style='width: 50%' src='https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.jpg?alt=media&token=30af9837-0908-4441-a4ea-d99031bc25ae' alt='DentalCare Logo' />
+                        <img style='width: 50%' src='https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=b98bc2f0-f603-4b85-bd1b-764d8679baf0' alt='DentalCare Logo' />
                     </div>
                 </div>
                 <div style='border-bottom: 2px dashed #f0f2f5; margin-top: 5px; padding-bottom: 30px; font-size: 1rem;'>Đặt lịch khám tại Bệnh viện - Phòng khám hàng đầu Việt Nam</div>
@@ -258,27 +272,11 @@ namespace Dental_Clinic_System.Services.EmailSender
         </tr>
     </table>
 </body>
-</html>";
-
-
-            try
-            {
-                var smtpClient = new SmtpClient(_configuration["Email:Smtp:Host"])
-                {
-                    Port = int.Parse(_configuration["Email:Smtp:Port"]),
-                    Credentials = new NetworkCredential(_configuration["Email:Smtp:Username"], _configuration["Email:Smtp:Password"]),
-                    EnableSsl = true,
-                };
-
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(_configuration["Email:FromAddress"], _configuration["Email:FromName"]),
-                    Subject = subject,
-                    Body = htmlMessage,
+</html>",
                     IsBodyHtml = true,
                 };
 
-                mailMessage.To.Add(email);
+                mailMessage.To.Add(toEmail);
 
                 // Optional: Add additional headers to improve deliverability
                 mailMessage.Headers.Add("X-Priority", "1");
@@ -286,11 +284,11 @@ namespace Dental_Clinic_System.Services.EmailSender
                 mailMessage.Headers.Add("Importance", "High");
 
                 await smtpClient.SendMailAsync(mailMessage);
-                _logger.LogInformation($"Email sent to {email} with subject {subject}");
+                _logger.LogInformation($"Email sent to {toEmail} with {subject}");
             }
             catch (SmtpException ex)
             {
-                _logger.LogError(ex, $"Error sending email to {email} with subject {subject}");
+                _logger.LogError(ex, $"Email did not send to {toEmail}");
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }

@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+<<<<<<< HEAD
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Security.Claims;
 using System.Security.Policy;
+=======
+using System.Security.Claims;
+>>>>>>> e3b9cedac4e8ad3df126b0c0ec8d85987e2d8a30
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -27,8 +31,13 @@ namespace Dental_Clinic_System.Controllers
 		[HttpGet]
 		public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string scheduleID)
 		{
+<<<<<<< HEAD
 			var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 			var username = claimsEmailValue;
+=======
+            var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var username = claimsEmailValue;
+>>>>>>> e3b9cedac4e8ad3df126b0c0ec8d85987e2d8a30
 			var patientRecord = await _context.PatientRecords
 										.Include(pr => pr.Account)
 										.Include(pr => pr.Appointments)
@@ -57,9 +66,23 @@ namespace Dental_Clinic_System.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CreateNewPatientRecord(PatientRecordVM patient, string? returnUrl)
 		{
+<<<<<<< HEAD
 			var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 			var user = _context.Accounts.FirstOrDefault(u => u.Email == claimsEmailValue);
 			if(user == null)
+=======
+            var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = _context.Accounts.FirstOrDefault(u => u.Email == claimsEmailValue);
+			if (user == null)
+			{
+                await Console.Out.WriteLineAsync("=========================================");
+                await Console.Out.WriteLineAsync("NULLLLLLLLLLLLLLLLLLLLLLLLLL");
+                await Console.Out.WriteLineAsync("===========================================================");
+
+            }
+            var age = DateTime.Now.Year - record.DateOfBirdth.Year;
+			if(age >= 14)
+>>>>>>> e3b9cedac4e8ad3df126b0c0ec8d85987e2d8a30
 			{
 				return NotFound("Không tìm thấy người dùng!!");
 			}
@@ -147,6 +170,7 @@ namespace Dental_Clinic_System.Controllers
 					FMPhoneNumber = patient.FMPhoneNumber,
 					FMRelationship = patient.FMRelationship
 
+<<<<<<< HEAD
 				};
 				await _context.PatientRecords.AddAsync(patientRecord);
 				await _context.SaveChangesAsync();
@@ -155,6 +179,15 @@ namespace Dental_Clinic_System.Controllers
 					return Redirect(returnUrl);
 				}
 				return RedirectToAction("PatientRecordInProfile");
+=======
+				 _context.PatientRecords.Add(patientrecord);
+				 await _context.SaveChangesAsync();
+                await Console.Out.WriteLineAsync("===========================================================");
+                await Console.Out.WriteLineAsync("Everything seem be like good!");
+                await Console.Out.WriteLineAsync("===========================================================");
+
+                return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang khác sau khi lưu thành công
+>>>>>>> e3b9cedac4e8ad3df126b0c0ec8d85987e2d8a30
 			}
 
 			return View(patient); // Trả lại view với các lỗi validation nếu có
