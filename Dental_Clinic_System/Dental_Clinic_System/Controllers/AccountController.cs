@@ -595,12 +595,24 @@ namespace Dental_Clinic_System.Controllers
                 DateOfBirth = dateOfBirth
 			};
 
-			var appointment = new Dictionary<string, object>
-			{
-                { "Appointment", await _context.Accounts.Include(p => p.PatientRecords).ThenInclude(a => a.Appointments).FirstOrDefaultAsync(u => u.Email == model.Email) }
-			};
+			//var appointment = new Dictionary<string, object>
+			//{
+   //             { "Appointment", await _context.Accounts.Include(p => p.PatientRecords).ThenInclude(a => a.Appointments).ThenInclude(s => s.Schedule).ThenInclude(t => t.TimeSlot).FirstOrDefaultAsync(u => u.Email == model.Email) }
+			//};
 
-			ViewBag.Appointment = appointment;
+            var account = await _context.Accounts
+       .Include(p => p.PatientRecords)
+       .ThenInclude(pr => pr.Appointments)
+       .ThenInclude(a => a.Schedule)
+       .ThenInclude(s => s.TimeSlot)
+       .Include(p => p.PatientRecords)
+       .ThenInclude(pr => pr.Appointments)
+       .ThenInclude(a => a.Specialty)
+       .FirstOrDefaultAsync(u => u.Email == model.Email);
+
+            var appointments = account?.PatientRecords.SelectMany(pr => pr.Appointments).ToList();
+
+            ViewBag.Appointment = appointments;
 
 			return View(model);
         }

@@ -1,7 +1,16 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\FPT\\SUMMER_2024\\SWP391\\BackEnd_NotConflict\\Dental-Care-HTDAH\\Dental_Clinic_System\\",
-  "Documents": [],
+  "WorkspaceRootPath": "G:\\My Project .NET\\Github - Team Clone\\Dental-Care-HTDAH\\Dental_Clinic_System\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\github - team clone\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|g:\\my project .net\\github - team clone\\dental-care-htdah\\dental_clinic_system\\dental_clinic_system\\controllers\\patientrecordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405A9A75-3E45-40FC-8B8B-9D932116970B}|Dental_Clinic_System\\Dental_Clinic_System.csproj|solutionrelative:dental_clinic_system\\controllers\\patientrecordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +18,53 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PaymentController.cs",
+              "DocumentMoniker": "G:\\My Project .NET\\Github - Team Clone\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\PaymentController.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Controllers\\PaymentController.cs",
+              "ToolTip": "G:\\My Project .NET\\Github - Team Clone\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\PaymentController.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\Controllers\\PaymentController.cs",
+              "ViewState": "AQIAAHwAAAAAAAAAAAAwwJAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T21:16:37.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PatientRecordController.cs",
+              "DocumentMoniker": "G:\\My Project .NET\\Github - Team Clone\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\PatientRecordController.cs",
+              "RelativeDocumentMoniker": "Dental_Clinic_System\\Controllers\\PatientRecordController.cs",
+              "ToolTip": "G:\\My Project .NET\\Github - Team Clone\\Dental-Care-HTDAH\\Dental_Clinic_System\\Dental_Clinic_System\\Controllers\\PatientRecordController.cs",
+              "RelativeToolTip": "Dental_Clinic_System\\Controllers\\PatientRecordController.cs",
+              "ViewState": "AQIAAK8AAAAAAAAAAAAkwLoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T21:09:21.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             },
             {
               "$type": "Bookmark",

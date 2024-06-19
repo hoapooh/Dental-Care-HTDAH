@@ -152,37 +152,37 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             return RedirectToAction("DentistDescription");
         }
 
-		#endregion
+        #endregion
 
-		#region Quản lý lịch đặt khám của bệnh nhân (Bản thử nghiệm và những dữ liệu quan trọng nữa)
+        #region Quản lý lịch đặt khám của bệnh nhân (Bản thử nghiệm và những dữ liệu quan trọng nữa)
 
-		[HttpGet]
-		public async Task<IActionResult> PatientAppointments()
-		{
-			var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
-			if (dentistAccountID == null)
-			{
-				return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
-			}
-			var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
-			var appointments = await _context.Appointments
-									.Include(a => a.Schedule).ThenInclude(s => s.TimeSlot)
-									.Include(a => a.PatientRecords)
-									.Include(a => a.Specialty)
-									.Where(a => a.Schedule.DentistID == dentist.ID)
-									.ToListAsync();
+        [HttpGet]
+        public async Task<IActionResult> PatientAppointments()
+        {
+            var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
+            if (dentistAccountID == null)
+            {
+                return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
+            }
 
-			ViewBag.DentistAvatar = dentist?.Account.Image;
-			ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
+            var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
+            var appointments = await _context.Appointments
+                                    .Include(a => a.Schedule).ThenInclude(s => s.TimeSlot)
+                                    .Include(a => a.PatientRecords)
+                                    .Include(a => a.Specialty)
+                                    .Where(a => a.Schedule.DentistID == dentist.ID)
+                                    .ToListAsync();
+            ViewBag.DentistAvatar = dentist?.Account.Image;
+            ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
 
-			ViewBag.Message = TempData["Message"];
-			return View("PatientAppointments", appointments);
-		}
-
-
+            ViewBag.Message = TempData["Message"];
+            return View("PatientAppointments", appointments);
+        }
 
 
-		[HttpPost]
+
+
+        [HttpPost]
         public async Task<IActionResult> ChangePatientAppointment(int appointmentID, string appointmentStatus)
         {
             var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
@@ -196,6 +196,13 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             _context.Update(appointment);
             await _context.SaveChangesAsync();
 
+            var schedule = await _context.Appointments.Include(s => s.Schedule).FirstOrDefaultAsync(a => a.ID == appointmentID);
+            if(appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
+            {
+                schedule.Schedule.ScheduleStatus = "Còn Trống";
+                await _context.SaveChangesAsync();
+            }
+
             // HERE
             #region Refund MOMO API
             if (appointment.AppointmentStatus == "Đã Khám")
@@ -207,10 +214,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 var amount = appointment.Transactions.FirstOrDefault()?.TotalPrice;
                 var bankName = appointment.Transactions.FirstOrDefault()?.BankName;
                 var fullName = appointment.Transactions.FirstOrDefault()?.FullName;
-                if (_momoPayment.RefundPayment((long)decimal.Parse(amount.ToString()), long.Parse(transactionCode.ToString()), "Hoàn tiền đặt cọc") != null)
+                if (_momoPayment.RefundPayment((long)decimal.Parse(amount.ToString()), long.Parse(transactionCode.ToString()), "") != null)
                 {
                     TempData["RefundMessage"] = "Hoàn tiền thành công";
-
 
                     var transaction = new Transaction
                     {

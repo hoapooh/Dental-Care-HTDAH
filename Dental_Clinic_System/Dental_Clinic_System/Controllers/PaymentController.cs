@@ -139,8 +139,13 @@ namespace Dental_Clinic_System.Controllers
         }
 
         [Authorize(Roles = "Bệnh Nhân")]
-        public IActionResult PaymentInvoice(Appointment specialtySchedulePatientRecord, Transaction transaction, int clinicID)
+        public async Task<IActionResult> PaymentInvoice(int appointmentID, Transaction transaction, int clinicID)
         {
+			var specialtySchedulePatientRecord = await _context.Appointments.Include(s => s.Specialty).Include(sc => sc.Schedule).ThenInclude(t => t.TimeSlot).Include(p => p.PatientRecords).ThenInclude(a => a.Account).FirstOrDefaultAsync(a => a.ID == appointmentID);
+
+            Console.WriteLine($"AppoinmentID = {appointmentID}");
+			Console.WriteLine($"aaaa = {specialtySchedulePatientRecord?.Specialty?.Name ?? "nullllll"}");
+
             ViewBag.specialtySchedulePatientRecord = specialtySchedulePatientRecord;
             ViewBag.transaction = transaction;
 			ViewBag.clinic = _context.Clinics.FirstOrDefault(c => c.ID == clinicID);
@@ -322,7 +327,7 @@ namespace Dental_Clinic_System.Controllers
 
 				var specialtySchedulePatientRecord = await _context.Appointments.Include(s => s.Specialty).Include(sc => sc.Schedule).ThenInclude(t => t.TimeSlot).Include(p => p.PatientRecords).ThenInclude(a => a.Account).FirstOrDefaultAsync(a => a.ID == appointment.ID);
 
-                ViewBag.specialtySchedulePatientRecord = specialtySchedulePatientRecord;
+                ViewBag.appoinmentID = appointment.ID;
                 ViewBag.transaction = transaction;
                 ViewBag.clinicID = clinicID;
 

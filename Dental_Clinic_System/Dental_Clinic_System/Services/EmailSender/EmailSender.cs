@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using ZXing.QrCode.Internal;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Services.EmailVerification;
+using System.Globalization;
 
 namespace Dental_Clinic_System.Services.EmailSender
 {
@@ -230,7 +231,7 @@ namespace Dental_Clinic_System.Services.EmailSender
                     </tr>
                     <tr>
                         <td style='text-align: left;'>Phí khám:</td>
-                        <td style='text-align: right;'><b>{appointment?.TotalPrice} VND</b></td>
+                        <td style='text-align: right;'><b>{string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment?.TotalPrice)}</b></td>
                     </tr>
                 </table>
             </td>

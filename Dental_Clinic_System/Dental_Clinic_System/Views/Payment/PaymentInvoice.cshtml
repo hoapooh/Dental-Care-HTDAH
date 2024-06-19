@@ -1,7 +1,9 @@
 ﻿@using Dental_Clinic_System.Helper
+@using System.Globalization
 
 @{
 	ViewData["Title"] = "PaymentInvoice";
+	var specialtySchedulePatientRecord = ViewBag.specialtySchedulePatientRecord as Dental_Clinic_System.Models.Data.Appointment;
 }
 
 <head>
@@ -37,7 +39,7 @@
 			</p>
 			<h2 class="sub__title text-center">Mã phiếu</h2>
 			<div class="barcode">
-				<img src="https://barcodeapi.org/api/code128/@ViewBag.transaction?.MedicalReportID" alt="Alternate Text" />
+				<img src="https://barcodeapi.org/api/code128/@ViewBag.transaction?.MedicalReportID" alt="Alternate Text" style="width: 100%" />
 			</div>
 			<div class="status text-center">Đặt khám thành công</div>
 		</div>
@@ -46,23 +48,23 @@
 		<div class="medicall__bill__time corner">
 			<div class="content">
 				<div class="sub__title text-center">Giờ khám dự kiến</div>
-				<div class="time text-center">@ViewBag.specialtySchedulePatientRecord.Schedule?.TimeSlot?.StartTime.ToString("HH:mm")</div>
+				<div class="time text-center">@specialtySchedulePatientRecord?.Schedule?.TimeSlot?.StartTime.ToString("HH:mm")</div>
 			</div>
 			<ul>
 				<li>
 					<span>Mã phiếu:</span> <span><b>@ViewBag.transaction?.MedicalReportID</b></span>
 				</li>
 				<li>
-					<span>Chuyên khoa:</span><span><b>@ViewBag.specialtySchedulePatientRecord?.Specialty?.Name</b></span>
+					<span>Chuyên khoa:</span><span><b>@specialtySchedulePatientRecord?.Specialty?.Name</b></span>
 				</li>
 				<li>
-					<span>Ngày khám:</span><span class="date__time"><b>@ViewBag.specialtySchedulePatientRecord?.Schedule?.Date.ToString("dd/MM/yyyy")</b></span>
+					<span>Ngày khám:</span><span class="date__time"><b>@specialtySchedulePatientRecord?.Schedule?.Date.ToString("dd/MM/yyyy")</b></span>
 				</li>
 				<li>
-					<span>Giờ khám dự kiến:</span><span class="date__time"><b>@ViewBag.specialtySchedulePatientRecord?.Schedule?.TimeSlot?.StartTime.ToString("HH:mm")</b></span>
+					<span>Giờ khám dự kiến:</span><span class="date__time"><b>@specialtySchedulePatientRecord?.Schedule?.TimeSlot?.StartTime.ToString("HH:mm")</b></span>
 				</li>
 				<li>
-					<span>Phí khám:</span><span><b>@ViewBag.specialtySchedulePatientRecord?.TotalPrice VND</b></span>
+					<span>Phí khám:</span><span><b>@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", @specialtySchedulePatientRecord?.TotalPrice) </b></span>
 				</li>
 			</ul>
 		</div>
@@ -71,10 +73,10 @@
 		<div class="medicall__bill__patient__info corner">
 			<ul>
 				<li>
-					<span>Bệnh nhân:</span><span><b>@ViewBag.specialtySchedulePatientRecord?.PatientRecords?.FullName</b></span>
+					<span>Bệnh nhân:</span><span><b>@specialtySchedulePatientRecord?.PatientRecords?.FullName</b></span>
 				</li>
 				<li>
-					<span>Ngày sinh:</span><span><b>@ViewBag.specialtySchedulePatientRecord?.PatientRecords?.DateOfBirth.ToString("dd/MM/yyyy")</b></span>
+					<span>Ngày sinh:</span><span><b>@specialtySchedulePatientRecord?.PatientRecords?.DateOfBirth.ToString("dd/MM/yyyy")</b></span>
 				</li>
 			</ul>
 		</div>
