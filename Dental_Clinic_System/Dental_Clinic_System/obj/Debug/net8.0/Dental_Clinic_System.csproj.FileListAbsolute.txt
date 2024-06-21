@@ -303,7 +303,11 @@ G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\De
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
@@ -333,7 +337,9 @@ G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\De
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.ProjectModel.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Protocol.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\NuGet.Versioning.dll
+G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\BouncyCastle.Crypto.dll
+G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\StackExchange.Redis.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.CodeDom.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.AttributedModel.dll
 G:\My Project .NET\Github - Team Clone\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\bin\Debug\net8.0\System.Composition.Convention.dll

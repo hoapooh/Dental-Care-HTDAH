@@ -595,20 +595,30 @@ namespace Dental_Clinic_System.Controllers
                 DateOfBirth = dateOfBirth
 			};
 
-			//var appointment = new Dictionary<string, object>
-			//{
-   //             { "Appointment", await _context.Accounts.Include(p => p.PatientRecords).ThenInclude(a => a.Appointments).ThenInclude(s => s.Schedule).ThenInclude(t => t.TimeSlot).FirstOrDefaultAsync(u => u.Email == model.Email) }
-			//};
+            //var appointment = new Dictionary<string, object>
+            //{
+            //             { "Appointment", await _context.Accounts.Include(p => p.PatientRecords).ThenInclude(a => a.Appointments).ThenInclude(s => s.Schedule).ThenInclude(t => t.TimeSlot).FirstOrDefaultAsync(u => u.Email == model.Email) }
+            //};
 
             var account = await _context.Accounts
-       .Include(p => p.PatientRecords)
-       .ThenInclude(pr => pr.Appointments)
-       .ThenInclude(a => a.Schedule)
-       .ThenInclude(s => s.TimeSlot)
-       .Include(p => p.PatientRecords)
-       .ThenInclude(pr => pr.Appointments)
-       .ThenInclude(a => a.Specialty)
-       .FirstOrDefaultAsync(u => u.Email == model.Email);
+    .Include(p => p.PatientRecords)
+        .ThenInclude(pr => pr.Appointments)
+            .ThenInclude(a => a.Schedule)
+                .ThenInclude(s => s.TimeSlot)
+    .Include(p => p.PatientRecords)
+        .ThenInclude(pr => pr.Appointments)
+            .ThenInclude(a => a.Specialty)
+    .Include(p => p.PatientRecords)
+        .ThenInclude(pr => pr.Appointments)
+        .ThenInclude(s => s.Schedule)
+            .ThenInclude(a => a.Dentist)
+            .ThenInclude(d => d.Account)// Include Dentist information
+            .Include(p => p.PatientRecords)
+            .ThenInclude(pr => pr.Appointments)
+        .ThenInclude(s => s.Schedule)
+            .ThenInclude(a => a.Dentist)
+            .ThenInclude(c => c.Clinic)
+    .FirstOrDefaultAsync(u => u.Email == model.Email);
 
             var appointments = account?.PatientRecords.SelectMany(pr => pr.Appointments).ToList();
 
@@ -772,14 +782,14 @@ namespace Dental_Clinic_System.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Bệnh Nhân")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Bệnh Nhân")]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordVM model)
         {
@@ -902,6 +912,27 @@ namespace Dental_Clinic_System.Controllers
         public IActionResult ForgotPasswordConfirmation()
         {
             return View();
+        }
+
+        [Authorize(Roles = "Bệnh Nhân")]
+        [HttpPost]
+        public async Task<IActionResult> CancelAppointment(int appointmentID, string appointmentStatus)
+        {
+            var appointment = await _context.Appointments.Include(a => a.Transactions).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
+            appointment.AppointmentStatus = appointmentStatus;
+
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+
+            var schedule = await _context.Appointments.Include(s => s.Schedule).FirstOrDefaultAsync(a => a.ID == appointmentID);
+            if (appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
+            {
+                schedule.Schedule.ScheduleStatus = "Còn Trống";
+                await _context.SaveChangesAsync();
+            }
+
+            TempData["message"] = "success";
+            return RedirectToAction("Profile", "Account");
         }
     }
 }

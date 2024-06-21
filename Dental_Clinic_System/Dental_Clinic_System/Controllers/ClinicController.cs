@@ -22,35 +22,44 @@ namespace Dental_Clinic_System.Controllers
             return View("clinic", clinics);
         }
 
-		[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> ClinicDetail(int clinicID)
         {
-			var clinic = _context.Clinics.FirstOrDefault(c => c.ID == clinicID);
-			return View(clinic);
+            var clinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == clinicID);
+            if (clinic == null)
+            {
+                return NotFound();
+            }
+            return View(clinic);
         }
 
-		[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> ChooseClinicSpecialty(int clinicID)
         {
-            var clinic = await _context.Clinics.
-                Include(c => c.Dentists).
-                    ThenInclude(a => a.Account).
-                Include(f => f.Dentists).
-                    ThenInclude(d => d.DentistSpecialties).
-                    ThenInclude(ds => ds.Specialty).
-                FirstOrDefaultAsync(c => c.ID == clinicID);
+            var clinic = await _context.Clinics
+                .Include(c => c.Dentists)
+                    .ThenInclude(d => d.Account)
+                .Include(c => c.Dentists)
+                    .ThenInclude(d => d.DentistSpecialties)
+                    .ThenInclude(ds => ds.Specialty)
+                .FirstOrDefaultAsync(c => c.ID == clinicID);
 
             if (clinic == null)
             {
                 return NotFound();
             }
 
-            var dentistAvailable = clinic.Dentists.Where(d => d.Account.AccountStatus == "Hoạt Động");
+            var dentistAvailable = clinic.Dentists
+                .Where(d => d.Account.AccountStatus == "Hoạt Động")
+                .ToList();
 
-            // Lọc ra các Specialty duy nhất
-            var specialties = dentistAvailable.SelectMany(d => d.DentistSpecialties).Select(ds => ds.Specialty).Distinct().ToList();
+            var specialties = dentistAvailable
+                .SelectMany(d => d.DentistSpecialties)
+                .Select(ds => ds.Specialty)
+                .Distinct()
+                .ToList();
 
-            ViewBag.ClinicID = clinicID; // Lưu clinicID vào ViewBag để sử dụng trong view
+            ViewBag.ClinicID = clinicID;
 
             return View("ClinicSpecialty", specialties);
         }
@@ -58,70 +67,78 @@ namespace Dental_Clinic_System.Controllers
         [HttpGet]
         public async Task<IActionResult> ChooseDentist(int clinicID, int specialtyID, string keysearch = null, int? degreeID = null, string gender = null)
         {
-            var dentists = await _context.Dentists
-                            .Include(d => d.Account)
-                            .Include(d => d.Clinic)
-                            .Include(d => d.DentistSpecialties)
-                                .ThenInclude(ds => ds.Specialty)
-                            .Include(d => d.Degree)
-                            .Where(d => d.ClinicID == clinicID && d.Account.AccountStatus == "Hoạt Động" && d.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID))
-                            .ToListAsync();
+            var dentistsQuery = _context.Dentists
+                .Include(d => d.Account)
+                .Include(d => d.Clinic)
+                .Include(d => d.DentistSpecialties)
+                    .ThenInclude(ds => ds.Specialty)
+                .Include(d => d.Degree)
+                .Where(d => d.ClinicID == clinicID && d.Account.AccountStatus == "Hoạt Động" && d.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID));
 
             if (degreeID != null)
             {
-                dentists = dentists.Where(d => d.Degree.ID == degreeID).ToList();
-
+                dentistsQuery = dentistsQuery.Where(d => d.Degree.ID == degreeID);
             }
 
             if (!string.IsNullOrEmpty(gender))
             {
-                dentists = dentists.Where(d => d.Account.Gender == gender).ToList();
+                dentistsQuery = dentistsQuery.Where(d => d.Account.Gender == gender);
             }
 
             if (!string.IsNullOrEmpty(keysearch))
             {
-                dentists = dentists.Where(d => d.Account.LastName.ToLower().Contains(keysearch.ToLower()) || d.Account.FirstName.ToLower().Contains(keysearch.ToLower())).ToList();
+                dentistsQuery = dentistsQuery.Where(d => d.Account.LastName.ToLower().Contains(keysearch.ToLower()) || d.Account.FirstName.ToLower().Contains(keysearch.ToLower()));
             }
 
-            ViewBag.Specialty = dentists.FirstOrDefault()?.DentistSpecialties.FirstOrDefault(ds => ds.SpecialtyID == specialtyID)?.Specialty;
+            var dentists = await dentistsQuery.ToListAsync();
+
+            var firstDentistSpecialty = dentists.FirstOrDefault()?.DentistSpecialties.FirstOrDefault(ds => ds.SpecialtyID == specialtyID)?.Specialty;
+
+            ViewBag.Specialty = firstDentistSpecialty;
             ViewBag.clinicID = clinicID;
             ViewBag.specialtyID = specialtyID;
             ViewBag.degree = degreeID;
             ViewBag.gender = gender;
             ViewBag.keysearch = keysearch;
+
             return View("ClinicDentist", dentists);
         }
 
-        //Hàm nhận tất cả schedule của dentistID truyền vào từ URL 
         [HttpGet]
         public async Task<IActionResult> ClinicDentistCalendar(int clinicID, int specialtyID, int dentistID)
         {
             var schedule = await _context.Schedules
-                                .Include(s => s.TimeSlot)
-                                .Include(s => s.Appointments)
-                                .Include(s => s.Dentist)
-                                    .ThenInclude(d => d.DentistSpecialties)
-                                    .ThenInclude(ds => ds.Specialty)
-								.Include(s => s.Dentist)
-								.Where(s => s.DentistID == dentistID)
-                                .ToListAsync();
+                .Include(s => s.TimeSlot)
+                .Include(s => s.Appointments)
+                .Include(s => s.Dentist)
+                    .ThenInclude(d => d.DentistSpecialties)
+                    .ThenInclude(ds => ds.Specialty)
+                .Where(s => s.DentistID == dentistID)
+                .ToListAsync();
 
-            var clinic = _context.Clinics.First(c => c.ID == clinicID);
-            var specialty = _context.Specialties.First(s => s.ID == specialtyID);
-            var dentist = _context.Dentists.Include(d => d.Account).First(d => d.ID == dentistID);
+            var clinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == clinicID);
+            var specialty = await _context.Specialties.FirstOrDefaultAsync(s => s.ID == specialtyID);
+            var dentist = await _context.Dentists.Include(d => d.Account).FirstOrDefaultAsync(d => d.ID == dentistID);
+
+            if (clinic == null || specialty == null || dentist == null)
+            {
+                return NotFound();
+            }
+
             ViewBag.clinicName = clinic.Name;
-            ViewBag.clinicAddress = clinic.Address + ", " + await LocalAPIReverseString.GetWardNameById(clinic.District ?? 0, clinic.Ward?? 0) + ", " + await LocalAPIReverseString.GetDistrictNameById(clinic.Province ?? 0, clinic.District ?? 0) + ", " + await LocalAPIReverseString.GetProvinceNameById(clinic.Province ?? 0);
-            ViewBag.dentistName = dentist.Account.LastName + dentist.Account.FirstName;
+            ViewBag.clinicAddress = $"{clinic.Address}, {clinic.WardName}, {clinic.DistrictName}, {clinic.ProvinceName}";
+            ViewBag.dentistName = $"{dentist.Account.LastName} {dentist.Account.FirstName}";
             ViewBag.specialtyName = specialty.Name;
             ViewBag.clinicID = clinicID;
-			ViewBag.specialtyID = specialtyID;
+            ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;
-			return View(schedule);
+
+            return View(schedule);
         }
 
-        //Hàm trả về JSON tất cả schedule của dentist hiện tại có status là "Còn Trống"
-		public IActionResult GetSchedules(int dentistID)
-		{
+        [HttpGet]
+        public IActionResult GetSchedules(int dentistID)
+        {
             var schedules = _context.Schedules
                 .Include(s => s.TimeSlot)
                 .Include(s => s.Dentist)
@@ -133,14 +150,14 @@ namespace Dental_Clinic_System.Controllers
                     EndTime = s.TimeSlot.EndTime.ToString(@"hh\:mm"),
                     scheduleID = s.ID
                 })
-				.ToList();
-            foreach(var s in schedules)
+                .ToList();
+
+            foreach (var s in schedules)
             {
                 Console.WriteLine(s);
             }
-			return Json(schedules);
-		}
 
+            return Json(schedules);
+        }
     }
-
 }

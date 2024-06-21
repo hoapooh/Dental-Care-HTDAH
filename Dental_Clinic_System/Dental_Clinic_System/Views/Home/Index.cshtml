@@ -138,7 +138,7 @@
                                         <h2 class="name">@clinic.Name</h2>
                                         <p class="work-place">
                                             <i class="fa-solid fa-location-dot"></i>
-                                            @(LocalAPIReverseString.GetProvinceNameById((int)clinic.Province).Result)
+                                            @clinic.ProvinceName
                                         </p>
                                         <a asp-controller="clinic" asp-action="ClinicDetail" asp-route-clinicID="@clinic.ID" class="button">Xem chi tiết</a>
                                     </div>

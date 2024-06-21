@@ -44,7 +44,7 @@
 							<div class="text">
 								<span>@Model.FirstOrDefault()?.Clinic.Name</span>
 								<p class="address">
-									@clinic.Address, @await LocalAPIReverseString.GetWardNameById(clinic.District ?? 0, clinic.Ward ?? 0), @await LocalAPIReverseString.GetDistrictNameById(clinic.Province ?? 0, clinic.District ?? 0), @await LocalAPIReverseString.GetProvinceNameById(clinic.Province ?? 0)
+									@clinic.Address, @clinic.WardName, @clinic.DistrictName, @clinic.ProvinceName
 								</p>
 							</div>
 						</li>

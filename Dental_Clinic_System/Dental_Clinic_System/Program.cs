@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,6 +86,14 @@ builder.Services.AddHttpClient();
 
 // Register EmailVerification (ZeroBounce) Service for Verificating Email  
 builder.Services.AddSingleton<IEmailVerification, EmailVerification>();
+
+// Register Redis Caching Service
+//builder.Services.AddStackExchangeRedisCache(options =>
+//{
+//	options.Configuration = builder.Configuration.GetSection("RedisConnection").GetValue<string>("Configuration");
+//	options.InstanceName = builder.Configuration.GetSection("RedisConnection").GetValue<string>("InstanceName");
+
+//});
 
 var app = builder.Build();
 

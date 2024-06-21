@@ -205,6 +205,10 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("int")
                         .HasColumnName("District");
 
+                    b.Property<string>("DistrictName")
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DistrictName");
+
                     b.Property<string>("Email")
                         .HasColumnType("varchar(50)")
                         .HasColumnName("Email");
@@ -227,6 +231,10 @@ namespace Dental_Clinic_System.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("OtherImage")
+                        .HasColumnType("varchar(MAX)")
+                        .HasColumnName("OtherImage");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("varchar(11)")
                         .HasColumnName("PhoneNumber");
@@ -235,9 +243,17 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Province");
 
+                    b.Property<string>("ProvinceName")
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("ProvinceName");
+
                     b.Property<int?>("Ward")
                         .HasColumnType("int")
                         .HasColumnName("Ward");
+
+                    b.Property<string>("WardName")
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("WardName");
 
                     b.HasKey("ID")
                         .HasName("PK_Clinic");

@@ -17,6 +17,8 @@ namespace Dental_Clinic_System.Models.Data
         [StringLength(100)]
         public string Name { get; set; } = null!;
 
+        #region ID For Address
+
         [Column("Province")]
         public int? Province { get; set; } = null!;
 
@@ -25,8 +27,20 @@ namespace Dental_Clinic_System.Models.Data
 
 		[Column("District")]
 		public int? District { get; set; } = null!;
+        #endregion
 
-		[Column("Address", TypeName = "nvarchar(200)")]
+        #region Name For Address
+        [Column("ProvinceName", TypeName = "nvarchar(200)")]
+        public string? ProvinceName { get; set; } = null;
+
+        [Column("WardName", TypeName = "nvarchar(200)")]
+        public string? WardName { get; set; } = null;
+
+        [Column("DistrictName", TypeName = "nvarchar(200)")]
+        public string? DistrictName { get; set; } = null;
+        #endregion
+
+        [Column("Address", TypeName = "nvarchar(200)")]
         public string Address { get; set; } = null!;
 
         [Column("Basis",TypeName = "nvarchar(200)")]
@@ -43,6 +57,9 @@ namespace Dental_Clinic_System.Models.Data
 
         [Column("Image", TypeName = "varchar(256)")]
         public string Image { get; set; } = null!;
+
+        [Column("OtherImage", TypeName = "varchar(MAX)")]
+        public string? OtherImage { get; set; } = null;
 
         [Column("ClinicStatus", TypeName = "nvarchar(30)")]
         public string ClinicStatus { get; set; } = null!;
