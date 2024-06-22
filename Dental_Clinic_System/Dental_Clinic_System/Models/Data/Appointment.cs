@@ -26,6 +26,9 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("TotalPrice",TypeName = "money")]
         public decimal TotalPrice { get; set; }
 
+        [Column("Description", TypeName = "nvarchar(1000)")]
+        public string? Description { get; set; }
+
         [Column("CreatedDate", TypeName = "datetime")]
         public DateTime? CreatedDate { get; set; }
 

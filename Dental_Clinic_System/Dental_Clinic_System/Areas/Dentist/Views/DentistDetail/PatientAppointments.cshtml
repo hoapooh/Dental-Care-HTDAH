@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Appointment>
 @using Dental_Clinic_System.Helper
 @{
-	ViewData["Title"] = "PatientAppointments";
+	ViewData["Title"] = "Quản Lý Đặt Khám";
 	string statusColorClass = "status";
 }
 
 <head>
-	<title>Quản Lý Đặt Khám</title>
 	<link rel="stylesheet" href="~/assets/css/sidebar.css" />
 	<link rel="stylesheet" href="~/assets/css/headerAd.css" />
 	<link rel="stylesheet" href="~/assets/css/dentistpatients.css" />
@@ -48,6 +47,18 @@
 					<td><p class="@statusColorClass">@appointment.AppointmentStatus</p></td>
 					<td>2024-05-21</td>
 					<td>
+						@if(appointment.AppointmentStatus == "Chờ Xác Nhận")
+						{
+							<a style="color:blue; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="1">Xác Nhận</a>
+							<a style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
+						}
+						else if (appointment.AppointmentStatus == "Đã Chấp Nhận")
+						{
+							<a style="color:green; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="2">Đã Khám</a>
+							<a style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
+						}
+						else if (appointment.AppointmentStatus == "Đã Khám")
+						{						
 						<button type="button" class="btn show-popup" data-appointment-id="@appointment.ID"
 								data-patient-name="@appointment.PatientRecords.FullName"
 								data-patient-gender="@appointment.PatientRecords.Gender"
@@ -59,8 +70,9 @@
 								data-patient-address="@appointment.PatientRecords.Address"
 								data-appointment-price="@Math.Round(appointment.TotalPrice)"
 								data-appointment-status="@appointment.AppointmentStatus">
-							<i class="fa-solid fa-pen-to-square"></i>
+							<p style="font-size:20px; color:chocolate; text-decoration:underline;">Chi Tiết Đơn</p>
 						</button>
+						}
 					</td>
 				</tr>
 			}
@@ -75,7 +87,6 @@
 <!-- Hidden block to display as a popup -->
 <div class="modal-content" id="popupBlock" style="font-size: 20px;">
 	<h5 style="text-align:center;">Thông tin bệnh nhân đặt khám</h5>
-	<form asp-controller="dentistdetail" asp-action="changepatientappointment">
 		<input type="hidden" id="appointmentID" name="AppointmentID" />
 		<div class="d-flex justify-content-around">
 			<div class="mb-3 w-75" style="margin-right:1%">
@@ -119,18 +130,18 @@
 		</div>
 		<div class="mb-3">
 			<label for="appointmentStatus" class="form-label">Trạng Thái</label>
-			<select class="form-control" id="appointmentStatus" name="AppointmentStatus">
+			<span class="form-control bg-light bg-gradient">Đã Khám + Hoàn Tiền</span>
+@* 			<select class="form-control" id="appointmentStatus" name="AppointmentStatus">
 				<option value="Chờ Xác Nhận">Chờ Xác Nhận</option>
 				<option value="Đã Chấp Nhận">Đã Chấp Nhận</option>
 				<option value="Đã Khám">Đã Khám</option>
 				<option value="Đã Hủy">Đã Hủy</option>
-			</select>
+			</select> *@
 		</div>
 		<div style="text-align: end;">
-		<button type="submit" class="btn btn-primary">Lưu</button>
+		<button type="submit" class="btn btn-warning">Xuất PDF</button>
 			<button type="button" class="btn btn-secondary" id="closePopup">Đóng</button>
 		</div>
-	</form>
 </div>
 
 
@@ -162,7 +173,6 @@
 			const patientWard = e.currentTarget.getAttribute('data-patient-ward');
 			const patientAddress = e.currentTarget.getAttribute('data-patient-address');
 			const appointmentPrice = e.currentTarget.getAttribute('data-appointment-price');
-			const appointmentStatus = e.currentTarget.getAttribute('data-appointment-status');
 
 			document.getElementById('appointmentID').value = appointmentID;
 			document.getElementById('patientName').textContent = patientName;
@@ -174,7 +184,6 @@
 			document.getElementById('patientWard').textContent = patientWard;
 			document.getElementById('patientAddress').textContent = patientAddress;
 			document.getElementById('appointmentPrice').textContent = appointmentPrice;
-			document.getElementById('appointmentStatus').value = appointmentStatus;
 
 			document.getElementById('popupBlock').style.display = 'block';
 			document.getElementById('modalOverlay').style.display = 'block';

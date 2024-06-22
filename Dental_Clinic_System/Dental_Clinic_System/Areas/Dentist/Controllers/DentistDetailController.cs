@@ -243,5 +243,47 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             return RedirectToAction("PatientAppointments");
         }
         #endregion
-    }
+
+        //Hàm hủy đơn đặt
+        public async Task<IActionResult> CancelAppointment(int appointmentID)  //string description
+        {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Đã Chấp Nhận" || a.AppointmentStatus == "Chờ Xác Nhận"));
+            if(appointment == null)
+            {
+				ViewBag.message = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
+				return RedirectToAction("patientappointments");
+			}
+            appointment.AppointmentStatus = "Đã Hủy";
+            //appointment.Description = "Lý do hủy: " + description;
+            _context.Update(appointment);
+           await _context.SaveChangesAsync();
+			ViewBag.message = "success";
+			return RedirectToAction("patientappointments");
+        }
+
+        //Hàm thay đổi trạng thái của đơn đặt
+		public async Task<IActionResult> ChangeStatusAppointment(int appointmentID, int statusNumber)
+		{
+			var appointment = _context.Appointments.FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Chờ Xác Nhận" || a.AppointmentStatus == "Đã Chấp Nhận"));
+			if (appointment == null)
+			{
+				ViewBag.message = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
+				return NotFound("patientappointments");
+			}
+
+            if(statusNumber == 1)
+            {
+				appointment.AppointmentStatus = "Đã Chấp Nhận";
+			}
+            else if(statusNumber == 2)
+			{
+				appointment.AppointmentStatus = "Đã Khám";
+			}
+			_context.Update(appointment);
+			await _context.SaveChangesAsync();
+			ViewBag.message = "success";
+			return RedirectToAction("patientappointments");
+		}
+
+	}
 }

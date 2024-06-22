@@ -23,6 +23,8 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual DbSet<Specialty> Specialties { get; set; }
 		public virtual DbSet<TimeSlot> TimeSlots { get; set; }
 		public virtual DbSet<Transaction> Transactions { get; set; }
+		public virtual DbSet<Wallet> Wallets { get; set; }
+		public virtual DbSet<ClinicTransaction> ClinicTransactions { get; set; }
 		#endregion
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Name=DBConnection");
@@ -192,7 +194,27 @@ namespace Dental_Clinic_System.Models.Data
 				entity.HasOne(d => d.Appointment).WithMany(p => p.Transactions).HasConstraintName("FK__Transacti__Appointment").OnDelete(DeleteBehavior.NoAction);
 			});
 
-			OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<Wallet>(entity =>
+            {
+                entity.HasKey(e => e.ID).HasName("PK_Wallet");
+
+                entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.Account).WithOne(p => p.Wallet).HasConstraintName("FK__Wallet__Account").OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<ClinicTransaction>(entity =>
+            {
+                entity.HasKey(e => e.ID).HasName("PK_ClinicTransaction");
+
+                entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.Wallet).WithMany(p => p.ClinicTransactions).HasConstraintName("FK__CLinicTrans__Wallet").OnDelete(DeleteBehavior.Restrict);
+
+				//entity.HasCheckConstraint("CK_Valid_ClinicTransaction_Status", "ClinicTransactionStatus = 'Pending' OR ClinicTransactionStatus = 'Completed' OR ClinicTransactionStatus = 'Canceled' OR ClinicTransactionStatus = N'Chờ Xác Nhận' OR ClinicTransactionStatus = N'Đã Thanh Toán' OR ClinicTransactionStatus = N'Đã Hủy'");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
 		}
 
 		partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

@@ -142,6 +142,10 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("CreatedDate");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("Description");
+
                     b.Property<int>("PatientRecordID")
                         .HasColumnType("int")
                         .HasColumnName("PatientRecordID");
@@ -262,6 +266,55 @@ namespace Dental_Clinic_System.Migrations
                         .IsUnique();
 
                     b.ToTable("Clinic");
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.ClinicTransaction", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Bank")
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Bank");
+
+                    b.Property<string>("ClinicTransactionStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("ClinicTransactionStatus");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("Date");
+
+                    b.Property<decimal>("Deposit")
+                        .HasColumnType("money")
+                        .HasColumnName("Deposit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("PaymentMethod");
+
+                    b.Property<int>("TransactionCode")
+                        .HasColumnType("int")
+                        .HasColumnName("TransactionCode");
+
+                    b.Property<int>("Wallet_ID")
+                        .HasColumnType("int")
+                        .HasColumnName("Wallet_ID");
+
+                    b.HasKey("ID")
+                        .HasName("PK_ClinicTransaction");
+
+                    b.HasIndex("Wallet_ID");
+
+                    b.ToTable("ClinicTransactions");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Degree", b =>
@@ -694,6 +747,31 @@ namespace Dental_Clinic_System.Migrations
                     b.ToTable("Transaction");
                 });
 
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.Wallet", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Account_ID")
+                        .HasColumnType("int")
+                        .HasColumnName("Account_ID");
+
+                    b.Property<decimal>("Money")
+                        .HasColumnType("money")
+                        .HasColumnName("Money");
+
+                    b.HasKey("ID")
+                        .HasName("PK_Wallet");
+
+                    b.HasIndex("Account_ID")
+                        .IsUnique();
+
+                    b.ToTable("Wallets");
+                });
+
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Appointment", b =>
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecords")
@@ -731,6 +809,18 @@ namespace Dental_Clinic_System.Migrations
                         .HasConstraintName("FK__Clinic__Manager");
 
                     b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.ClinicTransaction", b =>
+                {
+                    b.HasOne("Dental_Clinic_System.Models.Data.Wallet", "Wallet")
+                        .WithMany("ClinicTransactions")
+                        .HasForeignKey("Wallet_ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK__CLinicTrans__Wallet");
+
+                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Dentist", b =>
@@ -869,6 +959,18 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("Appointment");
                 });
 
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.Wallet", b =>
+                {
+                    b.HasOne("Dental_Clinic_System.Models.Data.Account", "Account")
+                        .WithOne("Wallet")
+                        .HasForeignKey("Dental_Clinic_System.Models.Data.Wallet", "Account_ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK__Wallet__Account");
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Account", b =>
                 {
                     b.Navigation("Clinics");
@@ -878,6 +980,8 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("PatientRecords");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Appointment", b =>
@@ -929,6 +1033,11 @@ namespace Dental_Clinic_System.Migrations
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.TimeSlot", b =>
                 {
                     b.Navigation("Schedules");
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.Wallet", b =>
+                {
+                    b.Navigation("ClinicTransactions");
                 });
 #pragma warning restore 612, 618
         }
