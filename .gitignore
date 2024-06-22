@@ -1,0 +1,9 @@
+# Ignore Visual Studio layout files
+DocumentLayout.json
+
+# Ignore Visual Studio user-specific files
+*.suo
+
+# Ignore File Changes while Build .NET
+bin/
+obj/
