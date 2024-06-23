@@ -7,15 +7,15 @@ import {
 	getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 
-// Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: "AIzaSyDC1sfSIQKXTwkyGDR27LsM3AAqsSQiogk",
-	authDomain: "auth-demo-123e3.firebaseapp.com",
-	projectId: "auth-demo-123e3",
-	storageBucket: "auth-demo-123e3.appspot.com",
-	messagingSenderId: "867903141504",
-	appId: "1:867903141504:web:d8f7ca0edb80a4dc04d865",
-	measurementId: "G-JEWGJ20EEC",
+	apiKey: "AIzaSyAIXe3XvrWSJcuRR0ImSHtBBIJe-W8xrl0",
+	authDomain: "dental-care-3388d.firebaseapp.com",
+	projectId: "dental-care-3388d",
+	storageBucket: "dental-care-3388d.appspot.com",
+	messagingSenderId: "554400776601",
+	appId: "1:554400776601:web:450c6bb275b0b646ebd308",
+	measurementId: "G-LJWE3WXSM5",
 };
 
 // Initialize Firebase

@@ -16,6 +16,7 @@ let futureFormattedDate =
 	String(futureDate.getDate()).padStart(2, "0");
 
 mobiscroll.setOptions({
+	locale: mobiscroll.localeVi,
 	theme: "ios",
 	themeVariant: "light",
 });

@@ -266,3 +266,13 @@ body::-webkit-scrollbar {
 .repass__content__wrapper div {
 	margin-bottom: 20px;
 }
+
+.history__container__style {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #b1b1b1;
+	text-align: center;
+	font-size: 2.4rem;
+	font-weight: bold;
+}
