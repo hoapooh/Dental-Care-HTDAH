@@ -67,6 +67,12 @@ namespace Dental_Clinic_System.Models.Data
         [Column("MapLinker", TypeName = "ntext")]
         public string? MapLinker { get; set; }
 
+        [Column("Rating")]
+        public double? Rating { get; set; } = null;
+
+        [Column("RatingCount")]
+        public int? RatingCount { get; set; } = null;
+
         #region Foreign Key
 
         [ForeignKey("ManagerID")]

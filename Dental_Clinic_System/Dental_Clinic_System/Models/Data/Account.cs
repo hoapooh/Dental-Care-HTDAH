@@ -75,6 +75,9 @@ namespace Dental_Clinic_System.Models.Data
 
 		[InverseProperty("Account")]
 		public virtual Wallet? Wallet { get; set; }
-		#endregion
-	}
+
+		[InverseProperty("Account")]
+		public virtual ICollection<News> News { get; set; } = new List<News>();
+        #endregion
+    }
 }

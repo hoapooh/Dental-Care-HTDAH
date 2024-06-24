@@ -25,6 +25,8 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual DbSet<Transaction> Transactions { get; set; }
 		public virtual DbSet<Wallet> Wallets { get; set; }
 		public virtual DbSet<ClinicTransaction> ClinicTransactions { get; set; }
+		public virtual DbSet<News> News { get; set; }
+		public virtual DbSet<Order> Orders { get; set; }
 		#endregion
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Name=DBConnection");
@@ -213,6 +215,24 @@ namespace Dental_Clinic_System.Models.Data
 
 				//entity.HasCheckConstraint("CK_Valid_ClinicTransaction_Status", "ClinicTransactionStatus = 'Pending' OR ClinicTransactionStatus = 'Completed' OR ClinicTransactionStatus = 'Canceled' OR ClinicTransactionStatus = N'Chờ Xác Nhận' OR ClinicTransactionStatus = N'Đã Thanh Toán' OR ClinicTransactionStatus = N'Đã Hủy'");
             });
+
+			modelBuilder.Entity<News>(entity =>
+			{
+                entity.HasKey(e => e.ID).HasName("PK_News");
+
+                entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+				entity.HasOne(d => d.Account).WithMany(p => p.News).HasConstraintName("FK__News__Account").OnDelete(DeleteBehavior.NoAction);
+            });
+
+			modelBuilder.Entity<Order>(entity =>
+			{
+				entity.HasKey(e => e.ID).HasName("PK_Order");
+
+				entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+				entity.HasCheckConstraint("CK_CHECKVALID_STATUS", "Status = N'Chưa Duyệt' OR Status = N'Từ Chối' OR Status = N'Đồng Ý'");
+			});
 
             OnModelCreatingPartial(modelBuilder);
 		}
