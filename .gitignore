@@ -7,3 +7,6 @@ DocumentLayout.json
 # Ignore File Changes while Build .NET
 bin/
 obj/
+
+#Ignore .vs Files
+.vs/
