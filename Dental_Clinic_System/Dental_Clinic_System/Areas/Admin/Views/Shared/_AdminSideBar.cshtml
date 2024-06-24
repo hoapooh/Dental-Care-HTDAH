@@ -23,42 +23,43 @@
 			<div class="collapse" id="manage-account">
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountDentist/ListAccountDentist" onclick="document.getElementById('form_nhasi').submit();">
-							<i class="fa-solid fa-stethoscope"></i> Tài khoản nha sĩ
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_nhasi').submit();">
+							<i class="fa-solid fa-stethoscope"></i> Quản lý tài khoản nha sĩ
 						</a>
+						<form id="form_nhasi" action="~/Admin/Account/ListAccount" method="get">
+							<input type="hidden" name="Role" value="Nha sĩ">
+						</form>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountPatient/ListAccountPatient" onclick="document.getElementById('form_benh_nhan').submit();">
-							<i class="fa-solid fa-hospital-user"></i> Tài khoản bệnh nhân
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_benh_nhan').submit();">
+							<i class="fa-solid fa-hospital-user"></i> Quản lý tài khoản bệnh nhân
 						</a>
+						<form id="form_benh_nhan" action="~/Admin/Account/ListAccount" method="get">
+							<input type="hidden" name="Role" value="Bệnh nhân" />
+						</form>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountManager/ListAccountManager" onclick="document.getElementById('form_quan_ly').submit();">
-							<i class="fa-solid fa-hospital"></i> Tài khoản của quản lý
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_quan_ly').submit();">
+							<i class="fa-solid fa-hospital"></i> Quản lý chủ phòng khám
 						</a>
+						<form id="form_quan_ly" action="~/Admin/Account/ListAccount" method="get">
+							<input type="hidden" name="Role" value="Quản lý" />
+						</form>
 					</li>
 
 					<li class="nav-item">
 						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link"
-						   href="~/Admin/AccountLocked/ListLockedAccount"><i class="fa-solid fa-ban"></i> Tài khoản bị cấm</a>
+						   href="~/Admin/Account/ListLockedAccount"><i class="fa-solid fa-ban"></i> Tài khoản bị cấm</a>
 					</li>
 				</ul>
 			</div>
 		</li>
-
-		<li class="nav-item menu-items">
-			<a class="nav-link collapsed"
-			   data-bs-toggle="collapse"
-			   href="#manage-specialty"
-			   aria-expanded="false"
-			   aria-controls="manage-specialty">
-				<span class="menu-icon"><i class="bx bx-list-ul"></i></span>
-				<span class="menu-title Quan_ly_tai_khoan">Quản lý phòng khám</span>
-				<span class="menu-down" style="margin-left: auto">
-					<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-				</span>
+		<li class="nav-item">
+			<a href="~/Admin/ManagerClinic/ListClinic" class="Quan_ly_phong_kham">
+				<span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản
+				lý phòng khám
 			</a>
 			<div class="collapse" id="manage-specialty">
 				<ul class="nav flex-column sub-menu">

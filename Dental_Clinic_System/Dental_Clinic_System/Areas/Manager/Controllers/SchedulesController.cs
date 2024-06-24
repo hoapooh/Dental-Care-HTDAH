@@ -30,19 +30,9 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             var dentalClinicDbContext = _context.Schedules.Include(s => s.Dentist).ThenInclude(d => d.Account).Include(s => s.TimeSlot);
             return View(await dentalClinicDbContext.ToListAsync());
         }
-		// GET: Manager/LichLamViec
-		public async Task<IActionResult> LichLamViec()
-		{
-			var dentists = _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).AsQueryable();
-			dentists =  dentists.Where(p => p.ClinicID == 1);
-			ViewBag.Dentists = await dentists.ToListAsync();
-            //------------------------------
-            
 
-			return View();
-		}
-		// GET: Manager/Schedules/Details/5
-		public async Task<IActionResult> Details(int? id)
+        // GET: Manager/Schedules/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {

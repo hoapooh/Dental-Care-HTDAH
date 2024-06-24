@@ -4,6 +4,7 @@ using Dental_Clinic_System.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    partial class DentalClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623102544_MigrationOkaV51")]
+    partial class MigrationOkaV51
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -422,6 +425,9 @@ namespace Dental_Clinic_System.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("AccountID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdminID")
                         .HasColumnType("int")
                         .HasColumnName("AccountID");
 
@@ -450,68 +456,10 @@ namespace Dental_Clinic_System.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.ToTable("News");
-                });
-
-            modelBuilder.Entity("Dental_Clinic_System.Models.Data.Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("ClinicAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("ClinicAddress");
-
-                    b.Property<string>("ClinicName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("ClinicName");
-
-                    b.Property<string>("CompanyEmail")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("CompanyEmail");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("CompanyName");
-
-                    b.Property<string>("CompanyPhonenumber")
-                        .IsRequired()
-                        .HasColumnType("varchar(12)")
-                        .HasColumnName("CompanyPhonenumber");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("Content");
-
-                    b.Property<string>("DomainName")
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("DomainName");
-
-                    b.Property<string>("RepresentativeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("RepresentativeName");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Status");
-
-                    b.HasKey("ID")
-                        .HasName("PK_Order");
-
-                    b.ToTable("Orders", t =>
+                    b.ToTable("News", t =>
                         {
-                            t.HasCheckConstraint("CK_CHECKVALID_STATUS", "Status = N'Chưa Duyệt' OR Status = N'Từ Chối' OR Status = N'Đồng Ý'");
+                            t.Property("AccountID")
+                                .HasColumnName("AccountID1");
                         });
                 });
 

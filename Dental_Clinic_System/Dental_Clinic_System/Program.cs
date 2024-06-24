@@ -132,8 +132,8 @@ app.UseEndpoints(endpoints =>
 
 	_ = endpoints.MapControllerRoute(
 	  name: "areas",
-	  pattern: "{area:exists}/{controller=Dashboard}/{action=GetAppointmentStatus}/{id?}"
-    );
+	  pattern: "{area:exists}/{controller=Admin}/{action=ListAccount}/{id?}"
+	);
 });
 
 

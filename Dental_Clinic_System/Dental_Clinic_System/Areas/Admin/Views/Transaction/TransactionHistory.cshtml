@@ -1,5 +1,4 @@
-﻿@using System.Globalization
-@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.TransactionVM>
+﻿@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.TransactionVM>
 
 @{
 	ViewData["Title"] = "TransactionHistory";
@@ -48,7 +47,7 @@
 					<td style="text-align: center">@transaction.Date</td>
 					<td>@transaction.BankName</td>
 					<td>@transaction.BankAccountNumber</td>
-					<td>@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", transaction.TotalPrice)</td>
+					<td>@transaction.TotalPrice</td>
 					<td>@transaction.Message</td>
 					<td>@transaction.Status</td>
 				</tr>
