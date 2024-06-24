@@ -30,6 +30,14 @@
             });
         </script>
     }
+    else if (TempData["ToastMessageFailTempData"] != null)
+    {
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                showErrorToasts('@TempData["ToastMessageFailTempData"]');
+            });
+        </script>
+    }
     else if (TempData["ToastMessageTempData"] != null)
     {
         <script>

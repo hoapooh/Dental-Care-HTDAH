@@ -8,6 +8,7 @@ namespace Dental_Clinic_System.Services.EmailSender
         Task SendEmailForUpdatingAsync(string email, string username, string subject, string message);
         Task SendEmailUpdatedAsync(string oldEmail, string newEmail, string subject, string message);
         Task SendInvoiceEmailAsync(Appointment appointment, Transaction transaction, int clinicID, string subject);
+        Task SendBusinessPartnershipsInfo(Order order, Account managerAccount, string encryptedPassword, string subject);
 
     }
 }

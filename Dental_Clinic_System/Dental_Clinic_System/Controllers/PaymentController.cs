@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using Dental_Clinic_System.Services.EmailSender;
 using Microsoft.EntityFrameworkCore;
 using static Dental_Clinic_System.Services.VNPAY.VNPAYLibrary;
+using Dental_Clinic_System.Services;
 namespace Dental_Clinic_System.Controllers
 {
     public class PaymentController : Controller
