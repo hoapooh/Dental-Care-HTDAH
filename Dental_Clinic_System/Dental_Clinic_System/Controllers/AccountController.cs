@@ -69,21 +69,25 @@ namespace Dental_Clinic_System.Controllers
                     //    ModelState.AddModelError("errorPhoneRegister", "Số điện thoại đã tồn tại");
                     //    return View();
                     //}
-                    ModelState.AddModelError("errorUsernameRegister", "Tên đăng nhập đã tồn tại");
+
+                    //ModelState.AddModelError("errorUsernameRegister", "Tên đăng nhập đã tồn tại");
+                    ViewBag.ToastMessage = "Tên đăng nhập đã tồn tại";
                     return View();
                 }
 
                 var checkEmail = _context.Accounts.SingleOrDefault(p => p.Email == model.Email);
                 if (checkEmail != null)
                 {
-                    ModelState.AddModelError("errorEmailRegister", "Email đã tồn tại");
+                    //ModelState.AddModelError("errorEmailRegister", "Email đã tồn tại");
+                    ViewBag.ToastMessage = "Email đã tồn tại";
                     return View();
                 }
 
                 var checkPhoneNumber = _context.Accounts.SingleOrDefault(p => p.PhoneNumber == model.PhoneNumber);
                 if (checkPhoneNumber != null)
                 {
-                    ModelState.AddModelError("errorPhoneRegister", "Số điện thoại đã tồn tại");
+                    //ModelState.AddModelError("errorPhoneRegister", "Số điện thoại đã tồn tại");
+                    ViewBag.ToastMessage = "Số điện thoại đã tồn tại";
                     return View();
                 }
 
@@ -106,6 +110,7 @@ namespace Dental_Clinic_System.Controllers
 
                 // Send confirmation email
                 await _emailSender.SendEmailAsync(model.Email, "Xác nhận email", confirmationLink);
+                ViewBag.ToastMessageSuccess = "Vui lòng kiểm tra Email để kích hoạt tài khoản";
 
                 // Debugging: Print all claims to console
                 //foreach (var claim in ClaimsHelper.GetCurrentClaims(HttpContext.User))
@@ -113,8 +118,21 @@ namespace Dental_Clinic_System.Controllers
                 //    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
                 //}
 
-                return RedirectToAction("Index", "Home");
+                return View("Login");
                 //return RedirectToAction("ConfirmEmail", "Account");
+            }
+            else
+            {
+                // Extract error messages from ModelState
+                var errorMessages = ModelState.Values
+                                              .SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage)
+                                              .ToList();
+
+                if (errorMessages.Any())
+                {
+                    ViewBag.ToastMessage = string.Join(". ", errorMessages); // Combine all error messages
+                }
             }
 
             // Log ModelState errors and going so far by this stop which means you got bugs LOL
@@ -194,32 +212,38 @@ namespace Dental_Clinic_System.Controllers
                 var patient = _context.Accounts.SingleOrDefault(p => p.Username == model.Username);
                 if (patient == null || patient.Role != "Bệnh Nhân")
                 {
-                    ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
+                    //ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
+                    ViewBag.ToastMessage = "Sai thông tin đăng nhập";
                 }
                 else
                 {
                     switch (patient.AccountStatus.ToUpper())
                     {
                         case "BỊ KHÓA":
-                            ModelState.AddModelError("errorLogin", "Tài khoản đã bị khóa");
-                            ModelState.AddModelError("errorLoginSolution", "Vui lòng liên hệ với Support qua email - support@gmail.com");
+                            //ModelState.AddModelError("errorLogin", "Tài khoản đã bị khóa");
+                            //ModelState.AddModelError("errorLoginSolution", "Vui lòng liên hệ với Support qua email - support@gmail.com");
+                            ViewBag.ToastMessage = "Tài khoản đã bị khóa. Vui lòng liên hệ với Support qua email - support@gmail.com";
                             return View();
                         case "BANNED":
-                            ModelState.AddModelError("errorLogin", "Tài khoản đã bị khóa");
-                            ModelState.AddModelError("errorLoginSolution", "Vui lòng liên hệ với Support qua email - support@gmail.com");
+                            //ModelState.AddModelError("errorLogin", "Tài khoản đã bị khóa");
+                            //ModelState.AddModelError("errorLoginSolution", "Vui lòng liên hệ với Support qua email - support@gmail.com");
+                            ViewBag.ToastMessage = "Tài khoản đã bị khóa. Vui lòng liên hệ với Support qua email - support@gmail.com";
                             return View();
                         case "CHƯA KÍCH HOẠT":
-                            ModelState.AddModelError("errorLogin", "Tài khoản chưa kích hoạt");
-                            ModelState.AddModelError("errorLoginSolution", "Vui lòng kiểm tra email của bạn để được kích hoạt");
+                            //ModelState.AddModelError("errorLogin", "Tài khoản chưa kích hoạt");
+                            //ModelState.AddModelError("errorLoginSolution", "Vui lòng kiểm tra email của bạn để được kích hoạt");
+                            ViewBag.ToastMessage = "Tài khoản chưa kích hoạt. Vui lòng kiểm tra email của bạn để được kích hoạt";
                             return View();
                         case "NOT ACTIVE":
-                            ModelState.AddModelError("errorLogin", "Tài khoản chưa kích hoạt");
-                            ModelState.AddModelError("errorLoginSolution", "Vui lòng kiểm tra email của bạn để được kích hoạt");
+                            //ModelState.AddModelError("errorLogin", "Tài khoản chưa kích hoạt");
+                            //ModelState.AddModelError("errorLoginSolution", "Vui lòng kiểm tra email của bạn để được kích hoạt");
+                            ViewBag.ToastMessage = "Tài khoản chưa kích hoạt. Vui lòng kiểm tra email của bạn để được kích hoạt";
                             return View();
                     }
                     if (Helper.DataEncryptionExtensions.ToMd5Hash(model.Password) != patient.Password)
                     {
-                        ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
+                        //ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
+                        ViewBag.ToastMessage = "Sai thông tin đăng nhập";
                     }
                     else
                     {
@@ -284,6 +308,19 @@ namespace Dental_Clinic_System.Controllers
                             return RedirectToAction("Index", "Home");
                         }
                     }
+                }
+            }
+            else
+            {
+                // Extract error messages from ModelState
+                var errorMessages = ModelState.Values
+                                              .SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage)
+                                              .ToList();
+
+                if (errorMessages.Any())
+                {
+                    ViewBag.ToastMessage = string.Join(". ", errorMessages); // Combine all error messages
                 }
             }
             return View();
@@ -593,7 +630,7 @@ namespace Dental_Clinic_System.Controllers
 
                 Address = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value,
                 DateOfBirth = dateOfBirth
-			};
+            };
 
             //var appointment = new Dictionary<string, object>
             //{
@@ -624,7 +661,7 @@ namespace Dental_Clinic_System.Controllers
 
             ViewBag.Appointment = appointments;
 
-			return View(model);
+            return View(model);
         }
 
 
@@ -739,6 +776,44 @@ namespace Dental_Clinic_System.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Bệnh Nhân")]
+        public async Task<IActionResult> RateAppointment(int clinicID, int dentistID, int patientID, int rating, string comment = "")
+        {
+            var clinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == clinicID);
+
+            if (clinic == null)
+            {
+                return NotFound();
+            }
+
+            // Nên dùng Review Table cho đánh giá
+            var review = new Review
+            {
+                Comment = comment,
+                Date = DateOnly.FromDateTime(DateTime.UtcNow),
+                DentistID = dentistID,
+                PatientID = patientID
+            };
+
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
+
+            //await Console.Out.WriteLineAsync("===========================================");
+            //await Console.Out.WriteLineAsync($"PatientID = {review.PatientID}");
+            //await Console.Out.WriteLineAsync($"Comment = {review.Comment}");
+            //await Console.Out.WriteLineAsync("===========================================");
+
+            // Update clinic rating
+            clinic.RatingCount = clinic.RatingCount.HasValue ? clinic.RatingCount + 1 : 1;
+            clinic.Rating = (clinic.Rating.HasValue ? clinic.Rating * (clinic.RatingCount - 1) + rating : rating) / clinic.RatingCount;
+            _context.Clinics.Update(clinic);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Profile");
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> ConfirmEmailChange(int userId, string oldEmail, string newEmail, string code)

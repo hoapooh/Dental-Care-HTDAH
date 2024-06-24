@@ -251,6 +251,14 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("ProvinceName");
 
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float")
+                        .HasColumnName("Rating");
+
+                    b.Property<int?>("RatingCount")
+                        .HasColumnType("int")
+                        .HasColumnName("RatingCount");
+
                     b.Property<int?>("Ward")
                         .HasColumnType("int")
                         .HasColumnName("Ward");
@@ -402,6 +410,109 @@ namespace Dental_Clinic_System.Migrations
                     b.HasIndex("SpecialtyID");
 
                     b.ToTable("Dentist_Specialty");
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("AccountID")
+                        .HasColumnType("int")
+                        .HasColumnName("AccountID");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("ntext")
+                        .HasColumnName("Content");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("Date");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Status");
+
+                    b.Property<string>("ThumbNail")
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("ThumbNail");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnName("Title");
+
+                    b.HasKey("ID")
+                        .HasName("PK_News");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("News");
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.Order", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("ClinicAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasColumnName("ClinicAddress");
+
+                    b.Property<string>("ClinicName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("ClinicName");
+
+                    b.Property<string>("CompanyEmail")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("CompanyEmail");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("CompanyName");
+
+                    b.Property<string>("CompanyPhonenumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(12)")
+                        .HasColumnName("CompanyPhonenumber");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnName("Content");
+
+                    b.Property<string>("DomainName")
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("DomainName");
+
+                    b.Property<string>("RepresentativeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("RepresentativeName");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Status");
+
+                    b.HasKey("ID")
+                        .HasName("PK_Order");
+
+                    b.ToTable("Orders", t =>
+                        {
+                            t.HasCheckConstraint("CK_CHECKVALID_STATUS", "Status = N'Chưa Duyệt' OR Status = N'Từ Chối' OR Status = N'Đồng Ý'");
+                        });
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.PatientRecord", b =>
@@ -873,6 +984,18 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("Specialty");
                 });
 
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
+                {
+                    b.HasOne("Dental_Clinic_System.Models.Data.Account", "Account")
+                        .WithMany("News")
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("FK__News__Account");
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.PatientRecord", b =>
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.Account", "Account")
@@ -976,6 +1099,8 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("Clinics");
 
                     b.Navigation("Dentists");
+
+                    b.Navigation("News");
 
                     b.Navigation("PatientRecords");
 

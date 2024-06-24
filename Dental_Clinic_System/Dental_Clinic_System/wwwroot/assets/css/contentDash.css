@@ -262,6 +262,7 @@
 }
 
 /*========= toasts MESSAGE ===========*/
+/*========= toasts MESSAGE ===========*/
 #toasts {
     position: fixed;
     bottom: 32px;
@@ -281,6 +282,31 @@
     border-left: 4px solid;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
     transition: all linear 0.3s;
+    opacity: 1; /* Set opacity to 1 */
+}
+
+@-webkit-keyframes slideInLeft {
+    from {
+        opacity: 0;
+        -webkit-transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+    }
+}
+
+@-moz-keyframes slideInLeft {
+    from {
+        opacity: 0;
+        -moz-transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        -moz-transform: translateX(0);
+    }
 }
 
 @keyframes slideInLeft {
@@ -292,6 +318,18 @@
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    to {
+        opacity: 0;
     }
 }
 
@@ -351,13 +389,13 @@
 }
 
 .toasts__title {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     color: #333;
 }
 
 .toasts__msg {
-    font-size: 14px;
+    font-size: 20px;
     color: #888;
     margin-top: 6px;
     line-height: 1.5;
