@@ -2,7 +2,6 @@
 using Dental_Clinic_System.Areas.Admin.ViewModels;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Models.Data;
-using Google.Apis.PeopleService.v1.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,7 +30,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 								 join account in _context.Accounts
 								 on clinic.ManagerID equals account.ID
 								 
-								 where account.Role == "Quản lý" && clinic.ClinicStatus == "Hoạt động"
+								 where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
 								 select new ManagerClinicVM
 								 {
 									 ClinicName = clinic.Name,
@@ -60,7 +59,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			var query = from clinic in _context.Clinics
 						join account in _context.Accounts
 						on clinic.ManagerID equals account.ID
-						where account.Role == "Quản lý" && clinic.ClinicStatus == "Hoạt động"
+						where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
 						select new ManagerClinicVM
 						{
 							ClinicName = clinic.Name,
@@ -95,7 +94,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		public async Task<IActionResult> CreateClinic()
 		{
 			var unassignedManagers = await _context.Accounts
-			.Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+			.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
 			.Select(a => new
 			{
 				a.ID,
@@ -142,7 +141,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				if (!ModelState.IsValid)
 				{
 					var unassignedManager = await _context.Accounts
-						.Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+						.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
 						.Select(a => new
 						{
 							a.ID,
@@ -157,7 +156,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 				//Kiểm tra Account Quản lý có tồn tại không, và đúng Role Quản lý chưa
 				var manager = await _context.Accounts
-					.FirstOrDefaultAsync(a => a.ID == model.ManagerID && a.Role == "Quản lý");
+					.FirstOrDefaultAsync(a => a.ID == model.ManagerID && a.Role == "Quản Lý");
 
 				if (manager == null)
 				{
@@ -178,7 +177,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 					Address = model.Address,
 					Description = model.Description,
 					Image = model.Image,
-					ClinicStatus = "Hoạt động"
+					ClinicStatus = "Hoạt Động"
 				};
 
 				_context.Clinics.Add(clinic);
@@ -188,7 +187,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			}
 
 			var unassignedManagers = await _context.Accounts
-				.Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+				.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
 				.Select(a => new
 				{
 					a.ID,
@@ -237,9 +236,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				Address = clinic.Address,
 				Description = clinic.Description,
 				Image = clinic.Image,
-				ClinicStatus = "Hoạt động",
+				ClinicStatus = "Hoạt Động",
 				UnassignedManagers = new SelectList(await _context.Accounts
-					.Where(a => a.Role == "Quản lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID))
+					.Where(a => a.Role == "Quản Lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID))
 					.Select(a => new
 					{
 						a.ID,
@@ -304,7 +303,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				clinic.Address = model.Address;
 				clinic.Description = model.Description;
 				clinic.Image = model.Image;
-				clinic.ClinicStatus = "Hoạt động";
+				clinic.ClinicStatus = "Hoạt Động";
 
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(ListClinic));
@@ -312,7 +311,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			//Ghi lại List Manager chưa được chỉ định phòng khám nào
 			model.UnassignedManagers = new SelectList(await _context.Accounts
-				.Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+				.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
 				.Select(a => new
 				{
 					a.ID,
@@ -350,40 +349,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(ListClinic));
         }
-		#endregion
+        #endregion
 
-		#region Duyệt Yêu Cầu Hợp Tác Kinh Doanh
-		[HttpGet]
-		public async Task<IActionResult> ApprovalRequest()
-		{
-			var orderList =  await _context.Orders.ToListAsync();
-
-			return View();
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> GetApprovalRequest(string companyName, string companyPhonenumber, string companyEmail, string representativeName, string clinicName, string clinicAddress, string? domainName, string content)
-		{
-			var order = new Order
-			{
-				CompanyName = companyName,
-				CompanyPhonenumber = companyPhonenumber,
-				CompanyEmail = companyEmail,
-				RepresentativeName = representativeName,
-				ClinicName = clinicName,
-				ClinicAddress = clinicAddress,
-				DomainName = domainName,
-				Content = content,
-				Status = "Chưa Duyệt"
-			};
-
-			_context.Orders.Add(order);
-			await _context.SaveChangesAsync();
-			TempData["ToastMessageSuccessTempData"] = "Gửi thông tin thành công";
-			return RedirectToAction("index", "contact", new { area = "" });
-		}
-		#endregion
-
-
-	}
+    }
 }

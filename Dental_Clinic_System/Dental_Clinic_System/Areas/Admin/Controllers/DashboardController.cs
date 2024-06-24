@@ -1,52 +1,63 @@
-﻿using Dental_Clinic_System.Models.Data;
+﻿using Dental_Clinic_System.Areas.Admin.ViewModels;
+using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
-	[Area("Admin")]
-	[Route("Admin/[controller]")]
-	public class DashboardController : Controller
-	{
-		private readonly DentalClinicDbContext _context;
+    [Area("Admin")]
+    [Route("Admin/[controller]")]
+    public class DashboardController : Controller
+    {
+        private readonly DentalClinicDbContext _context;
 
-		public DashboardController(DentalClinicDbContext context)
-		{
-			_context = context;
-		}
-
-        [HttpGet("appointment-status")]
-        public IActionResult GetAppointmentStatus()
+        public DashboardController(DentalClinicDbContext context)
         {
-            // Mặc định hiển thị dữ liệu cho ngày hôm nay
-            DateTime today = DateTime.Today;
-            return View(today);
+            _context = context;
         }
 
-        [HttpPost("appointment-status")]
-        public async Task<IActionResult> GetAppointmentStatus(DateTime date)
+        [Route("GetAppointmentStatus")]
+        public async Task<IActionResult> GetAppointmentStatus()
         {
-            // Đặt ngày giới hạn từ 00:00 đến 23:59 của ngày cần thống kê
-            DateTime startDate = date.Date;
-            DateTime endDate = date.Date.AddDays(1).AddSeconds(-1);
+            var currentYear = DateTime.Now.Year;
 
-            // Truy vấn list cuộc hẹn trong ngày
-            var appointments = await _context.Appointments
-                .Where(a => a.CreatedDate >= startDate && a.CreatedDate <= endDate)
+            var successfulAppointmentsPerMonth = await _context.Appointments
+                .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Year == currentYear && a.AppointmentStatus == "Đã Khám")
+                .GroupBy(a => a.CreatedDate.Value.Month)
+                .Select(g => new { Month = g.Key, Count = g.Count() })
                 .ToListAsync();
 
-            // Đếm số lượng người đặt thành công và thất bại
-            int successfulAppointment = appointments.Count(a => a.AppointmentStatus == "Thành công");
-            int failedAppointment = appointments.Count(a => a.AppointmentStatus == "Thất bại");
+            var failedAppointmentsPerMonth = await _context.Appointments
+                .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Year == currentYear && a.AppointmentStatus == "Đã Hủy")
+                .GroupBy(a => a.CreatedDate.Value.Month)
+                .Select(g => new { Month = g.Key, Count = g.Count() })
+                .ToListAsync();
 
-            // Trả về dữ liệu thống kê
-            var status = new
+            var successfulData = new int[12];
+            var failedData = new int[12];
+
+            foreach (var item in successfulAppointmentsPerMonth)
             {
-                SuccessfulAppointments = successfulAppointment,
-                FailedAppointments = failedAppointment
+                successfulData[item.Month - 1] = item.Count;
+            }
+
+            foreach (var item in failedAppointmentsPerMonth)
+            {
+                failedData[item.Month - 1] = item.Count;
+            }
+
+            var model = new AppointmentVM
+            {
+                SuccessfulAppointments = successfulAppointmentsPerMonth.Sum(x => x.Count),
+                FailedAppointments = failedAppointmentsPerMonth.Sum(x => x.Count),
+                MonthlySuccessfulAppointments = successfulData.ToList(),
+                MonthlyFailedAppointments = failedData.ToList()
             };
 
-            return Ok(status);
+
+            return View(model);
         }
+
     }
+    
 }

@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mobiscroll.setOptions({
             theme: "ios",
             themeVariant: "light",
+            locale: mobiscroll.localeVi,
         });
 
         mobiscroll.datepicker('#demo-counter', {

@@ -22,8 +22,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			_webHostEnvironment = iwebhostenvironment;
 		}
 
-		//===================LIST CHUYÊN KHOA===================
-		[Route("ListSpecialty")]
+        #region Show List Chuyên Khoa
+        //===================LIST CHUYÊN KHOA===================
+        [Route("ListSpecialty")]
 		public async Task<IActionResult> ListSpecialty()
 		{
 			var hiddenSpecialties = _hiddenSpecialty.GetHiddenSpecialty();
@@ -43,7 +44,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View("ListSpecialty", specialtyList);
 		}
+		#endregion
 
+		#region Tìm kiếm (Search)
 		//===================TÌM KIẾM===================
 		[Route("SeachSpecialty")]
 		public async Task<IActionResult> SeachSpecialty(string search)
@@ -65,7 +68,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View(nameof(ListSpecialty), specialtyList);
 		}
+		#endregion
 
+		#region Chỉnh sửa (Edit)
 		//===================CHỈNH SỬA===================
 		[HttpGet]
 		[Route("EditSpecialty/{id}")]
@@ -124,7 +129,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return View("EditSpecialty", model);
 		}
+		#endregion
 
+		#region Xóa tạm thời (Delete)
 		//===================XÓA CHUYÊN KHOA TẠM THỜI===================
 		[Route("DeleteSpecialty/{id}")]
 		public IActionResult DeleteSpecialty(int id)
@@ -132,9 +139,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			_hiddenSpecialty.HiddenSpecialty(id);
 			return RedirectToAction(nameof(ListSpecialty));
 		}
+        #endregion
 
-		//===================THÊM CHUYÊN KHOA===================
-		[HttpPost]
+        //===================THÊM CHUYÊN KHOA===================
+        [HttpPost]
 		[Route("AddSpecialty")]
 		public async Task<IActionResult> AddSpecialty(string name, string description, string imageUrl, decimal deposit)
 		{
@@ -194,6 +202,29 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			return RedirectToAction(nameof(ListSpecialty));
 		}
+
+		#region Xem thông tin (View)
+		[Route("ViewSpecialty")]
+		public async Task<IActionResult> ViewSpecialty(int id)
+		{
+			var specialty = await _context.Specialties.FindAsync(id);
+			if (specialty == null)
+			{
+				return NotFound();
+			}
+
+			var specialtyVM = new ManagerSpecialtyVM
+			{
+				Id = specialty.ID,
+				Name = specialty.Name,
+				Deposit = specialty.Deposit,
+				Description = specialty.Description,
+				Image = specialty.Image
+			};
+
+			return Json(specialtyVM);
+		}
+		#endregion
 	}
 }
 

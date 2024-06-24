@@ -8,7 +8,11 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 	{
 		public int Id { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập.")]
+		public string? FirstName { get; set; }
+
+		public string? LastName { get; set; }
+
+		[Required(ErrorMessage = "Vui lòng nhập tên đăng nhập.")]
 		[StringLength(30, ErrorMessage = "Tên đăng nhập không được vượt quá 30 ký tự.")]
 		[MinLength(3, ErrorMessage = "Tên đăng nhập phải có ít nhất 3 ký tự.")]
 		[RegularExpression("^[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Tên đăng nhập chỉ được chứa các ký tự chữ cái và số, và phải bắt đầu bằng chữ cái.")]
@@ -27,6 +31,7 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 		[MinLength(3, ErrorMessage = "Email phải có ít nhất 3 ký tự.")]
 		public string? Email { get; set; }
 
+		public string? Gender { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
@@ -37,9 +42,19 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
         public string Role { get; set; }
 
-        public string Status { get; set; } 
+        public string Status { get; set; }
 
-        public bool IsHidden { get; set; }
+		public int? Province { get; set; }
+
+		public int? District { get; set; }
+
+		public int? Ward { get; set; }
+
+		public bool IsHidden { get; set; }
+
+		public int DegreeID { get; set; }
+
+		public string Description { get; set; }
 
 	}
 }

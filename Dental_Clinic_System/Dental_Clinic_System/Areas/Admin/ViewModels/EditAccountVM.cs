@@ -46,5 +46,9 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
         public string? Address { get; set; }
 
         public string Role { get; set; }
+
+        public int DegreeID { get; set; }
+
+        public int ClinicID { get; set; }
     }
 }
