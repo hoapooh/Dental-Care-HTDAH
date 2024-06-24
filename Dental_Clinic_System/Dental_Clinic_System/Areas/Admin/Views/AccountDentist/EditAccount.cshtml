@@ -1,37 +1,37 @@
 ﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.EditAccountVM
 
 @{
-	ViewData["Title"] = "EditAccount";
-	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "EditAccount";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <!-- ============ INFO ============ -->
 <div class="account__management">
     <div class="account__management__header">
-        <h1 class="title mb-0">Thông tin ...</h1>
+        <h1 class="title mb-0">Chỉnh sửa thông tin</h1>
     </div>
 
     <form method="post" action="~/Admin/AccountDentist/EditAccount" class="account__management__edit row">
-		<input type="hidden" name="Id" value="@Model.Id" />
-        <input type="hidden" name="Role" value="@Model.Role"/>
-		<div class="col-md-6">
-			<label for="username">Tên đăng nhập</label>
-			<input type="text" name="Username" id="username" value="@Model.Username" />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Role" value="@Model.Role" />
+        <div class="col-md-6">
+            <label for="username">Tên đăng nhập</label>
+            <input type="text" name="Username" id="username" value="@Model.Username" />
             <span asp-validation-for="Username" class="text-danger"></span>
-		</div>
-		<div class="col-md-6">
-			<label for="password">Mật khẩu</label>
-			<input type="password" name="Password" id="password" value="@Model.Password" />
+        </div>
+        <div class="col-md-6">
+            <label for="password">Mật khẩu</label>
+            <input type="password" name="Password" id="password" value="@Model.Password" />
             <span asp-validation-for="Password" class="text-danger"></span>
-		</div>
+        </div>
         <div class="col-md-3">
             <label for="lastname">Họ</label>
             <input type="text" name="Lastname" id="lastname" value="@Model.LastName" />
         </div>
-		<div class="col-md-3">
-			<label for="firstname">Tên</label>
-			<input type="text" name="Firstname" id="firstname" value="@Model.FirstName" />
-		</div>
+        <div class="col-md-3">
+            <label for="firstname">Tên</label>
+            <input type="text" name="Firstname" id="firstname" value="@Model.FirstName" />
+        </div>
         <div class="col-md-3">
             <label for="dateofbirth">Ngày sinh</label>
             <input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" required
@@ -44,7 +44,7 @@
                 <option value="Nữ">Nữ</option>
             </select>
         </div>
-		<div class="col-md-6">
+        <div class="col-md-6">
             <label for="degreeID">Bằng cấp</label>
             <select name="DegreeID" id="degreeID" class="form-control" asp-items="ViewBag.DegreeID" required></select>
         </div>
@@ -66,31 +66,31 @@
             <label for="address">Địa chỉ</label>
             <input type="text" name="Address" id="address" value="@Model.Address" />
         </div>
-		<div class="col-md-6">
+        <div class="col-md-6">
             <label for="province">Tỉnh/ Thành phố</label>
             <select name="Province" id="province" value="@Model.Province">
                 <option value="0">Tỉnh Thành</option>
             </select>
-		</div>
-		<div class="col-md-6">
-			<label for="district">Quận/ Huyện</label>
+        </div>
+        <div class="col-md-6">
+            <label for="district">Quận/ Huyện</label>
             <select name="District" id="district" value="@Model.District">
                 <option value="0">Quận Huyện</option>
             </select>
-		</div>
-		<div class="col-md-6">
+        </div>
+        <div class="col-md-6">
             <label for="ward">Phường/ Xã</label>
             <select name="Ward" id="ward" value="@Model.Ward">
                 <option value="0">Phường Xã</option>
             </select>
-		</div>
-		
-		<div class="col-md-12 text-end">
+        </div>
+
+        <div class="col-md-12 text-end">
             <button type="reset" class="btn" id="newBtn">Quay lại</button>
-			<button type="submit" class="btn">Lưu</button>
-		</div>
-        
-	</form>
+            <button type="submit" class="btn">Lưu</button>
+        </div>
+
+    </form>
 </div>
 
 

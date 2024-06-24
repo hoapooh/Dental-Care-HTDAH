@@ -14,6 +14,10 @@
 		color: #fff;
 		background: #4880ff;
 	}
+
+	.form-modal-styles {
+		width: 817px;
+	}
 </style>
 
 <!--SHOW THÔNG TIN CHI TIẾT PHÒNG KHÁM VÀ CHỈNH SỬA-->
@@ -24,7 +28,7 @@
 </div>
 
 <div class="modal-dialog modal-dialog-centered form-modal-styles">
-	<form id="uploadForm" action="~/Admin/ManagerClinic/EditClinic" method="post" class="modal-content">
+	<form id="uploadForm" action="~/Admin/ClinicCurrent/EditClinic" method="post" class="modal-content">
 		<input type="hidden" asp-for="ID" />
 		<input type="hidden" asp-for="ClinicStatus" value="Hoạt động" />
 
@@ -82,14 +86,6 @@
 				<input type="text" name="Address" id="addrSpecialty" class="form-control" value="@Model.Address" />
 				<span asp-validation-for="Address" class="text-danger"></span>
 			</div>
-			@* <div class="clinic-image col-md-12">
-			<label>Hình ảnh</label>
-			<img src="@Model.Image" alt="" style="max-width: 300px; max-height: 300px;" />
-			<input type="file" id="fileInput" class="form-control" />
-			<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />
-			<span asp-validation-for="Image" class="text-danger"></span>
-			</div> *@
-
 			<!--UPLOAD IMAGE-->
 			<div class="clinic-image col-md-12">
 				<label>Hình ảnh</label>

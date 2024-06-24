@@ -42,6 +42,11 @@ builder.Services.AddAuthentication(options =>
 	options.AccessDeniedPath = "/Dentist/DentistAccount/AccessDenied";
 	options.ExpireTimeSpan = TimeSpan.FromDays(14);
 
+}).AddCookie("GetAppointmentStatus", options =>
+{
+    options.LoginPath = "/Admin/AdminAccount/Login";
+    options.AccessDeniedPath = "/AccessDenied";
+    options.ExpireTimeSpan = TimeSpan.FromDays(14);
 }).AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {
 	options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
@@ -125,14 +130,14 @@ app.UseCors(builder =>
 //============ ADMIN ================
 app.UseEndpoints(endpoints =>
 {
-	//_ = endpoints.MapControllerRoute(
-	//   name: "admin_default",
-	//   pattern: "Admin",
-	//   defaults: new { area = "Admin", controller = "Account", action = "ListAccount" });
+    _ = endpoints.MapControllerRoute(
+       name: "admin_default",
+       pattern: "Admin",
+       defaults: new { area = "Admin", controller = "Dashboard", action = "GetAppointmentStatus" });
 
-	_ = endpoints.MapControllerRoute(
-	  name: "areas",
-	  pattern: "{area:exists}/{controller=Dashboard}/{action=GetAppointmentStatus}/{id?}"
+    _ = endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 });
 

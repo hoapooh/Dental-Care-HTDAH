@@ -56,6 +56,11 @@
 				<input type="search" placeholder="Tìm kiếm ..." name="search" />
 			</div>
 		</form>
+		<button type="button"
+				data-bs-toggle="modal" data-bs-target="#myModal"
+				class="add__new" id="newBtn">
+			+ Thêm
+		</button>
 	</div>
 </div>
 
@@ -107,6 +112,24 @@
 
 
 @section Scripts {
+	<!--Chuyển hướng Button New-->
+	<script>
+		//Đợi cho document được tải hoàn chỉnh
+		document.addEventListener("DOMContentLoaded", function () {
+			// Lấy button "+ Thêm"
+			var newBtn = document.getElementById("newBtn");
+
+			// Nếu button tồn tại
+			if (newBtn) {
+				// Thêm click
+				newBtn.addEventListener("click", function () {
+					// Chuyển hướng đến URL của view khác
+					window.location.href = "/Admin/ClinicCurrent/CreateClinic";
+				});
+			}
+		});
+	</script>
+
 	<!--Hiển thị các Tỉnh/Thành phố, Quận/Huyện, Phường/Xã-->
 	<script src="https://esgoo.net/scripts/jquery.js"></script>
 	<script>

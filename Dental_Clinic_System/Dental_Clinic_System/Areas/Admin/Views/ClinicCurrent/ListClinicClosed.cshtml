@@ -56,9 +56,9 @@
 		outline: none;
 	}
 
-	.unlock:hover {
-		background-color: #e60000; /* Darker color on hover */
-	}
+		.unlock:hover {
+			background-color: #e60000; /* Darker color on hover */
+		}
 </style>
 
 <!-- TÌM KIẾM (SEARCH)-->
@@ -74,6 +74,74 @@
 	</div>
 </div>
 
+<!--VIEW-->
+<div class="modal fade" id="clinicDetailsModal" tabindex="-1" role="dialog" aria-labelledby="clinicDetailsModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="clinicDetailsModalLabel">Chi tiết phòng khám</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="clinicName">Tên phòng khám</label>
+						<input type="text" class="form-control" id="clinicName" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicPhoneNumber">Số điện thoại</label>
+						<input type="text" class="form-control" id="clinicPhoneNumber" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicEmail">Email</label>
+						<input type="text" class="form-control" id="clinicEmail" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicManagerName">Quản lý</label>
+						<input type="text" class="form-control" id="clinicManagerName" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicProvince">Tỉnh/Thành phố</label>
+						<input type="text" class="form-control" id="clinicProvince" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicDistrict">Quận/Huyện</label>
+						<input type="text" class="form-control" id="clinicDistrict" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicWard">Phường/Xã</label>
+						<input type="text" class="form-control" id="clinicWard" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicBasis">Cơ sở</label>
+						<input type="text" class="form-control" id="clinicBasis" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicAddress">Địa chỉ</label>
+						<input type="text" class="form-control" id="clinicAddress" readonly>
+					</div>
+					<div class="form-group">
+						<label for="clinicDescription">Mô tả</label>
+						<textarea class="form-control" id="clinicDescription" rows="3" readonly></textarea>
+					</div>
+					<div class="form-group">
+						<label for="clinicImage">Hình ảnh</label>
+						<img id="clinicImage" class="img-fluid" alt="Clinic Image">
+					</div>
+					<div class="form-group">
+						<label for="clinicStatus">Trạng thái</label>
+						<input type="text" class="form-control" id="clinicStatus" readonly>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!--SHOW LIST-->
 <!-- CLINIC LIST MANAGEMENT -->
@@ -96,10 +164,10 @@
 						<a href="tel:0123456789"><i class="fa-solid fa-phone-volume"></i></a>
 						<a href="mailto:example@gmail.com"><i class="fa-solid fa-envelope"></i></a>
 
-						<!--EDIT-->
-						<a href="~/Admin/ClinicCurrent/EditClinic/@clinic.Id" class="view">
+						<!--VIEW BUTTON-->
+						<button type="button" class="btn btn-view btn-icon" onclick="viewClinicClosed(@clinic.Id)">
 							<i class="fa-solid fa-eye"></i>
-						</a>
+						</button>
 
 						<!--UNLOCK-->
 						<form action="~/Admin/ClinicCurrent/UnlockClinic" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn mở lại phòng khám này không?');">
@@ -176,5 +244,35 @@
 			loadNames();
 		});
 	</script>
+
+	<script>
+		function viewClinicClosed(clinicId) {
+			// Use AJAX to fetch clinic details
+			$.ajax({
+				url: '@Url.Action("ViewClinic", "ClinicCurrent", new { Area = "Admin" })',
+				type: 'GET',
+				data: { id: clinicId },
+				success: function (data) {
+					// Populate modal fields with fetched data
+					$('#clinicName').val(data.name);
+					$('#clinicPhoneNumber').val(data.phoneNumber);
+					$('#clinicEmail').val(data.email);
+					$('#clinicManagerName').val(data.managerName);
+					$('#clinicProvince').val(data.province);
+					$('#clinicDistrict').val(data.district);
+					$('#clinicWard').val(data.ward);
+					$('#clinicBasis').val(data.basis);
+					$('#clinicAddress').val(data.address);
+					$('#clinicDescription').val(data.description);
+					$('#clinicImage').attr('src', data.image);
+					$('#clinicStatus').val(data.clinicStatus);
+
+					// Show the modal
+					$('#clinicDetailsModal').modal('show');
+				}
+			});
+		}
+	</script>
+
 }
 

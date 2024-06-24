@@ -1,13 +1,17 @@
 ﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.AddClincVM
 
 @{
-	ViewData["Title"] = "EditClinic";
+	ViewData["Title"] = "CreateClinic";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <style>
-	.text-New-Clinic {
-		font-size: calc(1.375rem + 1.5vw);
+	.modal-header {
+		justify-content: space-around;
+	}
+
+	.form-modal-styles {
+		width: 70%;
 	}
 
 	.sidebar .nav-item a.Quan_ly_phong_kham {
@@ -16,107 +20,76 @@
 	}
 </style>
 
-<!--SHOW THÔNG TIN CHI TIẾT PHÒNG KHÁM VÀ CHỈNH SỬA-->
-<div class="modal-header">
-	<h1 class="modal-title fs-10 text-New-Clinic" id="mainTitle">
-		Chỉnh sửa phòng khám
-	</h1>
-</div>
 
 <div class="modal-dialog modal-dialog-centered form-modal-styles">
-	<form id="uploadForm" action="~/Admin/ManagerClinic/EditClinic" method="post" class="modal-content">
-		<input type="hidden" asp-for="ID" />
-		<input type="hidden" asp-for="ClinicStatus" value="Hoạt động" />
-
+	<form id="clinicForm" action="~/Admin/ClinicCurrent/CreateClinic" method="post" class="modal-content">
+		<div class="modal-header">
+			<h1 class="modal-title fs-10" id="mainTitle">
+				Thêm mới phòng khám
+			</h1>
+		</div>
+		<input type="hidden" name="ClinicStatus" />
 		<div class="modal-body row">
 			@* HIỂN THỊ LỖI *@
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 			<div class="clinic-name col-md-6">
-				<label for="name">Tên phòng khám</label>
-				<input type="text" name="Name" id="name" class="form-control" value="@Model.Name" />
+				<label for="name">Tên phòng khám<sup style="color:red">*</sup></label>
+				<input type="text" name="Name" id="name" class="form-control" />
 				<span asp-validation-for="Name" class="text-danger"></span>
 			</div>
 			<div class="clinic-tel col-md-6">
 				<label for="basis">Cơ sở</label>
-				<input type="text" name="Basis" id="basis" class="form-control" value="@Model.Basis" />
+				<input type="text" name="Basis" id="basis" class="form-control" />
 
 			</div>
 			<div class="clinic-manager col-md-6">
-				<label for="manager">Người quản lý phòng khám</label>
+				<label for="manager">Tên quản lý phòng khám</label>
 				<select asp-for="ManagerID" asp-items="Model.UnassignedManagers" class="form-control">
 					<option value="">-- Chọn quản lý phòng khám --</option>
 				</select>
 			</div>
 			<div class="clinic-tel col-md-6">
-				<label for="tel">Số điện thoại</label>
-				<input type="tel" name="PhoneNumber" id="tel" class="form-control" value="@Model.PhoneNumber" />
+				<label for="tel">Số điện thoại<sup style="color:red">*</sup></label>
+				<input type="tel" name="PhoneNumber" id="tel" class="form-control" />
 				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 			</div>
 			<div class="clinic-mail col-md-12">
-				<label for="mail">Email</label>
-				<input type="email" name="Email" id="mail" class="form-control" value="@Model.Email" />
+				<label for="mail">Email<sup style="color:red">*</sup></label>
+				<input type="email" name="Email" id="mail" class="form-control" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 
 			<div class="clinic-province col-md-4">
-				<label for="province">Tỉnh / Thành phố</label>
+				<label for="province">Tỉnh / Thành phố<sup style="color:red">*</sup></label>
 				<select id="province" title="Chọn Tỉnh Thành" name="Province" class="form-control">
 					<option value="0">-- Chọn Tỉnh Thành --</option>
 				</select>
 			</div>
 			<div class="clinic-district col-md-4">
-				<label for="district">Quận / Huyện</label>
+				<label for="district">Quận / Huyện<sup style="color:red">*</sup></label>
 				<select id="district" title="Chọn Quận Huyện" name="District" class="form-control">
 					<option value="0">-- Chọn Quận Huyện --</option>
 				</select>
 			</div>
 			<div class="clinic-ward col-md-4">
-				<label for="ward">Phường / Xã</label>
+				<label for="ward">Phường / Xã<sup style="color:red">*</sup></label>
 				<select id="ward" title="Chọn Phường Xã" name="Ward" class="form-control">
 					<option value="0">-- Chọn Phường Xã --</option>
 				</select>
 			</div>
 			<div class="clinic-address col-md-12">
-				<label for="addrSpecialty">Địa chỉ phòng khám</label>
-				<input type="text" name="Address" id="addrSpecialty" class="form-control" value="@Model.Address" />
+				<label for="addrSpecialty">Địa chỉ phòng khám<sup style="color:red">*</sup></label>
+				<input type="text" name="Address" id="addrSpecialty" class="form-control" />
 				<span asp-validation-for="Address" class="text-danger"></span>
 			</div>
-			@* <div class="clinic-image col-md-12">
-			<label>Hình ảnh</label>
-			<img src="@Model.Image" alt="" style="max-width: 300px; max-height: 300px;" />
-			<input type="file" id="fileInput" class="form-control" />
-			<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />
-			<span asp-validation-for="Image" class="text-danger"></span>
-			</div> *@
 
-			<!--UPLOAD IMAGE-->
 			<div class="clinic-image col-md-12">
 				<label>Hình ảnh</label>
-				<div class="preview-image col-md-12">
-					<input type="file" id="imageInput" class="form-control" />
-					<input asp-for="Image" type="hidden" id="imageUrl" class="form-control" />
-				</div>
-
-				<br />
-
-				<div class="container__image__preview">
-					<div class="style__image__preview row">
-
-						<div class="final-image col-md-6">
-							<h3 class="title">Hình ảnh hiện tại</h3>
-							<img src="@Model.Image" alt="" id="imageDisplay"
-								 style=" display: block; max-width: 100%; text-align: center; border-radius: 10px;" />
-						</div>
-
-						<div class="preview-image col-md-6">
-							<h3 class="title">Hình ảnh được chọn</h3>
-							<img src="" alt="" id="imagePreview"
-								 style=" display: block; max-width: 100%; text-align: center; border-radius: 10px;" />
-						</div>
-
-					</div>
-				</div>
+				<img src="@Model.Image" alt="" style="max-width: 300px; max-height: 300px;" />
+				<input type="file" id="fileInput" class="form-control" />
+				<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />
+				<span asp-validation-for="Image" class="text-danger"></span>
 			</div>
 
 			<div class="clinic-desc col-md-12">
@@ -127,14 +100,14 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
+
 		<div class="modal-footer">
 			<button type="button"
 					class="close-btn btn"
 					data-bs-dismiss="modal"
 					id="newBtn">
-				Quay lại
+				Đóng
 			</button>
 			<button type="submit" class="submit-btn btn">
 				Lưu
@@ -144,9 +117,8 @@
 </div>
 
 
-
 @* Đưa ảnh lên firebase *@
-<script src="~/assets/js/upload-image-firebase.js" type="module"></script>
+<script src="~/assets/js/firebase_script2.js" type="module"></script>
 
 @* Dùng editor *@
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
