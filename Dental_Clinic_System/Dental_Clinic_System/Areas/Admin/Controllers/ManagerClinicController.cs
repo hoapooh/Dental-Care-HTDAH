@@ -1,7 +1,9 @@
 ﻿using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Areas.Admin.ViewModels;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
+using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.Services.EmailSender;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +18,12 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
     public class ManagerClinicController : Controller
     {
         private readonly DentalClinicDbContext _context;
+        private readonly IEmailSenderCustom _emailSender;
 
-        public ManagerClinicController(DentalClinicDbContext context)
+        public ManagerClinicController(DentalClinicDbContext context, IEmailSenderCustom emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
 
         #region Show List Clinic
@@ -350,6 +354,104 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             }
 
             return RedirectToAction(nameof(ListClinic));
+        }
+        #endregion
+
+        #region Duyệt Yêu Cầu Hợp Tác Kinh Doanh
+        [HttpGet]
+        //[Route("ApprovalRequest")]
+        public async Task<IActionResult> ApprovalRequest()
+        {
+            var orderList = await _context.Orders.ToListAsync();
+            var businessPartnershipViewModel = new BusinessPartnershipViewModel
+            {
+                BusinessPartnerships = orderList
+            };
+
+            return View(businessPartnershipViewModel);
+        }
+
+        [HttpPost]
+        //[Route("GetApprovalRequest")]
+        public async Task<IActionResult> GetApprovalRequest(string companyName, string companyPhonenumber, string companyEmail, string representativeName, string clinicName, string clinicAddress, string? domainName, string content)
+        {
+            var companyNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyName == companyName);
+            var companyPhonenumberExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyPhonenumber == companyPhonenumber);
+            var companyEmailExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyEmail == companyEmail);
+            var clinicNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.ClinicName == clinicName);
+            var domainExisted = await _context.Orders.FirstOrDefaultAsync(c => c.DomainName == domainName);
+
+            if (companyNameExisted != null || companyPhonenumberExisted != null || companyEmailExisted != null || clinicNameExisted != null || domainExisted != null)
+            {
+                TempData["ToastMessageFailTempData"] = "Gửi thông tin thất bại";
+                return RedirectToAction("index", "contact", new { area = "" });
+            }
+
+
+            var order = new Order
+            {
+                CompanyName = companyName,
+                CompanyPhonenumber = companyPhonenumber,
+                CompanyEmail = companyEmail,
+                RepresentativeName = representativeName,
+                ClinicName = clinicName,
+                ClinicAddress = clinicAddress,
+                DomainName = domainName,
+                Content = content,
+                Status = "Chưa Duyệt"
+            };
+
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+            TempData["ToastMessageSuccessTempData"] = "Gửi thông tin thành công";
+            return RedirectToAction("index", "contact", new { area = "" });
+        }
+
+        [HttpPost]
+        //[Route("ProcessRequest")]
+        public async Task<IActionResult> ProcessRequest(int orderID, string orderStatus)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.ID == orderID);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            if (orderStatus == "Đồng Ý")
+            {
+                var encryptedPassword = Util.GenerateRandomKey(order.CompanyEmail, 20);
+                var user = new Account
+                {
+                    Username = order.CompanyEmail,
+                    Password = DataEncryptionExtensions.ToMd5Hash(encryptedPassword),
+                    Role = "Quản Lý",
+                    FirstName = order.RepresentativeName,
+                    Email = order.CompanyEmail,
+                    PhoneNumber = order.CompanyPhonenumber,
+                    AccountStatus = "Hoạt Động"
+                };
+
+                order.Status = "Đồng Ý";
+
+                _context.Accounts.Add(user);
+                await _context.SaveChangesAsync();
+
+                await _emailSender.SendBusinessPartnershipsInfo(order, user, encryptedPassword, "Xác nhận trở thành đối tác của Dental Care");
+
+                TempData["ToastMessageSuccessTempData"] = "Xác nhận đơn duyệt thành công";
+                return RedirectToAction("ApprovalRequest", "ManagerClinic", new { area = "admin" });
+            }
+            else if (orderStatus == "Từ Chối")
+            {
+                _context.Orders.Remove(order);
+                await _context.SaveChangesAsync();
+
+                TempData["ToastMessageFailTempData"] = "Từ chối đơn duyệt thành công";
+                return RedirectToAction("ApprovalRequest", "ManagerClinic", new { area = "admin" });
+            }
+
+            TempData["ToastMessageTempData"] = "LOLOLOL";
+            return RedirectToAction("ApprovalRequest", "ManagerClinic", new { area = "admin" });
         }
         #endregion
 
