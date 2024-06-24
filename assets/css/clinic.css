@@ -749,51 +749,22 @@ body::-webkit-scrollbar {
 	margin: 0 auto;
 }
 
-.clinic__detail__info__images .info {
+.clinic__detail__info__map .info {
 	background: #fff;
 	box-shadow: #ccd6ef 5px 20px 40px 0px;
 	border-radius: 20px;
 	padding: 35px 35px 20px;
 }
 
-.clinic__detail__info__images .desc {
-	margin-top: 30px;
-	padding: 35px;
-	background: #fff;
-	box-shadow: #ccd6ef 5px 20px 40px 0px;
-	border-radius: 20px;
-}
-
-.clinic__detail__info__images .desc h2 {
-	font-size: 2.4rem;
-	font-weight: 700;
-	color: #2d9cfd;
-}
-
-.clinic__detail__info__images .desc p {
-	font-size: 1.8rem;
-	color: #003553;
-}
-
-/* .clinic__detail__info__images .images {
-	height: 100%;
-}
-
-.clinic__detail__info__images .images img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-} */
-
-.clinic__detail__info__images .info-title {
+.clinic__detail__info__map .info-title {
 	text-align: center;
 }
 
-.clinic__detail__info__images .info-title img {
+.clinic__detail__info__map .info-title img {
 	width: 150px;
 }
 
-.clinic__detail__info__images .info-title .name {
+.clinic__detail__info__map .info-title .name {
 	margin-top: 20px;
 	text-align: center;
 	font-size: 3rem;
@@ -801,11 +772,11 @@ body::-webkit-scrollbar {
 	color: #2d9cfd;
 }
 
-.clinic__detail__info__images .info-details {
+.clinic__detail__info__map .info-details {
 	font-size: 1.6rem;
 }
 
-.clinic__detail__info__images .info-details .book a {
+.clinic__detail__info__map .info-details .book a {
 	display: block;
 	padding: 10px 30px;
 	text-align: center;
@@ -816,22 +787,70 @@ body::-webkit-scrollbar {
 	border-radius: 100px;
 }
 
-.clinic__detail__info__images .info-details .book a:hover {
+.clinic__detail__info__map .info-details .book a:hover {
 	background: #0f5fcb;
 }
 
-.clinic__detail__info__images .info-details .style__item {
+.clinic__detail__info__map .info-details .style__item {
 	display: inline-flex;
 	gap: 5.5px;
 	align-items: center;
 	margin-bottom: 12px;
 }
 
-.clinic__detail__info__images .info-details .style__item .span {
+.clinic__detail__info__map .info-details .style__item .span {
 	line-height: 18.75px;
 }
 
-.clinic__detail__desc__map .map {
+.clinic__detail__info__map .map {
 	margin-top: 30px;
-	height: 30%;
+	height: 50%;
 }
+
+.carousel-inner {
+	border-radius: 20px;
+}
+
+.carousel-control-prev {
+	border-radius: 20px 0 0 20px;
+}
+
+.carousel-control-next {
+	border-radius: 0 20px 20px 0;
+}
+
+.clinic__detail__slide__desc img {
+	width: 100%;
+	height: 400px;
+	object-fit: cover;
+	border-radius: 20px;
+}
+
+.clinic__detail__slide__desc .desc {
+	margin-top: 30px;
+	padding: 35px;
+	background: #fff;
+	box-shadow: #ccd6ef 5px 20px 40px 0px;
+	border-radius: 20px;
+}
+
+.clinic__detail__slide__desc .desc h2 {
+	font-size: 2.4rem;
+	font-weight: 700;
+	color: #2d9cfd;
+}
+
+.clinic__detail__slide__desc .desc p {
+	font-size: 1.8rem;
+	color: #003553;
+}
+
+/* .clinic__detail__info__map .images {
+	height: 100%;
+}
+
+.clinic__detail__info__map .images img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+} */
