@@ -446,11 +446,11 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 _context.Orders.Remove(order);
                 await _context.SaveChangesAsync();
 
-                TempData["ToastMessageFailTempData"] = "Từ chối đơn duyệt thành công";
+                TempData["ToastMessageSuccessTempData"] = "Từ chối đơn duyệt thành công";
                 return RedirectToAction("ApprovalRequest", "ManagerClinic", new { area = "admin" });
             }
 
-            TempData["ToastMessageTempData"] = "LOLOLOL";
+            TempData["ToastMessageTempData"] = "Đã có lỗi xảy ra";
             return RedirectToAction("ApprovalRequest", "ManagerClinic", new { area = "admin" });
         }
         #endregion

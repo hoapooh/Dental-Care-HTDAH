@@ -32,8 +32,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 BankAccountNumber = t.BankAccountNumber,
                 TotalPrice = t.TotalPrice,
                 Message = t.Message,
-                Status = t.Status
-            }).ToList();
+                Status = t.Status,
+			}).ToList();
 
             return View(transactionList);
         }
