@@ -85,7 +85,7 @@ namespace Dental_Clinic_System.Controllers
 			//-------------------------CÁC CHUYÊN KHOA
 			var specialtyNames = _context.DentistSpecialties.Include(
 				s => s.Specialty).Include(d => d.Dentist).AsQueryable()
-				.Where(p => p.DentistID == id)
+				.Where(p => p.DentistID == id && p.Check == true)
 				.Select(p => p.Specialty.Name) // Extract the names of the specialties
 				.ToList();
 			ViewBag.SpecialtyNames = specialtyNames;
@@ -105,22 +105,6 @@ namespace Dental_Clinic_System.Controllers
 		// POST: Dentists/Create
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-		/*[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("ID,AccountID,ClinicID,DegreeID,Description")] Dentist dentist)
-		{
-			if (ModelState.IsValid)
-			{
-				_context.Add(dentist);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-			ViewData["AccountID"] = new SelectList(_context.Accounts, "ID", "AccountStatus", dentist.AccountID);
-			ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "ID", dentist.ClinicID);
-			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
-			return View(dentist);
-		}*/
 
 		//Thêm tài khoản -> Thêm Nha sĩ
 		[HttpPost]
@@ -175,24 +159,38 @@ namespace Dental_Clinic_System.Controllers
 			_context.Dentists.Add(newDentist);
 			await _context.SaveChangesAsync();
 			//Thêm vào bảng NhaSi_ChuyenKhoa
-			var den = await _context.Dentists.FirstOrDefaultAsync(a => a.AccountID == account.ID);
-			if (dentist.SpecialtyIDs.Count > 0)
+			var den = await _context.Dentists.FirstOrDefaultAsync(a => a.AccountID == account.ID); //lấy Nha sĩ ms tạo
+			var speIDs =  _context.Specialties.AsQueryable().Select(a => a.ID).ToList(); //lấy các ID củae all chuyển khoa
+			bool check;
+			foreach ( var speID in speIDs )
 			{
-				foreach (var spe in dentist.SpecialtyIDs)
+				if (dentist.SpecialtyIDs.Contains(speID))
+					check = true;
+				else
+					check = false;
+				var newDen_spe = new DentistSpecialty
 				{
-					var newDen_spe = new DentistSpecialty
-					{
-						DentistID = den.ID,
-						SpecialtyID = spe
-					};
-					_context.Add(newDen_spe);	
-				}
-
+					DentistID = den.ID,
+					SpecialtyID = speID,
+					Check = check
+				};
+				_context.Add(newDen_spe);
 			}
 			await _context.SaveChangesAsync();
-			//Về xem danh sách
-			var dentists = _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree);
-			return View("Index", await dentists.ToListAsync());
+			//--------------------------------------
+			//Thêm dòng cho nha sĩ ms trong Lịch làm việc Dentist_Session
+			for (int i = 1; i <= 14; i++)
+			{
+				var newDenSes = new Dentist_Session
+				{
+					Dentist_ID = den.ID,
+					Session_ID = i,
+					Check = false //mặc định khi tạo ms
+				};
+				_context.Add(newDenSes);
+			}
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
 		}
 
 		// GET: Dentists/Edit/5
@@ -226,6 +224,12 @@ namespace Dental_Clinic_System.Controllers
 				DateOfBirth = dentist.Account?.DateOfBirth,
 				Description = dentist.Description ?? ""
 			};
+			// Xử lý các chuyên khoa - BẢNG DENTIST_SPECIALTY
+			var den_speList = _context.DentistSpecialties.Include(d => d.Dentist).Include(d => d.Specialty).AsQueryable();
+			var speIDs = await den_speList.Where(p => p.DentistID == id && p.Check == true).Select(p => p.SpecialtyID).ToListAsync(); //lấy tất cả ID của chuyên khoa của nha sĩ có DentistID=id
+			ViewBag.SpeIDs = speIDs;
+			//-------------------
+			ViewData["Specialty"] = new SelectList(_context.Specialties, "ID", "Name");
 			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
 			return View(dentistForm);
 		}
@@ -235,7 +239,7 @@ namespace Dental_Clinic_System.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("DentistId, AccountId, LastName, FirstName, Gender, Province, Ward, District, Address, DateOfBirth, PhoneNumber, Email, DegreeID, Description")] EditDentistVM dentistForm)
+		public async Task<IActionResult> Edit(int id, [Bind("SpecialtyIDs, DentistId, AccountId, LastName, FirstName, Gender, Province, Ward, District, Address, DateOfBirth, PhoneNumber, Email, DegreeID, Description")] EditDentistVM dentistForm)
 		{
 			if (id != dentistForm.DentistId)
 			{
@@ -246,6 +250,7 @@ namespace Dental_Clinic_System.Controllers
 			{
 				try
 				{
+					//---------------BẢNG ACCOUNT CỦA NHA SĨ
 					var account = _context.Accounts.Find(dentistForm.AccountId);
 					if (account != null)
 					{
@@ -262,7 +267,7 @@ namespace Dental_Clinic_System.Controllers
 					};
 					_context.Update(account);
 					await _context.SaveChangesAsync();
-
+					//-----------------BẢNG NHA SĨ
 					var dentist = _context.Dentists.Find(dentistForm.DentistId);
 					if (dentist != null)
 					{
@@ -270,6 +275,17 @@ namespace Dental_Clinic_System.Controllers
 						dentist.Description = dentistForm.Description;
 					}
 					_context.Update(dentist);
+					await _context.SaveChangesAsync();
+					//------------------BẢNG NHA SĨ_CHUYÊN KHOA
+					var den_speList = _context.DentistSpecialties.AsQueryable().Where(d => d.DentistID == id).ToList();
+                    foreach (var denspe in den_speList)
+                    {
+						if (dentistForm.SpecialtyIDs.Contains(denspe.SpecialtyID))
+							denspe.Check = true;
+						else
+							denspe.Check = false;
+						_context.Update(denspe);
+                    }
 					await _context.SaveChangesAsync();
 				}
 				catch (DbUpdateConcurrencyException)

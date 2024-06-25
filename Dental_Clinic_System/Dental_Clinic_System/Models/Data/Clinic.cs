@@ -13,8 +13,14 @@ namespace Dental_Clinic_System.Models.Data
 
         [Column("ManagerID")]
         public int ManagerID { get; set; }
+		//====================================================================================================
+		[Column("AmWorkTime", TypeName = "int")]
+		public int AmWorkTimeID { get; set; }
+		[Column("PmWorkTime", TypeName = "int")]
+		public int PmWorkTimeID { get; set; }
+		//====================================================================================================
 
-        [StringLength(100)]
+		[StringLength(100)]
         public string Name { get; set; } = null!;
 
         #region ID For Address
@@ -79,6 +85,13 @@ namespace Dental_Clinic_System.Models.Data
 		[InverseProperty("Clinics")]
 		public virtual Account Manager { get; set; } = null!;
 
+		[ForeignKey("AmWorkTimeID")]
+		[InverseProperty("AmWorkTimeClinics")]
+		public virtual WorkTime AmWorkTimes { get; set; }
+
+		[ForeignKey("PmWorkTimeID")]
+		[InverseProperty("PmWorkTimeClinics")]
+		public virtual WorkTime PmWorkTimes { get; set; }
 		#endregion
 
 		#region Entity Mapping

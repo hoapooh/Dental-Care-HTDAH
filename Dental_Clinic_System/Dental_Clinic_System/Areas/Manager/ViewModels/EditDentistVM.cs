@@ -4,6 +4,7 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 {
 	public class EditDentistVM
 	{
+		public List<int> SpecialtyIDs { get; set; } = new List<int>();
 		public int DentistId { get; set; }
         public int AccountId { get; set; }
 

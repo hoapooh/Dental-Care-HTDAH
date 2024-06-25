@@ -27,6 +27,13 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual DbSet<ClinicTransaction> ClinicTransactions { get; set; }
 		public virtual DbSet<News> News { get; set; }
 		public virtual DbSet<Order> Orders { get; set; }
+
+		//================================================================================================================================
+		public virtual DbSet<Dentist_Session> Dentist_Sessions { get; set; }
+		public virtual DbSet<Session> Sessions { get; set; }
+
+		public virtual DbSet<WorkTime> WorkTimes { get; set; }
+		//================================================================================================================================
 		#endregion
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Name=DBConnection");
@@ -234,7 +241,36 @@ namespace Dental_Clinic_System.Models.Data
 				entity.HasCheckConstraint("CK_CHECKVALID_STATUS", "Status = N'Chưa Duyệt' OR Status = N'Từ Chối' OR Status = N'Đồng Ý'");
 			});
 
-            OnModelCreatingPartial(modelBuilder);
+			modelBuilder.Entity<Dentist_Session>(entity =>
+			{
+				entity.HasKey(e => e.ID).HasName("PK_Dentist_Session");
+
+				entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+				entity.HasOne(d => d.Dentist).WithMany(p => p.DentistSessions).HasConstraintName("FK__Dentist__Dentist_Session").OnDelete(DeleteBehavior.Restrict);
+
+				entity.HasOne(d => d.Session).WithMany(p => p.SessionsDentist).HasConstraintName("FK__Dentist__Session_Dentist").OnDelete(DeleteBehavior.Restrict);
+			});
+
+			modelBuilder.Entity<Session>(entity =>
+			{
+				entity.HasKey(e => e.ID).HasName("PK_Session");
+
+				entity.Property(e => e.ID).ValueGeneratedOnAdd();
+			});
+
+			modelBuilder.Entity<WorkTime>(entity =>
+			{
+				entity.HasKey(e => e.ID).HasName("PK_WorkTime");
+
+				entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+				entity.HasMany(d => d.AmWorkTimeClinics).WithOne(p => p.AmWorkTimes).HasForeignKey(fk => fk.AmWorkTimeID).HasConstraintName("FK__AmWorkTime__Clinic").IsRequired(false);
+
+				entity.HasMany(d => d.PmWorkTimeClinics).WithOne(p => p.PmWorkTimes).HasForeignKey(fk => fk.PmWorkTimeID).HasConstraintName("FK__PmWorkTime__Clinic").IsRequired(false);
+			});
+
+			OnModelCreatingPartial(modelBuilder);
 		}
 
 		partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

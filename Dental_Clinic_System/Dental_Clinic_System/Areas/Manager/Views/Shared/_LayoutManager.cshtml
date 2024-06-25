@@ -40,13 +40,13 @@
 				<ul class="nav">
 					<li class="nav-item">
 						<a asp-controller="Dentists" asp-action="Index" class="Quan_ly_nha_si">
-							<span class="menu-icon"><i class="bx bxs-user"></i></span>Quản lý nha sĩ</a>
+							<span class="menu-icon"><i class="bx bxs-user"></i></span>Nha sĩ</a>
 					</li>
 					<li class="nav-item">
 					<a asp-controller="Schedules" asp-action="Index" class="Lich_lam_viec">
 							<span class="menu-icon"
 								><i class="fa-solid fa-calendar-days"></i></span
-							>Lịch làm việc</a>
+							>Lịch trình</a>
 					</li>
 					<li class="nav-item">
 					<a asp-controller="Service" asp-action="Index" class="Dich_vu_kham">
@@ -57,7 +57,7 @@
 					<a asp-controller="Clinics" asp-action="Edit" asp-route-id="1" class="Quan_ly_phong_kham">
 						<span class="menu-icon"
 								><i class="fa-solid fa-house-chimney-medical"></i></span
-							>Quản lý phòng khám</a>
+							>Phòng khám</a>
 					</li>
 				</ul>
 			</nav>
@@ -80,7 +80,6 @@
 				<div class="manager__management">
 					@RenderBody()
 				</div>
-				
 			</div>
 		</div>
 		

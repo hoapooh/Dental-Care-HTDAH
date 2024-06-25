@@ -44,6 +44,9 @@
 			padding: 0 10px;
 		}
 
+		.form-modal-styles .modal-body .user-address {
+			flex: 0 0 50%;
+		}
 		.modal-content {
 			--mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
 			border: 0;
@@ -126,7 +129,27 @@
 				<label for="DegreeID">Bằng cấp</label>
 				<select asp-items="ViewBag.DegreeID" asp-for="DegreeID" class="form-control" required></select>
 			</div>
+
 			<div class="user-address modal-body-card">
+				<label>Chuyên khoa</label>
+				@{
+					var specialtyList = ((SelectList)ViewBag.Specialty).ToList();//tất cả chuyên khoa
+					var selectedSpeIds = ViewBag.SpeIDs as List<int>; //chuyên khoa nha sĩ có
+				}
+
+				@foreach (var specialty in specialtyList)
+				{
+					var isChecked = selectedSpeIds != null && selectedSpeIds.Contains(int.Parse(specialty.Value));
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" name="SpecialtyIDs" value="@specialty.Value" id="specialty_@specialty.Value" @(isChecked ? "checked" : "")>
+						<label class="form-check-label" for="specialty_@specialty.Value">
+							@specialty.Text
+						</label>
+					</div>
+				}
+			</div>
+
+			<div class="user-pic modal-body-card">
 				<label for="Description">Mô tả nha sĩ</label>
 				<div id="container">
 					<div id="editor">

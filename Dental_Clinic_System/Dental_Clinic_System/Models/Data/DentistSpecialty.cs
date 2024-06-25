@@ -15,6 +15,10 @@ namespace Dental_Clinic_System.Models.Data
 
         [Column("DentistID")]
         public int DentistID { get; set; }
+		//---------------
+		[Column("Check", TypeName = "bit")]
+		public bool? Check { get; set; }
+		//----------
 
 		#region Entity Mapping
 

@@ -33,14 +33,41 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		// GET: Manager/LichLamViec
 		public async Task<IActionResult> LichLamViec()
 		{
-			var dentists = _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).AsQueryable();
-			dentists =  dentists.Where(p => p.ClinicID == 1);
-			ViewBag.Dentists = await dentists.ToListAsync();
-            //------------------------------
-            
-
-			return View();
+            // Lấy các lịch làm việc của các nha sĩ thuộc phòng khám cụ thể - mà manager đang quản lý
+            //Ví dụ phòng khám có ID=1 (Nha khoa đại dương)
+            var den_sesList = _context.Dentist_Sessions.Include(d => d.Dentist).ThenInclude(a => a.Account).Include(d => d.Session).AsQueryable();
+			den_sesList = den_sesList.Where(p => p.Dentist.ClinicID == 1); //Lấy tất cả các dòng của Dentist_Sessions where DentistIDs thuộc Clinic có id=1 
+            //ViewBag.DenSesList = await den_SesList.ToListAsync(); ;
+            return View(await den_sesList.ToListAsync());
 		}
+		// POST: Manager/LichLamViec
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> LichLamViec(List<int> SelectedDenSesList)
+        {
+			// Lấy các lịch làm việc của các nha sĩ thuộc phòng khám cụ thể - mà manager đang quản lý
+			//Ví dụ phòng khám có ID=1 (Nha khoa đại dương)
+			var den_sesList = _context.Dentist_Sessions.Include(d => d.Dentist).ThenInclude(a => a.Account).Include(d => d.Session).AsQueryable();
+			den_sesList = den_sesList.Where(p => p.Dentist.ClinicID == 1); //Lấy tất cả các dòng của Dentist_Sessions where DentistIDs thuộc Clinic có id=1 
+            foreach (var denses in den_sesList)
+            {
+                if (SelectedDenSesList.Contains(denses.ID)) //nếu được chọn
+                    denses.Check = true;
+                else
+                    denses.Check = false;
+                _context.Update(denses);
+            }
+			await _context.SaveChangesAsync();
+            //Lấy danh sách để in ra
+			den_sesList = den_sesList.Where(p => p.Dentist.ClinicID == 1); //Lấy tất cả các dòng của Dentist_Sessions where DentistIDs thuộc Clinic có id=1 
+			return View(await den_sesList.ToListAsync());
+        }
+
+
+
+
 		// GET: Manager/Schedules/Details/5
 		public async Task<IActionResult> Details(int? id)
         {
