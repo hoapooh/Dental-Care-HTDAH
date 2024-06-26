@@ -76,9 +76,18 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.HasOne(d => d.PatientRecords).WithMany(p => p.Appointments).IsRequired(false).HasConstraintName("FK__Appointment__PatientRecord").OnDelete(DeleteBehavior.NoAction);
 
-				entity.HasOne(d => d.Schedule).WithOne(p => p.Appointments).IsRequired(true).HasConstraintName("FK__Appointment__Schedule").OnDelete(DeleteBehavior.NoAction);
+                // Remove the unique constraint on ScheduleID
+                entity.HasIndex(e => e.ScheduleID).IsUnique(false);
 
-				entity.HasOne(d => d.Specialty).WithMany(p => p.Appointments).HasConstraintName("FK__Appointment__Specialty");
+                //entity.HasOne(d => d.Schedule).WithOne(p => p.Appointments).IsRequired(true).HasConstraintName("FK__Appointment__Schedule").OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(d => d.Schedule)
+        .WithMany(p => p.Appointments) // Updated to WithMany to allow multiple appointments per schedule
+        .IsRequired(true)
+        .HasConstraintName("FK__Appointment__Schedule")
+        .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(d => d.Specialty).WithMany(p => p.Appointments).HasConstraintName("FK__Appointment__Specialty");
 			});
 
 			modelBuilder.Entity<Clinic>(entity =>
@@ -160,7 +169,14 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.HasOne(d => d.TimeSlot).WithMany(p => p.Schedules).HasConstraintName("FK__Schedule__TimeSlot").OnDelete(DeleteBehavior.Restrict);
 
-				entity.HasCheckConstraint("CK_Valid_Schedule_Status", "ScheduleStatus = 'Booked' OR ScheduleStatus = 'Available' OR ScheduleStatus = N'Đã Đặt' OR ScheduleStatus = N'Còn Trống'");
+                // Updated to reflect the one-to-many relationship with Appointments
+                entity.HasMany(d => d.Appointments)
+                    .WithOne(p => p.Schedule)
+                    .HasForeignKey(p => p.ScheduleID)
+                    .HasConstraintName("FK__Schedule__Appointments")
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasCheckConstraint("CK_Valid_Schedule_Status", "ScheduleStatus = 'Booked' OR ScheduleStatus = 'Available' OR ScheduleStatus = N'Đã Đặt' OR ScheduleStatus = N'Còn Trống'");
 			});
 
 			modelBuilder.Entity<Service>(entity =>

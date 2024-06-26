@@ -22,10 +22,10 @@ namespace Dental_Clinic_System.Models.Data
         [Column("ScheduleStatus",TypeName = "nvarchar(30)")]
         public string ScheduleStatus { get; set; } = null!;
 
-		#region Entity Mapping
+        #region Entity Mapping
 
-		[InverseProperty("Schedule")]
-        public virtual Appointment Appointments { get; set; } = null!;
+        // Update to reflect a one-to-many relationship with Appointments
+        public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
         [ForeignKey("DentistID")]
         [InverseProperty("Schedules")]

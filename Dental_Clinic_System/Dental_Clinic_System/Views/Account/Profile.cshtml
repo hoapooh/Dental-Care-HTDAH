@@ -368,8 +368,9 @@
 
                                                         break;
                                                     case "Chờ Xác Nhận":
-                                                        <form asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
+                                                        <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
                                                             <input type="hidden" name="appointmentID" value="@appointment.ID" />
+                                                            <input type="hidden" name="scheduleID" value="@appointment?.Schedule?.ID" />
                                                             <input type="hidden" name="appointmentStatus" value="Đã Hủy" />
                                                             <button type="submit" class="btn btn-danger" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">
                                                                 Hủy khám
@@ -377,7 +378,7 @@
                                                         </form>
                                                         break;
                                                     case "Đã Chấp Nhận":
-                                                        <form asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
+                                                        <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
                                                             <input type="hidden" name="appointmentID" value="@appointment.ID" />
                                                             <input type="hidden" name="appointmentStatus" value="Đã Hủy" />
                                                             <button type="submit" class="btn btn-danger" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">

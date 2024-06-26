@@ -243,8 +243,8 @@ namespace Dental_Clinic_System.Controllers
             //Console.WriteLine($"Signature from Request: {signatureFromRequest}");
 
             // Debug HERE if you get trouble LOL
-            Console.WriteLine("----------------------------------------------------------------");
-            await Console.Out.WriteLineAsync($"{orderType} || {orderInfo} || {transId} || {resultCode} || {message} || {payType} || {responseTime} || {extraData} || {signature}");
+            //Console.WriteLine("----------------------------------------------------------------");
+            //await Console.Out.WriteLineAsync($"{orderType} || {orderInfo} || {transId} || {resultCode} || {message} || {payType} || {responseTime} || {extraData} || {signature}");
 
             if (signatureCheck != signatureFromRequest)
             {

@@ -5,6 +5,7 @@ using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services;
 using Dental_Clinic_System.Services.EmailSender;
 using Dental_Clinic_System.Services.GoogleSecurity;
+using Dental_Clinic_System.Services.MOMO;
 using Dental_Clinic_System.ViewModels;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.PeopleService.v1;
@@ -36,13 +37,15 @@ namespace Dental_Clinic_System.Controllers
         private readonly IMapper _mapper;
         private readonly IEmailSenderCustom _emailSender;
         private readonly GoogleSecurity _googleSecurity;
+        private readonly IMOMOPayment _momoPayment;
 
-        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSenderCustom emailSender, GoogleSecurity googleSecurity)
+        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSenderCustom emailSender, GoogleSecurity googleSecurity, IMOMOPayment momoPayment)
         {
             _context = context;
             _mapper = mapper;
             _emailSender = emailSender;
             _googleSecurity = googleSecurity;
+            _momoPayment = momoPayment;
         }
 
         [HttpGet]
@@ -993,22 +996,105 @@ namespace Dental_Clinic_System.Controllers
 
         [Authorize(Roles = "Bệnh Nhân")]
         [HttpPost]
-        public async Task<IActionResult> CancelAppointment(int appointmentID, string appointmentStatus)
+        public async Task<IActionResult> CancelAppointment(int appointmentID, int scheduleID, string appointmentStatus)
         {
-            var appointment = await _context.Appointments.Include(a => a.Transactions).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
-            appointment.AppointmentStatus = appointmentStatus;
+            var appointment = await _context.Appointments.Include(a => a.Transactions).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
 
+            if (appointment == null)
+            {
+                TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra";
+                return RedirectToAction("Profile", "Account");
+            }
+
+            DateOnly appointmentDate = appointment.Schedule.Date;
+            TimeOnly appointmentHour = appointment.Schedule.TimeSlot.StartTime;
+            DateTime appointmentDateTime = appointmentDate.ToDateTime(appointmentHour);
+            DateTime now = DateTime.Now;
+
+            await Console.Out.WriteLineAsync("==================================");
+            await Console.Out.WriteLineAsync($"Date = {appointmentDate}");
+            await Console.Out.WriteLineAsync($"Hour = {appointmentHour}");
+            await Console.Out.WriteLineAsync("==================================");
+
+            double refundPercentage = 0;
+
+            // Calculate refund percentage based on cancellation time
+            if (now <= appointmentDateTime.AddHours(-24))
+            {
+                refundPercentage = 1.0; // 100% refund if cancelled more than 24 hours before appointment
+            }
+            else if (now <= appointmentDateTime.Date.AddHours(9))
+            {
+                refundPercentage = 1.0; // 100% refund if cancelled before 9 AM of the appointment day
+            }
+            else if (now <= appointmentDateTime.Date.AddHours(10))
+            {
+                refundPercentage = 0.4; // 40% refund if cancelled before 10 AM of the appointment day
+            }
+            else if (now <= appointmentDateTime.Date.AddHours(12))
+            {
+                refundPercentage = 0.2; // 20% refund if cancelled before 12 PM of the appointment day
+            }
+            else
+            {
+                refundPercentage = 0; // No refund if cancelled after 12 PM of the appointment day
+            }
+
+            var transaction = appointment.Transactions.FirstOrDefault();
+
+            if (transaction == null)
+            {
+                TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra";
+                return RedirectToAction("Profile", "Account");
+            }
+
+            var response = await _momoPayment.RefundPayment((long)(transaction.TotalPrice * decimal.Parse(refundPercentage.ToString())), long.Parse(transaction.TransactionCode), "");
+
+            if (response != null)
+            {
+                var refundTransaction = new Transaction
+                {
+                    AppointmentID = appointment.ID,
+                    Date = DateTime.Now,
+                    BankName = transaction.BankName,
+                    TransactionCode = response.transId.ToString(),
+                    PaymentMethod = "MOMO",
+                    TotalPrice = Decimal.Parse(response.amount.ToString()),
+                    BankAccountNumber = "9704198526191432198",
+                    FullName = transaction.FullName,
+                    Message = "Hoàn tiền đặt cọc",
+                    Status = "Thành Công"
+                };
+            }
+            else
+            {
+                TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra trong quá trình hủy khám";
+                return RedirectToAction("Profile", "Account");
+            }
+
+            // Change Appoinment Status
+            appointment.AppointmentStatus = appointmentStatus;
             _context.Update(appointment);
             await _context.SaveChangesAsync();
 
-            var schedule = await _context.Appointments.Include(s => s.Schedule).FirstOrDefaultAsync(a => a.ID == appointmentID);
             if (appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
             {
-                schedule.Schedule.ScheduleStatus = "Còn Trống";
+                appointment.Schedule.ScheduleStatus = "Còn Trống";
                 await _context.SaveChangesAsync();
             }
 
-            TempData["message"] = "success";
+            if (refundPercentage == 0)
+            {
+                TempData["ToastMessageSuccessTempData"] = "Hủy khám thành công. Không hoàn lại tiền vì hủy quá muộn";
+            }
+            else if (refundPercentage < 1.0)
+            {
+                TempData["ToastMessageSuccessTempData"] = "Hủy khám thành công. Hoàn lại một phần tiền vì hủy muộn";
+            }
+            else
+            {
+                TempData["ToastMessageSuccessTempData"] = "Hủy khám thành công";
+            }
             return RedirectToAction("Profile", "Account");
         }
     }
