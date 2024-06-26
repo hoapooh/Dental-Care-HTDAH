@@ -19,22 +19,22 @@
 			</a>
 			<ul class="footer__navigation__list">
 				<li>
-					<a href="~/index.html">Trang chủ</a>
+					<a asp-controller="home" asp-action="index">Trang Chủ</a>
 				</li>
 				<li>
-					<a href="~/about.html">Giới thiệu</a>
+					<a asp-controller="about" asp-action="index">Giới Thiệu</a>
 				</li>
 				<li>
-					<a href="~/clinic.html">Phòng khám</a>
+					<a asp-controller="clinic" asp-action="index">Phòng Khám</a>
 				</li>
 				<li>
-					<a href="~/speciality.html">Chuyên khoa</a>
+					<a asp-controller="specialty" asp-action="index">Chuyên Khoa</a>
 				</li>
 				<li>
-					<a href="#!">Blogs</a>
+					<a asp-area="" asp-controller="news" asp-action="index">Tin Tức</a>
 				</li>
 				<li>
-					<a href="~/contact.html">Liên hệ</a>
+					<a asp-controller="contact" asp-action="index">Liên Hệ</a>
 				</li>
 			</ul>
 		</div>
@@ -57,10 +57,10 @@
 				<div class="footer__terms__title">Dịch vụ Y tế</div>
 				<ul>
 					<li>
-						<a href="~/clinic.html" class="footer__terms__links">Đặt khám tại cơ sở</a>
+						<a asp-controller="clinic" asp-action="index" class="footer__terms__links">Đặt khám theo phòng khám</a>
 					</li>
 					<li>
-						<a href="~/speciality.html" class="footer__terms__links">Đặt khám theo chuyên khoa</a>
+						<a href="~/specialty" class="footer__terms__links">Đặt khám theo nha sĩ</a>
 					</li>
 				</ul>
 			</div>
@@ -68,7 +68,7 @@
 				<div class="footer__terms__title">Hướng dẫn</div>
 				<ul>
 					<li>
-						<a href="#!" class="footer__terms__links">Đặt lịch khám</a>
+						<a asp-controller="clinic" asp-action="index" class="footer__terms__links">Đặt lịch khám</a>
 					</li>
 					<li>
 						<a href="#!" class="footer__terms__links">Câu hỏi thường gặp</a>
@@ -79,7 +79,7 @@
 				<div class="footer__terms__title">Về DentalCare</div>
 				<ul>
 					<li>
-						<a href="~/about.html" class="footer__terms__links">Giới thiệu</a>
+						<a asp-controller="about" asp-action="index" class="footer__terms__links">Giới thiệu</a>
 					</li>
 					<li>
 						<a href="#!" class="footer__terms__links">Điều khoản dịch vụ</a>

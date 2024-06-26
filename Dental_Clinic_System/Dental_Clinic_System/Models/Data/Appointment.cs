@@ -32,6 +32,8 @@ namespace Dental_Clinic_System.Models.Data
         [Column("CreatedDate", TypeName = "datetime")]
         public DateTime? CreatedDate { get; set; }
 
+        [Column("IsRated")]
+        public string? IsRated { get; set; } = null;
 		#region Foreign Key
 
 		[ForeignKey("PatientRecordID")]

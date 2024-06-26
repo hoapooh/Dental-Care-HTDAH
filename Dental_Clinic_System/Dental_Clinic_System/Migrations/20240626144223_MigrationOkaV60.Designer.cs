@@ -4,6 +4,7 @@ using Dental_Clinic_System.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    partial class DentalClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240626144223_MigrationOkaV60")]
+    partial class MigrationOkaV60
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,6 +89,10 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Province");
 
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float")
+                        .HasColumnName("Rating");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(9)")
@@ -145,10 +152,6 @@ namespace Dental_Clinic_System.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(1000)")
                         .HasColumnName("Description");
-
-                    b.Property<string>("IsRated")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsRated");
 
                     b.Property<int>("PatientRecordID")
                         .HasColumnType("int")
@@ -692,10 +695,6 @@ namespace Dental_Clinic_System.Migrations
                     b.Property<int>("PatientID")
                         .HasColumnType("int")
                         .HasColumnName("PatientID");
-
-                    b.Property<double?>("Rating")
-                        .HasColumnType("float")
-                        .HasColumnName("Rating");
 
                     b.HasKey("ID")
                         .HasName("PK_Review");

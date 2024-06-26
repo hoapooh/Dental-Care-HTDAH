@@ -780,11 +780,12 @@ namespace Dental_Clinic_System.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Bệnh Nhân")]
-        public async Task<IActionResult> RateAppointment(int clinicID, int dentistID, int patientID, int rating, string comment = "")
+        public async Task<IActionResult> RateAppointment(int clinicID, int dentistID, int patientID, int rating, int appointmentID, string comment = "")
         {
             var clinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == clinicID);
+            var appointment = await _context.Appointments.FirstOrDefaultAsync(a => a.ID == appointmentID);
 
-            if (clinic == null)
+            if (clinic == null || appointment == null)
             {
                 return NotFound();
             }
@@ -792,19 +793,19 @@ namespace Dental_Clinic_System.Controllers
             // Nên dùng Review Table cho đánh giá
             var review = new Review
             {
+                Rating = rating,
                 Comment = comment,
                 Date = DateOnly.FromDateTime(DateTime.UtcNow),
                 DentistID = dentistID,
                 PatientID = patientID
             };
 
+            appointment.IsRated = "Đã Đánh Giá";
+
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
 
-            //await Console.Out.WriteLineAsync("===========================================");
-            //await Console.Out.WriteLineAsync($"PatientID = {review.PatientID}");
-            //await Console.Out.WriteLineAsync($"Comment = {review.Comment}");
-            //await Console.Out.WriteLineAsync("===========================================");
+
 
             // Update clinic rating
             clinic.RatingCount = clinic.RatingCount.HasValue ? clinic.RatingCount + 1 : 1;

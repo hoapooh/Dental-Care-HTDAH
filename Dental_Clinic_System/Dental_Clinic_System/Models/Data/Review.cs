@@ -17,6 +17,9 @@ namespace Dental_Clinic_System.Models.Data
         [Column("PatientID")]
         public int PatientID { get; set; }
 
+        [Column("Rating")]
+        public double? Rating { get; set; } = null;
+
         [Column("Comment",TypeName = "nvarchar(2000)")]
         public string Comment { get; set; } = null!;
 

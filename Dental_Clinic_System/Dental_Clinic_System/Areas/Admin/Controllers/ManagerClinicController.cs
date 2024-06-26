@@ -375,20 +375,38 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         //[Route("GetApprovalRequest")]
         public async Task<IActionResult> GetApprovalRequest(string companyName, string companyPhonenumber, string companyEmail, string representativeName, string clinicName, string clinicAddress, string? domainName, string content)
         {
-            var companyNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyName == companyName);
-            var companyPhonenumberExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyPhonenumber == companyPhonenumber);
-            var companyEmailExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyEmail == companyEmail);
-            var clinicNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.ClinicName == clinicName);
-            var domainExisted = await _context.Orders.FirstOrDefaultAsync(c => c.DomainName == domainName);
+            //var companyNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyName == companyName);
+            //var companyPhonenumberExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyPhonenumber == companyPhonenumber);
+            //var companyEmailExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyEmail == companyEmail);
+            //var clinicNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.ClinicName == clinicName);
+            //var domainExisted = await _context.Orders.FirstOrDefaultAsync(c => c.DomainName == domainName);
 
-            if (companyNameExisted != null || companyPhonenumberExisted != null || companyEmailExisted != null || clinicNameExisted != null || domainExisted != null)
-            {
-                TempData["ToastMessageFailTempData"] = "Gửi thông tin thất bại";
-                return RedirectToAction("index", "contact", new { area = "" });
-            }
+			var checkResult = await CheckExistingDetails(companyName, companyPhonenumber, companyEmail, clinicName, domainName);
 
+			switch (checkResult)
+			{
+				case "CompanyNameExists":
+					TempData["ToastMessageFailTempData"] = "Tên doanh nghiệp đã được đăng ký";
+					return RedirectToAction("index", "contact", new { area = "" });
 
-            var order = new Order
+				case "CompanyPhonenumberExists":
+					TempData["ToastMessageFailTempData"] = "Số điện thoại đã được đăng ký";
+					return RedirectToAction("index", "contact", new { area = "" });
+
+				case "CompanyEmailExists":
+					TempData["ToastMessageFailTempData"] = "Địa chỉ Email đã được đăng ký";
+					return RedirectToAction("index", "contact", new { area = "" });
+
+				case "ClinicNameExists":
+					TempData["ToastMessageFailTempData"] = "Tên phòng khám đã được đăng ký";
+					return RedirectToAction("index", "contact", new { area = "" });
+
+				case "DomainNameExists":
+					TempData["ToastMessageFailTempData"] = "Tên miền đã được đăng ký";
+					return RedirectToAction("index", "contact", new { area = "" });
+			}
+
+			var order = new Order
             {
                 CompanyName = companyName,
                 CompanyPhonenumber = companyPhonenumber,
@@ -407,7 +425,37 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             return RedirectToAction("index", "contact", new { area = "" });
         }
 
-        [HttpPost]
+		private async Task<string> CheckExistingDetails(string companyName, string companyPhonenumber, string companyEmail, string clinicName, string domainName)
+		{
+			if (await _context.Orders.AnyAsync(c => c.CompanyName == companyName))
+			{
+				return "CompanyNameExists";
+			}
+
+			if (await _context.Orders.AnyAsync(c => c.CompanyPhonenumber == companyPhonenumber))
+			{
+				return "CompanyPhonenumberExists";
+			}
+
+			if (await _context.Orders.AnyAsync(c => c.CompanyEmail == companyEmail))
+			{
+				return "CompanyEmailExists";
+			}
+
+			if (await _context.Orders.AnyAsync(c => c.ClinicName == clinicName))
+			{
+				return "ClinicNameExists";
+			}
+
+			if (await _context.Orders.AnyAsync(c => c.DomainName == domainName))
+			{
+				return "DomainNameExists";
+			}
+
+			return "None";
+		}
+
+		[HttpPost]
         //[Route("ProcessRequest")]
         public async Task<IActionResult> ProcessRequest(int orderID, string orderStatus)
         {

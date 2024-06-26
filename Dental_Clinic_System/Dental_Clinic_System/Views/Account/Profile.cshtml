@@ -300,7 +300,7 @@
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
                                                 );
-                                                                                                            ">
+                                                                                                                    ">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -346,15 +346,26 @@
                                             <div class="item" style="display: flex; align-items: center; margin-bottom: 8px;">
                                                 <span style="font-weight: bold; white-space: nowrap; margin-right: 8px; min-width: 180px;">Giá tiền:</span>
                                                 <span style="flex-grow: 1;">@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment?.TotalPrice)</span>
-                                                @switch (appointment.AppointmentStatus)
+                                                @switch (appointment?.AppointmentStatus)
                                                 {
                                                     case "Đã Hủy":
 
                                                         break;
                                                     case "Đã Khám":
-                                                        <button type="button" class="btn btn-success" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;" data-bs-toggle="modal" data-bs-target="#ratingModal" data-clinic-id="@appointment?.Schedule?.Dentist?.Clinic.ID" data-dentist-id="@appointment?.Schedule?.Dentist.ID" data-patient-id="@appointment?.PatientRecords?.Account?.ID">
-                                                            Đánh Giá
-                                                        </button>
+
+                                                        if (appointment.IsRated == "Đã Đánh Giá")
+                                                        {
+                                                            <div class="btn btn-success" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">
+                                                                Đã Đánh Giá
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-success" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;" data-bs-toggle="modal" data-bs-target="#ratingModal" data-clinic-id="@appointment?.Schedule?.Dentist?.Clinic.ID" data-dentist-id="@appointment?.Schedule?.Dentist.ID" data-patient-id="@appointment?.PatientRecords?.Account?.ID" data-appointment-id="@appointment?.ID">
+                                                                Đánh Giá
+                                                            </button>
+                                                        }
+
                                                         break;
                                                     case "Chờ Xác Nhận":
                                                         <form asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
@@ -410,6 +421,7 @@
                 </div>
                 <div class="modal-body" style="display: flex; flex-direction: column; align-items: center;">
                     <form id="ratingForm" asp-action="RateAppointment" method="post" style="width: 100%;">
+                        <input type="hidden" name="appointmentID" id="appointmentIdInput" />
                         <input type="hidden" name="clinicID" id="clinicIdInput" />
                         <input type="hidden" name="dentistID" id="dentistIdInput" />
                         <input type="hidden" name="patientID" id="patientIdInput" />
@@ -421,7 +433,7 @@
                             <span class="star" data-value="5" style="font-size: 3.5rem; cursor: pointer; color: #e4e5e9; margin: 0 5px;">&#9733;</span>
                         </div>
                         <input type="hidden" name="rating" id="ratingInput" />
-                        
+
                         <div class="form-group" style="width: 100%; margin-top: 20px;">
                             <label for="comment" style="font-size: large;">Nhận xét:</label>
                             <textarea class="form-control" name="comment" id="comment" rows="10" style="width: 100%; font-size: 2rem;"></textarea>
@@ -444,10 +456,12 @@
                 var clinicId = button.data('clinic-id');
                 var dentistId = button.data('dentist-id');
                 var patientId = button.data('patient-id');
+                var appointmentId = button.data('appointment-id');
                 var modal = $(this);
                 modal.find('#clinicIdInput').val(clinicId);
                 modal.find('#dentistIdInput').val(dentistId);
                 modal.find('#patientIdInput').val(patientId);
+                modal.find('#appointmentIdInput').val(appointmentId);
             });
 
             $('.star').click(function () {

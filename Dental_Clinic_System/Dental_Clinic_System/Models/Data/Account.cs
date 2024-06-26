@@ -50,7 +50,10 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("Address", TypeName = "nvarchar(100)")]
 		public string? Address { get; set; } = null;
 
-		[Column("Image", TypeName = "varchar(256)")]
+		//[Column("Rating")]
+		//public double? Rating { get; set; } = null;
+
+        [Column("Image", TypeName = "varchar(256)")]
 		public string? Image { get; set; } = null;
 
 		[Column("IsLinked")]
