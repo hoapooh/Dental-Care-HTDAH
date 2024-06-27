@@ -30,7 +30,7 @@
 		--mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
 		border: 0;
 		box-shadow: var(--mdb-modal-box-shadow);
-		padding: 1px 8px !important; /* Reduced padding for top/bottom and left/right */
+		padding: 1px 8px !important;
 		border-radius: 17px;
 	}
 
@@ -70,6 +70,7 @@
 				<h1 class="modal-title fs-10" id="mainTitle">
 					Thêm mới tài khoản nha sĩ
 				</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<div class="row mb-3">
@@ -148,7 +149,6 @@
 			@* <th>Bằng cấp</th> *@
 			<th>Email</th>
 			<th>Số điện thoại</th>
-			<th>Vai trò</th>
 			<th>Hành động</th>
 		</tr>
 	</thead>
@@ -159,7 +159,7 @@
 			@foreach (var account in Model)
 			{
 				<tr style="vertical-align: middle">
-					<td style="text-align: center">@stt (ID: @account.Id)</td>
+					<td style="text-align: center">@stt @* (ID: @account.Id) *@</td>
 					<td>
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
@@ -168,11 +168,9 @@
 					@* <td>@account.DegreeID</td> *@
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
-					<td>@account.Role</td>
-					@* <td>@account.Status</td> *@
 					<td>
 						<!--EDIT-->
-						<a href="@Url.Action("EditAccount", "AccountDentist", new {id = account.Id})" class="inline-block">
+						<a asp-area="Admin" asp-controller="AccountDentist" asp-action="EditAccountDentist" asp-route-id="@account.Id" class="inline-block">
 							<button type="button">
 								<i class="bx bxs-edit"></i>
 							</button>

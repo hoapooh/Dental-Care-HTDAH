@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.ManagerAccountVM>
+﻿@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.ManagerAccountVM>
 
 @{
 	ViewData["Title"] = "ListAccountPatient";
@@ -22,8 +17,8 @@
 	}
 
 	.account__management .color-trash button {
-		background: rgb(255, 66, 66); /* Nền đỏ */
-		color: white; /* Màu chữ trắng */
+		background: rgb(255, 66, 66);
+		color: white;
 	}
 
 	.sidebar .nav-item a.Quan_ly_tai_khoan {
@@ -162,7 +157,6 @@
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
 					<td>@account.Address</td>
-					<td>@account.Role</td>
 					@* <td>@account.Status</td> *@
 					<td>
 						<!--EDIT-->

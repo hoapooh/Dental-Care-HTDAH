@@ -1,20 +1,21 @@
 ﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.EditAccountVM
 
 @{
-    ViewData["Title"] = "EditAccount";
+    ViewData["Title"] = "EditAccountDentist";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 <!-- ============ INFO ============ -->
 <div class="account__management">
     <div class="account__management__header">
-        <h1 class="title mb-0">Thông tin ...</h1>
+        <h1 class="title mb-0">Chỉnh sửa thông tin</h1>
     </div>
 
-    <form method="post" action="~/Admin/AccountManager/EditAccount" class="account__management__edit row">
+    <form method="post" action="~/Admin/AccountDentist/EditAccountDentist" class="account__management__edit row">
         <input type="hidden" name="Id" value="@Model.Id" />
         <input type="hidden" name="Role" value="@Model.Role" />
         <div class="col-md-6">
-            <label for="username">Tên tài khoản</label>
+            <label for="username">Tên đăng nhập</label>
             <input type="text" name="Username" id="username" value="@Model.Username" />
             <span asp-validation-for="Username" class="text-danger"></span>
         </div>
@@ -24,24 +25,18 @@
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div class="col-md-3">
+            <label for="lastname">Họ</label>
+            <input type="text" name="Lastname" id="lastname" value="@Model.LastName" />
+        </div>
+        <div class="col-md-3">
             <label for="firstname">Tên</label>
             <input type="text" name="Firstname" id="firstname" value="@Model.FirstName" />
         </div>
         <div class="col-md-3">
-            <label for="lastname">Họ</label>
-            <input type="text" name="Lastname" id="lastname" value="@Model.LastName" />
-        </div>
-        <div class="col-md-6">
-            <label for="email">Email</label>
-            <input type="email" name="Email" id="email" value="@Model.Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
             <label for="dateofbirth">Ngày sinh</label>
-            <input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" required
-                   max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")" />
+            <input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" required max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")" />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <label for="gender">Giới tính</label>
             <select name="Gender" class="form-control" id="gender" value="@Model.Gender">
                 <option value="Nam">Nam</option>
@@ -49,9 +44,26 @@
             </select>
         </div>
         <div class="col-md-6">
+            <label for="degreeID">Bằng cấp</label>
+            <select name="DegreeID" id="degreeID" class="form-control" asp-items="ViewBag.DegreeID" required></select>
+        </div>
+        <div class="col-md-6">
+            <label for="clinicID">Phòng khám</label>
+            <select name="ClinicID" id="clinicID" class="form-control" asp-items="ViewBag.ClinicID" required></select>
+        </div>
+        <div class="col-md-6">
+            <label for="email">Email</label>
+            <input type="email" name="Email" id="email" value="@Model.Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
             <label for="phonenumber">Số điện thoại</label>
             <input type="text" name="PhoneNumber" id="phonenumber" value="@Model.PhoneNumber" />
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="address">Địa chỉ</label>
+            <input type="text" name="Address" id="address" value="@Model.Address" />
         </div>
         <div class="col-md-6">
             <label for="province">Tỉnh/ Thành phố</label>
@@ -71,18 +83,33 @@
                 <option value="0">Phường Xã</option>
             </select>
         </div>
-        <div class="col-md-6">
-            <label for="address">Địa chỉ</label>
-            <input type="text" name="Address" id="address" value="@Model.Address" />
-        </div>
+
         <div class="col-md-12 text-end">
+            <button type="reset" class="btn" id="newBtn">Quay lại</button>
             <button type="submit" class="btn">Lưu</button>
-            <button type="reset" class="btn">Đặt lại</button>
         </div>
 
     </form>
 </div>
 
+
+<!--Chuyển hướng Button-->
+<script>
+    //Đợi cho document được tải hoàn chỉnh
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy button "Quay lại"
+        var newBtn = document.getElementById("newBtn");
+
+        // Nếu button tồn tại
+        if (newBtn) {
+            // Thêm click
+            newBtn.addEventListener("click", function () {
+                // Chuyển hướng đến URL của view khác
+                window.location.href = "/Admin/AccountDentist/ListAccountDentist";
+            });
+        }
+    });
+</script>
 
 @* Call API from https://esgoo.ne to get data*@
 <script src="https://esgoo.net/scripts/jquery.js"></script>

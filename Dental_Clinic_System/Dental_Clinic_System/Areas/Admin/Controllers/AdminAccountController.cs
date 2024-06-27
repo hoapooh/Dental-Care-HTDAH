@@ -53,5 +53,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			return NotFound("Account của bạn có Role không hợp lệ, vui lòng thử lại!");
 		}
 
+		public async Task<IActionResult> Logout()
+		{
+			await HttpContext.SignOutAsync("GetAppointmentStatus");
+			return LocalRedirect("/admin");
+		}
 	}
 }

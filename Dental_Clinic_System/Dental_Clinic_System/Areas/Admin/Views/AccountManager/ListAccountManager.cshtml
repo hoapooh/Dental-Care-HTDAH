@@ -38,13 +38,25 @@
 		color: #fff;
 		background: #4880ff;
 	}
+
+	.modal-content {
+		--mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
+		border: 0;
+		box-shadow: var(--mdb-modal-box-shadow);
+		padding: 1px 8px !important;
+		border-radius: 17px;
+	}
+
+	.form-modal-styles {
+		width: 46%;
+	}
 </style>
 
 
 <!-- TÌM KIẾM (SEARCH)-->
 <!-- account management header -->
 <div class="account__management__header">
-	<div class="title">Tài khoản manager</div>
+	<div class="title">Tài khoản của quản lý</div>
 	<div class="action-btn">
 		<form action="~/Admin/AccountManager/SearchAccount" method="get">
 			<div class="search__bar">
@@ -66,36 +78,47 @@
 <!-- THÊM MỚI NGƯỜI DÙNG (ADD)-->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="mainTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered form-modal-styles">
-		<form action="~/Admin/AccountManager/AddAccount" method="POST" class="modal-content" onsubmit="return validateForm()">
+		<form action="~/Admin/AccountManager/AddAccountManager" method="POST" class="modal-content" onsubmit="return validateForm()">
 			<div class="modal-header">
 				<h1 class="modal-title fs-10" id="mainTitle">
 					Thêm mới tài khoản quản lý
 				</h1>
-				<button type="button"
-						class="btn-close"
-						data-bs-dismiss="modal"
-						aria-label="Close"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<div class="user-name">
-					<label for="username">Tên đăng nhập</label>
-					<input type="text" name="Username" id="username" required />
-					<span id="usernameError" class="text-danger"></span>
+				<div class="row mb-3">
+					<div class="col">
+						<label for="username">Tên đăng nhập</label>
+						<input type="text" name="Username" id="username" required />
+						<span id="usernameError" class="text-danger"></span>
+					</div>
+					<div class="col">
+						<label for="password">Mật khẩu</label>
+						<input type="password" name="Password" id="password" required />
+						<span id="passwordError" class="text-danger"></span>
+					</div>
 				</div>
-				<div class="user-password">
-					<label for="password">Mật khẩu</label>
-					<input type="password" name="Password" id="password" required />
-					<span id="passwordError" class="text-danger"></span>
+				<div class="row mb-3">
+					<div class="col">
+						<label for="lastname">Họ</label>
+						<input type="text" name="Lastname" id="lastname" required />
+					</div>
+					<div class="col">
+						<label for="firstname">Tên</label>
+						<input type="text" name="Firstname" id="firstname" required />
+					</div>
 				</div>
-				<div class="user-tel">
-					<label for="phonenumber">Số điện thoại</label>
-					<input type="tel" name="PhoneNumber" id="phonenumber" required />
-					<span id="phoneNumberError" class="text-danger"></span>
-				</div>
-				<div class="user-mail">
-					<label for="email">Email</label>
-					<input type="email" name="Email" id="email" required />
-					<span id="emailError" class="text-danger"></span>
+				<div class="row mb-3">
+					<div class="col">
+						<label for="email">Email</label>
+						<input type="email" name="Email" id="email" required />
+						<span id="emailError" class="text-danger"></span>
+					</div>
+					<div class="col">
+						<label for="phonenumber">Số điện thoại</label>
+						<input type="tel" name="PhoneNumber" id="phonenumber" required />
+						<span id="phoneNumberError" class="text-danger"></span>
+					</div>
 				</div>
 				<div class="user-address">
 					<label for="address">Địa chỉ</label>
@@ -122,6 +145,7 @@
 		<tr>
 			<th class="text-center">STT</th>
 			<th>Tên đăng nhập</th>
+			<th>Tên phòng khám</th>
 			<th>Email</th>
 			<th>Số điện thoại</th>
 			<th>Địa chỉ</th>
@@ -141,6 +165,7 @@
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
+					<td>@account.ClinicName</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
 					<td>@account.Address</td>
@@ -148,7 +173,7 @@
 					@* <td>@account.Status</td> *@
 					<td>
 						<!--EDIT-->
-						<a href="@Url.Action("EditAccount", "AccountManager", new {id = account.Id})" class="inline-block">
+						<a href="@Url.Action("EditAccountManager", "AccountManager", new {id = account.Id})" class="inline-block">
 							<button type="button">
 								<i class="bx bxs-edit"></i>
 							</button>

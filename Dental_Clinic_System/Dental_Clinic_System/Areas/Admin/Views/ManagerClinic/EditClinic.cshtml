@@ -8,11 +8,52 @@
 <style>
 	.text-New-Clinic {
 		font-size: calc(1.375rem + 1.5vw);
+		text-align: center;
 	}
 
 	.sidebar .nav-item a.Quan_ly_phong_kham {
 		color: #fff;
 		background: #4880ff;
+	}
+
+	.modal-wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.form-modal-styles {
+		width: 817px;
+		margin: auto;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		border-radius: 8px;
+		background-color: #fff;
+		padding: 20px;
+	}
+
+	.modal-content {
+		padding: 20px;
+	}
+
+	.modal-body {
+		margin-top: 20px;
+	}
+
+	.text-New-Clinic {
+		font-size: calc(1.375rem + 1.5vw);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+
+	.modal-header {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
 	}
 </style>
 
@@ -24,6 +65,7 @@
 </div>
 
 <div class="modal-dialog modal-dialog-centered form-modal-styles">
+
 	<form id="uploadForm" action="~/Admin/ManagerClinic/EditClinic" method="post" class="modal-content">
 		<input type="hidden" asp-for="ID" />
 		<input type="hidden" asp-for="ClinicStatus" value="Hoạt động" />
@@ -40,7 +82,6 @@
 			<div class="clinic-tel col-md-6">
 				<label for="basis">Cơ sở</label>
 				<input type="text" name="Basis" id="basis" class="form-control" value="@Model.Basis" />
-
 			</div>
 			<div class="clinic-manager col-md-6">
 				<label for="manager">Người quản lý phòng khám</label>
@@ -58,7 +99,11 @@
 				<input type="email" name="Email" id="mail" class="form-control" value="@Model.Email" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
-
+			<div class="clinic-address col-md-12">
+				<label for="addrSpecialty">Địa chỉ phòng khám</label>
+				<input type="text" name="Address" id="addrSpecialty" class="form-control" value="@Model.Address" />
+				<span asp-validation-for="Address" class="text-danger"></span>
+			</div>
 			<div class="clinic-province col-md-4">
 				<label for="province">Tỉnh / Thành phố</label>
 				<select id="province" title="Chọn Tỉnh Thành" name="Province" class="form-control">
@@ -77,18 +122,6 @@
 					<option value="0">-- Chọn Phường Xã --</option>
 				</select>
 			</div>
-			<div class="clinic-address col-md-12">
-				<label for="addrSpecialty">Địa chỉ phòng khám</label>
-				<input type="text" name="Address" id="addrSpecialty" class="form-control" value="@Model.Address" />
-				<span asp-validation-for="Address" class="text-danger"></span>
-			</div>
-			@* <div class="clinic-image col-md-12">
-			<label>Hình ảnh</label>
-			<img src="@Model.Image" alt="" style="max-width: 300px; max-height: 300px;" />
-			<input type="file" id="fileInput" class="form-control" />
-			<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />
-			<span asp-validation-for="Image" class="text-danger"></span>
-			</div> *@
 
 			<!--UPLOAD IMAGE-->
 			<div class="clinic-image col-md-12">
@@ -102,7 +135,6 @@
 
 				<div class="container__image__preview">
 					<div class="style__image__preview row">
-
 						<div class="final-image col-md-6">
 							<h3 class="title">Hình ảnh hiện tại</h3>
 							<img src="@Model.Image" alt="" id="imageDisplay"
@@ -114,7 +146,6 @@
 							<img src="" alt="" id="imagePreview"
 								 style=" display: block; max-width: 100%; text-align: center; border-radius: 10px;" />
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -127,7 +158,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 		<div class="modal-footer">
 			<button type="button"
@@ -142,7 +172,6 @@
 		</div>
 	</form>
 </div>
-
 
 
 @* Đưa ảnh lên firebase *@

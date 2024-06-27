@@ -10,8 +10,17 @@
 		justify-content: space-around;
 	}
 
+	.modal-title {
+		font-size: 3rem;
+		font-weight: bold;
+	}
+
 	.form-modal-styles {
 		width: 70%;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		border-radius: 8px;
+		background-color: #fff;
+		padding: 20px;
 	}
 
 	.sidebar .nav-item a.Quan_ly_phong_kham {
@@ -22,7 +31,7 @@
 
 
 <div class="modal-dialog modal-dialog-centered form-modal-styles">
-	<form id="clinicForm" action="~/Admin/ManagerClinic/CreateClinic" method="post" class="modal-content">
+	<form id="uploadForm" action="~/Admin/ManagerClinic/CreateClinic" method="post" class="modal-content">
 		<div class="modal-header">
 			<h1 class="modal-title fs-10" id="mainTitle">
 				Thêm mới phòng khám
@@ -41,7 +50,20 @@
 			<div class="clinic-tel col-md-6">
 				<label for="basis">Cơ sở</label>
 				<input type="text" name="Basis" id="basis" class="form-control" />
-
+			</div>
+			<div class="clinic-worktime col-md-6">
+				<label for="amWorkTime">Thời gian làm việc buổi sáng<sup style="color:red">*</sup></label>
+				<select asp-for="AmWorkTimeID" asp-items="Model.AmWorkTimes" class="form-control">
+					<option value="">-- Chọn AM Work Time --</option>
+				</select>
+				<span asp-validation-for="AmWorkTimeID" class="text-danger"></span>
+			</div>
+			<div class="clinic-worktime col-md-6">
+				<label for="pmWorkTime">Thời gian làm việc buổi chiều<sup style="color:red">*</sup></label>
+				<select asp-for="PmWorkTimeID" asp-items="Model.PmWorkTimes" class="form-control">
+					<option value="">-- Chọn PM Work Time --</option>
+				</select>
+				<span asp-validation-for="PmWorkTimeID" class="text-danger"></span>
 			</div>
 			<div class="clinic-manager col-md-6">
 				<label for="manager">Tên quản lý phòng khám</label>
@@ -83,15 +105,13 @@
 				<input type="text" name="Address" id="addrSpecialty" class="form-control" />
 				<span asp-validation-for="Address" class="text-danger"></span>
 			</div>
-
 			<div class="clinic-image col-md-12">
 				<label>Hình ảnh</label>
-				<img src="@Model.Image" alt="" style="max-width: 300px; max-height: 300px;" />
-				<input type="file" id="fileInput" class="form-control" />
+				<input type="file" id="imageInput" class="form-control" required />
+				<img src="@Model.Image" alt="" id="imagePreview" style="display: block; max-width: 100px; text-align: center; border-radius: 10px;" />
 				<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />
 				<span asp-validation-for="Image" class="text-danger"></span>
 			</div>
-
 			<div class="clinic-desc col-md-12">
 				<label>Mô tả phòng khám</label>
 				<div id="container">
@@ -118,7 +138,7 @@
 
 
 @* Đưa ảnh lên firebase *@
-<script src="~/assets/js/firebase_script2.js" type="module"></script>
+<script src="~/assets/js/upload-image-firebaseAdmin.js" type="module"></script>
 
 @* Dùng editor *@
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>

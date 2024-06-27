@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Route("Admin/[controller]")]
     [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
     public class DashboardController : Controller
     {
@@ -25,8 +24,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         }
 
 
-        //[Route("GetAppointmentStatus")]
-        public async Task<IActionResult> GetAppointmentStatus()
+        public async Task<IActionResult> GetAppointmentStatus(int? year)
         {
             var adminAccountID = HttpContext.Session.GetInt32("adminAccountID");
             if (adminAccountID == null)
@@ -34,8 +32,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction("Login", "AdminAccount", new { area = "Admin" });
             }
 
-            var currentYear = DateTime.Now.Year;
+            int currentYear = year ?? DateTime.Now.Year;
+            DateTime today = DateTime.Today;
 
+            //Đặt khám thành công/thất bại mỗi tháng
             var successfulAppointmentsPerMonth = await _context.Appointments
                 .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Year == currentYear && a.AppointmentStatus == "Đã Khám")
                 .GroupBy(a => a.CreatedDate.Value.Month)
@@ -61,14 +61,27 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 failedData[item.Month - 1] = item.Count;
             }
 
+            var successfulAppointmentsToday = await _context.Appointments
+                .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Date == today && a.AppointmentStatus == "Đã Khám")
+                .CountAsync();
+
+            var failedAppointmentsToday = await _context.Appointments
+                .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Date == today && a.AppointmentStatus == "Đã Hủy")
+                .CountAsync();
+
             var model = new AppointmentVM
             {
+                SelectedYear = currentYear,
                 SuccessfulAppointments = successfulAppointmentsPerMonth.Sum(x => x.Count),
                 FailedAppointments = failedAppointmentsPerMonth.Sum(x => x.Count),
                 MonthlySuccessfulAppointments = successfulData.ToList(),
-                MonthlyFailedAppointments = failedData.ToList()
+                MonthlyFailedAppointments = failedData.ToList(),
+                SuccessfulAppointmentsToday = successfulAppointmentsToday,
+                FailedAppointmentsToday = failedAppointmentsToday
             };
 
+            Console.WriteLine("SuccessfulAppointmentsToday: " + successfulAppointmentsToday);
+            Console.WriteLine("FailedAppointmentsToday: " + failedAppointmentsToday);
 
             return View(model);
         }

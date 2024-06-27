@@ -7,14 +7,14 @@
 <!-- ============ INFO ============ -->
 <div class="account__management">
 	<div class="account__management__header">
-		<h1 class="title mb-0">Thông tin ...</h1>
+		<h1 class="title mb-0">Chỉnh sửa thông tin</h1>
 	</div>
 
 	<form method="post" action="~/Admin/AccountPatient/EditAccount" class="account__management__edit row">
 		<input type="hidden" name="Id" value="@Model.Id" />
 		<input type="hidden" name="Role" value="@Model.Role" />
 		<div class="col-md-6">
-			<label for="username">Tên tài khoản</label>
+			<label for="username">Tên đăng nhập</label>
 			<input type="text" name="Username" id="username" value="@Model.Username" />
 			<span asp-validation-for="Username" class="text-danger"></span>
 		</div>

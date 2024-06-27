@@ -1,4 +1,5 @@
-﻿using Dental_Clinic_System.Areas.Admin.Models;
+﻿using Dental_Clinic_System.Areas.Admin.DTO;
+using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Areas.Admin.ViewModels;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Helper;
@@ -26,339 +27,467 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             _emailSender = emailSender;
         }
 
-        #region Show List Clinic
-        //===================LIST CLINIC===================
-        //[Route("ListClinic")]
-        public async Task<IActionResult> ListClinic()
-        {
-            //Lấy dữ liệu từ cơ sở dữ liệu
-            var clinics = await (from clinic in _context.Clinics
-                                 join account in _context.Accounts
-                                 on clinic.ManagerID equals account.ID
+		#region Show List Clinic
+		//===================LIST CLINIC===================
+		//[Route("ListClinic")]
+		public async Task<IActionResult> ListClinic()
+		{
+			//Lấy dữ liệu từ cơ sở dữ liệu
+			var clinics = await (from clinic in _context.Clinics
+								 join account in _context.Accounts
+								 on clinic.ManagerID equals account.ID
 
-                                 where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
-                                 select new ManagerClinicVM
-                                 {
-                                     ClinicName = clinic.Name,
-                                     //Address = clinic.Address,
-                                     Province = clinic.Province,
-                                     Image = clinic.Image,
-                                     Id = clinic.ID,
-                                     ManagerName = account.LastName + " " + account.FirstName
-                                 }).ToListAsync();
+								 where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
+								 select new ManagerClinicVM
+								 {
+									 ClinicName = clinic.Name,
+									 //Address = clinic.Address,
+									 Province = clinic.Province,
+									 Image = clinic.Image,
+									 Id = clinic.ID,
+									 ManagerName = account.LastName + " " + account.FirstName
+								 }).ToListAsync();
 
-            return View(clinics);
-        }
-        #endregion
+			return View(clinics);
+		}
+		#endregion
 
-        #region Tìm kiếm phòng khám (Search)
-        //===================TÌM KIẾM===================
-        //[Route("SearchClinic")]
-        public async Task<IActionResult> SearchClinic(string search)
-        {
-            //Nếu search rỗng, sẽ chuyển hướng đến ListClinic
-            if (string.IsNullOrEmpty(search))
-            {
-                return RedirectToAction(nameof(ListClinic));
-            }
+		#region Tìm kiếm phòng khám (Search)
+		//===================TÌM KIẾM===================
+		//[Route("SearchClinic")]
+		public async Task<IActionResult> SearchClinic(string search)
+		{
+			//Nếu search rỗng, sẽ chuyển hướng đến ListClinic
+			if (string.IsNullOrEmpty(search))
+			{
+				return RedirectToAction(nameof(ListClinic));
+			}
 
-            var query = from clinic in _context.Clinics
-                        join account in _context.Accounts
-                        on clinic.ManagerID equals account.ID
-                        where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
-                        select new ManagerClinicVM
-                        {
-                            ClinicName = clinic.Name,
-                            Address = clinic.Address,
-                            Image = clinic.Image,
-                            ManagerName = account.LastName + " " + account.FirstName
-                        };
+			var query = from clinic in _context.Clinics
+						join account in _context.Accounts
+						on clinic.ManagerID equals account.ID
+						where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
+						select new ManagerClinicVM
+						{
+							ClinicName = clinic.Name,
+							//Address = clinic.Address,
+							Province = clinic.Province,
+							Image = clinic.Image,
+							ManagerName = account.LastName + " " + account.FirstName
+						};
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                query = query.Where(c => c.ClinicName.Contains(search));
-            }
+			if (!string.IsNullOrEmpty(search))
+			{
+				query = query.Where(c => c.ClinicName.Contains(search));
+			}
 
-            var clinics = await query.ToListAsync();
+			var clinics = await query.ToListAsync();
 
-            var clinicList = clinics.Select(c => new ManagerClinicVM
-            {
-                ClinicName = c.ClinicName,
-                Address = c.Address,
-                Image = c.Image,
-                ManagerName = c.ManagerName
-            }).ToList();
+			var clinicList = clinics.Select(c => new ManagerClinicVM
+			{
+				ClinicName = c.ClinicName,
+				//Address = c.Address,
+				Province = c.Province,
+				Image = c.Image,
+				ManagerName = c.ManagerName
+			}).ToList();
 
-            return View(nameof(ListClinic), clinics);
-        }
-        #endregion
+			return View(nameof(ListClinic), clinics);
+		}
+		#endregion
 
-        #region Thêm phòng khám (ADD)
-        //===================THÊM PHÒNG KHÁM===================
-        [HttpGet]
-        //[Route("CreateClinic")]
-        public async Task<IActionResult> CreateClinic()
-        {
-            var unassignedManagers = await _context.Accounts
-            .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
-            .Select(a => new
-            {
-                a.ID,
-                FullName = a.LastName + " " + a.FirstName
-            }).ToListAsync();
+		#region Thêm phòng khám (ADD)
+		//===================THÊM PHÒNG KHÁM===================
+		[HttpGet]
+		//[Route("CreateClinic")]
+		public async Task<IActionResult> CreateClinic()
+		{
+			var unassignedManagers = await _context.Accounts
+			.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+			.Select(a => new
+			{
+				a.ID,
+				FullName = a.LastName + " " + a.FirstName
+			}).ToListAsync();
 
-            var model = new AddClincVM
-            {
-                UnassignedManagers = new SelectList(unassignedManagers, "ID", "FullName")
-            };
+			var amWorkTimes = await _context.WorkTimes
+			.Where(w => w.Session == "Sáng")
+			.Select(w => new WorkTimeDto
+			{
+				ID = w.ID,
+				DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+			})
+			.ToListAsync();
 
-            return View(model);
-        }
+			var pmWorkTimes = await _context.WorkTimes
+				.Where(w => w.Session == "Chiều")
+				.Select(w => new WorkTimeDto
+				{
+					ID = w.ID,
+					DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+				})
+				.ToListAsync();
 
+			var model = new AddClincVM
+			{
+				UnassignedManagers = new SelectList(unassignedManagers, "ID", "FullName"),
+				AmWorkTimes = new SelectList(amWorkTimes, "ID", "DisplayText"),
+				PmWorkTimes = new SelectList(pmWorkTimes, "ID", "DisplayText")
+			};
 
-        [HttpPost]
-        //[Route("CreateClinic")]
-        public async Task<IActionResult> CreateClinic(AddClincVM model)
-        {
-            if (ModelState.IsValid)
-            {
-                //Kiểm tra Phòng khám đã tồn tại chưa
-                bool clinicNameExists = await _context.Clinics.AnyAsync(c => c.Name == model.Name);
-                if (clinicNameExists)
-                {
-                    ModelState.AddModelError("Name", "Tên phòng khám đã tồn tại.");
-                }
-
-                //Kiểm tra Hotline đã tồn tại chưa
-                bool clinicPhoneExists = await _context.Clinics.AnyAsync(c => c.PhoneNumber == model.PhoneNumber);
-                if (clinicPhoneExists)
-                {
-                    ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
-                }
-
-                //Kiểm tra Email phòng khám tồn tại chưa
-                bool clinicEmailExists = await _context.Clinics.AnyAsync(c => c.Email == model.Email);
-                if (clinicEmailExists)
-                {
-                    ModelState.AddModelError("Email", "Email đã tồn tại.");
-                }
-
-                //Nếu đã tồn tại, load lại danh sách người quản lý chưa có gắn phòng khám
-                if (!ModelState.IsValid)
-                {
-                    var unassignedManager = await _context.Accounts
-                        .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
-                        .Select(a => new
-                        {
-                            a.ID,
-                            FullName = a.LastName + " " + a.FirstName
-                        })
-                        .ToListAsync();
-
-                    model.UnassignedManagers = new SelectList(unassignedManager, "ID", "FullName");
-                    return View(model);
-                }
+			return View(model);
+		}
 
 
-                //Kiểm tra Account Quản lý có tồn tại không, và đúng Role Quản lý chưa
-                var manager = await _context.Accounts
-                    .FirstOrDefaultAsync(a => a.ID == model.ManagerID && a.Role == "Quản Lý");
+		[HttpPost]
+		//[Route("CreateClinic")]
+		public async Task<IActionResult> CreateClinic(AddClincVM model)
+		{
+			if (ModelState.IsValid)
+			{
+				//Kiểm tra Phòng khám đã tồn tại chưa
+				bool clinicNameExists = await _context.Clinics.AnyAsync(c => c.Name == model.Name);
+				if (clinicNameExists)
+				{
+					ModelState.AddModelError("Name", "Tên phòng khám đã tồn tại.");
+				}
 
-                if (manager == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Manager not found or is not a manager.");
-                    return View(model);
-                }
+				//Kiểm tra Hotline đã tồn tại chưa
+				bool clinicPhoneExists = await _context.Clinics.AnyAsync(c => c.PhoneNumber == model.PhoneNumber);
+				if (clinicPhoneExists)
+				{
+					ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
+				}
 
-                var clinic = new Clinic
-                {
-                    Name = model.Name,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    ManagerID = manager.ID,
-                    Province = model.Province,
-                    District = model.District,
-                    Ward = model.Ward,
-                    Basis = model.Basis,
-                    Address = model.Address,
-                    Description = model.Description,
-                    Image = model.Image,
-                    ClinicStatus = "Hoạt Động"
-                };
+				//Kiểm tra Email phòng khám tồn tại chưa
+				bool clinicEmailExists = await _context.Clinics.AnyAsync(c => c.Email == model.Email);
+				if (clinicEmailExists)
+				{
+					ModelState.AddModelError("Email", "Email đã tồn tại.");
+				}
 
-                _context.Clinics.Add(clinic);
-                await _context.SaveChangesAsync();
+				//Nếu đã tồn tại, load lại danh sách người quản lý chưa có gắn phòng khám
+				if (!ModelState.IsValid)
+				{
+					var unassignedManager = await _context.Accounts
+						.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+						.Select(a => new
+						{
+							a.ID,
+							FullName = a.LastName + " " + a.FirstName
+						})
+						.ToListAsync();
 
-                return RedirectToAction(nameof(ListClinic));
-            }
+					var amWorkTime = await _context.WorkTimes
+						.Where(w => w.Session == "Sáng")
+						.Select(w => new WorkTimeDto
+						{
+							ID = w.ID,
+							DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+						})
+						.ToListAsync();
 
-            var unassignedManagers = await _context.Accounts
-                .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
-                .Select(a => new
-                {
-                    a.ID,
-                    FullName = a.LastName + " " + a.FirstName
-                }).ToListAsync();
+					var pmWorkTime = await _context.WorkTimes
+						.Where(w => w.Session == "Chiều")
+						.Select(w => new WorkTimeDto
+						{
+							ID = w.ID,
+							DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+						})
+						.ToListAsync();
 
-            model.UnassignedManagers = new SelectList(unassignedManagers, "ID", "FullName");
+					model.UnassignedManagers = new SelectList(unassignedManager, "ID", "FullName");
+					model.AmWorkTimes = new SelectList(amWorkTime, "ID", "DisplayText");
+					model.PmWorkTimes = new SelectList(pmWorkTime, "ID", "DisplayText");
+					return View(model);
+				}
 
-            //List<string> errors = new List<string>();
-            //foreach (var value in ModelState.Values)
-            //{
-            //	foreach (var error in value.Errors)
-            //	{
-            //		errors.Add(error.ErrorMessage);
-            //	}
-            //}
-            //string errorMessage = string.Join("\n", errors);
-            //return BadRequest(errorMessage);
-            return View(model);
-        }
-        #endregion
 
-        #region Chỉnh sửa (Edit Clinic)
-        //===================CHỈNH SỬA PHÒNG KHÁM===================
-        [HttpGet]
-        //[Route("EditClinic/{id}")]
-        public async Task<IActionResult> EditClinic(int id)
-        {
-            var clinic = await _context.Clinics.FindAsync(id);
-            if (clinic == null)
-            {
-                return NotFound();
-            }
+				//Kiểm tra Account Quản lý có tồn tại không, và đúng Role Quản lý chưa
+				var manager = await _context.Accounts
+					.FirstOrDefaultAsync(a => a.ID == model.ManagerID && a.Role == "Quản Lý");
 
-            var model = new AddClincVM
-            {
-                ID = clinic.ID,
-                Name = clinic.Name,
-                PhoneNumber = clinic.PhoneNumber,
-                Email = clinic.Email,
-                ManagerID = clinic.ManagerID,
-                Province = clinic.Province,
-                District = clinic.District,
-                Ward = clinic.Ward,
-                Basis = clinic.Basis,
-                Address = clinic.Address,
-                Description = clinic.Description,
-                Image = clinic.Image,
-                ClinicStatus = "Hoạt Động",
-                UnassignedManagers = new SelectList(await _context.Accounts
-                    .Where(a => a.Role == "Quản Lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID))
-                    .Select(a => new
-                    {
-                        a.ID,
-                        FullName = a.LastName + " " + a.FirstName
-                    }).ToListAsync(), "ID", "FullName")
-            };
+				if (manager == null)
+				{
+					ModelState.AddModelError(string.Empty, "Không tìm thấy Role là Quản Lý.");
+					return View(model);
+				}
 
-            return View(model);
-        }
+				var clinic = new Clinic
+				{
+					Name = model.Name,
+					PhoneNumber = model.PhoneNumber,
+					Email = model.Email,
+					ManagerID = manager.ID,
+					Province = model.Province,
+					District = model.District,
+					Ward = model.Ward,
+					Basis = model.Basis,
+					Address = model.Address,
+					Description = model.Description,
+					Image = model.Image,
+					ClinicStatus = "Hoạt Động",
+					AmWorkTimeID = model.AmWorkTimeID,
+					PmWorkTimeID = model.PmWorkTimeID
+				};
 
-        [HttpPost]
-        //[Route("EditClinic")]
-        public async Task<IActionResult> EditClinic(AddClincVM model)
-        {
-            if (ModelState.IsValid)
-            {
-                ////Kiểm tra Tên phòng khám đã tồn tại chưa
-                //bool existingName = await _context.Clinics.AnyAsync(c => c.Name == model.Name);
-                //if(existingName)
-                //	ModelState.AddModelError("Name", "Tên phòng khám đã tồn tại.");
+				_context.Clinics.Add(clinic);
+				await _context.SaveChangesAsync();
 
-                ////Kiểm tra Email đã tồn tại chưa
-                //bool existingEmail = await _context.Clinics.AnyAsync(c => c.Email == model.Email);
-                //if (existingEmail)
-                //	ModelState.AddModelError("Email", "Email đã tồn tại.");
+				return RedirectToAction(nameof(ListClinic));
+			}
 
-                ////Kiểm tra Số điện thoại đã tồn tại chưa
-                //bool existingPhone = await _context.Clinics.AnyAsync(c => c.PhoneNumber == model.PhoneNumber);
-                //if (existingPhone)
-                //	ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
+			var unassignedManagers = await _context.Accounts
+				.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+				.Select(a => new
+				{
+					a.ID,
+					FullName = a.LastName + " " + a.FirstName
+				}).ToListAsync();
 
-                //            //Nếu đã tồn tại, load lại danh sách người quản lý chưa có gắn phòng khám
-                //if(!ModelState.IsValid)
-                //{
-                //                var unassignedManager = await _context.Accounts
-                //                    .Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
-                //                    .Select(a => new
-                //                    {
-                //                        a.ID,
-                //                        FullName = a.LastName + " " + a.FirstName
-                //                    })
-                //                    .ToListAsync();
+			var amWorkTimes = await _context.WorkTimes
+			.Where(w => w.Session == "Sáng")
+			.Select(w => new WorkTimeDto
+			{
+				ID = w.ID,
+				DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+			})
+			.ToListAsync();
 
-                //                model.UnassignedManagers = new SelectList(unassignedManager, "ID", "FullName");
-                //                return View(model);
-                //            }
+			var pmWorkTimes = await _context.WorkTimes
+				.Where(w => w.Session == "Chiều")
+				.Select(w => new WorkTimeDto
+				{
+					ID = w.ID,
+					DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+				})
+				.ToListAsync();
 
-                var clinic = await _context.Clinics.FindAsync(model.ID);
-                if (clinic == null)
-                {
-                    return NotFound();
-                }
+			model.UnassignedManagers = new SelectList(unassignedManagers, "ID", "FullName");
+			model.AmWorkTimes = new SelectList(amWorkTimes, "ID", "DisplayText");
+			model.PmWorkTimes = new SelectList(pmWorkTimes, "ID", "DisplayText");
 
-                clinic.Name = model.Name;
-                clinic.PhoneNumber = model.PhoneNumber;
-                clinic.Email = model.Email;
-                clinic.ManagerID = model.ManagerID;
-                clinic.Province = model.Province;
-                clinic.District = model.District;
-                clinic.Ward = model.Ward;
-                clinic.Basis = model.Basis;
-                clinic.Address = model.Address;
-                clinic.Description = model.Description;
-                clinic.Image = model.Image;
-                clinic.ClinicStatus = "Hoạt Động";
+			//List<string> errors = new List<string>();
+			//foreach (var value in ModelState.Values)
+			//{
+			//	foreach (var error in value.Errors)
+			//	{
+			//		errors.Add(error.ErrorMessage);
+			//	}
+			//}
+			//string errorMessage = string.Join("\n", errors);
+			//return BadRequest(errorMessage);
+			return View(model);
+		}
+		#endregion
 
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(ListClinic));
-            }
+		#region Chỉnh sửa (Edit Clinic)
+		//===================CHỈNH SỬA PHÒNG KHÁM===================
+		[HttpGet]
+		//[Route("EditClinic/{id}")]
+		public async Task<IActionResult> EditClinic(int id)
+		{
+			var clinic = await _context.Clinics.FindAsync(id);
+			if (clinic == null)
+			{
+				return NotFound();
+			}
 
-            //Ghi lại List Manager chưa được chỉ định phòng khám nào
-            model.UnassignedManagers = new SelectList(await _context.Accounts
-                .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
-                .Select(a => new
-                {
-                    a.ID,
-                    FullName = a.LastName + " " + a.FirstName
-                }).ToListAsync(), "ID", "FullName");
+			var model = new AddClincVM
+			{
+				ID = clinic.ID,
+				Name = clinic.Name,
+				PhoneNumber = clinic.PhoneNumber,
+				Email = clinic.Email,
+				ManagerID = clinic.ManagerID,
+				Province = clinic.Province,
+				District = clinic.District,
+				Ward = clinic.Ward,
+				Basis = clinic.Basis,
+				Address = clinic.Address,
+				Description = clinic.Description,
+				Image = clinic.Image,
+				ClinicStatus = "Hoạt Động",
+				UnassignedManagers = new SelectList(await _context.Accounts
+					.Where(a => a.Role == "Quản Lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID))
+					.Select(a => new
+					{
+						a.ID,
+						FullName = a.LastName + " " + a.FirstName
+					}).ToListAsync(), "ID", "FullName")
+			};
 
-            // Log model state errors
-            //List<string> errorMessages = new List<string>();
-            //foreach (var value in ModelState.Values)
-            //{
-            //	foreach (var error in value.Errors)
-            //	{
-            //		errorMessages.Add(error.ErrorMessage);
-            //	}
-            //}
-            //string errorMessage = string.Join("\n", errorMessages);
+			return View(model);
+		}
 
-            //return BadRequest(errorMessage);
-            return View(model);
-        }
-        #endregion
+		[HttpPost]
+		//[Route("EditClinic")]
+		public async Task<IActionResult> EditClinic(AddClincVM model)
+		{
+			if (ModelState.IsValid)
+			{
+				////Kiểm tra Tên phòng khám đã tồn tại chưa
+				//bool existingName = await _context.Clinics.AnyAsync(c => c.Name == model.Name);
+				//if(existingName)
+				//	ModelState.AddModelError("Name", "Tên phòng khám đã tồn tại.");
 
-        #region Ẩn phòng khám (Delete)
-        //===================XÓA PHÒNG KHÁM===================
-        //[Route("HiddenClinic")]
-        public async Task<IActionResult> HiddenClinic(string name, string status)
-        {
-            var clinic = await _context.Clinics.SingleOrDefaultAsync(c => c.Name == name);
+				////Kiểm tra Email đã tồn tại chưa
+				//bool existingEmail = await _context.Clinics.AnyAsync(c => c.Email == model.Email);
+				//if (existingEmail)
+				//	ModelState.AddModelError("Email", "Email đã tồn tại.");
 
-            if (clinic != null)
-            {
-                clinic.ClinicStatus = status;
-                _context.SaveChanges();
-            }
+				////Kiểm tra Số điện thoại đã tồn tại chưa
+				//bool existingPhone = await _context.Clinics.AnyAsync(c => c.PhoneNumber == model.PhoneNumber);
+				//if (existingPhone)
+				//	ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
 
-            return RedirectToAction(nameof(ListClinic));
-        }
-        #endregion
+				//            //Nếu đã tồn tại, load lại danh sách người quản lý chưa có gắn phòng khám
+				//if(!ModelState.IsValid)
+				//{
+				//                var unassignedManager = await _context.Accounts
+				//                    .Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+				//                    .Select(a => new
+				//                    {
+				//                        a.ID,
+				//                        FullName = a.LastName + " " + a.FirstName
+				//                    })
+				//                    .ToListAsync();
 
-        #region Duyệt Yêu Cầu Hợp Tác Kinh Doanh
-        [HttpGet]
+				//                model.UnassignedManagers = new SelectList(unassignedManager, "ID", "FullName");
+				//                return View(model);
+				//            }
+
+				var clinic = await _context.Clinics.FindAsync(model.ID);
+				if (clinic == null)
+				{
+					return NotFound();
+				}
+
+				clinic.Name = model.Name;
+				clinic.PhoneNumber = model.PhoneNumber;
+				clinic.Email = model.Email;
+				clinic.ManagerID = model.ManagerID;
+				clinic.Province = model.Province;
+				clinic.District = model.District;
+				clinic.Ward = model.Ward;
+				clinic.Basis = model.Basis;
+				clinic.Address = model.Address;
+				clinic.Description = model.Description;
+				clinic.Image = model.Image;
+				clinic.ClinicStatus = "Hoạt Động";
+
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(ListClinic));
+			}
+
+			//Ghi lại List Manager chưa được chỉ định phòng khám nào
+			model.UnassignedManagers = new SelectList(await _context.Accounts
+				.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+				.Select(a => new
+				{
+					a.ID,
+					FullName = a.LastName + " " + a.FirstName
+				}).ToListAsync(), "ID", "FullName");
+
+			return View(model);
+		}
+		#endregion
+
+		#region Đóng cửa phòng khám (Delete)
+		//===================XÓA PHÒNG KHÁM===================
+		//[Route("HiddenClinic")]
+		public async Task<IActionResult> HiddenClinic(string name, string status)
+		{
+			var clinic = await _context.Clinics.SingleOrDefaultAsync(c => c.Name == name);
+
+			if (clinic != null)
+			{
+				clinic.ClinicStatus = status;
+				_context.SaveChanges();
+			}
+
+			return RedirectToAction(nameof(ListClinic));
+		}
+		#endregion
+
+		//=====================PHÒNG KHÁM ĐÓNG CỬA=====================
+
+		#region Show Clinic Closed
+		//[Route("ListClinicClosed")]
+		public async Task<IActionResult> ListClinicClosed()
+		{
+			var clinicClosed = await (from clinic in _context.Clinics
+									  join account in _context.Accounts
+									  on clinic.ManagerID equals account.ID
+
+									  where account.Role == "Quản Lý" && clinic.ClinicStatus == "Đóng Cửa"
+									  select new ManagerClinicVM
+									  {
+										  ClinicName = clinic.Name,
+										  Province = clinic.Province,
+										  Id = clinic.ID,
+										  Image = clinic.Image,
+										  ManagerName = account.LastName + " " + account.FirstName
+									  }).ToListAsync();
+
+			return View(clinicClosed);
+
+		}
+		#endregion
+
+		#region Xem phòng khám (View)
+		[HttpGet]
+		//[Route("ViewClinic/{id}")]
+		public async Task<IActionResult> ViewClinic(int id)
+		{
+			var clinic = await (from c in _context.Clinics
+								join a in _context.Accounts
+								on c.ManagerID equals a.ID
+								where c.ID == id && a.Role == "Quản Lý" && c.ClinicStatus == "Đóng Cửa"
+								select new ManagerClinicVM
+								{
+									Id = c.ID,
+									Name = c.Name,
+									PhoneNumber = c.PhoneNumber,
+									Email = c.Email,
+									ManagerName = a.LastName + " " + a.FirstName,
+									Province = c.Province,
+									District = c.District,
+									Ward = c.Ward,
+									Basis = c.Basis,
+									Address = c.Address,
+									Description = c.Description,
+									Image = c.Image,
+									ClinicStatus = c.ClinicStatus
+								}).FirstOrDefaultAsync();
+
+			if (clinic == null)
+			{
+				return NotFound();
+			}
+
+			return Json(clinic);
+		}
+		#endregion
+
+		#region Mở cửa lại phòng khám
+		//[Route("UnlockClinic")]
+		public async Task<IActionResult> UnlockClinic(string name, string status)
+		{
+			var clinic = await _context.Clinics.SingleOrDefaultAsync(c => c.Name == name);
+
+			if (clinic != null)
+			{
+				clinic.ClinicStatus = status;
+				_context.SaveChanges();
+			}
+
+			return RedirectToAction(nameof(ListClinicClosed));
+		}
+		#endregion
+
+		#region Duyệt Yêu Cầu Hợp Tác Kinh Doanh
+		[HttpGet]
         //[Route("ApprovalRequest")]
         public async Task<IActionResult> ApprovalRequest()
         {
