@@ -56,7 +56,7 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
         public string Description { get; set; }
 
-        public string ClinicName { get; set; }
+        public string? ClinicName { get; set; }
 
     }
 }

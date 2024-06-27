@@ -78,12 +78,12 @@
 			<div class="modal-body">
 				<div class="row mb-3">
 					<div class="col">
-						<label for="username">Tên đăng nhập</label>
+						<label for="username">Tên đăng nhập<sup style="color: red">*</sup></label>
 						<input type="text" name="Username" id="username" required />
 						<span id="usernameError" class="text-danger"></span>
 					</div>
 					<div class="col">
-						<label for="password">Mật khẩu</label>
+						<label for="password">Mật khẩu<sup style="color:red">*</sup></label>
 						<input type="password" name="Password" id="password" required />
 						<span id="passwordError" class="text-danger"></span>
 					</div>
@@ -100,12 +100,12 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col">
-						<label for="email">Email</label>
+						<label for="email">Email<sup style="color:red">*</sup></label>
 						<input type="email" name="Email" id="email" required />
 						<span id="emailError" class="text-danger"></span>
 					</div>
 					<div class="col">
-						<label for="phonenumber">Số điện thoại</label>
+						<label for="phonenumber">Số điện thoại<sup style="color:red">*</sup></label>
 						<input type="tel" name="PhoneNumber" id="phonenumber" required />
 						<span id="phoneNumberError" class="text-danger"></span>
 					</div>
@@ -136,6 +136,7 @@
 		<tr>
 			<th class="text-center">STT</th>
 			<th>Tên đăng nhập</th>
+			<th>Giới tính</th>
 			<th>Email</th>
 			<th>Số điện thoại</th>
 			<th>Địa chỉ</th>
@@ -154,6 +155,7 @@
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
+					<td>@account.Gender</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
 					<td>@account.Address</td>

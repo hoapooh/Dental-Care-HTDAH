@@ -188,20 +188,19 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				return NotFound();
 			}
 
-			var dentist = await _context.Dentists.Include(d => d.Account).FirstOrDefaultAsync(d => d.ID == id);
-			if (dentist == null || dentist.Account == null)
-			{
-				Console.WriteLine($"Account với ID {id} không tìm thấy.");
-				return NotFound();
-			}
+            var dentist = await _context.Dentists.FirstOrDefaultAsync(d => d.AccountID == id);
+            if (dentist == null)
+            {
+                Console.WriteLine($"Dentist với AccountID {id} không tìm thấy.");
+                return NotFound();
+            }
 
-			var accountVM = new EditAccountVM
+            var accountVM = new EditAccountVM
 			{
 				Id = account.ID,
 				FirstName = account.FirstName,
 				LastName = account.LastName,
 				Username = account.Username,
-				Password = DataEncryptionExtensions.ToMd5Hash(account.Password),
 				Email = account.Email,
 				DateOfBirth = account.DateOfBirth,
 				PhoneNumber = account.PhoneNumber,
@@ -215,9 +214,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				ClinicID = dentist.ClinicID
 			};
 
-			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
-			ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", dentist.ClinicID);
-			return View(accountVM);
+            ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
+            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", dentist.ClinicID);
+            return View(accountVM);
 		}
 
 		[HttpPost]
@@ -232,10 +231,27 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 					return NotFound();
 				}
 
-				account.FirstName = model.FirstName;
+                if (!string.IsNullOrEmpty(model.NewPassword) || !string.IsNullOrEmpty(model.ConfirmPassword))
+                {
+                    if (model.NewPassword != model.ConfirmPassword)
+                    {
+                        ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp.");
+                        return View(model);
+                    }
+
+                    if (model.NewPassword.Length < 3)
+                    {
+                        ModelState.AddModelError("NewPassword", "Mật khẩu phải có ít nhất 3 ký tự.");
+                        return View(model);
+                    }
+
+                    account.Password = DataEncryptionExtensions.ToMd5Hash(model.NewPassword);
+                }
+
+                account.ID = model.Id;
+                account.FirstName = model.FirstName;
 				account.LastName = model.LastName;
 				account.Username = model.Username;
-				account.Password = DataEncryptionExtensions.ToMd5Hash(model.Password);
 				account.Email = model.Email;
 				account.DateOfBirth = model.DateOfBirth;
 				account.PhoneNumber = model.PhoneNumber;
@@ -246,25 +262,25 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				account.Address = model.Address;
 				account.Role = model.Role;
 
-				//Update nha sĩ entity
-				var dentist = await _context.Dentists.FirstOrDefaultAsync(d => d.ID == model.Id);
-				if (dentist != null)
-				{
-					dentist.DegreeID = model.DegreeID;
-					dentist.ClinicID = model.ClinicID;
-				}
+                //Update nha sĩ entity
+                var dentist = await _context.Dentists.FirstOrDefaultAsync(d => d.AccountID == model.Id);
+                if (dentist != null)
+                {
+                    dentist.DegreeID = model.DegreeID;
+                    dentist.ClinicID = model.ClinicID;
+                    _context.Update(dentist);
+                }
 
-				_context.Update(account);
-				_context.Update(dentist);
+                _context.Update(account);
 				await _context.SaveChangesAsync();
 
 				//Chuyển đến ListAccount
 				return RedirectToAction(nameof(ListAccountDentist));
 			}
 
-			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
-			ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", model.ClinicID);
-			return View(model);
+            ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
+            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", model.ClinicID);
+            return View(model);
 		}
 		#endregion
 

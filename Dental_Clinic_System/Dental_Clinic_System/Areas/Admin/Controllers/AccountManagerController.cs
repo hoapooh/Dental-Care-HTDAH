@@ -28,12 +28,14 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 		#region Show List Account với Role Quản lý
 		//===================LIST ACCOUNT===================
-		//[Route("ListAccountManager")]
+		//join để kết hợp 2 table là  Accounts và Clinics
+		//into accountClinicGroup: tạo 1 nhóm kq từ join
 		public async Task<IActionResult> ListAccountManager()
 		{
 			var accountList = await (from account in _context.Accounts
 									 join clinic in _context.Clinics
-									 on account.ID equals clinic.ManagerID
+									 on account.ID equals clinic.ManagerID into accountClinicGroup
+									 from clinic in accountClinicGroup.DefaultIfEmpty()
 
 									 where account.Role == "Quản Lý" && account.AccountStatus == "Hoạt Động"
 									 select new ManagerAccountVM
@@ -44,7 +46,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 										 PhoneNumber = account.PhoneNumber,
 										 Address = account.Address,
 										 Role = account.Role,
-										 ClinicName = clinic.Name
+										 ClinicName = clinic != null ? clinic.Name : "N/A"
 									 }).ToListAsync();
 
 			return View(accountList);
@@ -64,7 +66,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			var accountList = await (from account in _context.Accounts
 									 join clinic in _context.Clinics
-									 on account.ID equals clinic.ManagerID
+									 on account.ID equals clinic.ManagerID into accountClinicGroup
+									 from clinic in accountClinicGroup.DefaultIfEmpty()
 
 									 where account.Role == "Quản Lý" && account.AccountStatus == "Hoạt Động"
 											&& account.Username.Contains(keyword)
@@ -76,7 +79,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 										 PhoneNumber = account.PhoneNumber,
 										 Address = account.Address,
 										 Role = account.Role,
-										 ClinicName = clinic.Name
+										 ClinicName = clinic != null ? clinic.Name : "N/A"
 									 }).ToListAsync();
 
 			return View("ListAccountManager", accountList);
@@ -154,7 +157,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				FirstName = account.FirstName,
 				LastName = account.LastName,
 				Username = account.Username,
-				Password = DataEncryptionExtensions.ToMd5Hash(account.Password),
 				Email = account.Email,
 				DateOfBirth = account.DateOfBirth,
 				PhoneNumber = account.PhoneNumber,
@@ -181,11 +183,27 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 					return NotFound();
 				}
 
+				if (!string.IsNullOrEmpty(model.NewPassword) || !string.IsNullOrEmpty(model.ConfirmPassword))
+				{
+					if (model.NewPassword != model.ConfirmPassword)
+					{
+						ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp.");
+						return View(model);
+					}
+
+					if (model.NewPassword.Length < 3)
+					{
+						ModelState.AddModelError("NewPassword", "Mật khẩu phải có ít nhất 3 ký tự.");
+						return View(model);
+					}
+
+					account.Password = DataEncryptionExtensions.ToMd5Hash(model.NewPassword);
+				}
+
 				account.ID = model.Id;
 				account.FirstName = model.FirstName;
 				account.LastName = model.LastName;
 				account.Username = model.Username;
-				account.Password = DataEncryptionExtensions.ToMd5Hash(model.Password);
 				account.Email = model.Email;
 				account.DateOfBirth = model.DateOfBirth;
 				account.PhoneNumber = model.PhoneNumber;

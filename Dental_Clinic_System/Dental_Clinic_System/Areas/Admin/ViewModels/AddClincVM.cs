@@ -49,12 +49,6 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
         public int PmWorkTimeID { get; set; }
 
-        //public TimeOnly StartTimeMorning { get; set; }
-        //public TimeOnly EndTimeMorning { get; set; }
-
-        //public TimeOnly StartTimeAfternoon { get; set; }
-        //public TimeOnly EndTimeAfternoon { get; set; }
-
         public SelectList? AmWorkTimes { get; set; }
 
         public SelectList? PmWorkTimes { get; set; }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Dental_Clinic_System.Helper
 {
@@ -29,6 +30,17 @@ namespace Dental_Clinic_System.Helper
 			}
 
 			return property.Name; // Fallback to the property name if DisplayName is not set
+		}
+
+		//Xóa các thẻ Html ra khỏi chuỗi (string)
+		public static string StripHtmlTags(string input)
+		{
+			if (string.IsNullOrEmpty(input))
+			{
+				return string.Empty;
+			}
+
+			return Regex.Replace(input, "<.*?>", string.Empty);
 		}
 	}
 }

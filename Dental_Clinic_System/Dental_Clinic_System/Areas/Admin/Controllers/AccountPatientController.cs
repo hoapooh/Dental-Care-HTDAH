@@ -42,9 +42,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 Username = a.Username,
                 Email = a.Email,
                 PhoneNumber = a.PhoneNumber,
+                Gender = a.Gender,
                 Address = a.Address,
                 Role = a.Role
-                //Status = a.AccountStatus
             }).ToList();
 
 
@@ -74,9 +74,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 Username = a.Username,
                 Email = a.Email,
                 PhoneNumber = a.PhoneNumber,
+                Gender = a.Gender,
                 Address = a.Address,
                 Role = a.Role
-                //Status = a.AccountStatus
             }).ToList();
 
             return View("ListAccountPatient", accountList);
@@ -154,8 +154,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 FirstName = account.FirstName,
                 LastName = account.LastName,
                 Username = account.Username,
-                Password = DataEncryptionExtensions.ToMd5Hash(account.Password),
-                Email = account.Email,
+				Email = account.Email,
                 DateOfBirth = account.DateOfBirth,
                 PhoneNumber = account.PhoneNumber,
                 Gender = account.Gender,
@@ -175,17 +174,34 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var account = await _context.Accounts.FindAsync(model.Id);
-                if (account == null)
-                {
-                    return NotFound();
-                }
+				var account = await _context.Accounts.FindAsync(model.Id);
+				if (account == null)
+				{
+					return NotFound();
+				}
+
+				if (!string.IsNullOrEmpty(model.NewPassword) || !string.IsNullOrEmpty(model.ConfirmPassword))
+				{
+					if (model.NewPassword != model.ConfirmPassword)
+					{
+						ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp.");
+						return View(model);
+					}
+
+					if (model.NewPassword.Length < 3)
+					{
+						ModelState.AddModelError("NewPassword", "Mật khẩu phải có ít nhất 3 ký tự.");
+						return View(model);
+					}
+
+					account.Password = DataEncryptionExtensions.ToMd5Hash(model.NewPassword);
+				}
 
                 account.ID = model.Id;
                 account.FirstName = model.FirstName;
                 account.LastName = model.LastName;
                 account.Username = model.Username;
-                account.Password = DataEncryptionExtensions.ToMd5Hash(model.Password);
+                //account.Password = DataEncryptionExtensions.ToMd5Hash(model.Password);
                 account.Email = model.Email;
                 account.DateOfBirth = model.DateOfBirth;
                 account.PhoneNumber = model.PhoneNumber;
@@ -196,7 +212,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 account.Address = model.Address;
                 account.Role = model.Role;
 
-                _context.Update(account);
+
+				_context.Update(account);
                 await _context.SaveChangesAsync();
 
                 //Chuyển đến ListAccount

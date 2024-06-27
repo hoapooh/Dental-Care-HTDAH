@@ -4,6 +4,7 @@
 	ViewData["Title"] = "EditAccount";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 <!-- ============ INFO ============ -->
 <div class="account__management">
 	<div class="account__management__header">
@@ -18,10 +19,15 @@
 			<input type="text" name="Username" id="username" value="@Model.Username" />
 			<span asp-validation-for="Username" class="text-danger"></span>
 		</div>
-		<div class="col-md-6">
-			<label for="password">Mật khẩu</label>
-			<input type="password" name="Password" id="password" value="@Model.Password" />
-			<span asp-validation-for="Password" class="text-danger"></span>
+		<div class="col-md-3">
+			<label for="newPassword">Mật khẩu mới</label>
+			<input type="password" name="NewPassword" id="newPassword" />
+			<span asp-validation-for="NewPassword" class="text-danger"></span>
+		</div>
+		<div class="col-md-3">
+			<label for="confirmPassword">Xác nhận mật khẩu</label>
+			<input type="password" name="ConfirmPassword" id="confirmPassword" />
+			<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 		</div>
 		<div class="col-md-3">
 			<label for="lastname">Họ</label>
@@ -83,6 +89,8 @@
 	</form>
 </div>
 
+
+<link rel="stylesheet" href="~/assets/css/editAccount.css" />
 
 <script>
 	document.addEventListener("DOMContentLoaded", function () {

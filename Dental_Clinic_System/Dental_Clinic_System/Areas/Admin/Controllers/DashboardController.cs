@@ -61,6 +61,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 failedData[item.Month - 1] = item.Count;
             }
 
+            //Đặt khám thành công/thất bại trong ngày
             var successfulAppointmentsToday = await _context.Appointments
                 .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Date == today && a.AppointmentStatus == "Đã Khám")
                 .CountAsync();
