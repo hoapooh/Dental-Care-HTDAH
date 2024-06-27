@@ -23,6 +23,10 @@
     <div class="newsDetail__container">
         @if (newsItem != null)
         {
+            <h1>@newsItem.Title</h1>
+            <div class="newsDetail__datetime">
+                <i class="fa-regular fa-calendar"></i><span>@newsItem.CreatedDate</span>
+            </div>
             @Html.Raw(newsItem.Content)
         }
         else

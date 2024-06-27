@@ -1,51 +1,98 @@
 ﻿using Dental_Clinic_System.Models.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class NewsController : Controller
-    {
-        private readonly DentalClinicDbContext _context;
-        public NewsController(DentalClinicDbContext context)
-        {
-            _context = context;
-        }
+	[Area("Admin")]
+	//[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+	public class NewsController : Controller
+	{
+		private readonly DentalClinicDbContext _context;
+		public NewsController(DentalClinicDbContext context)
+		{
+			_context = context;
+		}
 
-        [HttpGet]
-        public async Task<IActionResult> NewsPost()
-        {
-            var user = _context.Accounts.FirstOrDefault(r => r.Role == "Admin");
+		[HttpGet]
+		public async Task<IActionResult> NewsPost()
+		{
+			var news = _context.News.ToList();
+			return View(news);
+		}
 
-            ViewBag.AdminID = user?.ID;
-            return View();
-        }
+		[HttpGet]
+		public async Task<IActionResult> NewsPostAdd()
+		{
+			var user = _context.Accounts.FirstOrDefault(r => r.Role == "Admin");
 
-        [HttpPost]
-        public async Task<IActionResult> CreateNewsPost(string? content, string? newsTitle, int adminID)
-        {
-            // Get the current UTC time
-            DateTime utcNow = DateTime.UtcNow;
+			ViewBag.AdminID = user?.ID;
+			return View();
+		}
 
-            // Define the UTC+7 time zone
-            TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+		[HttpPost]
+		public async Task<IActionResult> CreateNewsPost(string? content, string? newsTitle, int adminID, string? thumbnail)
+		{
+			// Get the current UTC time
+			DateTime utcNow = DateTime.UtcNow;
 
-            // Convert the UTC time to UTC+7
-            DateTime utcPlus7Now = TimeZoneInfo.ConvertTimeFromUtc(utcNow, timeZone);
+			// Define the UTC+7 time zone
+			TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
 
-            var news = new News
-            {
-                AccountID = adminID,
-                Title = newsTitle,
-                Content = content,
-                CreatedDate = utcPlus7Now,
-                ThumbNail = null,
-                Status = null
-            };
+			// Convert the UTC time to UTC+7
+			DateTime utcPlus7Now = TimeZoneInfo.ConvertTimeFromUtc(utcNow, timeZone);
 
-            _context.News.Add(news);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("newspost", "news", "admin");
-        }
-    }
+			var news = new News
+			{
+				AccountID = adminID,
+				Title = newsTitle,
+				Content = content,
+				CreatedDate = utcPlus7Now,
+				ThumbNail = thumbnail,
+				Status = null
+			};
+
+			_context.News.Add(news);
+			await _context.SaveChangesAsync();
+			return RedirectToAction("newspost", "news", "admin");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> NewsPostEdit(int id)
+		{
+			var news = await _context.News.FindAsync(id);
+			return View(news);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> EditNewsPost(int newsID, string? content, string? newsTitle)
+		{
+			var news = await _context.News.FindAsync(newsID);
+			news.Title = newsTitle;
+			news.Content = content;
+			_context.News.Update(news);
+			await _context.SaveChangesAsync();
+			return RedirectToAction("newspost", "news", "admin");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> NewsPostDelete(int id)
+		{
+			var news = await _context.News.FindAsync(id);
+			_context.News.Remove(news);
+			await _context.SaveChangesAsync();
+			return RedirectToAction("newspost", "news", "admin");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> SearchNewsPost(string? search)
+		{
+			if (string.IsNullOrEmpty(search))
+			{
+				return RedirectToAction("newspost", "news", "admin");
+			}
+			var news = _context.News.Where(r => r.Title.Contains(search)).ToList();
+			return View("NewsPost", news);
+		}
+	}
 }
