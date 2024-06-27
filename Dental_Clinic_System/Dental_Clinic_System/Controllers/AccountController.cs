@@ -27,6 +27,7 @@ using NuGet.Common;
 using System.Globalization;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+using ZXing.QrCode.Internal;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Dental_Clinic_System.Controllers
@@ -691,7 +692,8 @@ namespace Dental_Clinic_System.Controllers
                     .AnyAsync(u => u.Email == model.Email && u.Email != emailClaim);
                 if (emailExists)
                 {
-                    TempData["EmailError"] = "Email đã tồn tại.";
+                    //TempData["EmailError"] = "Email đã tồn tại.";
+                    TempData["ToastMessageFailTempData"] = "Email đã tồn tại.";
                     model.Email = user.Email; // Reset to the current email
                     return View(model);
                 }
@@ -701,7 +703,8 @@ namespace Dental_Clinic_System.Controllers
                     .AnyAsync(u => u.PhoneNumber == model.PhoneNumber && u.PhoneNumber != user.PhoneNumber);
                 if (phoneExists && !model.PhoneNumber.IsNullOrEmpty())
                 {
-                    TempData["PhoneNumberError"] = "Số điện thoại đã tồn tại";
+                    //TempData["PhoneNumberError"] = "Số điện thoại đã tồn tại";
+                    TempData["ToastMessageFailTempData"] = "Số điện thoại đã tồn tại";
                     model.PhoneNumber = user.PhoneNumber; // Reset to the current phonenumber
                     return View(model);
                 }
@@ -721,7 +724,8 @@ namespace Dental_Clinic_System.Controllers
                     // Send confirmation email
                     await _emailSender.SendEmailForUpdatingAsync(model.Email, user.Username, "Xác Minh Email Mới Của Bạn", confirmationLink);
 
-                    TempData["EmailChangeMessage"] = "A confirmation email has been sent to your new email address. Please confirm to complete the change.";
+                    //TempData["EmailChangeMessage"] = "Một email xác nhận đã được gửi đến địa chỉ email mới của bạn. Vui lòng xác nhận để hoàn tất thay đổi.";
+                    TempData["ToastMessageSuccessTempData"] = "Một email xác nhận đã được gửi đến địa chỉ email mới của bạn. Vui lòng xác nhận để hoàn tất thay đổi.";
 
                 }
 
@@ -816,6 +820,8 @@ namespace Dental_Clinic_System.Controllers
             _context.Clinics.Update(clinic);
             await _context.SaveChangesAsync();
 
+            TempData["ToastMessageSuccessTempData"] = "Đánh giá thành công";
+
             return RedirectToAction("Profile");
         }
 
@@ -851,11 +857,13 @@ namespace Dental_Clinic_System.Controllers
                 // Send confirmation email
                 await _emailSender.SendEmailUpdatedAsync(oldEmail, user.Email, "Bạn Đã Thay Đổi Địa Chỉ Email Của Mình", "");
 
-                TempData["EmailChangeMessage"] = "Email updated successfully.";
+                //TempData["EmailChangeMessage"] = "Email updated successfully.";
+                TempData["ToastMessageSuccessTempData"] = "Email được cập nhật thành công.";
             }
             else
             {
-                TempData["EmailChangeMessage"] = "Invalid confirmation code.";
+                //TempData["EmailChangeMessage"] = "Invalid confirmation code.";
+                TempData["ToastMessageFailTempData"] = "Mã xác nhận sai.";
             }
 
             return RedirectToAction("Profile", "Account");
@@ -881,19 +889,22 @@ namespace Dental_Clinic_System.Controllers
 
             if (user == null)
             {
-                TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
+                //TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
+                TempData["ToastMessageFailTempData"] = "Mật khẩu thay đổi thất bại.";
                 return RedirectToAction("Profile", "Account");
             }
 
             if (DataEncryptionExtensions.ToMd5Hash(model.Password) != user.Password)
             {
-                TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
+                //TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
+                TempData["ToastMessageFailTempData"] = "Mật khẩu thay đổi thất bại.";
                 return RedirectToAction("Profile", "Account");
             }
 
             if (model.NewPassword != model.ConfirmPassword)
             {
-                TempData["ChangePasswordMessageFailed"] = "Mật khẩu mới và mật khẩu xác nhận không giống.";
+                //TempData["ChangePasswordMessageFailed"] = "Mật khẩu mới và mật khẩu xác nhận không giống.";
+                TempData["ToastMessageFailTempData"] = "Mật khẩu mới và mật khẩu xác nhận không giống.";
                 return RedirectToAction("Profile", "Account");
             }
 
@@ -902,12 +913,14 @@ namespace Dental_Clinic_System.Controllers
                 user.Password = DataEncryptionExtensions.ToMd5Hash(model.NewPassword);
                 _context.Accounts.Update(user);
                 await _context.SaveChangesAsync();
-                TempData["ChangePasswordMessageSuccessfully"] = "Mật khẩu thay đổi thành công.";
+                //TempData["ChangePasswordMessageSuccessfully"] = "Mật khẩu thay đổi thành công.";
+                TempData["ToastMessageSuccessTempData"] = "Mật khẩu thay đổi thành công.";
                 return RedirectToAction("Profile", "Account");
             }
             else
             {
-                TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
+                //TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
+                TempData["ToastMessageFailTempData"] = "Mật khẩu thay đổi thất bại.";
                 return RedirectToAction("Profile", "Account");
             }
         }
