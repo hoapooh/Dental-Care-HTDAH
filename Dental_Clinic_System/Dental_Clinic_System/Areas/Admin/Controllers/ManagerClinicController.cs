@@ -446,20 +446,23 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 								where c.ID == id && a.Role == "Quản Lý" && c.ClinicStatus == "Đóng Cửa"
 								select new ManagerClinicVM
 								{
-									Id = c.ID,
-									Name = c.Name,
-									PhoneNumber = c.PhoneNumber,
-									Email = c.Email,
-									ManagerName = a.LastName + " " + a.FirstName,
-									Province = c.Province,
-									District = c.District,
-									Ward = c.Ward,
-									Basis = c.Basis,
-									Address = c.Address,
-									Description = c.Description,
-									Image = c.Image,
-									ClinicStatus = c.ClinicStatus
-								}).FirstOrDefaultAsync();
+                                    Id = c.ID,
+                                    Name = c.Name,
+                                    PhoneNumber = c.PhoneNumber,
+                                    Email = c.Email,
+                                    ManagerName = a.LastName + " " + a.FirstName,
+                                    Province = c.Province,
+                                    District = c.District,
+                                    Ward = c.Ward,
+                                    ProvinceName = c.ProvinceName,
+                                    DistrictName = c.DistrictName,
+                                    WardName = c.WardName,
+                                    Basis = c.Basis,
+                                    Address = c.Address,
+                                    Description = c.Description,
+                                    Image = c.Image,
+                                    ClinicStatus = c.ClinicStatus
+                                }).FirstOrDefaultAsync();
 
 			if (clinic == null)
 			{

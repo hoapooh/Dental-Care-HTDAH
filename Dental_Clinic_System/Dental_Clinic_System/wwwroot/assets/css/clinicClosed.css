@@ -1,0 +1,135 @@
+﻿.title-Name-Clinic {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #202224;
+}
+
+.title-Address {
+    font-size: 2.3rem;
+}
+
+.img, svg {
+    vertical-align: middle;
+    height: 45%;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+    padding: 1.5rem;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.sidebar .nav-item a.Quan_ly_phong_kham {
+    color: #fff;
+    background: #4880ff;
+}
+
+.unlock {
+    background-color: #ff4c4c;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+    .unlock:hover {
+        background-color: #e60000;
+    }
+
+/* New styles for centering the modal */
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.modal-content {
+    margin: auto;
+}
+
+.form-group label {
+    font-weight: bold;
+    font-size: 1.2rem; /* Increase label font size */
+}
+
+.modal-title {
+    font-size: 2.5rem; /* Increase modal title font size */
+}
+
+.img-fluid {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.modal-body .row {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100%;
+}
+
+.modal-body .image-column {
+    flex: 0 0 35%; /* Adjust the width of the image column */
+    max-width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Stack image and description vertically */
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.modal-body .form-column {
+    flex: 1;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.form-control1 {
+    font-size: 1.3rem;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btn-view {
+    background-color: rgb(0, 181, 156) !important;
+    border: none;
+    border-radius: 8px;
+    color: white !important;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+    .btn-view:hover {
+        background-color: rgb(0, 161, 136) !important; /* Darker green on hover */
+    }

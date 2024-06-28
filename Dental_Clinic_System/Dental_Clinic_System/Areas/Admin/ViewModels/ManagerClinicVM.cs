@@ -37,5 +37,10 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
 		public int? Ward { get; set; }
 
-	}
+        public string? ProvinceName { get; set; }
+
+        public string? DistrictName { get; set; }
+
+        public string? WardName { get; set; }
+    }
 }

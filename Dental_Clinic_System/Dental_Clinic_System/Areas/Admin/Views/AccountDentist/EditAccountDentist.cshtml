@@ -202,7 +202,7 @@
             var fullnameTinh = selectedOption.data('fullname');
             $('#Province').val(fullnameTinh);
 
-            // Load districts based on selected province
+            //Tải Quận/Huyện dựa trên Tỉnh/Thành phố đã chọn
             loadDistricts(idtinh);
         });
 
@@ -212,7 +212,7 @@
             var fullnameQuan = selectedOption.data('fullname');
             $('#District').val(fullnameQuan);
 
-            // Load wards based on selected district
+            //Tải Phường/Xã dựa trên Quận/Huyện đã chọn
             loadWards(idquan);
         });
 

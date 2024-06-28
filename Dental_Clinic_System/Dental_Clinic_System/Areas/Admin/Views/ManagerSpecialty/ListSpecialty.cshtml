@@ -194,8 +194,6 @@
 	}
 </script>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
 @functions {
 	public string TruncateDescription(string? description, int maxLength)
 	{
@@ -203,6 +201,8 @@
 		return description.Length <= maxLength ? description : description.Substring(0, maxLength) + "...";
 	}
 }
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 @* Đưa ảnh lên firebase *@
 <script src="~/assets/js/upload-image-firebaseAdmin.js" type="module"></script>

@@ -5,82 +5,6 @@
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<style>
-	.title-Name-Clinic {
-		font-size: 2.8rem;
-		font-weight: 700;
-		color: #202224;
-	}
-
-	.title-Address {
-		font-size: 2.3rem;
-	}
-
-	.img, svg {
-		vertical-align: middle;
-		height: 45%;
-	}
-
-	.modal-header, .modal-footer {
-		border: none;
-		padding: 1.5rem;
-	}
-
-	.modal-body {
-		padding: 2rem;
-	}
-
-	.btn-close {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		background: transparent;
-		border: none;
-		font-size: 1.5rem;
-	}
-
-	.sidebar .nav-item a.Quan_ly_phong_kham {
-		color: #fff;
-		background: #4880ff;
-	}
-
-	.unlock {
-		background-color: #ff4c4c;
-		border: none;
-		border-radius: 8px;
-		color: white;
-		cursor: pointer;
-		padding: 10px;
-		font-size: 16px;
-		outline: none;
-	}
-
-		.unlock:hover {
-			background-color: #e60000;
-		}
-
-	/* New styles for centering the modal */
-	.modal-dialog {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 100vh;
-	}
-
-	.modal-content {
-		margin: auto;
-	}
-
-	.form-group label {
-		font-weight: bold;
-	}
-
-	.modal-title {
-		font-size: 2rem;
-		/* font-weight: bold; */
-	}
-</style>
-
 <!-- TÌM KIẾM (SEARCH)-->
 <!-- Clinic management header -->
 <div class="clinic__management__header">
@@ -96,72 +20,79 @@
 
 <!--VIEW-->
 <div class="modal fade" id="clinicDetailsModal" tabindex="-1" role="dialog" aria-labelledby="clinicDetailsModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="clinicDetailsModalLabel">Chi tiết phòng khám</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<form>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="clinicName">Tên phòng khám</label>
-							<input type="text" class="form-control" id="clinicName" readonly>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="clinicManagerName">Quản lý</label>
-							<input type="text" class="form-control" id="clinicManagerName" readonly>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="clinicEmail">Email</label>
-							<input type="text" class="form-control" id="clinicEmail" readonly>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="clinicPhoneNumber">Số điện thoại</label>
-							<input type="text" class="form-control" id="clinicPhoneNumber" readonly>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="clinicBasis">Cơ sở</label>
-							<input type="text" class="form-control" id="clinicBasis" readonly>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="clinicProvince">Tỉnh/Thành phố</label>
-							<input type="text" class="form-control" id="clinicProvince" readonly>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="clinicDistrict">Quận/Huyện</label>
-							<input type="text" class="form-control" id="clinicDistrict" readonly>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="clinicWard">Phường/Xã</label>
-							<input type="text" class="form-control" id="clinicWard" readonly>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="clinicAddress">Địa chỉ</label>
-						<input type="text" class="form-control" id="clinicAddress" readonly>
-					</div>
-					<div class="form-group">
-						<label for="clinicImage">Hình ảnh</label>
+				<div class="row">
+					<div class="image-column">
 						<img id="clinicImage" class="img-fluid" alt="Clinic Image">
+
 					</div>
-					<div class="form-group">
-						<label for="clinicDescription">Mô tả</label>
-						<textarea class="form-control" id="clinicDescription" rows="3" readonly></textarea>
+					<div class="form-column">
+						<form>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="clinicName">Tên phòng khám</label>
+									<input type="text" class="form-control1" id="clinicName" readonly>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="clinicManagerName">Quản lý</label>
+									<input type="text" class="form-control1" id="clinicManagerName" readonly>
+								</div>
+							</div>
+							<div class="form-row">
+								
+								<div class="form-group col-md-6">
+									<label for="clinicEmail">Email</label>
+									<input type="text" class="form-control1" id="clinicEmail" readonly>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="clinicPhoneNumber">Số điện thoại</label>
+									<input type="text" class="form-control1" id="clinicPhoneNumber" readonly>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="clinicAddress">Địa chỉ</label>
+									<input type="text" class="form-control1" id="clinicAddress" readonly>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="clinicBasis">Cơ sở</label>
+									<input type="text" class="form-control1" id="clinicBasis" readonly>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label for="clinicProvince">Tỉnh/Thành phố</label>
+									<input type="text" class="form-control1" id="clinicProvince" readonly>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="clinicDistrict">Quận/Huyện</label>
+									<input type="text" class="form-control1" id="clinicDistrict" readonly>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="clinicWard">Phường/Xã</label>
+									<input type="text" class="form-control1" id="clinicWard" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="clinicDescription">Mô tả</label>
+								<textarea class="form-control1" id="clinicDescription" rows="3" readonly></textarea>
+							</div>
+						</form>
 					</div>
-				</form>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+				<button type="button" class="close-btn btn" data-bs-dismiss="modal">
+					Đóng
+				</button>
 			</div>
 		</div>
 	</div>
@@ -216,6 +147,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+@* Chỉnh sửa UI *@
+<link rel="stylesheet" href="~/assets/css/clinicClosed.css" />
 
 @section Scripts {
 	<!--Hiển thị các Tỉnh/Thành phố, Quận/Huyện, Phường/Xã-->
@@ -286,16 +220,16 @@
 					$('#clinicPhoneNumber').val(data.phoneNumber);
 					$('#clinicEmail').val(data.email);
 					$('#clinicManagerName').val(data.managerName);
-					$('#clinicProvince').val(data.province);
-					$('#clinicDistrict').val(data.district);
-					$('#clinicWard').val(data.ward);
+					$('#clinicProvince').val(data.provinceName);
+					$('#clinicDistrict').val(data.districtName);
+					$('#clinicWard').val(data.wardName);
 					$('#clinicBasis').val(data.basis);
 					$('#clinicAddress').val(data.address);
 					$('#clinicDescription').val(data.description);
 					$('#clinicImage').attr('src', data.image);
 					$('#clinicStatus').val(data.clinicStatus);
 
-					//Hiển thị modal
+					// Hiển thị modal
 					$('#clinicDetailsModal').modal('show');
 				}
 			});

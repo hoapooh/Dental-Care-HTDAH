@@ -18,10 +18,11 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             _context = context;
         }
 
-        //[Route("TransactionHistory")]
         public async Task<IActionResult> TransactionHistory()
         {
-            var transactionHistory = await _context.Transactions.ToListAsync();
+            var transactionHistory = await _context.Transactions
+                //.Where(t => t.Status == "Thành Công")
+                .ToListAsync();
 
             var transactionList = transactionHistory.Select(t => new TransactionVM
             {
