@@ -53,8 +53,7 @@
                                 <i class="fa-solid fa-hospital"></i>
                                 <div class="clinic__info__details">
                                     <span>@clinic?.Name</span>
-                                    <!--<p>@clinic?.Address, @await LocalAPIReverseString.GetWardNameById(clinic?.District ?? 0, clinic?.Ward ?? 0), @await LocalAPIReverseString.GetDistrictNameById(clinic?.Province ?? 0, clinic?.District ?? 0), @await LocalAPIReverseString.GetProvinceNameById(clinic?.Province ?? 0)</p>-->
-                                    <p>@clinic?.Address, @clinic.WardName, @clinic.DistrictName, @clinic.ProvinceName</p>
+                                    <p>@clinic?.Address, @clinic?.WardName, @clinic?.DistrictName, @clinic?.ProvinceName</p>
                                 </div>
                             </div>
                         </div>
@@ -83,16 +82,16 @@
                                             <td class="style__col__sub__other">
                                                 @specialty?.Name
                                             </td>
-                                            <td class="style__col__sub__other">@dentist.Account.LastName @dentist.Account.FirstName</td>
+                                            <td class="style__col__sub__other">@dentist?.Account.LastName @dentist?.Account.FirstName</td>
                                             <td class="style__col__sub__other">
                                                 <p>@schedule?.TimeSlot?.StartTime.ToString("HH:mm") - @schedule?.TimeSlot?.EndTime.ToString("HH:mm")</p>
                                                 <p>@schedule?.Date.ToString("dd/MM/yyyy")</p>
                                             </td>
                                             <td class="style__col__sub__other">@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", specialty?.Deposit)</td>
-                                             @* <td>
-                                                <button type="button" class="delete-btn">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
+                                            @* <td>
+                                            <button type="button" class="delete-btn">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                            </button>
                                             </td> *@
                                         </tr>
                                     </tbody>
@@ -111,41 +110,41 @@
                                             <i class="fa-solid fa-user"> </i><span>Họ và tên:</span>
                                         </div>
                                         <div class="details__item__content name">
-                                            @patientRecord.FullName
+                                            @patientRecord?.FullName
                                         </div>
                                     </div>
                                     <div class="details__item">
                                         <div class="details__item__title">
                                             <i class="fa-solid fa-mars-and-venus"></i><span>Giới tính:</span>
                                         </div>
-                                        <div class="details__item__content">@patientRecord.Gender</div>
+                                        <div class="details__item__content">@patientRecord?.Gender</div>
                                     </div>
                                     <div class="details__item">
                                         <div class="details__item__title">
                                             <i class="fa-solid fa-cake-candles"></i><span>Ngày sinh:</span>
                                         </div>
-                                        <div class="details__item__content">@patientRecord.DateOfBirth.ToString("dd/MM/yyyy")</div>
+                                        <div class="details__item__content">@patientRecord?.DateOfBirth.ToString("dd/MM/yyyy")</div>
                                     </div>
                                     <div class="details__item">
                                         <div class="details__item__title">
                                             <i class="fa-solid fa-at"></i><span>Email:</span>
                                         </div>
                                         <div class="details__item__content">
-                                            @patientRecord.EmailReceiver
+                                            @patientRecord?.EmailReceiver
                                         </div>
                                     </div>
                                     <div class="details__item">
                                         <div class="details__item__title">
                                             <i class="fa-solid fa-phone"></i><span>Số điện thoại:</span>
                                         </div>
-                                        <div class="details__item__content">@patientRecord.PhoneNumber</div>
+                                        <div class="details__item__content">@patientRecord?.PhoneNumber</div>
                                     </div>
                                     <div class="details__item">
                                         <div class="details__item__title">
                                             <i class="fa-solid fa-location-dot"></i><span>Địa chỉ:</span>
                                         </div>
                                         <div class="details__item__content">
-                                            @patientRecord.Address
+                                            @patientRecord?.Address
                                         </div>
                                     </div>
                                 </div>
@@ -158,14 +157,14 @@
                                 Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
                             </button>
                         </a>
-                        <a asp-controller="patientrecord" asp-action="patientrecordpaymentchoosing" asp-route-specialtyID="@ViewBag.specialtyID" 
-                                                                                                    asp-route-dentistID="@ViewBag.dentistID" 
-                                                                                                    asp-route-patientRecordID="@ViewBag.patientRecordID" 
-                                                                                                    asp-route-scheduleID="@ViewBag.scheduleID" 
-                                                                                                    asp-route-clinicID="@ViewBag.clinicID">
+                        <a asp-controller="patientrecord" asp-action="patientrecordpaymentchoosing" asp-route-specialtyID="@ViewBag.specialtyID"
+                           asp-route-dentistID="@ViewBag.dentistID"
+                           asp-route-patientRecordID="@ViewBag.patientRecordID"
+                           asp-route-scheduleID="@ViewBag.scheduleID"
+                           asp-route-clinicID="@ViewBag.clinicID">
                             <button type="button" class="add-record-btn">Xác nhận</button> @* -------------------------------------------*@
                         </a>
-                        
+
                     </div>
                 </div>
             </div>

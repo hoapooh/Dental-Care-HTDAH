@@ -662,7 +662,7 @@ namespace Dental_Clinic_System.Controllers
             .ThenInclude(c => c.Clinic)
     .FirstOrDefaultAsync(u => u.Email == model.Email);
 
-            var appointments = account?.PatientRecords.SelectMany(pr => pr.Appointments).ToList();
+            var appointments = account?.PatientRecords.SelectMany(pr => pr.Appointments).Reverse().ToList();
 
             ViewBag.Appointment = appointments;
 
@@ -782,6 +782,30 @@ namespace Dental_Clinic_System.Controllers
                 await Console.Out.WriteLineAsync("Null at Profile (POST)");
             }
 
+            var account = await _context.Accounts
+.Include(p => p.PatientRecords)
+    .ThenInclude(pr => pr.Appointments)
+        .ThenInclude(a => a.Schedule)
+            .ThenInclude(s => s.TimeSlot)
+.Include(p => p.PatientRecords)
+    .ThenInclude(pr => pr.Appointments)
+        .ThenInclude(a => a.Specialty)
+.Include(p => p.PatientRecords)
+    .ThenInclude(pr => pr.Appointments)
+    .ThenInclude(s => s.Schedule)
+        .ThenInclude(a => a.Dentist)
+        .ThenInclude(d => d.Account)// Include Dentist information
+        .Include(p => p.PatientRecords)
+        .ThenInclude(pr => pr.Appointments)
+    .ThenInclude(s => s.Schedule)
+        .ThenInclude(a => a.Dentist)
+        .ThenInclude(c => c.Clinic)
+.FirstOrDefaultAsync(u => u.Email == model.Email);
+
+            var appointments = account?.PatientRecords.SelectMany(pr => pr.Appointments).Reverse().ToList();
+
+            ViewBag.Appointment = appointments;
+
             return View(model);
         }
 
@@ -823,6 +847,51 @@ namespace Dental_Clinic_System.Controllers
             TempData["ToastMessageSuccessTempData"] = "Đánh giá thành công";
 
             return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RescheduleAppointment(int scheduleID, int appointmentID)
+        {
+            var appointment = await _context.Appointments.Include(a => a.Schedule).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
+
+            if (appointment == null)
+            {
+                TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra";
+                return RedirectToAction("Profile", "Account");
+            }
+
+            // Change current Schedule Status to Empty
+            appointment.Schedule.ScheduleStatus = "Còn Trống";
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+            //await Console.Out.WriteLineAsync("================================");
+            //await Console.Out.WriteLineAsync($"Current Status = {appointment.Schedule.ScheduleStatus} of {appointment.ScheduleID}");
+            //await Console.Out.WriteLineAsync("================================");
+            // Update current ScheduleID to a new Slot
+            appointment.ScheduleID = scheduleID;
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+            //await Console.Out.WriteLineAsync("================================");
+            //await Console.Out.WriteLineAsync($"New ScheduleID = {appointment.ScheduleID}");
+            //await Console.Out.WriteLineAsync("================================");
+            // Retrieve the new Schedule
+            var newSchedule = await _context.Schedules.FindAsync(scheduleID);
+            if (newSchedule == null)
+            {
+                TempData["ToastMessageFailTempData"] = "Không tìm thấy lịch khám.";
+                return RedirectToAction("Profile", "Account");
+            }
+
+            // Update new Schedule Status to Booked
+            newSchedule.ScheduleStatus = "Đã Đặt";
+            _context.Update(newSchedule);
+            await _context.SaveChangesAsync();
+            //await Console.Out.WriteLineAsync("================================");
+            //await Console.Out.WriteLineAsync($"New Status = {newSchedule.ScheduleStatus} of {newSchedule.ID}");
+            //await Console.Out.WriteLineAsync("================================");
+
+
+            return RedirectToAction("Profile", "Account");
         }
 
 
@@ -939,21 +1008,23 @@ namespace Dental_Clinic_System.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _context.Accounts.SingleOrDefaultAsync(u => u.Email == model.Email);
-                if (user == null)
+                if (user == null || user.Role != "Bệnh Nhân")
                 {
-                    TempData["ForgotPasswordMessage"] = "User not found.";
+                    //TempData["ForgotPasswordMessage"] = "User not found.";
+                    TempData["ToastMessageFailTempData"] = "Không tìm thấy người dùng.";
                     return View(model);
                 }
 
                 var code = Guid.NewGuid().ToString(); // Generate a unique code for password reset
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.ID, code = code }, protocol: HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                    $"Vui lòng click vào link sau để đặt lại mật khẩu <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>here</a>.");
+                await _emailSender.SendResetasswordEmailAsync(model.Email, "Quên Mật Khẩu", callbackUrl);
 
-                TempData["ForgotPasswordMessage"] = "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn.";
-                return RedirectToAction("ForgotPasswordConfirmation");
+                //TempData["ForgotPasswordMessage"] = "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn.";
+                TempData["ToastMessageSuccessTempData"] = "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn.";
+                return RedirectToAction("Login", "Account");
             }
+            TempData["ToastMessageFailTempData"] = "Thông tin nhập không đúng định dạng.";
             return View(model);
         }
 
@@ -975,13 +1046,15 @@ namespace Dental_Clinic_System.Controllers
         {
             if (!ModelState.IsValid)
             {
+                TempData["ToastMessageFailTempData"] = "Thông tin nhập không đúng định dạng.";
                 return View(model);
             }
 
-            var user = await _context.Accounts.FindAsync(model.UserId);
+            var user = await _context.Accounts.FindAsync(Int32.Parse(model.UserId));
             if (user == null)
             {
-                TempData["ResetPasswordMessage"] = "Người dùng không tồn tại";
+                //TempData["ResetPasswordMessage"] = "Người dùng không tồn tại";
+                TempData["ToastMessageFailTempData"] = "Người dùng không tồn tại";
                 return View(model);
             }
 
@@ -989,8 +1062,9 @@ namespace Dental_Clinic_System.Controllers
             _context.Accounts.Update(user);
             await _context.SaveChangesAsync();
 
-            TempData["ResetPasswordMessage"] = "Mật khẩu đã đặt lại thành công";
-            return RedirectToAction("ResetPasswordConfirmation");
+            //TempData["ResetPasswordMessage"] = "Mật khẩu đã đặt lại thành công";
+            TempData["ToastMessageSuccessTempData"] = "Mật khẩu đã đặt lại thành công";
+            return RedirectToAction("Login", "Account");
         }
 
         [AllowAnonymous]

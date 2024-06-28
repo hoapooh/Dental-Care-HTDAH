@@ -36,8 +36,11 @@
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/assets/css/mobiscroll.javascript.min.css" />
+    <link rel="stylesheet" href="~/assets/css/schedule.css" />
     <link rel="stylesheet" href="~/assets/css/profile.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
     <main>
@@ -99,21 +102,21 @@
                         <form asp-action="profile" method="POST" class="d-flex account__content__wrapper">
 
                             <div style="width: 50%">
-                                <label for="firstname">Họ <sup>*</sup></label><br /><input type="text"
-                                                                                           id="firstname"
-                                                                                           placeholder="Họ"
-                                                                                           value="@Model.FirstName"
-                                                                                           asp-for="@Model.FirstName"
-                                                                                           style="width: 100%" />
+                                <label for="firstname">Họ</label><br /><input type="text"
+                                                                              id="firstname"
+                                                                              placeholder="Họ"
+                                                                              value="@Model.FirstName"
+                                                                              asp-for="@Model.FirstName"
+                                                                              style="width: 100%" />
                                 <span class="text-danger" asp-validation-for="FirstName"></span>
                             </div>
                             <div style="width: 50%">
-                                <label for="lastname">Tên <sup>*</sup></label><br /><input type="text"
-                                                                                           id="lastname"
-                                                                                           placeholder="Tên"
-                                                                                           value="@Model.LastName"
-                                                                                           asp-for="@Model.LastName"
-                                                                                           style="width: 100%" />
+                                <label for="lastname">Tên</label><br /><input type="text"
+                                                                              id="lastname"
+                                                                              placeholder="Tên"
+                                                                              value="@Model.LastName"
+                                                                              asp-for="@Model.LastName"
+                                                                              style="width: 100%" />
                                 <span class="text-danger" asp-validation-for="LastName"></span>
                             </div>
                             <div style="width: 50%">
@@ -128,7 +131,7 @@
 
                             </div>
                             <div style="width: 50%">
-                                <label for="gender">Giới tính <sup>*</sup></label><br />
+                                <label for="gender">Giới tính</label><br />
                                 <select id="gender" asp-for="@Model.Gender" style="width: 100%">
 
                                     @* Tạo các thẻ option động bằng Razor *@
@@ -180,41 +183,41 @@
                             }
 
                             <div style="width: 50%">
-                                <label for="birth">Ngày sinh <sup>*</sup></label><br /><input type="date"
-                                                                                              id="birth"
-                                                                                              value="@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") : string.Empty)"
-                                                                                              asp-for="@Model.DateOfBirth"
-                                                                                              max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")"
-                                                                                              placeholder="Vui lòng nhập ngày sinh"
-                                                                                              style="width: 100%" />
+                                <label for="birth">Ngày sinh</label><br /><input type="date"
+                                                                                 id="birth"
+                                                                                 value="@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") : string.Empty)"
+                                                                                 asp-for="@Model.DateOfBirth"
+                                                                                 max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")"
+                                                                                 placeholder="Vui lòng nhập ngày sinh"
+                                                                                 style="width: 100%" />
                             </div>
 
                             <div style="width: 50%">
-                                <label for="province">Tỉnh / Thành phố <sup>*</sup></label><br />
+                                <label for="province">Tỉnh / Thành phố</label><br />
                                 <select id="tinh" title="Chọn Tỉnh Thành" asp-for="@Model.Province">
                                     <option value="0">Tỉnh Thành</option>
                                 </select>
                             </div>
                             <div style="width: 25%" class="district">
-                                <label for="district">Quận / Huyện <sup>*</sup></label><br />
+                                <label for="district">Quận / Huyện</label><br />
                                 <select id="quan" title="Chọn Quận Huyện" asp-for="@Model.District">
                                     <option value="0">Quận Huyện</option>
                                 </select>
                             </div>
                             <div style="width: 25%" class="ward">
-                                <label for="ward">Phường / Xã <sup>*</sup></label><br />
+                                <label for="ward">Phường / Xã</label><br />
                                 <select id="phuong" title="Chọn Phường Xã" asp-for="@Model.Ward">
                                     <option value="0">Phường Xã</option>
                                 </select>
                             </div>
 
                             <div style="width: 100%" class="address">
-                                <label for="address">Địa chỉ <sup>*</sup></label><br /><input type="text"
-                                                                                              id="address"
-                                                                                              placeholder="Nhập địa chỉ"
-                                                                                              value="@Model.Address"
-                                                                                              asp-for="@Model.Address"
-                                                                                              style="width: 100%" />
+                                <label for="address">Địa chỉ</label><br /><input type="text"
+                                                                                 id="address"
+                                                                                 placeholder="Nhập địa chỉ"
+                                                                                 value="@Model.Address"
+                                                                                 asp-for="@Model.Address"
+                                                                                 style="width: 100%" />
                                 <span class="text-danger" asp-validation-for="Address"></span>
                             </div>
                             <div class="submit__button">
@@ -279,7 +282,7 @@
                         <h2>Lịch sử đặt khám</h2>
                         <div class="history__management">
 
-                            @if (appointments.Count > 0)
+                            @if (appointments?.Count > 0)
                             {
                                 @foreach (var appointment in appointments)
                                 {
@@ -300,7 +303,7 @@
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
                                                 );
-                                                                                                                    ">
+                                                                                                                                                                                    ">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -368,8 +371,12 @@
 
                                                         break;
                                                     case "Chờ Xác Nhận":
+                                                        <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
+                                                            Đổi lịch khám
+                                                        </button>
+
                                                         <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
-                                                            <input type="hidden" name="appointmentID" value="@appointment.ID" />
+                                                            <input type="hidden" name="appointmentID" value="@appointment?.ID" />
                                                             <input type="hidden" name="scheduleID" value="@appointment?.Schedule?.ID" />
                                                             <input type="hidden" name="appointmentStatus" value="Đã Hủy" />
                                                             <button type="submit" class="btn btn-danger" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">
@@ -448,6 +455,141 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Reschedule Modal -->
+    <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rescheduleModalLabel">Đổi Lịch Khám</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="rescheduleForm" asp-controller="Account" asp-action="RescheduleAppointment" method="post">
+
+                        <input type="hidden" name="scheduleID" id="scheduleID"></input>
+                        <input type="hidden" name="appointmentID" id="appointmentID"></input>
+
+                        <!-- THẺ NÀY ĐỂ HIỂN THỊ LỊCH THEO GIAO DIỆN MOBISCROLL  -->
+                        <div class="mbsc-col-sm-12 mbsc-col-md-4">
+                            <div class="mbsc-form-group">
+                                <div id="demo-single-day"></div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/assets/js/mobiscroll.javascript.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            mobiscroll.setOptions({
+                stepMinute: 30,
+                theme: "ios",
+                themeVariant: "light"
+            });
+
+            // var dentistId = button.data('dentist-id');
+            document.querySelectorAll('.pendingButton').forEach(button => {
+                button.addEventListener('click', (hello) => {
+                    const dentistId = hello.currentTarget.getAttribute('data-dentist-id');
+                    const appointmentId = hello.currentTarget.getAttribute('data-appointment-id');
+                    // document.getElementById('appointmentID').textContent = appointmentId;
+                    document.getElementById('appointmentID').value = appointmentId;
+                    console.log(appointmentId);
+                    console.log(dentistId);
+                    //fetch schedules from the server
+                    fetch('/clinic/getschedules?dentistID=' + dentistId)
+                        .then(response => response.json())
+                        .then(data => {
+                            // map the data to the mobiscroll valid format
+                            var schedules = data.map(function (item) {
+                                return {
+                                    start: item.date + 'T' + item.startTime,
+                                    end: item.date + 'T' + item.startTime,
+                                    title: item.scheduleID,
+                                    recurring: {
+                                        repeat: 'none'
+                                    }
+                                };
+                            });
+
+                            var scheduleMap = new Map();
+                            data.forEach(function (item) {
+                                scheduleMap.set(item.date + 'T' + item.startTime, item.scheduleID);
+                            });
+                            //console.log(schedules);
+                            console.log(scheduleMap);
+
+                            let current = new Date();
+                            //initialize mobiscroll calendar with the valid dates
+                            mobiscroll.datepicker("#demo-single-day", {
+                                controls: ["calendar", "timegrid"],
+                                firstDay: 1,
+                                min: current.setHours(current.getHours() + 4),
+                                display: "inline",
+                                touchUI: true,
+                                selectMultiple: false,
+                                valid: schedules.map(item => ({
+                                    start: item.start,
+                                    end: item.end,
+                                    item: item.title,
+
+                                })),
+
+                                locale: mobiscroll.localeVi,
+
+                                onChange: function (event, inst) {
+                                    console.log(formatDate(event.value));
+                                    document.getElementById('scheduleID').value = scheduleMap.get(formatDate(event.value));
+                                    //Ẩn hoặc hiện button submit theo giá trị scheduleID
+                                    if (document.getElementById('scheduleID').value === 'undefined') {
+                                        document.querySelectorAll('.add-record-btn').forEach(btn => {
+                                            btn.classList.add('hidding');
+                                        })
+                                    }
+                                    else {
+                                        document.querySelectorAll('.add-record-btn').forEach(btn => {
+                                            btn.classList.remove('hidding');
+                                        })
+                                    }
+                                }
+                            });
+
+                        })
+                        .catch(error => {
+                            alert('Không tải được lịch tương ứng!');
+                            console.error('error:', error);
+                        });
+                });
+            });
+        });
+
+        // Hàm này nhận value của ngày trong event và trả về theo định dạng
+        function formatDate(date) {
+            const pad = (number) => (number < 10 ? '0' : '') + number;
+            const day = pad(date.getDate());
+            const month = pad(date.getMonth() + 1); // Months are zero-based
+            const year = date.getFullYear();
+            const hours = pad(date.getHours());
+            const minutes = pad(date.getMinutes());
+
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+    </script>
+
+
 
 
     <script>
