@@ -2,8 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model IEnumerable<Dental_Clinic_System.Models.Data.News>
-@{
-}
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,10 +44,7 @@
                                     <h2 class="newsItem__title">@news?.Title</h2>
                                 </a>
                                 <p class="newsItem__desc">
-                                    Từ tháng 04/2024, người bệnh có thể dễ dàng đặt lịch khám
-                                    nha khoa phòng khám sản phụ khoa Nha Khoa Trẻ qua nền tảng
-                                    Medpro - Đặt khám nhanh.
-                                    @* @Html.Raw(news?.Content?.Substring(0, Math.Min(news.Content.Length, 100)) + "...") *@
+                                    @Html.Raw(news?.Content?.Substring(0, Math.Min(news.Content.Length, 50)) + "...")
                                 </p>
                                 <div class="newsItem__datetime">
                                     <span class="newsItem__datetime__style">
@@ -60,7 +56,7 @@
                             <!-- =========== THUMB =========== -->
                             <div class="newsItem__thumb">
                                 <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })">
-                                    <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/10658/665db085cc3fb.png"
+                                    <img src="@news.ThumbNail"
                                          alt="thumbnail" />
                                 </a>
                             </div>

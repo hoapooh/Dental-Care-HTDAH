@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
 	var newsItems = document.querySelectorAll(
-		".newPost__wrapper .newsItem__wrapper"
+		".post__management__list .postItem__wrapper"
 	);
 	var pagination = document.getElementById("pagination");
-	var numRowsPerPage = 2; // Số phần tử trên mỗi trang
+	var numRowsPerPage = 4; // Số phần tử trên mỗi trang
 	var currentPage = 1;
 
 	function updateNewsItemsDisplay() {
@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				updateNewsItemsDisplay();
 				updatePagination();
 
-				// Apply animation to newsItem__wrapper elements
+				// Apply animation to postItem__wrapper elements
 				document
-					.querySelectorAll(".newsItem__wrapper")
+					.querySelectorAll(".postItem__wrapper")
 					.forEach(function (element) {
 						element.style.animation = "prevPage 0.5s ease-out forwards";
 					});
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 						// Apply the determined animation to all newsItem__wrapper elements
 						document
-							.querySelectorAll(".newsItem__wrapper")
+							.querySelectorAll(".postItem__wrapper")
 							.forEach(function (element) {
 								element.style.animation = `${animationName} 0.5s ease-out forwards`;
 							});
@@ -122,9 +122,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				updateNewsItemsDisplay();
 				updatePagination();
 
-				// Apply animation to newsItem__wrapper elements
+				// Apply animation to postItem__wrapper elements
 				document
-					.querySelectorAll(".newsItem__wrapper")
+					.querySelectorAll(".postItem__wrapper")
 					.forEach(function (element) {
 						element.style.animation = "nextPage 0.5s ease-out forwards";
 					});

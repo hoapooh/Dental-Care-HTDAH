@@ -1,6 +1,7 @@
 ﻿using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
@@ -54,7 +55,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			_context.News.Add(news);
 			await _context.SaveChangesAsync();
-			return RedirectToAction("newspost", "news", "admin");
+			return RedirectToAction("newspost", "news", new { area = "Admin" });
 		}
 
 		[HttpGet]
@@ -65,23 +66,34 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> EditNewsPost(int newsID, string? content, string? newsTitle)
+		public async Task<IActionResult> EditNewsPost(int newsID, string? content, string? newsTitle, string? newsThumbnail)
 		{
 			var news = await _context.News.FindAsync(newsID);
 			news.Title = newsTitle;
 			news.Content = content;
-			_context.News.Update(news);
+
+			if (newsThumbnail != null)
+			{
+				news.ThumbNail = newsThumbnail;
+			}
+
+            _context.News.Update(news);
 			await _context.SaveChangesAsync();
-			return RedirectToAction("newspost", "news", "admin");
+			return RedirectToAction("newspost", "news", new { area = "Admin" });
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> NewsPostDelete(int id)
 		{
 			var news = await _context.News.FindAsync(id);
-			_context.News.Remove(news);
-			await _context.SaveChangesAsync();
-			return RedirectToAction("newspost", "news", "admin");
+
+			if (news != null)
+			{
+				_context.News.Remove(news);
+				await _context.SaveChangesAsync();
+			}
+
+			return RedirectToAction("Newspost", "News", new { area = "Admin" });
 		}
 
 		[HttpGet]
@@ -89,7 +101,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		{
 			if (string.IsNullOrEmpty(search))
 			{
-				return RedirectToAction("newspost", "news", "admin");
+				return RedirectToAction("newspost", "news", new { area = "Admin" });
 			}
 			var news = _context.News.Where(r => r.Title.Contains(search)).ToList();
 			return View("NewsPost", news);

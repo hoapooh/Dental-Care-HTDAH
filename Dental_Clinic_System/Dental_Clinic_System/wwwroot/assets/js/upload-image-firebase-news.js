@@ -30,7 +30,7 @@ document.getElementById("uploadForm").addEventListener("submit", (event) => {
 	const file = fileInput.files[0];
 
 	if (file) {
-		// Create a reference to 'profile_pictures/filename'
+		// Create a reference to 'news/filename'
 		const storageRef = ref(storage, "news/" + file.name);
 
 		// Upload the file to the reference

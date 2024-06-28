@@ -1,13 +1,13 @@
 ﻿@model Dental_Clinic_System.Models.Data.News
 @{
-
+    ViewData["Title"] = "Chỉnh sửa Bài Viết";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chỉnh sửa Bài Viết</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -21,10 +21,67 @@
 </head>
 
 <div style="padding: 40px;">
-    <form asp-area="admin" asp-controller="news" asp-action="CreateNewsPost" method="post">
-        <label for="newsTitle">Title</label>
-        <input type="text" name="newsTitle" id="newsTitle" value="@Model.Title"/>
-        <input type="hidden" value="@Model.ID" name="newsID">
+    <div class="post__management__header">
+        <h1 class="title">@ViewData["Title"]</h1>
+    </div>
+
+    <form id="uploadForm" asp-area="admin" asp-controller="news" asp-action="EditNewsPost" method="post" class="row">
+        <div class="col-md-6">
+            <label for="newsTitle">Title</label>
+            <input class="form-control" type="text" name="newsTitle" id="newsTitle" value="@Model.Title" />
+            <input type="hidden" value="@Model.ID" name="newsID">
+        </div>
+        
+        <!-- UPLOAD -->
+        <div class="image-file col-md-6">
+            <label for="imageInput">Hình ảnh</label>
+            <div class="preview-image col-md-12">
+                <input class="form-control"
+                       type="file"
+                       name="imageInput"
+                       id="imageInput" />
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            <div class="container__image__preview">
+                <div class="style__image__preview row">
+
+                    <div class="final-image col-md-6">
+                        <h3 class="title">Hiện ảnh hiện tại</h3>
+                        <div class="image-box-style">
+                            <img src="@Model.ThumbNail"
+                                 alt=""
+                                 id="imageDisplay"
+                                 style="
+												display: block;
+												max-width: 100%;
+												text-align: center;
+												border-radius: 5px;
+                                            " />
+                        </div>
+                        
+                    </div>
+                    <div class="preview-image col-md-6">
+                        <h3 class="title">Hình ảnh được chọn</h3>
+                        <div class="image-box-style">
+                            <img src=""
+                                 alt=""
+                                 id="imagePreview"
+                                 style="
+												display: block;
+												max-width: 100%;
+												text-align: center;
+												border-radius: 5px;
+                                            " />
+                        </div>
+                    </div>
+                    <input name="newsThumbnail" id="imageUrl" class="form-control" type="hidden" />
+                </div>
+            </div>
+        </div>
+
+        <label for="imageInput">Mô tả bài viết</label>
         <div id="container">
             <textarea id="editor" name="content">@Model.Content</textarea>
         </div>
@@ -44,4 +101,5 @@
 <script src="https://kit.fontawesome.com/53f42380b0.js"
         crossorigin="anonymous"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+<script src="~/assets/js/upload-image-firebase-news.js" type="module"></script>
 <script src="~/assets/js/richtexteditor.js"></script>

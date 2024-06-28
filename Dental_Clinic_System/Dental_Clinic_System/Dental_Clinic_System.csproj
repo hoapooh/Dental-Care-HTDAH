@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\js\pagination-news-post.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\assets\js\pagination-news-post.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Areas\Manager\Views\Clinics\Create.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Details.cshtml" />
@@ -39,6 +47,7 @@
     <None Include="wwwroot\assets\js\chart.js" />
     <None Include="wwwroot\assets\js\myswiper.js" />
     <None Include="wwwroot\assets\js\pagination-clinic.js" />
+    <None Include="wwwroot\assets\js\pagination-news-post.js" />
     <None Include="wwwroot\assets\js\pagination.js" />
     <None Include="wwwroot\assets\js\richtexteditor2.js" />
     <None Include="wwwroot\assets\js\timeinterval.js" />
