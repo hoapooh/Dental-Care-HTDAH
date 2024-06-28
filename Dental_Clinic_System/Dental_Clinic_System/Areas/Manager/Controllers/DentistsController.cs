@@ -10,6 +10,9 @@ using Dental_Clinic_System.Areas.Manager.ViewModels;
 using System.Configuration;
 using static Dental_Clinic_System.Helper.LocalAPIReverseString;
 using Dental_Clinic_System.Helper;
+using System.Globalization;
+using System.Text;
+using System.Runtime.Versioning;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -25,26 +28,37 @@ namespace Dental_Clinic_System.Controllers
 		}
 		//[Route("Index")]
 		// GET: Dentists
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string keyword)
 		{
-			var dentists = _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree);
-			return View(await dentists.ToListAsync());
+
+			var dentists = await _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).ToListAsync();
+
+			if (!string.IsNullOrEmpty(keyword))
+			{
+				keyword = keyword.Trim().ToLower();
+				dentists = dentists.Where(p =>
+					(p.Account.FirstName != null && Util.ConvertVnString(p.Account.FirstName).Contains(keyword)) ||
+					(p.Account.LastName != null && Util.ConvertVnString(p.Account.LastName).Contains(keyword)) ||
+					((p.Account.FirstName != null || p.Account.LastName != null) && Util.ConvertVnString(p.Account.LastName+" "+ p.Account.FirstName).Contains(keyword)	)||
+					(p.Account.Email != null && Util.ConvertVnString(p.Account.Email).Contains(keyword)))
+					.ToList();
+			}
+			return View(dentists);
 		}
 		//[Route("Search")]
-		public async Task<IActionResult> Search(String keyword)
+		[HttpPost]
+		public async Task<IActionResult> Search(string keyword)
 		{
-			var dentists = _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).AsQueryable();
-			if (keyword != null)
+			// Xử lý từ khóa tìm kiếm như trim, kiểm tra null, v.v...
+			if (!string.IsNullOrEmpty(keyword))
 			{
 				keyword = keyword.Trim();
-				dentists = dentists.Where(p =>
-					(p.Account.FirstName != null && p.Account.FirstName.Contains(keyword)) ||
-					(p.Account.LastName != null && p.Account.LastName.Contains(keyword)) ||
-					(p.Account.Email != null && p.Account.Email.Contains(keyword)));
-			}
-			return View("Index", await dentists.ToListAsync());
-		}
+				keyword = Util.ConvertVnString(keyword);
 
+			}
+			return RedirectToAction("Index", new { keyword = keyword });
+		}
+		
 		// GET: Dentists/Details/5
 		public async Task<IActionResult> Details(int? id)
 		{
@@ -160,9 +174,9 @@ namespace Dental_Clinic_System.Controllers
 			await _context.SaveChangesAsync();
 			//Thêm vào bảng NhaSi_ChuyenKhoa
 			var den = await _context.Dentists.FirstOrDefaultAsync(a => a.AccountID == account.ID); //lấy Nha sĩ ms tạo
-			var speIDs =  _context.Specialties.AsQueryable().Select(a => a.ID).ToList(); //lấy các ID củae all chuyển khoa
+			var speIDs = _context.Specialties.AsQueryable().Select(a => a.ID).ToList(); //lấy các ID củae all chuyển khoa
 			bool check;
-			foreach ( var speID in speIDs )
+			foreach (var speID in speIDs)
 			{
 				if (dentist.SpecialtyIDs.Contains(speID))
 					check = true;
@@ -278,14 +292,14 @@ namespace Dental_Clinic_System.Controllers
 					await _context.SaveChangesAsync();
 					//------------------BẢNG NHA SĨ_CHUYÊN KHOA
 					var den_speList = _context.DentistSpecialties.AsQueryable().Where(d => d.DentistID == id).ToList();
-                    foreach (var denspe in den_speList)
-                    {
+					foreach (var denspe in den_speList)
+					{
 						if (dentistForm.SpecialtyIDs.Contains(denspe.SpecialtyID))
 							denspe.Check = true;
 						else
 							denspe.Check = false;
 						_context.Update(denspe);
-                    }
+					}
 					await _context.SaveChangesAsync();
 				}
 				catch (DbUpdateConcurrencyException)
