@@ -21,25 +21,27 @@
     <link rel="stylesheet" href="~/assets/css/sidebar.css" />
     <link rel="stylesheet" href="~/assets/css/headerAd.css" />
     <link rel="stylesheet" href="~/assets/css/contentDash.css" />
- 
+
 </head>
 
-    <div class="work__schedule" style="padding: 40px">
-        <form asp-action="senddentistdescription">
-            <div id="container">
-                <textarea id="editor" name="content"></textarea>
-            </div>
-            <div style="margin-top: 1%;">
-                <button type="submit" class="btn btn-primary" style="font-size: 15px;">Xác Nhận</button>
-            </div>
-        </form>
-    </div>
+<div class="work__schedule" style="padding: 40px">
+    <h1 style="text-align:center;"><strong>Chỉnh Sửa Mô Tả Nha Sĩ</strong></h1>
+    <div class="text-center"><img style="vertical-align: middle;" src="/assets/images/separate-01.png" alt="Sepherate image"></div>
+    <form asp-action="senddentistdescription">
+        <div id="container">
+            <textarea id="editor" name="content"></textarea>
+        </div>
+        <div style="margin-top: 1%;">
+            <button type="submit" class="btn btn-primary" style="font-size: 15px;">Xác Nhận</button>
+        </div>
+    </form>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
-    <script src="https://kit.fontawesome.com/53f42380b0.js"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
-    <script src="~/assets/js/richtexteditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/53f42380b0.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+<script src="~/assets/js/richtexteditor.js"></script>

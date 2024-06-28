@@ -99,7 +99,7 @@ td, th {
 	z-index: 999;
 }
 
-.modal-content {
+.modal-content-appointment {
 	display: none;
 	position: fixed;
 	top: 50%;
@@ -114,11 +114,11 @@ td, th {
 	font-size: 1.5rem; /* Larger text inside the modal */
 }
 
-	.modal-content h5 {
+	.modal-content-appointment h2 {
 		font-size: 2rem; /* Larger heading text */
 	}
 
-	.modal-content .form-label, .modal-content .form-control {
+	.modal-content-appointment .form-label, .modal-content-appointment .form-control {
 		font-size: 1.5rem; /* Larger form text */
 	}
 

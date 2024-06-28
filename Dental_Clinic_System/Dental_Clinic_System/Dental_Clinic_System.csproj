@@ -15,6 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Dentist\Views\DentistAccount\Login.cshtml" />
+    <None Include="Areas\Dentist\Views\DentistDetail\DentistDescription.cshtml" />
+    <None Include="Areas\Dentist\Views\DentistDetail\DentistSchedule.cshtml" />
+    <None Include="Areas\Dentist\Views\DentistDetail\PatientAppointments.cshtml" />
+    <None Include="Areas\Dentist\Views\Shared\_DentistAvatar.cshtml" />
+    <None Include="Areas\Dentist\Views\Shared\_DentistSidebar.cshtml" />
+    <None Include="Areas\Dentist\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\Dentist\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Dentist\Views\_ViewStart.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Create.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Details.cshtml" />
@@ -39,6 +48,12 @@
     <None Include="Areas\Manager\Views\Shared\_LayoutManager.cshtml" />
     <None Include="Areas\Manager\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Manager\Views\_ViewImports.cshtml" />
+    <None Include="Views\PatientRecord\ConfirmAppointment.cshtml" />
+    <None Include="Views\PatientRecord\CreateNewPatientRecord.cshtml" />
+    <None Include="Views\PatientRecord\EditPatientRecord.cshtml" />
+    <None Include="Views\PatientRecord\PatientRecord.cshtml" />
+    <None Include="Views\PatientRecord\PatientRecordInProfile.cshtml" />
+    <None Include="Views\PatientRecord\PatientRecordPaymentChoosing.cshtml" />
     <None Include="wwwroot\assets\images\clinic-icon.svg" />
     <None Include="wwwroot\assets\images\envelope.svg" />
     <None Include="wwwroot\assets\images\lock.svg" />
@@ -361,6 +376,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
     <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.68.0.1869" />
     <PackageReference Include="Google.Apis.PeopleService.v1" Version="1.68.0.3359" />

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using static System.Net.WebRequestMethods;
 
 namespace Dental_Clinic_System.Areas.Dentist.Controllers
 {
@@ -99,8 +100,8 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                                         .FirstOrDefaultAsync(d => d.Account.ID == dentistAccountID);
 
             // Gửi thông tin qua View
-            ViewBag.dentistAvatar = dentist.Account.Image;
-            ViewBag.dentistName = $"{dentist.Account.LastName} {dentist.Account.FirstName}";
+            ViewBag.dentistAvatar = dentist?.Account.Image ?? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744";
+            ViewBag.dentistName = $"{dentist?.Account.LastName} {dentist?.Account.FirstName}";
             ViewBag.events = JsonConvert.SerializeObject(events);
             return View();
         }
@@ -118,7 +119,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
             }
             var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
-            ViewBag.DentistAvatar = dentist?.Account.Image;
+            ViewBag.DentistAvatar = dentist?.Account.Image ?? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744";
             ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
             var message = TempData["Message"] as string;
             ViewBag.message = message;
@@ -172,7 +173,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                                     .Include(a => a.Specialty)
                                     .Where(a => a.Schedule.DentistID == dentist.ID)
                                     .ToListAsync();
-            ViewBag.DentistAvatar = dentist?.Account.Image;
+            ViewBag.DentistAvatar = dentist?.Account.Image ?? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744";
             ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
 
             ViewBag.Message = TempData["Message"];
@@ -197,7 +198,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             await _context.SaveChangesAsync();
 
             var schedule = await _context.Appointments.Include(s => s.Schedule).FirstOrDefaultAsync(a => a.ID == appointmentID);
-            if(appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
+            if (appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
             {
                 schedule.Schedule.ScheduleStatus = "Còn Trống";
                 await _context.SaveChangesAsync();
@@ -205,7 +206,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             // HERE
             #region Refund MOMO API
-            if (appointment.AppointmentStatus == "Đã Khám")
+            /*if (appointment.AppointmentStatus == "Đã Khám")
             {
                 // Invoke the refund method from payment controller
                 // Hoàn tiền thành công
@@ -236,7 +237,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                     _context.SaveChanges();
                 }
 
-            }
+            }*/
             #endregion
 
             TempData["message"] = "success";
@@ -248,42 +249,42 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         public async Task<IActionResult> CancelAppointment(int appointmentID)  //string description
         {
             var appointment = _context.Appointments.FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Đã Chấp Nhận" || a.AppointmentStatus == "Chờ Xác Nhận"));
-            if(appointment == null)
+            if (appointment == null)
             {
-				ViewBag.message = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
-				return RedirectToAction("patientappointments");
-			}
+                ViewBag.message = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
+                return RedirectToAction("patientappointments");
+            }
             appointment.AppointmentStatus = "Đã Hủy";
             //appointment.Description = "Lý do hủy: " + description;
             _context.Update(appointment);
-           await _context.SaveChangesAsync();
-			ViewBag.message = "success";
-			return RedirectToAction("patientappointments");
+            await _context.SaveChangesAsync();
+            ViewBag.message = "success";
+            return RedirectToAction("patientappointments");
         }
 
         //Hàm thay đổi trạng thái của đơn đặt
-		public async Task<IActionResult> ChangeStatusAppointment(int appointmentID, int statusNumber)
-		{
-			var appointment = _context.Appointments.FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Chờ Xác Nhận" || a.AppointmentStatus == "Đã Chấp Nhận"));
-			if (appointment == null)
-			{
-				ViewBag.message = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
-				return NotFound("patientappointments");
-			}
-
-            if(statusNumber == 1)
+        public async Task<IActionResult> ChangeStatusAppointment(int appointmentID, int statusNumber)
+        {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Chờ Xác Nhận" || a.AppointmentStatus == "Đã Chấp Nhận"));
+            if (appointment == null)
             {
-				appointment.AppointmentStatus = "Đã Chấp Nhận";
-			}
-            else if(statusNumber == 2)
-			{
-				appointment.AppointmentStatus = "Đã Khám";
-			}
-			_context.Update(appointment);
-			await _context.SaveChangesAsync();
-			ViewBag.message = "success";
-			return RedirectToAction("patientappointments");
-		}
+                ViewBag.message = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
+                return NotFound("patientappointments");
+            }
 
-	}
+            if (statusNumber == 1)
+            {
+                appointment.AppointmentStatus = "Đã Chấp Nhận";
+            }
+            else if (statusNumber == 2)
+            {
+                appointment.AppointmentStatus = "Đã Khám";
+            }
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+            ViewBag.message = "success";
+            return RedirectToAction("patientappointments");
+        }
+
+    }
 }

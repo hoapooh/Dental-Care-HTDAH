@@ -53,7 +53,8 @@
                                 <i class="fa-solid fa-hospital"></i>
                                 <div class="clinic__info__details">
                                     <span>@clinic?.Name</span>
-                                    <p>@patientRecord?.Address, @await LocalAPIReverseString.GetWardNameById(patientRecord?.District ?? 0, patientRecord?.Ward ?? 0), @await LocalAPIReverseString.GetDistrictNameById(patientRecord?.Province ?? 0, patientRecord?.District ?? 0), @await LocalAPIReverseString.GetProvinceNameById(patientRecord?.Province ?? 0)</p>
+                                    <!--<p>@clinic?.Address, @await LocalAPIReverseString.GetWardNameById(clinic?.District ?? 0, clinic?.Ward ?? 0), @await LocalAPIReverseString.GetDistrictNameById(clinic?.Province ?? 0, clinic?.District ?? 0), @await LocalAPIReverseString.GetProvinceNameById(clinic?.Province ?? 0)</p>-->
+                                    <p>@clinic?.Address, @clinic.WardName, @clinic.DistrictName, @clinic.ProvinceName</p>
                                 </div>
                             </div>
                         </div>

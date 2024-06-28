@@ -1,4 +1,4 @@
-using Dental_Clinic_System.Areas.Admin.Models;
+﻿using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services.EmailSender;
@@ -6,12 +6,18 @@ using Dental_Clinic_System.Services.EmailVerification;
 using Dental_Clinic_System.Services.GoogleSecurity;
 using Dental_Clinic_System.Services.MOMO;
 using Dental_Clinic_System.Services.VNPAY;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using System.Drawing.Imaging;
+using System.Drawing.Printing;
+using System.Reflection;
+using System.Runtime.Loader;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -100,6 +106,17 @@ builder.Services.AddSingleton<IEmailVerification, EmailVerification>();
 
 //});
 
+//Soyu: Cấu hình DinkToPDF
+var context = new CustomAssemblyLoadContext();
+var wkHtmlToPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wkhtmltox", "libwkhtmltox.dll");
+context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+
+//Soyu: Thêm Singleton cho phần xuất pdf
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
+//Soyu: Đăng Ký PDFService
+builder.Services.AddSingleton<PdfService>();
+
 var app = builder.Build();
 
 
@@ -161,3 +178,56 @@ app.MapControllerRoute(
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+#region Class CustomAssemblyLoadContext
+public class CustomAssemblyLoadContext : AssemblyLoadContext
+{
+    public IntPtr LoadUnmanagedLibrary(string absolutePath)
+    {
+        return LoadUnmanagedDll(absolutePath);
+    }
+
+    protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+    {
+        return LoadUnmanagedDllFromPath(unmanagedDllName);
+    }
+
+    protected override Assembly Load(AssemblyName assemblyName)
+    {
+        throw new NotImplementedException();
+    }
+}
+#endregion
+
+#region Class PdfService
+public class PdfService
+{
+    private readonly IConverter _converter;
+
+    public PdfService(IConverter converter)
+    {
+        _converter = converter;
+    }
+
+    public byte[] GeneratePdf(string html)
+    {
+        var doc = new HtmlToPdfDocument()
+        {
+            GlobalSettings = {
+                ColorMode = DinkToPdf.ColorMode.Color,
+                Orientation = DinkToPdf.Orientation.Portrait,
+                PaperSize = DinkToPdf.PaperKind.A4
+            },
+            Objects = {
+                new ObjectSettings() {
+                    PagesCount = null,
+                    HtmlContent = html,
+                    WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/css", "appointmentpdf.css") },
+                }
+            }
+        };
+
+        return _converter.Convert(doc);
+    }
+}
+#endregion

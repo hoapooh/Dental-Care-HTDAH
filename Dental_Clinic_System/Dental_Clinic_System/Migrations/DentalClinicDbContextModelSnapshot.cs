@@ -579,7 +579,7 @@ namespace Dental_Clinic_System.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnName("Address");
 
                     b.Property<DateOnly>("DateOfBirth")

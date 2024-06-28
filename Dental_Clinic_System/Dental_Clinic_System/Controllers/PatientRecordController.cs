@@ -47,9 +47,9 @@ namespace Dental_Clinic_System.Controllers
         #region Hàm này chỉ show ra View tạo mới patient record
         [HttpGet]
         [Route("/createnewpatientrecord")]
-        public async Task<IActionResult> ShowFormCreatingNewPatientRecord()
+        public async Task<IActionResult> ShowFormCreatingNewPatientRecord(string returnUrl)
         {
-            //ViewBag.returnUrl = returnUrl;
+            TempData["returnUrl"] = returnUrl;
             return View("createnewpatientrecord");
         }
         #endregion
@@ -88,7 +88,19 @@ namespace Dental_Clinic_System.Controllers
             //Check theo độ tuổi
             if (age >= 14)
             {
-                patient.FMFullName = null;
+				if (string.IsNullOrEmpty(patient.PhoneNumber))
+				{
+					ModelState.AddModelError("PhoneNumber", "Không được bỏ trống Số điện thoại!");
+					return View(patient);
+				}
+
+				if (string.IsNullOrEmpty(patient.Job))
+				{
+					ModelState.AddModelError("Job", "Vui lòng chọn nghề nghiệp!");
+					return View(patient);
+				}
+
+				patient.FMFullName = null;
                 patient.FMRelationship = null;
                 patient.FMEmail = null;
                 patient.FMPhoneNumber = null;
@@ -101,25 +113,25 @@ namespace Dental_Clinic_System.Controllers
 
                 if (string.IsNullOrEmpty(patient.FMFullName))
                 {
-                    ModelState.AddModelError("FMFullName", "FMFullName is required.");
+                    ModelState.AddModelError("FMFullName", "Không được bỏ trống Tên người thân!");
                     return View(patient);
                 }
 
                 if (string.IsNullOrEmpty(patient.FMRelationship))
                 {
-                    ModelState.AddModelError("FMRelationship", "FMRelationship is required.");
+                    ModelState.AddModelError("FMRelationship", "Không được bỏ trống Quan hệ với bệnh nhân!");
                     return View(patient);
                 }
 
                 if (string.IsNullOrEmpty(patient.FMEmail))
                 {
-                    ModelState.AddModelError("FMEmail", "FMEmail is required.");
+                    ModelState.AddModelError("FMEmail", "Không được bỏ trống Email!");
                     return View(patient);
                 }
 
                 if (string.IsNullOrEmpty(patient.FMPhoneNumber))
                 {
-                    ModelState.AddModelError("FMPhoneNumber", "FMPhoneNumber is required.");
+                    ModelState.AddModelError("FMPhoneNumber", "Không được bỏ trống Số điện thoại!");
                     return View(patient);
                 }
                 patient.Job = "Còn nhỏ";
@@ -151,10 +163,12 @@ namespace Dental_Clinic_System.Controllers
                 };
                 await _context.PatientRecords.AddAsync(patientRecord);
                 await _context.SaveChangesAsync();
-                //if (!string.IsNullOrEmpty(returnUrl))
-                //{
-                //    return Redirect(returnUrl);
-                //}
+                //Quay lại view trước đó nếu có
+                string? returnUrl = TempData["returnUrl"] as string;
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("PatientRecordInProfile");
             }
 
@@ -322,40 +336,51 @@ namespace Dental_Clinic_System.Controllers
                 ModelState.Remove(nameof(patient.Job));
                 ModelState.Remove(nameof(patient.IdentifyNumber));
 
-                if (string.IsNullOrEmpty(patient.FMFullName))
-                {
-                    ModelState.AddModelError("FMFullName", "FMFullName is required.");
-                    return View(patient);
-                }
+				if (string.IsNullOrEmpty(patient.FMFullName))
+				{
+					ModelState.AddModelError("FMFullName", "Không được bỏ trống Tên người thân!");
+					return View(patient);
+				}
 
-                if (string.IsNullOrEmpty(patient.FMRelationship))
-                {
-                    ModelState.AddModelError("FMRelationship", "FMRelationship is required.");
-                    return View(patient);
-                }
+				if (string.IsNullOrEmpty(patient.FMRelationship))
+				{
+					ModelState.AddModelError("FMRelationship", "Không được bỏ trống Quan hệ với bệnh nhân!");
+					return View(patient);
+				}
 
-                if (string.IsNullOrEmpty(patient.FMEmail))
-                {
-                    ModelState.AddModelError("FMEmail", "FMEmail is required.");
-                    return View(patient);
-                }
+				if (string.IsNullOrEmpty(patient.FMEmail))
+				{
+					ModelState.AddModelError("FMEmail", "Không được bỏ trống Email!");
+					return View(patient);
+				}
 
-                if (string.IsNullOrEmpty(patient.FMPhoneNumber))
-                {
-                    ModelState.AddModelError("FMPhoneNumber", "FMPhoneNumber is required.");
-                    return View(patient);
-                }
+				if (string.IsNullOrEmpty(patient.FMPhoneNumber))
+				{
+					ModelState.AddModelError("FMPhoneNumber", "Không được bỏ trống Số điện thoại!");
+					return View(patient);
+				}
+				patient.Job = "Còn nhỏ";
+			}
+            else if (age >= 14)
+			{
+				
+				if (string.IsNullOrEmpty(patient.PhoneNumber))
+				{
+					ModelState.AddModelError("PhoneNumber", "Không được bỏ trống Số điện thoại!");
+					return View(patient);
+				}
 
-                patient.Job = "Còn nhỏ";
-            }
-            else
-            {
-                // Xóa family member info nếu age > 14 
-                patient.FMFullName = null;
-                patient.FMRelationship = null;
-                patient.FMEmail = null;
-                patient.FMPhoneNumber = null;
-            }
+				if (string.IsNullOrEmpty(patient.Job))
+				{
+					ModelState.AddModelError("Job", "Vui lòng chọn nghề nghiệp!");
+					return View(patient);
+				}
+				// Xóa family member info nếu age > 14 
+				patient.FMFullName = null;
+				patient.FMRelationship = null;
+				patient.FMEmail = null;
+				patient.FMPhoneNumber = null;
+			}
 
             if (ModelState.IsValid)
             {

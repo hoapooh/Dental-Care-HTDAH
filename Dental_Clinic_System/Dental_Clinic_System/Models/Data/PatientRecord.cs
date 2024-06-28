@@ -47,7 +47,7 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("Ward", TypeName = "int")]
 		public int Ward { get; set; } = default;
 
-		[Column("Address", TypeName = "nvarchar(50)")]
+		[Column("Address", TypeName = "nvarchar(500)")]
 		public string Address { get; set; } = null!;
 
 		[Column("PatientRecordStatus", TypeName = "nvarchar(50)")]
