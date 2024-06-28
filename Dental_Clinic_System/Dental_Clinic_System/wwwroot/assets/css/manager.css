@@ -451,6 +451,8 @@ input:focus {
         .form-check-input[type="checkbox"]:checked {
             background-color: #007bff;
             border-color: #007bff;
+            /*background-color: #3f97f6ba;
+            border-color: aliceblue;*/
         }
 
             /*.form-check-input[type="checkbox"]:checked::before {

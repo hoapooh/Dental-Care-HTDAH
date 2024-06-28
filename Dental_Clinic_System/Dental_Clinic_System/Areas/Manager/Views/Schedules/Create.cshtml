@@ -19,45 +19,6 @@
 			justify-content: space-around;
 		}
 
-		a.button-link {
-			display: inline-block;
-			padding: 5px 10px;
-			background-color: transparent;
-			border: none;
-			cursor: pointer;
-			text-decoration: none;
-			color: inherit;
-			border-radius: 6px;
-		}
-
-		.manager__management table a.button-link i {
-			vertical-align: middle;
-		}
-
-		.manager__management table a.button-link:first-child,
-		.manager__management .submit-btn {
-			background: #4880ff;
-			color: white;
-		}
-
-			.manager__management table a.button-link:first-child:hover,
-			.manager__management .submit-btn:hover {
-				background: #3b6cd9;
-			}
-
-		.manager__management table a.button-link:last-child,
-		.manager__management .close-btn {
-			margin-left: 5px;
-			background: rgb(255, 66, 66);
-			color: white;
-		}
-
-			.manager__management table a.button-link:last-child:hover,
-			.manager__management .close-btn:hover {
-				background: #f81f1f;
-			}
-
-
 		.sub-title {
 			color: seagreen;
 			font-size: 3rem;
@@ -92,7 +53,50 @@
 			padding: 24px 48px !important; /* Reduced padding for top/bottom and left/right */
 			border-radius: 10px; /* Adjust this value to change the roundness of the corners */
 		}
+
+
+		.mbsc-ios.mbsc-calendar-week-day {
+			font-size: 1em;
+			color: brown;
+		}
+
+		.mbsc-ios.mbsc-calendar-day {
+			font-size: 0.9em;
+		}
+
+		.mbsc-calendar-cell-inner {
+			display: inline-block;
+			padding: 0 .25em;
+			vertical-align: middle;
+			align-content: center;
+			/* margin-top: -11px; */
+		}
+		.week-button, .week-buttonTitile {
+			margin-top: 5px;
+			padding: 5px 10px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+
+
+		}
+
+			.week-button:hover, .week-buttonTitile:hover {
+				background-color: #0056b3;
+				margin-left: 0;
+				margin-top: 5px;
+			}
+
+		.mbsc-calendar-day {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 50px; // Adjust as necessary
+		}  
 	</style>
+
 }
 
 
@@ -127,33 +131,25 @@
 
 	</div>
 	<div style="height:15px"></div>
-	@* TRẠNG THÁI LÀM VIỆC?
-	<div class="col-md-6">
-	<label for="status" class="sub-title">Trạng thái làm việc</label><select class="bg-body-secondary"
-	name="status"
-	id="status"
-	disabled>
-	<option value="working" selected>Đang làm việc</option>
-	<option value="done">Đã xong</option>
-	</select>
-	</div> *@
+
 	<!-- ========== TEST MOBISCROLL SCHEDULE - CHỌN NGÀY ========== -->
 	<div class="col-md-12">
 		<label class="sub-title">Chọn ngày làm việc:</label>
 		<div class="mbsc-grid">
 			<div class="mbsc-col-sm-12 mbsc-col-md-12">
 				<div class="mbsc-form-group">
-					@* <div class="mbsc-form-group-title text-center"
-					style="font-size: 3rem">
-					Chọn ngày khám
-					</div> *@
-
-					<div id="demo-counter"></div>
+					<div id="calendar-container">
+						<div id="demo-counter">
+							<!-- Mobiscroll calendar will render here -->
+						</div>
+					</div>
+					
 					<input type="hidden" asp-for="Dates" />
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<div style="height:15px"></div>
 	<!-- ========== CHỌN KHUNG GIỜ ========== -->
 	<div class="col-md-12">
@@ -180,3 +176,5 @@
 	<!-- ========== MOBISCROLL SCHEDULE ========== -->
 	<script src="~/assets/js/mobiscroll-calendar2.js"></script>
 }
+
+

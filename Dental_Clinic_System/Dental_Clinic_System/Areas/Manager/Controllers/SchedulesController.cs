@@ -11,6 +11,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Google.Apis.PeopleService.v1.Data;
+using Dental_Clinic_System.ViewModels;
+using Newtonsoft.Json;
 
 namespace Dental_Clinic_System.Areas.Manager.Controllers
 {
@@ -18,27 +20,38 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
     public class SchedulesController : Controller
     {
         private readonly DentalClinicDbContext _context;
-
         public SchedulesController(DentalClinicDbContext context)
         {
             _context = context;
         }
-
+        #region Bảng lịch khám vs các Column: Nha sĩ - Ngày - Các timeslot - Edit
         // GET: Manager/Schedules
         public async Task<IActionResult> Index()
         {
             var dentalClinicDbContext = _context.Schedules.Include(s => s.Dentist).ThenInclude(d => d.Account).Include(s => s.TimeSlot);
             return View(await dentalClinicDbContext.ToListAsync());
         }
+		#endregion
+
+		#region Lich làm việc của Nha Sĩ - Hàng tuần - Lịch này hỗ trợ generatr lịch khám theo tuần nhanh chóng
 		// GET: Manager/LichLamViec
 		public async Task<IActionResult> LichLamViec()
 		{
-            // Lấy các lịch làm việc của các nha sĩ thuộc phòng khám cụ thể - mà manager đang quản lý
-            //Ví dụ phòng khám có ID=1 (Nha khoa đại dương)
-            var den_sesList = _context.Dentist_Sessions.Include(d => d.Dentist).ThenInclude(a => a.Account).Include(d => d.Session).AsQueryable();
+			//Lịch làm việc sáng chiều của phòng khám. Mô phỏng: clinicID = 1
+			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == 1);
+			ViewBag.SangStart = clinic.AmWorkTimes.StartTime;
+			ViewBag.SangEnd = clinic.AmWorkTimes.EndTime;
+			ViewBag.ChieuStart = clinic.PmWorkTimes.StartTime;
+			ViewBag.ChieuEnd = clinic.PmWorkTimes.EndTime;
+
+			//--------------------------------------------
+			// Lấy các lịch làm việc của các nha sĩ thuộc phòng khám cụ thể - mà manager đang quản lý
+			//Ví dụ phòng khám có ID=1 (Nha khoa đại dương)
+			var den_sesList = _context.Dentist_Sessions.Include(d => d.Dentist).ThenInclude(a => a.Account).Include(d => d.Session).AsQueryable();
 			den_sesList = den_sesList.Where(p => p.Dentist.ClinicID == 1); //Lấy tất cả các dòng của Dentist_Sessions where DentistIDs thuộc Clinic có id=1 
-            //ViewBag.DenSesList = await den_SesList.ToListAsync(); ;
-            return View(await den_sesList.ToListAsync());
+            ViewBag.DenSesList = await den_sesList.ToListAsync(); ;
+			//return View(await den_sesList.ToListAsync());
+			return View();
 		}
 		// POST: Manager/LichLamViec
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -62,12 +75,125 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			await _context.SaveChangesAsync();
             //Lấy danh sách để in ra
 			den_sesList = den_sesList.Where(p => p.Dentist.ClinicID == 1); //Lấy tất cả các dòng của Dentist_Sessions where DentistIDs thuộc Clinic có id=1 
+			ViewBag.DenSesList = await den_sesList.ToListAsync(); 
 			return View(await den_sesList.ToListAsync());
         }
+		#endregion
+
+		// POST: Manager/LichLamViec
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> CreateWeekSchedule(string selectedDates)
+		{
+			//Lịch làm việc sáng chiều của phòng khám. Mô phỏng: clinicID = 1
+			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == 1);
+			ViewBag.SangStart = clinic.AmWorkTimes.StartTime;
+			ViewBag.SangEnd = clinic.AmWorkTimes.EndTime;
+			ViewBag.ChieuStart = clinic.PmWorkTimes.StartTime;
+			ViewBag.ChieuEnd = clinic.PmWorkTimes.EndTime;
+			//--------------------------------------------
+			// Lấy các lịch làm việc của các nha sĩ thuộc phòng khám cụ thể - mà manager đang quản lý
+			//Ví dụ phòng khám có ID=1 (Nha khoa đại dương)
+			var den_sesList = _context.Dentist_Sessions.Include(d => d.Dentist).ThenInclude(a => a.Account).Include(d => d.Session).AsQueryable();
+			den_sesList = den_sesList.Where(p => p.Dentist.ClinicID == 1); //Lấy tất cả các dòng của Dentist_Sessions where DentistIDs thuộc Clinic có id=1 
+			ViewBag.DenSesList = await den_sesList.ToListAsync();
+			//------------------------------------------------------------
+			if (!string.IsNullOrEmpty(selectedDates))
+			{
+				List<DateOnly> dates = selectedDates
+					.Split(',')
+					.Select(date => DateOnly.ParseExact(date.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture))
+					.ToList();
+
+				// Process the dates as needed
+				foreach (var date in dates)
+				{
+					// Your logic here, using date as DateOnly
+				}
+			}
+			return View();
+		}
+
+		#region Lấy lịch làm việc của Dentist cụ thể, đưa vào Calendar - ORIGINAL AUTHOR: PHẠM DUY HOÀNG
+		[HttpGet]
+		//[Authorize(Roles = "Nha Sĩ")]
+		public async Task<IActionResult> DentistSchedule()
+		{
+
+			var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
+			if (dentistAccountID == null)
+			{
+				return RedirectToAction("Login", "DentistAccount", new { area = "Dentist" });
+			}
+
+			// Lấy Schedule của dentist cụ thể
+			var schedules = await _context.Schedules
+									.Include(s => s.Dentist)
+									.Include(s => s.TimeSlot)
+									.Where(s => s.Dentist.Account.ID == dentistAccountID)
+									.ToListAsync();
+
+			if (schedules == null || !schedules.Any())
+			{
+				ViewBag.message = "Không tìm thấy lịch phù hợp";
+				return View();
+			}
+
+			// Map 2 bên Schedule với appointment, sau đó map những cột appointment ko null với patient record
+			var scheduleAppointments = from schedule in schedules
+									   join appointment in _context.Appointments
+									   on schedule.ID equals appointment.ScheduleID into appointmentGroup
+									   from appointment in appointmentGroup.DefaultIfEmpty()
+									   select new
+									   {
+										   appointmentID = appointment?.ID ?? 0,
+										   scheduleDate = schedule.Date,
+										   patientID = appointment?.PatientRecordID ?? 0,
+										   startTime = schedule?.TimeSlot?.StartTime,
+										   endTime = schedule?.TimeSlot?.EndTime,
+										   patientRecordID = appointment?.PatientRecordID ?? 0
+									   };
 
 
+			var result = from sa in scheduleAppointments
+						 join patientRecord in _context.PatientRecords
+						 on sa.patientRecordID equals patientRecord.ID into patientGroup
+						 from patientRecord in patientGroup.DefaultIfEmpty()
+						 select new
+						 {
+							 sa.appointmentID,
+							 sa.scheduleDate,
+							 sa.startTime,
+							 sa.endTime,
+							 patientName = patientRecord?.FullName ?? "No Patient"
+						 };
+
+			// Map to EventVM
+			var events = result.Select(s => new EventVM
+			{
+				Title = s.appointmentID != 0 ? $"#{s.appointmentID} - {s.patientName}" : "Trống",
+				Start = s.scheduleDate != null && s.startTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.startTime.Value:HH:mm:ss}" : null,
+				End = s.scheduleDate != null && s.endTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.endTime.Value:HH:mm:ss}" : null,
+			}).ToList();
 
 
+			// Lấy thông tin Nha sĩ
+			var dentist = await _context.Dentists
+										.Include(d => d.Account)
+										.FirstOrDefaultAsync(d => d.Account.ID == dentistAccountID);
+
+			// Gửi thông tin qua View
+			ViewBag.dentistAvatar = dentist.Account.Image;
+			ViewBag.dentistName = $"{dentist.Account.LastName} {dentist.Account.FirstName}";
+			ViewBag.events = JsonConvert.SerializeObject(events);
+			return View();
+		}
+
+		#endregion
+
+		#region Xóa lịch khám theo ID - autoCreate
 		// GET: Manager/Schedules/Details/5
 		public async Task<IActionResult> Details(int? id)
         {
@@ -87,9 +213,11 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
             return View(schedule);
         }
+		#endregion
 
-        // GET: Manager/Schedules/Create
-        public IActionResult Create()
+		#region Tạo lịch khám => Chọn nhiều nha sĩ, chọn nhiều ngày, chọn nhiều timeslot => Nhiều lịch khám
+		// GET: Manager/Schedules/Create
+		public IActionResult Create()
         {
             var dentists = _context.Dentists
                            .Join(_context.Accounts,
@@ -108,24 +236,12 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             //ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID");
             return View();
         }
-
-        // POST: Manager/Schedules/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		
+		// POST: Manager/Schedules/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ID,DentistID,TimeSlotID,Date,ScheduleStatus")] Schedule schedule)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(schedule);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["DentistID"] = new SelectList(_context.Dentists, "ID", "ID", schedule.DentistID);
-        //    ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID", schedule.TimeSlotID);
-        //    return View(schedule);
-        //}
         public async Task<IActionResult> Create([Bind("DentistIDs, Dates, TimeSlots")] ScheduleVM schedule)
         {
 			if (ModelState.IsValid)
@@ -174,7 +290,9 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 			return dateList;
 		}
+		#endregion
 
+		#region Sửa lịch khám - Vô bảng riêng của "Nha Sĩ - Ngày" cụ thể -> Xóa lịch chưa được đặt 
 		// GET: Manager/Schedules/Edit/5
 		public async Task<IActionResult> Edit(int? dentistId, DateTime? date)
         {
@@ -240,9 +358,11 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID", schedule.TimeSlotID);
             return View(schedule);
         }
+		#endregion
 
-        // GET: Manager/Schedules/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		#region Xóa lịch khám theo ID - autoCreate
+		// GET: Manager/Schedules/Delete/5
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -261,8 +381,8 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             return View(schedule);
         }
 
-        // POST: Manager/Schedules/Delete/5
-        [HttpPost, ActionName("Delete")]
+		// POST: Manager/Schedules/Delete/5
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -280,8 +400,9 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Edit", new { dentistId = denId, date = date });
         }
+		#endregion
 
-        private bool ScheduleExists(int id)
+		private bool ScheduleExists(int id)
         {
             return _context.Schedules.Any(e => e.ID == id);
         }
