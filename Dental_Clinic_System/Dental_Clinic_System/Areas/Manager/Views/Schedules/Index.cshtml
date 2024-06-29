@@ -114,7 +114,7 @@
 									<p class="time_Dat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
 
 								}
-								else
+								else if (item.ScheduleStatus == "Còn Trống" && item.TimeSlotID != 23 && item.TimeSlotID != 24)
 								{
 									<p class="time_ChuaDat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
 								}

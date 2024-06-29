@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Google.Apis.PeopleService.v1.Data;
 using Dental_Clinic_System.ViewModels;
 using Newtonsoft.Json;
+using System.Collections;
 
 namespace Dental_Clinic_System.Areas.Manager.Controllers
 {
@@ -96,6 +97,68 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateWeekSchedule(string selectedDates)
+		{
+			if (!string.IsNullOrEmpty(selectedDates))
+			{
+				List<DateOnly> dates = selectedDates.Split(',')
+					.Select(date => DateOnly.ParseExact(date.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture))
+					.ToList();
+
+				// Tạo dictionary để dễ dàng map session ID với ngày và time slot
+				var sessionToDayTime = new Dictionary<int, (int, int)>
+				{
+					{1, (0, 23)}, {2, (0, 24)}, {3, (1, 23)}, {4, (1, 24)},
+					{5, (2, 23)}, {6, (2, 24)}, {7, (3, 23)}, {8, (3, 24)},
+					{9, (4, 23)}, {10, (4, 24)}, {11, (5, 23)}, {12, (5, 24)},
+					{13, (6, 23)}, {14, (6, 24)}
+				}; //Dictionary là một cấu trúc dữ liệu trong C# dùng để lưu trữ các cặp khóa-giá trị (key-value pairs). Trong trường hợp này, sessionToDayTime là một dictionary với session_ID là khóa và cặp (dayIndex, timeSlotId) là giá trị.
+
+
+
+				var dentistSessions = await _context.Dentist_Sessions
+					.Include(ds => ds.Dentist)
+					.ThenInclude(d => d.Account)
+					.Include(ds => ds.Session)
+					.Where(ds => ds.Dentist.ClinicID == 1 && ds.Check == true)
+					.ToListAsync();
+
+				var newScheList = new List<Schedule>();
+
+				foreach (var group in dentistSessions.GroupBy(ds => ds.Dentist_ID))
+				{
+					foreach (var ds in group)
+					{
+						if (sessionToDayTime.TryGetValue(ds.Session_ID, out var dayTime))
+						//Phương thức TryGetValue của Dictionary giúp kiểm tra xem một khóa cụ thể có tồn tại trong dictionary hay không. Nếu tồn tại, nó sẽ trả về giá trị tương ứng và đặt vào biến out.
+						//Cú pháp: dictionary.TryGetValue(key, out value);
+
+						{
+							var (dayIndex, timeSlotId) = dayTime;
+							var date = dates[dayIndex];
+
+							if (!_context.Schedules.Any(s => s.DentistID == ds.Dentist_ID && s.Date == date && s.TimeSlotID == timeSlotId))
+							{
+								newScheList.Add(new Schedule
+								{
+									DentistID = ds.Dentist_ID,
+									Date = date,
+									TimeSlotID = timeSlotId,
+									ScheduleStatus = "Còn Trống"
+								});
+							}
+						}
+					}
+				}
+
+				_context.AddRange(newScheList);
+				await _context.SaveChangesAsync();
+			}
+
+			return RedirectToAction("Index");
+		}
+
+
+		public async Task<IActionResult> CreateWeekSchedule_oldVer(string selectedDates)
 		{
 
 			if (!string.IsNullOrEmpty(selectedDates))
@@ -182,11 +245,11 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			_context.SaveChanges();
 		}
 
-		private  List<int> GenerateTimeSlots(int workTimeId)
+		private List<int> GenerateTimeSlots(int workTimeId)
 		{
 
 			// Retrieve the WorkTime based on the given ID
-			var workTime =  _context.WorkTimes
+			var workTime = _context.WorkTimes
 								  .FirstOrDefault(wt => wt.ID == workTimeId);
 
 			if (workTime == null)
@@ -199,7 +262,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			var endTime = workTime.EndTime;
 
 			// Retrieve the matching TimeSlots
-			return  _context.TimeSlots
+			return _context.TimeSlots
 						  .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime)
 						  .Select(ts => ts.ID)
 						  .ToList();
