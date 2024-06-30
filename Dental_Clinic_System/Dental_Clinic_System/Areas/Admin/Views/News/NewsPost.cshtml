@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.News>
+@using System.Linq
 @{
 	ViewData["Title"] = "Bài Viết";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -33,7 +34,7 @@
 
 <!-- ========= LIST ========= -->
 <div class="post__management__list">
-	@foreach (var news in Model)
+	@foreach (var news in Model.OrderByDescending(n => n.ID))
 	{
 		<div class="postItem__wrapper">
 			<div class="postItem__content">

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using HtmlAgilityPack;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -42,5 +43,22 @@ namespace Dental_Clinic_System.Helper
 
 			return Regex.Replace(input, "<.*?>", string.Empty);
 		}
-	}
+
+        public static string ExtractTextAndLimitCharacters(string htmlContent, int maxLength)
+        {
+            if (string.IsNullOrEmpty(htmlContent))
+                return "";
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(htmlContent);
+
+            var textContent = htmlDoc.DocumentNode.InnerText;
+
+            // Truncate the text to the desired length
+            if (textContent.Length > maxLength)
+                return textContent.Substring(0, maxLength) + "...";
+
+            return textContent;
+        }
+    }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Dental_Clinic_System.Controllers
 {
     public class NewsController : Controller

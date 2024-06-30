@@ -1,6 +1,8 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Dental_Clinic_System.Helper
+@using System.Linq
 @model IEnumerable<Dental_Clinic_System.Models.Data.News>
 
 <head>
@@ -34,7 +36,7 @@
         <div class="newsPost__container">
             <div class="newPost__wrapper">
                 <!-- =========== NEWS CONTAINER ITEM =========== -->
-                @foreach (var news in Model)
+                @foreach (var news in Model.OrderByDescending(n => n.ID))
                 {
                     <div class="newsItem__wrapper">
                         <div class="newsItem__content">
@@ -44,7 +46,7 @@
                                     <h2 class="newsItem__title">@news?.Title</h2>
                                 </a>
                                 <p class="newsItem__desc">
-                                    @Html.Raw(news?.Content?.Substring(0, Math.Min(news.Content.Length, 50)) + "...")
+                                    @Html.Raw(HtmlHelpers.ExtractTextAndLimitCharacters(news?.Content, 200))
                                 </p>
                                 <div class="newsItem__datetime">
                                     <span class="newsItem__datetime__style">
