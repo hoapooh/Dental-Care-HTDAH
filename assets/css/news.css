@@ -11,6 +11,10 @@ html {
 body {
 	font-family: "Baloo Paaji 2", sans-serif;
 	scroll-behavior: smooth;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	width: 100%;
+	min-height: 100vh;
 }
 
 ul {
@@ -255,6 +259,10 @@ body::-webkit-scrollbar-thumb {
 	padding: 0 0 2px 20px;
 	margin-top: 10px;
 	margin-bottom: 20px;
+}
+
+.newsDetail__container blockquote p {
+	margin-bottom: 0;
 }
 
 .newsDetail__container figure {
