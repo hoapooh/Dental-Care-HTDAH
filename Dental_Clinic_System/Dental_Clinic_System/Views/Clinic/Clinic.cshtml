@@ -2,13 +2,12 @@
 @model IEnumerable<Dental_Clinic_System.Models.Data.Clinic>
 
 @{
-    ViewData["Title"] = "Clinic";
+    ViewData["Title"] = "Danh sách phòng khám";
 }
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dental Care | login</title>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
     @* <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,7 +30,23 @@
     </div>
     <div class="clinic__container">
         <h2 class="clinic__container__title">
-            <img src="~/assets/images/clinic-icon.svg" alt="" /><span>Chọn Phòng Khám</span>
+            <span style="display: flex; align-items: center; gap: 20px">
+                <img src="~/assets/images/clinic-icon.svg" alt="" />
+                <span>Chọn Phòng Khám</span>
+            </span>
+
+            <div class="clinic__filter">
+                Sắp xếp theo:
+                <select name="clinic" id="clinic" class="clinic__filter__select">
+                    <option value="all">Tất cả</option>
+                    <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                    <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
+                    <option value="Nam Định">Nam Định</option>
+                    <option value="Hải Phòng">Hải Phòng</option>
+                    <option value="Hà Nội">Hà Nội</option>
+                </select>
+                <i class="fa-solid fa-chevron-down clinic__filter__icon"></i>
+            </div>
         </h2>
         @foreach (var clinic in Model)
         {
@@ -96,3 +111,34 @@
     </div>
 </div>
 
+
+    <script>
+        //Lắng nghe sự kiện thay đổi trên phần tử filter
+        document
+            .querySelector(".clinic__filter__select")
+            .addEventListener("change", function () {
+                // Lấy giá trị được chọn
+                var selectedValue = this.value.toLowerCase();
+
+                // Duyệt qua tất cả các phần tử có class "clinic__container__card"
+                var cards = document.querySelectorAll(".clinic__container__card");
+                cards.forEach(function (card) {
+                    //Nếu giá trị được chọn là "all", hiển thị tất cả các card
+                    if (selectedValue === "all") {
+                        card.style.display = "";
+                    } else {
+                        // Lấy giá trị trong thẻ <p> với class "location"
+                        var location = card
+                            .querySelector(".location")
+                            .textContent.toLowerCase();
+
+                        // Kiểm tra nếu giá trị chứa trong "location" khớp với giá trị được chọn
+                        if (location.includes(selectedValue)) {
+                            card.style.display = ""; // Hiển thị nếu khớp
+                        } else {
+                            card.style.display = "none"; // Ẩn nếu không khớp
+                        }
+                    }
+                });
+            });
+    </script>

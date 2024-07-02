@@ -2,6 +2,7 @@ using Dental_Clinic_System.Models;
 using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -18,14 +19,17 @@ namespace Dental_Clinic_System.Controllers
 			_context = context;	
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
 
-            var specialties = _context.Specialties.ToList();
+            var specialties = await _context.Specialties.ToListAsync();
             ViewBag.Specialities = specialties;
 
-            var clinics = _context.Clinics.ToList();
+            var clinics = await _context.Clinics.ToListAsync();
             ViewBag.Clinics = clinics;
+
+			var news = await _context.News.ToListAsync();
+			ViewBag.News = news;
 
             var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 

@@ -1,4 +1,5 @@
-﻿using Dental_Clinic_System.Models.Data;
+﻿using Dental_Clinic_System.Helper;
+using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,21 +35,14 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CreateNewsPost(string? content, string? newsTitle, int adminID, string? thumbnail)
 		{
-			// Get the current UTC time
-			DateTime utcNow = DateTime.UtcNow;
-
-			// Define the UTC+7 time zone
-			TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
-
-			// Convert the UTC time to UTC+7
-			DateTime utcPlus7Now = TimeZoneInfo.ConvertTimeFromUtc(utcNow, timeZone);
+			
 
 			var news = new News
 			{
 				AccountID = adminID,
 				Title = newsTitle,
 				Content = content,
-				CreatedDate = utcPlus7Now,
+				CreatedDate = Util.GetUtcPlus7Time(),
 				ThumbNail = thumbnail,
 				Status = null
 			};

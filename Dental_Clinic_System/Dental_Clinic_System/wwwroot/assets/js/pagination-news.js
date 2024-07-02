@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		".newPost__wrapper .newsItem__wrapper"
 	);
 	var pagination = document.getElementById("pagination");
-	var numRowsPerPage = 2; // Số phần tử trên mỗi trang
+	var numRowsPerPage = 4; // Số phần tử trên mỗi trang
 	var currentPage = 1;
 
 	function updateNewsItemsDisplay() {

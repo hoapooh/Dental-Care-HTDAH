@@ -1,6 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@{
+    ViewData["Title"] = "Tin tức";
+}
 @using Dental_Clinic_System.Helper
 @using System.Linq
 @model IEnumerable<Dental_Clinic_System.Models.Data.News>
@@ -8,7 +11,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tin tức</title>
+    <title>@ViewData["Title"]</title>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
@@ -65,64 +68,6 @@
                         </div>
                     </div>
                 }
-
-                @* <div class="newsItem__wrapper">
-                    <div class="newsItem__content">
-                        <!-- =========== INFO =========== -->
-                        <div class="newsItem__info">
-                            <a href="#!">
-                                <h2 class="newsItem__title">Bu sịt</h2>
-                            </a>
-                            <p class="newsItem__desc">
-                                Xin chào mọi người mình là Lý Cao Nguyên, mình đã làm một dự
-                                án website front-end với hơn 100 bài học và 200 bài viết.
-                                Bài viết này...
-                            </p>
-                            <div class="newsItem__datetime">
-                                <span class="newsItem__datetime__style">
-                                    <i class="fa-regular fa-calendar"></i><span class="text">22/06/2024, 00:00</span>
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- =========== THUMB =========== -->
-                        <div class="newsItem__thumb">
-                            <a href="#!">
-                                <img src="https://cdn.oneesports.gg/cdn-data/2024/06/WutheringWaves_Changli.jpg"
-                                     alt="thumbnail" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="newsItem__wrapper">
-                    <div class="newsItem__content">
-                        <!-- =========== INFO =========== -->
-                        <div class="newsItem__info">
-                            <a href="#!">
-                                <h2 class="newsItem__title">Bu sịt</h2>
-                            </a>
-                            <p class="newsItem__desc">
-                                Xin chào mọi người mình là Lý Cao Nguyên, mình đã làm một dự
-                                án website front-end với hơn 100 bài học và 200 bài viết.
-                                Bài viết này...
-                            </p>
-                            <div class="newsItem__datetime">
-                                <span class="newsItem__datetime__style">
-                                    <i class="fa-regular fa-calendar"></i><span class="text">22/06/2024, 00:00</span>
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- =========== THUMB =========== -->
-                        <div class="newsItem__thumb">
-                            <a href="#!">
-                                <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_68.jpg"
-                                     alt="thumbnail" />
-                            </a>
-                        </div>
-                    </div>
-                </div> *@
             </div>
 
             <!-- ========== PAGINATION  ========== -->
