@@ -745,9 +745,7 @@ namespace Dental_Clinic_System.Migrations
 
                     b.ToTable("Schedule", t =>
                         {
-
                             t.HasCheckConstraint("CK_Valid_Schedule_Status", "ScheduleStatus = 'Booked' OR ScheduleStatus = 'Available' OR ScheduleStatus = N'Đã Đặt' OR ScheduleStatus = N'Còn Trống' OR ScheduleStatus = N'Lịch khám' OR ScheduleStatus = N'Lịch điều trị' OR ScheduleStatus = N'Lịch Sáng' OR ScheduleStatus = N'Lịch Chiều' OR ScheduleStatus = N'Nghỉ'");
-
                         });
                 });
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    [Migration("20240701114243_MigrationLinaV67")]
-    partial class MigrationLinaV67
+    [Migration("20240702115029_MigrationLinaV69")]
+    partial class MigrationLinaV69
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -543,6 +543,10 @@ namespace Dental_Clinic_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(2000)")
                         .HasColumnName("Content");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedDate");
 
                     b.Property<string>("DomainName")
                         .HasColumnType("varchar(200)")

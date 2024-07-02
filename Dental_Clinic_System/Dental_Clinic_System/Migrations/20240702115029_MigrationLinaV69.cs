@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Dental_Clinic_System.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationSoyuV43 : Migration
+    public partial class MigrationLinaV69 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,43 @@ namespace Dental_Clinic_System.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyName = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    CompanyPhonenumber = table.Column<string>(type: "varchar(12)", nullable: false),
+                    CompanyEmail = table.Column<string>(type: "varchar(50)", nullable: false),
+                    RepresentativeName = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    ClinicName = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    ClinicAddress = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    DomainName = table.Column<string>(type: "varchar(200)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(2000)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(100)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.ID);
+                    table.CheckConstraint("CK_CHECKVALID_STATUS", "Status = N'Chưa Duyệt' OR Status = N'Từ Chối' OR Status = N'Đồng Ý'");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sessions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WeekDay = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    SessionInDay = table.Column<string>(type: "nvarchar(20)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Session", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Specialty",
                 columns: table => new
                 {
@@ -86,31 +123,39 @@ namespace Dental_Clinic_System.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clinic",
+                name: "WorkTimes",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ManagerID = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Province = table.Column<int>(type: "int", nullable: true),
-                    Ward = table.Column<int>(type: "int", nullable: true),
-                    District = table.Column<int>(type: "int", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    Basis = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "varchar(11)", nullable: true),
-                    Email = table.Column<string>(type: "varchar(50)", nullable: true),
-                    Description = table.Column<string>(type: "ntext", nullable: true),
-                    Image = table.Column<string>(type: "varchar(256)", nullable: false),
-                    ClinicStatus = table.Column<string>(type: "nvarchar(30)", nullable: false),
-                    MapLinker = table.Column<string>(type: "ntext", nullable: true)
+                    Session = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    StartTime = table.Column<TimeOnly>(type: "time(7)", nullable: false),
+                    EndTime = table.Column<TimeOnly>(type: "time(7)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clinic", x => x.ID);
+                    table.PrimaryKey("PK_WorkTime", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "News",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AccountID = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(250)", nullable: true),
+                    Content = table.Column<string>(type: "ntext", nullable: true),
+                    ThumbNail = table.Column<string>(type: "varchar(500)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(50)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.ID);
                     table.ForeignKey(
-                        name: "FK__Clinic__Manager",
-                        column: x => x.ManagerID,
+                        name: "FK__News__Account",
+                        column: x => x.AccountID,
                         principalTable: "Account",
                         principalColumn: "ID");
                 });
@@ -133,7 +178,7 @@ namespace Dental_Clinic_System.Migrations
                     Province = table.Column<int>(type: "int", nullable: false),
                     District = table.Column<int>(type: "int", nullable: false),
                     Ward = table.Column<int>(type: "int", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(500)", nullable: false),
                     PatientRecordStatus = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     FMName = table.Column<string>(type: "nvarchar(75)", nullable: true),
                     FMEmail = table.Column<string>(type: "varchar(50)", nullable: true),
@@ -143,13 +188,107 @@ namespace Dental_Clinic_System.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patient", x => x.ID);
-                    table.CheckConstraint("CK_Valid_PatientRecord_Status", "PatientRecordStatus = 'Đã Xóa' OR PatientRecordStatus = 'Đang Tồn Tại'");
+                    table.CheckConstraint("CK_Valid_PatientRecord_Status", "PatientRecordStatus = N'Đã Xóa' OR PatientRecordStatus = N'Đang Tồn Tại'");
                     table.ForeignKey(
                         name: "FK__Patient__Account",
                         column: x => x.AccountID,
                         principalTable: "Account",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Wallets",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Account_ID = table.Column<int>(type: "int", nullable: false),
+                    Money = table.Column<decimal>(type: "money", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wallet", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK__Wallet__Account",
+                        column: x => x.Account_ID,
+                        principalTable: "Account",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Clinic",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ManagerID = table.Column<int>(type: "int", nullable: false),
+                    AmWorkTime = table.Column<int>(type: "int", nullable: false),
+                    PmWorkTime = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Province = table.Column<int>(type: "int", nullable: true),
+                    Ward = table.Column<int>(type: "int", nullable: true),
+                    District = table.Column<int>(type: "int", nullable: true),
+                    ProvinceName = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    WardName = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    DistrictName = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Basis = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(11)", nullable: true),
+                    Email = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Description = table.Column<string>(type: "ntext", nullable: true),
+                    Image = table.Column<string>(type: "varchar(256)", nullable: false),
+                    OtherImage = table.Column<string>(type: "varchar(MAX)", nullable: true),
+                    ClinicStatus = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    MapLinker = table.Column<string>(type: "ntext", nullable: true),
+                    Rating = table.Column<double>(type: "float", nullable: true),
+                    RatingCount = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clinic", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK__AmWorkTime__Clinic",
+                        column: x => x.AmWorkTime,
+                        principalTable: "WorkTimes",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK__Clinic__Manager",
+                        column: x => x.ManagerID,
+                        principalTable: "Account",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK__PmWorkTime__Clinic",
+                        column: x => x.PmWorkTime,
+                        principalTable: "WorkTimes",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClinicTransactions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Wallet_ID = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
+                    TransactionCode = table.Column<int>(type: "int", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(1000)", nullable: true),
+                    Deposit = table.Column<decimal>(type: "money", nullable: false),
+                    ClinicTransactionStatus = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Bank = table.Column<string>(type: "nvarchar(50)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClinicTransaction", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK__CLinicTrans__Wallet",
+                        column: x => x.Wallet_ID,
+                        principalTable: "Wallets",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,13 +355,41 @@ namespace Dental_Clinic_System.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Dentist_Sessions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Session_ID = table.Column<int>(type: "int", nullable: false),
+                    Dentist_ID = table.Column<int>(type: "int", nullable: false),
+                    Check = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dentist_Session", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK__Dentist__Dentist_Session",
+                        column: x => x.Dentist_ID,
+                        principalTable: "Dentist",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK__Dentist__Session_Dentist",
+                        column: x => x.Session_ID,
+                        principalTable: "Sessions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Dentist_Specialty",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SpecialtyID = table.Column<int>(type: "int", nullable: false),
-                    DentistID = table.Column<int>(type: "int", nullable: false)
+                    DentistID = table.Column<int>(type: "int", nullable: false),
+                    Check = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -249,6 +416,7 @@ namespace Dental_Clinic_System.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DentistID = table.Column<int>(type: "int", nullable: false),
                     PatientID = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<double>(type: "float", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(2000)", nullable: false),
                     Date = table.Column<DateOnly>(type: "DATE", nullable: false)
                 },
@@ -283,7 +451,7 @@ namespace Dental_Clinic_System.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Schedule", x => x.ID);
-                    table.CheckConstraint("CK_Valid_Schedule_Status", "ScheduleStatus = 'Booked' OR ScheduleStatus = 'Available' OR ScheduleStatus = N'Đã Đặt' OR ScheduleStatus = N'Còn Trống'");
+                    table.CheckConstraint("CK_Valid_Schedule_Status", "ScheduleStatus = 'Booked' OR ScheduleStatus = 'Available' OR ScheduleStatus = N'Đã Đặt' OR ScheduleStatus = N'Còn Trống' OR ScheduleStatus = N'Lịch khám' OR ScheduleStatus = N'Lịch điều trị' OR ScheduleStatus = N'Lịch Sáng' OR ScheduleStatus = N'Lịch Chiều' OR ScheduleStatus = N'Nghỉ'");
                     table.ForeignKey(
                         name: "FK__Schedule__Dentis",
                         column: x => x.DentistID,
@@ -309,7 +477,9 @@ namespace Dental_Clinic_System.Migrations
                     SpecialtyID = table.Column<int>(type: "int", nullable: false),
                     AppointmentStatus = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "money", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(1000)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    IsRated = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -321,16 +491,16 @@ namespace Dental_Clinic_System.Migrations
                         principalTable: "PatientRecord",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK__Appointment__Schedule",
-                        column: x => x.ScheduleID,
-                        principalTable: "Schedule",
-                        principalColumn: "ID");
-                    table.ForeignKey(
                         name: "FK__Appointment__Specialty",
                         column: x => x.SpecialtyID,
                         principalTable: "Specialty",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK__Schedule__Appointments",
+                        column: x => x.ScheduleID,
+                        principalTable: "Schedule",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -389,8 +559,7 @@ namespace Dental_Clinic_System.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Appointment_ScheduleID",
                 table: "Appointment",
-                column: "ScheduleID",
-                unique: true);
+                column: "ScheduleID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointment_SpecialtyID",
@@ -398,10 +567,25 @@ namespace Dental_Clinic_System.Migrations
                 column: "SpecialtyID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clinic_AmWorkTime",
+                table: "Clinic",
+                column: "AmWorkTime");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Clinic_ManagerID",
                 table: "Clinic",
                 column: "ManagerID",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clinic_PmWorkTime",
+                table: "Clinic",
+                column: "PmWorkTime");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClinicTransactions_Wallet_ID",
+                table: "ClinicTransactions",
+                column: "Wallet_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Degree_Name",
@@ -426,6 +610,16 @@ namespace Dental_Clinic_System.Migrations
                 column: "DegreeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dentist_Sessions_Dentist_ID",
+                table: "Dentist_Sessions",
+                column: "Dentist_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dentist_Sessions_Session_ID",
+                table: "Dentist_Sessions",
+                column: "Session_ID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Dentist_Specialty_DentistID",
                 table: "Dentist_Specialty",
                 column: "DentistID");
@@ -434,6 +628,11 @@ namespace Dental_Clinic_System.Migrations
                 name: "IX_Dentist_Specialty_SpecialtyID",
                 table: "Dentist_Specialty",
                 column: "SpecialtyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_News_AccountID",
+                table: "News",
+                column: "AccountID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PatientRecord_AccountID",
@@ -493,13 +692,31 @@ namespace Dental_Clinic_System.Migrations
                 name: "IX_Transaction_AppointmentID",
                 table: "Transaction",
                 column: "AppointmentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wallets_Account_ID",
+                table: "Wallets",
+                column: "Account_ID",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ClinicTransactions");
+
+            migrationBuilder.DropTable(
+                name: "Dentist_Sessions");
+
+            migrationBuilder.DropTable(
                 name: "Dentist_Specialty");
+
+            migrationBuilder.DropTable(
+                name: "News");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Review");
@@ -511,16 +728,22 @@ namespace Dental_Clinic_System.Migrations
                 name: "Transaction");
 
             migrationBuilder.DropTable(
+                name: "Wallets");
+
+            migrationBuilder.DropTable(
+                name: "Sessions");
+
+            migrationBuilder.DropTable(
                 name: "Appointment");
 
             migrationBuilder.DropTable(
                 name: "PatientRecord");
 
             migrationBuilder.DropTable(
-                name: "Schedule");
+                name: "Specialty");
 
             migrationBuilder.DropTable(
-                name: "Specialty");
+                name: "Schedule");
 
             migrationBuilder.DropTable(
                 name: "Dentist");
@@ -533,6 +756,9 @@ namespace Dental_Clinic_System.Migrations
 
             migrationBuilder.DropTable(
                 name: "Degree");
+
+            migrationBuilder.DropTable(
+                name: "WorkTimes");
 
             migrationBuilder.DropTable(
                 name: "Account");
