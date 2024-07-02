@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Dental_Clinic_System.Helper;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dental_Clinic_System.Models.Data
@@ -33,7 +34,10 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("Content", TypeName = "nvarchar(2000)")]
 		public string Content { get; set; } = null!;
 
-		[Column("Status", TypeName = "nvarchar(100)")]
+		[Column("CreatedDate", TypeName = "datetime")]
+		public DateTime? CreatedDate { get; set; } = Util.GetUtcPlus7Time();
+
+        [Column("Status", TypeName = "nvarchar(100)")]
 		public string Status { get; set; } = null!;
 	}
 }

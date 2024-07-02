@@ -257,16 +257,16 @@
                                                                                                 style="width: 100%" />
                                     </div>
                                     <div style="width: 100%">
-                                        <label for="firstname">Nhập lại mật khẩu</label><br /><input type="password"
-                                                                                                     name="confirmPassword"
-                                                                                                     id="firstname"
-                                                                                                     pattern="^[a-zA-Z][a-zA-Z0-9]*$"
-                                                                                                     minlength="3"
-                                                                                                     maxlength="30"
-                                                                                                     required
-                                                                                                     placeholder="Nhập lại mật khẩu"
+                                        <label for="firstname">Nhập lại mật khẩu mới</label><br /><input type="password"
+                                                                                                         name="confirmPassword"
+                                                                                                         id="firstname"
+                                                                                                         pattern="^[a-zA-Z][a-zA-Z0-9]*$"
+                                                                                                         minlength="3"
+                                                                                                         maxlength="30"
+                                                                                                         required
+                                                                                                         placeholder="Nhập lại mật khẩu mới"
                                         @(User.Identity.IsAuthenticated && (User.Identity as ClaimsIdentity)?.Claims.Any(c => c.Issuer == "Google") == true ? "readonly" : "required")
-                                                                                                     style="width: 100%" />
+                                                                                                         style="width: 100%" />
                                     </div>
                                     <div class="submit__button">
                                         <button type="reset" class="reset">Nhập lại</button>
@@ -303,7 +303,7 @@
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
                                                 );
-                                                                                                                                                                                    ">
+                                                                                                                                                                                                            ">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -328,7 +328,7 @@
                                             </div>
                                             <div class="item" style="display: flex; align-items: center; margin-bottom: 8px;">
                                                 <span style="font-weight: bold; white-space: nowrap; margin-right: 8px; min-width: 180px;">Nha sĩ:</span>
-                                                <span style="flex-grow: 1;">@appointment?.Schedule?.Dentist?.Account?.FirstName @appointment?.Schedule?.Dentist?.Account?.LastName</span>
+                                                <span style="flex-grow: 1;">@appointment?.Schedule?.Dentist?.Account?.LastName @appointment?.Schedule?.Dentist?.Account?.FirstName</span>
                                             </div>
                                             <div class="item" style="display: flex; align-items: center; margin-bottom: 8px;">
                                                 <span style="font-weight: bold; white-space: nowrap; margin-right: 8px; min-width: 180px;">Chuyên Khoa:</span>
@@ -461,9 +461,13 @@
     <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="rescheduleModalLabel">Đổi Lịch Khám</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header" style="justify-content: center;">
+                    <div>
+                        <h3 class="modal-title" id="rescheduleModalLabel">Đổi Lịch Khám</h3>
+                    </div>
+                    @* <div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> *@
                 </div>
                 <div class="modal-body">
                     <form id="rescheduleForm" asp-controller="Account" asp-action="RescheduleAppointment" method="post">

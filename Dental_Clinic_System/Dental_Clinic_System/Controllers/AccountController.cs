@@ -806,6 +806,8 @@ namespace Dental_Clinic_System.Controllers
 
             ViewBag.Appointment = appointments;
 
+            TempData["ToastMessageSuccessTempData"] = "Lưu thay đổi thành công";
+
             return View(model);
         }
 
@@ -1096,7 +1098,9 @@ namespace Dental_Clinic_System.Controllers
             DateOnly appointmentDate = appointment.Schedule.Date;
             TimeOnly appointmentHour = appointment.Schedule.TimeSlot.StartTime;
             DateTime appointmentDateTime = appointmentDate.ToDateTime(appointmentHour);
-            DateTime now = DateTime.Now;
+
+            // Get the current UTC time
+            DateTime now = Util.GetUtcPlus7Time();
 
             await Console.Out.WriteLineAsync("==================================");
             await Console.Out.WriteLineAsync($"Date = {appointmentDate}");
@@ -1106,25 +1110,17 @@ namespace Dental_Clinic_System.Controllers
             double refundPercentage = 0;
 
             // Calculate refund percentage based on cancellation time
-            if (now <= appointmentDateTime.AddHours(-24))
+            if (now <= appointmentDateTime.AddHours(-7))
             {
-                refundPercentage = 1.0; // 100% refund if cancelled more than 24 hours before appointment
+                refundPercentage = 1.0; // 100% refund if cancelled more than 7 hours before appointment
             }
-            else if (now <= appointmentDateTime.Date.AddHours(9))
+            else if (now <= appointmentDateTime.AddHours(-2))
             {
-                refundPercentage = 1.0; // 100% refund if cancelled before 9 AM of the appointment day
-            }
-            else if (now <= appointmentDateTime.Date.AddHours(10))
-            {
-                refundPercentage = 0.4; // 40% refund if cancelled before 10 AM of the appointment day
-            }
-            else if (now <= appointmentDateTime.Date.AddHours(12))
-            {
-                refundPercentage = 0.2; // 20% refund if cancelled before 12 PM of the appointment day
+                refundPercentage = 0.5; // 50% refund if cancelled between 2 and 7 hours before appointment
             }
             else
             {
-                refundPercentage = 0; // No refund if cancelled after 12 PM of the appointment day
+                refundPercentage = 0; // No refund if cancelled within 2 hours of appointment
             }
 
             var transaction = appointment.Transactions.FirstOrDefault();
@@ -1135,28 +1131,32 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
-            var response = await _momoPayment.RefundPayment((long)(transaction.TotalPrice * decimal.Parse(refundPercentage.ToString())), long.Parse(transaction.TransactionCode), "");
+            if (refundPercentage > 0)
+            {
+                var response = await _momoPayment.RefundPayment((long)(transaction.TotalPrice * decimal.Parse(refundPercentage.ToString())), long.Parse(transaction.TransactionCode), "");
 
-            if (response != null)
-            {
-                var refundTransaction = new Transaction
+
+                if (response != null)
                 {
-                    AppointmentID = appointment.ID,
-                    Date = DateTime.Now,
-                    BankName = transaction.BankName,
-                    TransactionCode = response.transId.ToString(),
-                    PaymentMethod = "MOMO",
-                    TotalPrice = Decimal.Parse(response.amount.ToString()),
-                    BankAccountNumber = "9704198526191432198",
-                    FullName = transaction.FullName,
-                    Message = "Hoàn tiền đặt cọc",
-                    Status = "Thành Công"
-                };
-            }
-            else
-            {
-                TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra trong quá trình hủy khám";
-                return RedirectToAction("Profile", "Account");
+                    var refundTransaction = new Transaction
+                    {
+                        AppointmentID = appointment.ID,
+                        Date = now,
+                        BankName = transaction.BankName,
+                        TransactionCode = response.transId.ToString(),
+                        PaymentMethod = "MOMO",
+                        TotalPrice = Decimal.Parse(response.amount.ToString()),
+                        BankAccountNumber = "9704198526191432198",
+                        FullName = transaction.FullName,
+                        Message = "Hoàn tiền đặt cọc",
+                        Status = "Thành Công"
+                    };
+                }
+                else
+                {
+                    TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra trong quá trình hủy khám";
+                    return RedirectToAction("Profile", "Account");
+                }
             }
 
             // Change Appoinment Status

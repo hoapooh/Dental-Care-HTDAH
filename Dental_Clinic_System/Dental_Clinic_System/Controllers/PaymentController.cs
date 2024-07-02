@@ -47,13 +47,15 @@ namespace Dental_Clinic_System.Controllers
         {
             var patient = _context.PatientRecords.FirstOrDefault(p => p.ID == patientRecordID);
 
+            var now = Util.GetUtcPlus7Time();
+
             switch (paymentMethod)
             {
                 case "VNPAY":
                     var vnpayModel = new VNPaymentRequestModel
                     {
                         Amount = totalDeposit,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = now,
                         FullName = patient.FullName,
                         Description = "Thanh toán tiền đặt cọc",
 
@@ -99,6 +101,8 @@ namespace Dental_Clinic_System.Controllers
         [Authorize(Roles = "Bệnh Nhân")]
         public IActionResult Index()
         {
+            var now = Util.GetUtcPlus7Time();
+
             var momoModel = new MOMOPaymentRequestModel
             {
                 OrderID = Guid.NewGuid().ToString(),
@@ -119,7 +123,7 @@ namespace Dental_Clinic_System.Controllers
             var vnpayModel = new VNPaymentRequestModel
             {
                 Amount = 50000,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 FullName = "aaaa",
                 Description = "Thanh toán tiền đặt cọc",
 
@@ -143,9 +147,6 @@ namespace Dental_Clinic_System.Controllers
         public async Task<IActionResult> PaymentInvoice(int appointmentID, Transaction transaction, int clinicID)
         {
 			var specialtySchedulePatientRecord = await _context.Appointments.Include(s => s.Specialty).Include(sc => sc.Schedule).ThenInclude(t => t.TimeSlot).Include(p => p.PatientRecords).ThenInclude(a => a.Account).FirstOrDefaultAsync(a => a.ID == appointmentID);
-
-            Console.WriteLine($"AppoinmentID = {appointmentID}");
-			Console.WriteLine($"aaaa = {specialtySchedulePatientRecord?.Specialty?.Name ?? "nullllll"}");
 
             ViewBag.specialtySchedulePatientRecord = specialtySchedulePatientRecord;
             ViewBag.transaction = transaction;
@@ -293,13 +294,15 @@ namespace Dental_Clinic_System.Controllers
                 //Console.WriteLine($"Amount = {momoModel.Amount}");
                 //Console.WriteLine("==================================");
 
+                var now = Util.GetUtcPlus7Time();
+
                 var appointment = new Appointment
                 {
                     ScheduleID = scheduleID,
                     PatientRecordID = patientRecordID,
                     SpecialtyID = specialtyID,
                     TotalPrice = momoModel.Amount,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = now,
                     AppointmentStatus = "Chờ Xác Nhận"
                 };
 
@@ -309,7 +312,7 @@ namespace Dental_Clinic_System.Controllers
                 var transaction = new Transaction
                 {
                     AppointmentID = appointment.ID,
-                    Date = DateTime.Now,
+                    Date = now,
                     BankName = response.OrderType,
                     TransactionCode = response.TransId,
                     PaymentMethod = "MOMO",
