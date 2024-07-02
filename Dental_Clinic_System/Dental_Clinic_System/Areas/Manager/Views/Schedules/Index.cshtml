@@ -15,7 +15,9 @@
 			color: #fff;
 			background: #4880ff;
 		}
-
+		.manager__management table td {
+			align-content: start;
+		}
 		a.button-link {
 			display: inline-block;
 			padding: 5px 10px;
@@ -37,11 +39,12 @@
 			color: white;
 		}
 
-		.manager__management table a.button-link:first-child:hover,
-		.manager__management .submit-btn:hover {
-			background: #3b6cd9;
-		}
-		.manager__management .work__schedule .time_ChuaDat {
+			.manager__management table a.button-link:first-child:hover,
+			.manager__management .submit-btn:hover {
+				background: #3b6cd9;
+			}
+
+		.manager__management .work__schedule .time_ChuaDat, .time_ChuaDat {
 			width: 101px;
 			background: #668bde;
 			color: #fff;
@@ -52,10 +55,21 @@
 			margin-bottom: 0;
 		}
 
-		.manager__management .work__schedule .time_Dat {
+		.manager__management .work__schedule .time_Dat, .time_Dat {
 			width: 101px;
 			background: #86e49d;
 			color: #006b21;
+			padding: 0.4rem 0.4rem;
+			border-radius: 5px;
+			font-weight: 500;
+			text-align: center;
+			margin-bottom: 0;
+		}
+
+		.manager__management .work__schedule .time_Nghi, .time_Nghi {
+			width: 101px;
+			background: #f84242c4;
+			color: #fff;
 			padding: 0.4rem 0.4rem;
 			border-radius: 5px;
 			font-weight: 500;
@@ -67,16 +81,45 @@
 }
 <!-- account management header -->
 <div class="manager__management__header">
-	<div class="title">Lịch khám</div>
+	<div class="title">Khung giờ làm việc</div>
 	<div class="action-btn">
-		<form asp-action="Search">
-			<div class="search__bar">
-				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
-			</div>
-		</form>
-		<a asp-action="Create" class="add__new">+ New</a>
+		<p style="color: #0d6efd"> Chú thích: </p>
+		<p class="time_ChuaDat">Còn trống</p>
+		<p class="time_Dat">Đã đặt</p>
+		<p class="time_Nghi">Nghỉ</p>
+
 	</div>
 </div>
+<!-- Filters Section -->
+<div class="filters">
+	<form method="get" asp-action="Index">
+		<div class="form-group">
+			<label for="dentist">Nha sĩ</label>
+			<select id="dentist" name="dentistId" class="form-control">
+				<option value=""></option>
+				@foreach (var dentist in ViewBag.Dentists)
+				{
+					<option value="@dentist.ID">@dentist.Account.LastName @dentist.Account.FirstName</option>
+				}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="date">Ngày</label>
+			<input type="date" id="date" name="date" class="form-control" />
+		<div class="form-group">
+			<label for="status">Trạng thái</label>
+			<select id="status" name="status" class="form-control">
+				<option value=""></option>
+				<option value="Đã Đặt">Đã đặt</option>
+				<option value="Còn Trống">Còn trống</option>
+				<option value="Nghỉ">Nghỉ</option>
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Tìm</button>
+	</form>
+</div>
+
+<!-- Nội dung -->
 <div class="table-responsive">
 	<table class="table table-striped mt-5" style="font-size: 1.6rem">
 		<thead>
@@ -97,47 +140,122 @@
 			}
 			@foreach (var group in groupedData)
 			{
-				var dentist = group.FirstOrDefault()?.Dentist;
-				var account = dentist?.Account;
-				<tr style="vertical-align: middle">
-					<td class="text-center">@(++index)</td>
-					<td>
-						@account?.LastName @account?.FirstName
-					</td>
-					<td title="ngày/tháng/năm">@group.Key.Date.ToString("dd/MM/yyyy")</td>
-					<td class="ws__style">
-						<div class="work__schedule">
-							@foreach (var item in group)
-							{
-								if (item.ScheduleStatus == "Đã Đặt")
+				List<int> slotIDs_DaDat = new();
+				List<int> slotIDs_Nghi = new();
+				List<int> slotIDs_AmPm = new();
+				var checkAm = group.Any(g => g.TimeSlotID == 1);
+				var checkPm = group.Any(g => g.TimeSlotID == 2);
+				if (ViewBag.Status != "Còn Trống" || checkAm == true || checkPm == true)
+				{
+					var dentist = group.FirstOrDefault()?.Dentist;
+					var account = dentist?.Account;
+					<tr style="vertical-align: middle">
+						<td class="text-center">@(++index)</td>
+						<td>
+							@account?.LastName @account?.FirstName
+						</td>
+						<td title="ngày/tháng/năm">@group.Key.Date.ToString("dd/MM/yyyy")</td>
+						<td class="ws__style">
+							<div class="work__schedule">
+								@if (ViewBag.Status == null || ViewBag.Status == "Còn Trống")
 								{
-									<p class="time_Dat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
+									@foreach (var item in group) //list các id slot đã đặt lịch
+									{
+										if (item.ScheduleStatus == "Đã Đặt")
+											slotIDs_DaDat.Add(item.TimeSlotID);
+										else if (item.ScheduleStatus == "Nghỉ")
+											slotIDs_Nghi.Add(item.TimeSlotID);
+										else
+											slotIDs_AmPm.Add(item.TimeSlotID); //xem có id 23 24 ko -> có làm sáng chiều ko
+									}
 
+									if (ViewBag.Status == null)
+									{
+										foreach (var slot in @ViewBag.AmTimeSlots)
+										{
+											if (slotIDs_DaDat.Contains(slot.ID))
+											{
+												<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+											else if (slotIDs_Nghi.Contains(slot.ID))
+											{
+												<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+											else if (slotIDs_AmPm.Contains(1))
+											{
+												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+										}
+										foreach (var slot in @ViewBag.PmTimeSlots)
+										{
+											if (slotIDs_DaDat.Contains(slot.ID))
+											{
+												<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+											else if (slotIDs_Nghi.Contains(slot.ID))
+											{
+												<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+											else if (slotIDs_AmPm.Contains(2))
+											{
+												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+										}
+									}
+									else if (ViewBag.Status == "Còn Trống")
+									{
+										foreach (var slot in @ViewBag.AmTimeSlots)
+										{
+											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && slotIDs_AmPm.Contains(1))
+											{
+												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+										}
+										foreach (var slot in @ViewBag.PmTimeSlots)
+										{
+											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && slotIDs_AmPm.Contains(2))
+											{
+												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+											}
+										}
+									}
 								}
-								else if (item.ScheduleStatus == "Còn Trống" && item.TimeSlotID != 23 && item.TimeSlotID != 24)
+								else if (ViewBag.Status == "Đã Đặt")
 								{
-									<p class="time_ChuaDat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
+									@foreach (var item in group) //list các id slot đã đặt lịch
+									{
+										<p class="time_Dat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
+									}
 								}
-								
-							}
-						</div>
-					</td>
-					<td>
-						@* <a asp-action="Edit" asp-route-id="" class="button-link">
-							<i class="bx bxs-edit"></i>
-						</a>
-						<a asp-action="Delete" asp-route-id="" class="button-link">
-							<i class="bx bxs-trash"></i>
-						</a> *@
+								else if (ViewBag.Status == "Nghỉ")
+								{
+									@foreach (var item in group) //list các id slot đã đặt lịch
+									{
+										<p class="time_Nghi">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
+									}
+								}
 
-						<a asp-action="Edit" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
-							<i class="bx bxs-edit"></i>
-						</a>
-						@* <a asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
-							<i class="bx bxs-trash"></i>
-						</a> *@
-					</td>
-				</tr>
+
+							</div>
+						</td>
+						<td>
+							@* <a asp-action="Edit" asp-route-id="" class="button-link">
+					<i class="bx bxs-edit"></i>
+					</a>
+					<a asp-action="Delete" asp-route-id="" class="button-link">
+					<i class="bx bxs-trash"></i>
+					</a> *@
+
+							<a asp-action="Edit" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
+								<i class="bx bxs-edit"></i>
+							</a>
+							@* <a asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
+					<i class="bx bxs-trash"></i>
+					</a> *@
+						</td>
+					</tr>
+				}
+				
 			}
 		</tbody>
 	</table>
