@@ -73,6 +73,8 @@ builder.Services.AddAuthentication(options =>
 // Register Google Security Service API
 builder.Services.AddScoped<GoogleSecurity>();
 
+// Register the background service
+builder.Services.AddHostedService<AppointmentReminder>();
 
 // Register the email sender service
 builder.Services.AddScoped<IEmailSenderCustom, EmailSender>();
@@ -97,6 +99,8 @@ builder.Services.AddHttpClient();
 
 // Register EmailVerification (ZeroBounce) Service for Verificating Email  
 builder.Services.AddSingleton<IEmailVerification, EmailVerification>();
+
+
 
 // Register Redis Caching Service
 //builder.Services.AddStackExchangeRedisCache(options =>

@@ -1,3 +1,5 @@
+﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.AddClincVM
+
 ﻿@{
     ViewData["Title"] = "Liên hệ hợp tác";
 }
@@ -7,10 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
-    @* <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400..800&display=swap"
-    rel="stylesheet" /> *@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
@@ -32,36 +30,99 @@
         Vui lòng gửi thông tin, chúng tôi sẽ liên hệ lại trong thời gian sớm
         nhất.
     </p>
-    <form asp-area="admin" asp-controller="managerclinic" asp-action="GetApprovalRequest" method="POST" class="contact__form" onsubmit="return validateForm()">
-        <p>Tên Doanh Nghiệp <sup>*</sup></p>
-        <input type="text" name="companyName" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Tên doanh nghiệp chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
+    <form id="uploadForm" asp-area="admin" asp-controller="managerclinic" asp-action="GetApprovalRequest" method="POST" class="contact__form" onsubmit="return validateForm()">
 
-        <p>Số Điện Thoại <sup>*</sup></p>
-        <input type="tel" name="companyPhonenumber" required pattern="^[0-9]{9,12}$" title="Số điện thoại chỉ được chứa chữ số và có độ dài từ 9-12 chữ số." />
+        <input type="hidden" value="Clinic" id="folderName" />
 
-        <p>Địa Chỉ Email <sup>*</sup></p>
-        <input type="email" name="companyEmail" required />
-
-        <p>Tên Người Đại Diện <sup>*</sup></p>
-        <input type="text" name="representativeName" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Tên người đại diện chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
-
-        <p>Tên Phòng Khám <sup>*</sup></p>
-        <input type="text" name="clinicName" required />
-
-        <p>Địa Chỉ Phòng Khám <sup>*</sup></p>
-        <input type="text" name="clinicAddress" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Địa chỉ phòng khám chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
-
-        <p>Tên Miền hoặc URL Website</p>
-        <input type="url" name="domainName" />
-
-        <p>Nội Dung <sup>*</sup></p>
-        <textarea name="content" id="default" required></textarea>
-
-        <div style="text-align: end;">
-            <button type="submit">Gửi thông tin</button>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Tên Doanh Nghiệp <sup style="color:red">*</sup></p>
+                <input type="text" name="companyName" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Tên doanh nghiệp chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
+            </div>
+            <div class="col-md-6">
+                <p>Số Điện Thoại <sup style="color:red">*</sup></p>
+                <input type="tel" name="companyPhonenumber" class="form-control" required pattern="^[0-9]{9,12}$" title="Số điện thoại chỉ được chứa chữ số và có độ dài từ 9-12 chữ số." />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Địa Chỉ Email <sup style="color:red">*</sup></p>
+                <input type="email" name="companyEmail" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+                <p>Tên Người Đại Diện <sup style="color:red">*</sup></p>
+                <input type="text" name="representativeName" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Tên người đại diện chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Tên Phòng Khám <sup style="color:red">*</sup></p>
+                <input type="text" id="fileName" name="clinicName" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+                <p>Địa Chỉ Phòng Khám <sup style="color:red">*</sup></p>
+                <input type="text" name="clinicAddress" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Địa chỉ phòng khám chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Tên Miền hoặc URL Website</p>
+                <input type="url" name="domainName" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <p>Logo Phòng Khám <sup style="color:red">*</sup></p>
+                <input type="file" id="imageInput" name="imageInput" class="form-control" required />
+                <input type="hidden" name="logo" id="imageUrl" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin: 20px 0; font-size: 2rem;">
+                <p>Tỉnh / Thành phố <sup style="color:red">*</sup></p>
+                <select id="tinh" title="Chọn Tỉnh Thành" name="provinceID" class="form-select" style="font-size: 2rem;" required>
+                    <option value="0">Tỉnh Thành</option>
+                </select>
+            </div>
+            <div class="col-md-4" style="margin: 20px 0; font-size: 2rem;">
+                <p>Quận / Huyện <sup style="color:red">*</sup></p>
+                <select id="quan" title="Chọn Quận Huyện" name="districtID" class="form-select" style="font-size: 2rem;" required>
+                    <option value="0">Quận Huyện</option>
+                </select>
+            </div>
+            <div class="col-md-4" style="margin: 20px 0; font-size: 2rem;">
+                <p>Phường / Xã <sup style="color:red">*</sup></p>
+                <select id="phuong" title="Chọn Phường Xã" name="wardID" class="form-select" style="font-size: 2rem;" required>
+                    <option value="0">Phường Xã</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Thời gian làm việc buổi sáng<sup style="color:red">*</sup></p>
+                    <select name="amWorkTimeID" asp-items="Model.AmWorkTimes" class="form-control" style="font-size: 2rem;" required>
+                        <option value="">-- Thời gian làm việc ca sáng --</option>
+                    </select>
+                    <span asp-validation-for="AmWorkTimeID" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <p>Thời gian làm việc buổi chiều<sup style="color:red">*</sup></p>
+                    <select name="pmWorkTimeID" asp-items="Model.PmWorkTimes" class="form-control" style="font-size: 2rem;" required>
+                        <option value="">-- Thời gian làm việc ca chiều --</option>
+                    </select>
+                    <span asp-validation-for="PmWorkTimeID" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <p>Nội Dung <sup style="color:red">*</sup></p>
+                <textarea name="content" id="default" class="form-control" required></textarea>
+            </div>
+        </div>
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-primary">Gửi thông tin</button>
         </div>
     </form>
 </div>
+
 <script>
     function validateForm() {
         var form = document.forms["contact__form"];
@@ -99,12 +160,48 @@
         return true; // Nếu tất cả đều hợp lệ, cho phép gửi form
     }
 </script>
-
 <script src="https://kit.fontawesome.com/53f42380b0.js"
         crossorigin="anonymous"></script>
-<script src="assets\js\tinymce\js\tinymce\tinymce.min.js"></script>
-<script src="assets\js\richtexteditor.js"></script>
-<script type="text/javascript" src="/richtexteditor/rte.js"></script>
-<script type="text/javascript"
-        src="/richtexteditor/plugins/all_plugins.js"></script>
+<script src="https://esgoo.net/scripts/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        //Lấy tỉnh thành
+        $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+            if (data_tinh.error == 0) {
+                $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                    $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                });
+                $("#tinh").change(function (e) {
+                    var idtinh = $(this).val();
+                    //Lấy quận huyện
+                    $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                        if (data_quan.error == 0) {
+                            $("#quan").html('<option value="0">Quận Huyện</option>');
+                            $("#phuong").html('<option value="0">Phường Xã</option>');
+                            $.each(data_quan.data, function (key_quan, val_quan) {
+                                $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
+                            });
+                            //Lấy phường xã
+                            $("#quan").change(function (e) {
+                                var idquan = $(this).val();
+                                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                                    if (data_phuong.error == 0) {
+                                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                                        $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                                            $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
+                                        });
+                                    }
+                                });
+                            });
 
+                        }
+                    });
+                });
+
+            }
+        });
+    });
+</script>
+
+@* Đưa ảnh lên firebase *@
+<script src="~/assets/js/upload-image-firebase-general.js" type="module"></script>

@@ -186,7 +186,7 @@
                                                                                  id="birth"
                                                                                  value="@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") : string.Empty)"
                                                                                  asp-for="@Model.DateOfBirth"
-                                                                                 max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")"
+                                                                                 max="@Util.GetUtcPlus7Time().AddYears(-16).ToString("yyyy-MM-dd")"
                                                                                  placeholder="Vui lòng nhập ngày sinh"
                                                                                  style="width: 100%" />
                             </div>
@@ -230,7 +230,7 @@
                         <div id="repass" class="tab-pane fade">
                             <h2>Đổi mật khẩu</h2>
                             <div class="repass__content__wrapper">
-                                <form asp-action="ChangePassword" method="POST">
+                                <form asp-action="ChangePassword" method="POST" onsubmit="return window.confirm('Bạn có chắc muốn đổi mật khẩu')">
                                     <div style="width: 100%">
                                         <label for="pass">Mật khẩu</label><br /><input type="password"
                                                                                        name="password"
@@ -244,7 +244,7 @@
                                                                                        style="width: 100%" />
                                     </div>
                                     <div style="width: 100%">
-                                        <label for="firstname">Mật khẩu mới</label><br /><input type="password"
+                                        <label>Mật khẩu mới</label><br /><input type="password"
                                                                                                 name="newPassword"
                                                                                                 id="firstname"
                                                                                                 pattern="^[a-zA-Z][a-zA-Z0-9]*$"
@@ -256,7 +256,7 @@
                                                                                                 style="width: 100%" />
                                     </div>
                                     <div style="width: 100%">
-                                        <label for="firstname">Nhập lại mật khẩu mới</label><br /><input type="password"
+                                        <label>Nhập lại mật khẩu mới</label><br /><input type="password"
                                                                                                          name="confirmPassword"
                                                                                                          id="firstname"
                                                                                                          pattern="^[a-zA-Z][a-zA-Z0-9]*$"
@@ -269,7 +269,10 @@
                                     </div>
                                     <div class="submit__button">
                                         <button type="reset" class="reset">Nhập lại</button>
-                                        <button type="submit" class="submit">Tạo mới</button>
+                                        <button type="submit" class="submit" data-bs-toggle="modal"
+                                                data-bs-target="#changePassword">
+                                            Đổi mật khẩu
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -302,7 +305,7 @@
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
                                                 );
-                                                                                                                                                                                                            ">
+                                                                                                                                                                                                                                    ">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -460,19 +463,25 @@
     <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header" style="justify-content: center;">
+                <div class="modal-header" style="justify-content: center; border: 0; color: #fff;
+    padding: 12px 16px;
+    background: linear-gradient(36deg, #00b5f1, #00e0ff);
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;">
                     <div>
                         <h3 class="modal-title" id="rescheduleModalLabel">Đổi Lịch Khám</h3>
                     </div>
                     @* <div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div> *@
                 </div>
                 <div class="modal-body">
                     <form id="rescheduleForm" asp-controller="Account" asp-action="RescheduleAppointment" method="post">
 
-                        <input type="hidden" name="scheduleID" id="scheduleID"></input>
-                        <input type="hidden" name="appointmentID" id="appointmentID"></input>
+                        <input type="hidden" name="scheduleID" id="scheduleID" />
+                        <input type="hidden" name="appointmentID" id="appointmentID" />
 
                         <!-- THẺ NÀY ĐỂ HIỂN THỊ LỊCH THEO GIAO DIỆN MOBISCROLL  -->
                         <div class="mbsc-col-sm-12 mbsc-col-md-4">
@@ -483,9 +492,9 @@
 
 
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        <div class="modal-footer" style="border: 0;">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 1.5rem;">Đóng</button>
+                            <button type="submit" class="btn btn-primary" style="font-size: 1.5rem;" id="saveButton" disabled>Lưu thay đổi</button>
                         </div>
                     </form>
                 </div>
@@ -557,15 +566,10 @@
                                     console.log(formatDate(event.value));
                                     document.getElementById('scheduleID').value = scheduleMap.get(formatDate(event.value));
                                     //Ẩn hoặc hiện button submit theo giá trị scheduleID
-                                    if (document.getElementById('scheduleID').value === 'undefined') {
-                                        document.querySelectorAll('.add-record-btn').forEach(btn => {
-                                            btn.classList.add('hidding');
-                                        })
-                                    }
-                                    else {
-                                        document.querySelectorAll('.add-record-btn').forEach(btn => {
-                                            btn.classList.remove('hidding');
-                                        })
+                                    if (document.getElementById('scheduleID').value !== 'undefined') {
+                                        document.getElementById('saveButton').disabled = false;
+                                    } else {
+                                        document.getElementById('saveButton').disabled = true;
                                     }
                                 }
                             });
@@ -578,6 +582,16 @@
                 });
             });
         });
+
+        // Check if the selected date conflicts with any existing appointments
+        function isConflict(appointments, selectedDate) {
+            const selectedDateTime = new Date(selectedDate);
+            return appointments.some(appointment => {
+                const appointmentStart = new Date(appointment.date + 'T' + appointment.startTime);
+                const appointmentEnd = new Date(appointment.date + 'T' + appointment.endTime);
+                return selectedDateTime >= appointmentStart && selectedDateTime < appointmentEnd;
+            });
+        }
 
         // Hàm này nhận value của ngày trong event và trả về theo định dạng
         function formatDate(date) {

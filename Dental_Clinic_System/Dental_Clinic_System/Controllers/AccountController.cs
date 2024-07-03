@@ -114,7 +114,7 @@ namespace Dental_Clinic_System.Controllers
                 var confirmationLink = Url.Action("ConfirmEmail", "Account", new { code = code, username = DataEncryptionExtensions.Encrypt(model.Username), email = DataEncryptionExtensions.Encrypt(model.Email), phonenumber = DataEncryptionExtensions.Encrypt(model.PhoneNumber) }, HttpContext.Request.Scheme);
 
                 // Send confirmation email
-                await _emailSender.SendEmailAsync(model.Email, "Xác nhận email", confirmationLink);
+                await _emailSender.SendEmailConfirmationAsync(model.Email, "Xác nhận email", confirmationLink);
                 ViewBag.ToastMessageSuccess = "Vui lòng kiểm tra Email để kích hoạt tài khoản";
 
                 // Debugging: Print all claims to console
@@ -968,7 +968,7 @@ namespace Dental_Clinic_System.Controllers
             if (DataEncryptionExtensions.ToMd5Hash(model.Password) != user.Password)
             {
                 //TempData["ChangePasswordMessageFailed"] = "Mật khẩu thay đổi thất bại.";
-                TempData["ToastMessageFailTempData"] = "Mật khẩu thay đổi thất bại.";
+                TempData["ToastMessageFailTempData"] = "Mật khẩu hiện tại không đúng.";
                 return RedirectToAction("Profile", "Account");
             }
 

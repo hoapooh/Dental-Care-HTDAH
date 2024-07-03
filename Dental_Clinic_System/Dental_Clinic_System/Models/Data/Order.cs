@@ -37,6 +37,28 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("CreatedDate", TypeName = "datetime")]
 		public DateTime? CreatedDate { get; set; } = Util.GetUtcPlus7Time();
 
+        [Column("Image", TypeName = "varchar(256)")]
+        public string Image { get; set; } = null!;
+
+        #region ID For Address
+
+        [Column("Province")]
+        public int? Province { get; set; } = null!;
+
+        [Column("Ward")]
+        public int? Ward { get; set; } = null!;
+
+        [Column("District")]
+        public int? District { get; set; } = null!;
+        #endregion
+
+        #region Worktime
+        [Column("AmWorkTime", TypeName = "int")]
+        public int AmWorkTimeID { get; set; }
+        [Column("PmWorkTime", TypeName = "int")]
+        public int PmWorkTimeID { get; set; }
+        #endregion
+
         [Column("Status", TypeName = "nvarchar(100)")]
 		public string Status { get; set; } = null!;
 	}
