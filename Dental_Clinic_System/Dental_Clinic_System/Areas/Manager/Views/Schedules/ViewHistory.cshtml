@@ -78,6 +78,26 @@
 			text-align: center;
 			margin-bottom: 0;
 		}
+
+		.manager__management__clinic {
+			width: 100%;
+			margin: 0 auto;
+			/* color: #4880ff; */
+			font-size: 2rem;
+		}
+
+		.manager__management__clinic select, .manager__management__clinic input {
+			font-size: 2rem;
+			margin-bottom: 10px;
+			/* padding: 5px 10px; */
+			/* border-radius: 5px; */
+			/* border: 1px solid #4880ff;
+								color: #4880ff; */
+		}
+
+		.row {
+			justify-content: end;
+		}
 	</style>
 
 }
@@ -87,14 +107,14 @@
 	<div class="action-btn">
 		<p style="color: #0d6efd"> Chú thích: </p>
 		<p class="time_Dat">Đã đặt</p>
-		<p class="time_Nghi">Nghỉ</p>
 
 	</div>
 </div>
+
 <!-- Filters Section -->
-<div class="filters">
-	<form method="get" asp-action="ViewHistory">
-		<div class="form-group">
+<div>
+	<form method="get" asp-action="ViewHistory" class="manager__management__clinic row">
+		<div class="form-group col-md-3">
 			<label for="dentist">Nha sĩ</label>
 			<select id="dentist" name="dentistId" class="form-control">
 				<option value=""></option>
@@ -104,21 +124,18 @@
 				}
 			</select>
 		</div>
-		<div class="form-group">
+		<div class="form-group col-md-2">
 			<label for="date">Ngày</label>
 			<input type="date" id="date" name="date" class="form-control" />
-			<div class="form-group">
-				<label for="status">Trạng thái</label>
-				<select id="status" name="status" class="form-control">
-					<option value=""></option>
-					<option value="Đã Đặt">Đã đặt</option>
-					<option value="Nghỉ">Nghỉ</option>
-				</select>
-			</div>
-			<button type="submit" class="btn btn-primary">Tìm</button>
+		</div>
+		<div class="col-md-1" style="margin-top: 33px;">
+			<button type="submit" class="btn btn-primary" style="min-width: 78px;">
+				Tìm
+			</button>
+		</div>
+
 	</form>
 </div>
-
 <!-- Nội dung -->
 <div class="table-responsive">
 	<table class="table table-striped mt-5" style="font-size: 1.6rem">
@@ -128,7 +145,6 @@
 				<th>Tên nha sĩ</th>
 				<th>Ngày làm việc</th>
 				<th>Khung giờ làm việc</th>
-				<th>Hành động</th>
 			</tr>
 		</thead>
 		<tbody id="myTableBody">
@@ -154,50 +170,10 @@
 						<div class="work__schedule">
 							@foreach (var item in group) //list các id slot đã đặt lịch
 							{
-								if (item.ScheduleStatus == "Đã Đặt")
-									slotIDs_DaDat.Add(item.TimeSlotID);
-								else if (item.ScheduleStatus == "Nghỉ")
-									slotIDs_Nghi.Add(item.TimeSlotID);
+								<p class="time_Dat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
 							}
-							@foreach (var slot in @ViewBag.AmTimeSlots)
-							{
-								if (slotIDs_DaDat.Contains(slot.ID))
-								{
-									<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-								}
-								else if (slotIDs_Nghi.Contains(slot.ID))
-								{
-									<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-								}
-							}
-							@foreach (var slot in @ViewBag.PmTimeSlots)
-							{
-								if (slotIDs_DaDat.Contains(slot.ID))
-								{
-									<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-								}
-								else if (slotIDs_Nghi.Contains(slot.ID))
-								{
-									<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-								}
-
-							}
+							
 						</div>
-					</td>
-					<td>
-						@* <a asp-action="Edit" asp-route-id="" class="button-link">
-					<i class="bx bxs-edit"></i>
-					</a>
-					<a asp-action="Delete" asp-route-id="" class="button-link">
-					<i class="bx bxs-trash"></i>
-					</a> *@
-
-						<a asp-action="Edit" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
-							<i class="bx bxs-edit"></i>
-						</a>
-						@* <a asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
-					<i class="bx bxs-trash"></i>
-					</a> *@
 					</td>
 				</tr>
 

@@ -13,10 +13,13 @@ using Dental_Clinic_System.Helper;
 using System.Globalization;
 using System.Text;
 using System.Runtime.Versioning;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Dental_Clinic_System.Controllers
 {
 	[Area("Manager")]
+	[Authorize(AuthenticationSchemes = "ManagerScheme", Roles = "Quản Lý")]
 	//[Route("Manager/[controller]")]
 	public class DentistsController : Controller
 	{
@@ -26,12 +29,17 @@ namespace Dental_Clinic_System.Controllers
 		{
 			_context = context;
 		}
+
 		//[Route("Index")]
 		// GET: Dentists
 		public async Task<IActionResult> Index(string keyword)
 		{
-
-			var dentists = await _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).ToListAsync();
+			var clinicId = HttpContext.Session.GetInt32("clinicId");
+			if (clinicId == null)
+			{   // Check if session has expired, log out
+				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+			}
+			var dentists = await _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).Where(d => d.ClinicID == clinicId).ToListAsync();
 
 			if (!string.IsNullOrEmpty(keyword))
 			{
@@ -40,7 +48,8 @@ namespace Dental_Clinic_System.Controllers
 					(p.Account.FirstName != null && Util.ConvertVnString(p.Account.FirstName).Contains(keyword)) ||
 					(p.Account.LastName != null && Util.ConvertVnString(p.Account.LastName).Contains(keyword)) ||
 					((p.Account.FirstName != null || p.Account.LastName != null) && Util.ConvertVnString(p.Account.LastName+" "+ p.Account.FirstName).Contains(keyword)	)||
-					(p.Account.Email != null && Util.ConvertVnString(p.Account.Email).Contains(keyword)))
+					(p.Account.Email != null && Util.ConvertVnString(p.Account.Email).Contains(keyword)) ||
+					(p.Account.PhoneNumber != null && Util.ConvertVnString(p.Account.PhoneNumber).Contains(keyword)))
 					.ToList();
 			}
 			return View(dentists);
@@ -67,12 +76,18 @@ namespace Dental_Clinic_System.Controllers
 				return NotFound();
 			}
 
+			var clinicId = HttpContext.Session.GetInt32("clinicId");
+			if (clinicId == null)
+			{   // Check if session has expired, log out
+				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+			}
+
 			var dentist = await _context.Dentists
 				.Include(d => d.Account)
 				.Include(d => d.Clinic)
 				.Include(d => d.Degree)
 				.FirstOrDefaultAsync(m => m.ID == id);
-			if (dentist == null)
+			if (dentist == null || dentist.ClinicID != clinicId)
 			{
 				return NotFound();
 			}
@@ -214,11 +229,16 @@ namespace Dental_Clinic_System.Controllers
 			{
 				return NotFound();
 			}
+			var clinicId = HttpContext.Session.GetInt32("clinicId");
+			if (clinicId == null)
+			{   // Check if session has expired, log out
+				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+			}
 
 			var dentist = await _context.Dentists
 								.Include(d => d.Account)
 								.FirstOrDefaultAsync(d => d.ID == id);
-			if (dentist == null || dentist.Account == null)
+			if (dentist == null || dentist.Account == null || dentist.ClinicID != clinicId)
 			{
 				return NotFound();
 			}

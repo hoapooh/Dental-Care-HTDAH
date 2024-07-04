@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Dentist>
 
 @{
-	ViewData["Title"] = "Quản lý nha sĩ";
+	ViewData["Title"] = "Danh sách nha sĩ";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -65,7 +65,7 @@
 				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
 			</div>
 		</form>
-		<a asp-controller="Dentists" asp-action="Create" class="add__new">+ New</a>
+		<a asp-controller="Dentists" asp-action="Create" class="add__new">+ Thêm</a>
 	</div>
 </div>
 
@@ -112,10 +112,10 @@
 					@item.Account.AccountStatus
 				</td>
 				<td>
-					<a asp-action="Edit" asp-route-id="@item.ID" class="button-link">
+					<a asp-action="Edit" asp-route-id="@item.ID" class="button-link" title="Chỉnh sửa thông tin">
 						<i class="bx bxs-edit"></i>
 					</a>
-					<a asp-action="Delete" asp-route-id="@item.ID" class="button-link">
+					<a asp-action="Delete" asp-route-id="@item.ID" class="button-link" title="Khóa tài khoản">
 						<i class="bx bxs-trash"></i>
 					</a>
 				</td>

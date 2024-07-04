@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Manager</title>
+	<title>@ViewData["Title"]</title>
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,6 +27,8 @@
 	<!-- MDB -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.1/mdb.min.css"
 		  rel="stylesheet" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="~/assets/images/dentalClinicLogoOfficial.png" />
 	<link rel="stylesheet" href="~/assets/fonts/stylesheet.css" />
 	<link rel="stylesheet" href="~/assets/css/mobiscroll.javascript.min.css" />
 	<link rel="stylesheet" href="~/assets/css/sidebar.css" />
@@ -38,15 +40,16 @@
 </head>
 
 <body>
-		<div class="dashboard__container d-flex">
+	<div class="dashboard__container d-flex">
 		<nav class="sidebar" style="width: 15%; position: fixed; top: 0; height: 100vh; overflow-y: auto;background: aliceblue;">
-				<p class="dashboard__logo"><span>Dental</span>Care</p>
+			<p class="dashboard__logo"><span>Dental</span>Care</p>
 			<!-- ===========  MENU =========== -->
 			<ul class="nav">
-					<li class="nav-item">
-						<a asp-controller="Dentists" asp-action="Index" class="Quan_ly_nha_si">
-							<span class="menu-icon"><i class="bx bxs-user"></i></span>Nha sĩ</a>
-					</li>
+				<li class="nav-item">
+					<a asp-controller="Dentists" asp-action="Index" class="Quan_ly_nha_si">
+						<span class="menu-icon"><i class="bx bxs-user"></i></span>Nha sĩ
+					</a>
+				</li>
 				<!-- ====================== -->
 				<li class="nav-item menu-items">
 					<a class="nav-link collapsed"
@@ -57,14 +60,14 @@
 						<span class="menu-icon"><i class="fa-solid fa-calendar-days"></i></span>
 						<span class="menu-title Quan_ly_tai_khoan">Lịch trình</span>
 						<span class="menu-down" style="margin-left: auto">
-							<i  aria-hidden="true"></i>
+							<i aria-hidden="true"></i>
 						</span>
 					</a>
 					<div class="collapse" id="manage-account">
 						<ul class="nav flex-column sub-menu">
 							<li class="nav-item">
 								<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec1" asp-controller="Schedules" asp-action="LichLamViec">
-									<i class="fa-solid fa-stethoscope"></i> Lịch làm việc
+									<i class="fa-solid fa-stethoscope"></i> Lịch làm việc -> Tạo
 								</a>
 							</li>
 
@@ -84,54 +87,51 @@
 					</div>
 				</li>
 				<!-- ====================== -->
-					<li class="nav-item">
+				<li class="nav-item">
 					<a asp-controller="Service" asp-action="Index" class="Dich_vu_kham">
-						<span class="menu-icon"><i class="fa-solid fa-notes-medical"></i></span
-							>Dịch vụ làm răng</a>
-					</li>
-					<li class="nav-item">
+						<span class="menu-icon"><i class="fa-solid fa-notes-medical"></i></span>Dịch vụ làm răng
+					</a>
+				</li>
+				<li class="nav-item">
 					<a asp-controller="Clinics" asp-action="Edit" asp-route-id="1" class="Quan_ly_phong_kham">
-						<span class="menu-icon"
-								><i class="fa-solid fa-house-chimney-medical"></i></span
-							>Phòng khám</a>
-					</li>
-				</ul>
+						<span class="menu-icon"><i class="fa-solid fa-house-chimney-medical"></i></span>Phòng khám
+					</a>
+				</li>
+			</ul>
 
-			</nav>
+		</nav>
 
 		<div class="container-fluid" style="width: 85%; padding: 0; margin-left: 15%">
-				
-				@* Icon account + Dropdown here *@
-				<nav class="nav__header d-flex flex-row justify-content-end">
-					<a href="#!">
-						<div class="d-flex align-items-center nav__header__profile">
-							<img src="~/assets/images/avatar.jpg" alt="" />
-							<p>
-								<span>Hoapooh</span> <br />
-								Clinic Manager
-							</p>
-							<i class="bx bx-chevron-down-circle"></i>
-						</div>
-					</a>
-				</nav>
-				<div class="manager__management">
-					@RenderBody()
+
+			@* Icon account + Dropdown here *@
+			<nav class="nav__header d-flex flex-row justify-content-end">
+				<div>
+					<div class="d-flex align-items-center nav__header__profile">
+						<img src="~/assets/images/avatar.jpg" alt="" />
+						<p>
+							<span>Hoapooh</span> <br />
+							Quản lý phòng khám
+						</p>
+						<a asp-area="Manager" asp-controller="ManagerAccount" asp-action="Logout" title="Logout">
+							<i class="bx bx-log-out" style="color: red; transform: rotate(180deg)"></i>
+						</a>
+					</div>
 				</div>
+			</nav>
+			<div class="manager__management">
+				@RenderBody()
 			</div>
 		</div>
-		
+	</div>
 
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://kit.fontawesome.com/53f42380b0.js"
-			crossorigin="anonymous"
-		></script>
-		<script src="~/assets/js/pagination.js"></script>
+			crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/53f42380b0.js"
+			crossorigin="anonymous"></script>
+	<script src="~/assets/js/pagination.js"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
 			// Define the paths that should trigger the submenu to open
@@ -154,7 +154,7 @@
 	<!-- MDB -->
 	<script type="text/javascript"
 			src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.1/mdb.umd.min.js"></script>
-		@await RenderSectionAsync("Scripts", required: false)
-	</body>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
 
 </html>

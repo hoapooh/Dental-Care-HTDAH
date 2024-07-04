@@ -76,7 +76,7 @@
 	<div class="manager__management__header">
 		<div class="title">Chỉnh sửa lịch khám</div>
 	</div>
-	<br/>
+	<br />
 	<!-- ========== CHỌN NHA SĨ ========== -->
 	<div class="col-md-12">
 		<label class="sub-title col-md-3">Nha sĩ: </label>
@@ -105,9 +105,60 @@
 				<tbody>
 					@{
 						int index = 0;
+						List<Dental_Clinic_System.Models.Data.Schedule> list = new();
+						List<int> slotIDs_DaDat = new();
+						List<int> slotIDs_Nghi = new();
+						List<int> slotIDs_AmPm = new();
+						
+						@foreach (var item in Model)
+						{
+							if (item.ScheduleStatus == "Đã Đặt")
+								slotIDs_DaDat.Add(item.TimeSlotID);
+							else if (item.ScheduleStatus == "Nghỉ")
+								slotIDs_Nghi.Add(item.TimeSlotID);
+							else
+								slotIDs_AmPm.Add(item.TimeSlotID); //xem có id 23 24 ko -> có làm sáng chiều ko
+						}
+						if (slotIDs_AmPm.Contains(1))
+						{
+							foreach (var slot in @ViewBag.AmTimeSlots)
+							{
+								if (slotIDs_DaDat.Contains(slot))
+								{
+									list.Add(new() { TimeSlotID = slot, ScheduleStatus = "Đã Đặt" });
+								}
+								else if (slotIDs_Nghi.Contains(slot))
+								{
+									list.Add(new() { TimeSlotID = slot, ScheduleStatus = "Nghỉ" });
+								}
+								else
+								{
+									list.Add(new() { TimeSlotID = slot, ScheduleStatus = "Còn trống" });
+								}
+							}
+						}
+						if (slotIDs_AmPm.Contains(2))
+						{
+							foreach (var slot in @ViewBag.PmTimeSlots)
+							{
+								if (slotIDs_DaDat.Contains(slot))
+								{
+									list.Add(new() { TimeSlotID = slot, ScheduleStatus = "Đã Đặt" });
+								}
+								else if (slotIDs_Nghi.Contains(slot))
+								{
+									list.Add(new() { TimeSlotID = slot, ScheduleStatus = "Nghỉ" });
+								}
+								else
+								{
+									list.Add(new() { TimeSlotID = slot, ScheduleStatus = "Còn trống" });
+								}
+							}
+						}
 					}
 					@foreach (var item in Model)
 					{
+
 						<tr style="vertical-align: middle">
 							<td class="text-center">@(++index)</td>
 							<td>
@@ -123,15 +174,15 @@
 							</a> *@
 
 								@* <a asp-action="Edit" asp-route-id="@item.ID" class="button-link">
-									<i class="bx bxs-edit"></i>
-								</a> *@
+							<i class="bx bxs-edit"></i>
+							</a> *@
 								@if (item.ScheduleStatus == "Còn Trống")
 								{
-									<a asp-action="Delete" asp-route-id="@item.ID"  class="button-link">
+									<a asp-action="Delete" asp-route-id="@item.ID" class="button-link">
 										<i class="bx bxs-trash"></i>
 									</a>
 								}
-								
+
 							</td>
 						</tr>
 					}

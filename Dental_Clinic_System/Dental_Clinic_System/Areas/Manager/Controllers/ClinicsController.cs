@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dental_Clinic_System.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class ClinicsController : Controller
+	[Authorize(AuthenticationSchemes = "ManagerScheme", Roles = "Quản Lý")]
+	public class ClinicsController : Controller
     {
         private readonly DentalClinicDbContext _context;
 

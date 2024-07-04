@@ -27,7 +27,7 @@ builder.Services.AddDbContext<DentalClinicDbContext>(o => o.UseSqlServer(builder
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddSession(options =>
 {
-	options.IdleTimeout = TimeSpan.FromMinutes(10);
+	options.IdleTimeout = TimeSpan.FromMinutes(30);  // Set session timeout to 30 minutes
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
@@ -53,6 +53,11 @@ builder.Services.AddAuthentication(options =>
     options.LoginPath = "/Admin/AdminAccount/Login";
     options.AccessDeniedPath = "/AccessDenied";
     options.ExpireTimeSpan = TimeSpan.FromDays(14);
+}).AddCookie("ManagerScheme", options =>
+{
+	options.LoginPath = "/Manager/ManagerAccount/Login";
+	options.AccessDeniedPath = "/Manager/ManagerAccount/AccessDenied";
+	options.ExpireTimeSpan = TimeSpan.FromDays(14);
 }).AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {
 	options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
@@ -170,6 +175,18 @@ app.UseEndpoints(endpoints =>
 	   name: "dentist_default",
 	   pattern: "Dentist",
 	   defaults: new { area = "Dentist", controller = "DentistDetail", action = "DentistSchedule" });
+
+	_ = endpoints.MapControllerRoute(
+			name: "areas",
+			pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+});
+//============ Manager Route ================
+app.UseEndpoints(endpoints =>
+{
+	_ = endpoints.MapControllerRoute(
+	   name: "manager_default",
+	   pattern: "Manager",
+	   defaults: new { area = "Manager", controller = "Dentists", action = "Index" });
 
 	_ = endpoints.MapControllerRoute(
 			name: "areas",

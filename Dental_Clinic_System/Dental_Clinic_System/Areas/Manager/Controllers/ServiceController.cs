@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.ViewModels;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dental_Clinic_System.Controllers
 {
     [Area("Manager")]
-   // [Route("Manager/[controller]")]
-    public class ServiceController : Controller
+	// [Route("Manager/[controller]")]
+	[Authorize(AuthenticationSchemes = "ManagerScheme", Roles = "Quản Lý")]
+	public class ServiceController : Controller
     {
         private readonly DentalClinicDbContext _context;
 
