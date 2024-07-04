@@ -25,11 +25,7 @@
     <None Include="Areas\Dentist\Views\Shared\_Layout.cshtml" />
     <None Include="Areas\Dentist\Views\_ViewImports.cshtml" />
     <None Include="Areas\Dentist\Views\_ViewStart.cshtml" />
-    <None Include="Areas\Manager\Views\Clinics\Create.cshtml" />
-    <None Include="Areas\Manager\Views\Clinics\Delete.cshtml" />
-    <None Include="Areas\Manager\Views\Clinics\Details.cshtml" />
     <None Include="Areas\Manager\Views\Clinics\Edit.cshtml" />
-    <None Include="Areas\Manager\Views\Clinics\Index.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Create.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Dentists\Details.cshtml" />

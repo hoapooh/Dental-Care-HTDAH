@@ -59,8 +59,8 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="user-address modal-body-card">
-                <label>Phòng khám</label>
-                <select asp-for="ClinicID" class="form-control" asp-items="ViewBag.ClinicID"></select>
+                @* <label>Phòng khám</label> *@
+                <input asp-for="ClinicID" class="form-control" value="@ViewBag.ClinicID" type="hidden" />
             </div>
             <div class="user-address modal-body-card">
                 <label>Chuyên khoa</label>

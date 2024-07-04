@@ -43,7 +43,6 @@ namespace Dental_Clinic_System.Controllers
 
 			if (!string.IsNullOrEmpty(keyword))
 			{
-				keyword = keyword.Trim().ToLower();
 				dentists = dentists.Where(p =>
 					(p.Account.FirstName != null && Util.ConvertVnString(p.Account.FirstName).Contains(keyword)) ||
 					(p.Account.LastName != null && Util.ConvertVnString(p.Account.LastName).Contains(keyword)) ||
@@ -61,7 +60,7 @@ namespace Dental_Clinic_System.Controllers
 			// Xử lý từ khóa tìm kiếm như trim, kiểm tra null, v.v...
 			if (!string.IsNullOrEmpty(keyword))
 			{
-				keyword = keyword.Trim();
+				keyword = keyword.Trim().ToLower();
 				keyword = Util.ConvertVnString(keyword);
 
 			}
@@ -142,9 +141,13 @@ namespace Dental_Clinic_System.Controllers
 		{
 			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentist.DegreeID);
 			ViewData["Specialty"] = new SelectList(_context.Specialties, "ID", "Name", dentist.SpecialtyIDs);
-
-			//Check thông tin trùng lặp
-			var existingAccount = await _context.Accounts
+            var clinicId = HttpContext.Session.GetInt32("clinicId");
+            if (clinicId == null)
+            {   // Check if session has expired, log out
+                return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+            }
+            //Check thông tin trùng lặp
+            var existingAccount = await _context.Accounts
 				.FirstOrDefaultAsync(a => a.Email == dentist.Email || a.PhoneNumber == dentist.PhoneNumber || a.Username == dentist.Username);
 
 			if (existingAccount != null)
@@ -181,7 +184,7 @@ namespace Dental_Clinic_System.Controllers
 			var newDentist = new Dentist
 			{
 				AccountID = account.ID,
-				ClinicID = int.Parse("1"),
+				ClinicID = clinicId ?? 0,
 				DegreeID = dentist.DegreeID,
 				Description = dentist.Description
 			};

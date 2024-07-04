@@ -9,6 +9,7 @@ using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.ViewModels;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Dental_Clinic_System.Helper;
 
 namespace Dental_Clinic_System.Controllers
 {
@@ -26,24 +27,35 @@ namespace Dental_Clinic_System.Controllers
 
        // [Route("Index")]
         // GET: Service
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string keyword)
         {
-            var serviceList = _context.Services.Include(s => s.Clinic).Include(s => s.Specialty);
-            return View(await serviceList.ToListAsync());
-        }
-       // [Route("Search")]
-        public async Task<IActionResult> Search(String keyword)
-		{
-            var serviceList = _context.Services.Include(s => s.Clinic).Include(s => s.Specialty).AsQueryable();
-            if (keyword != null)
-            {
-                keyword = keyword.Trim();
-                serviceList = serviceList.Where(p =>
-                    (p.Specialty.Name.Contains(keyword)) ||
-                    p.Name.Contains(keyword));
+            var clinicId = HttpContext.Session.GetInt32("clinicId");
+            if (clinicId == null)
+            {   // Check if session has expired, log out
+                return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
             }
-            return View("Index", await serviceList.ToListAsync());
-		}
+            var serviceList = await _context.Services.Include(s => s.Clinic).Include(s => s.Specialty).Where(d => d.ClinicID == clinicId).ToListAsync();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                serviceList = serviceList.Where(p =>
+                    (Util.ConvertVnString(p.Specialty.Name).Contains(keyword)) ||
+                    Util.ConvertVnString(p.Name).Contains(keyword) ||
+                    Util.ConvertVnString(p.Price).Contains(keyword)).ToList();
+            }
+            return View(serviceList);
+        }
+        //[Route("Search")]
+        [HttpPost]
+        public async Task<IActionResult> Search(string keyword)
+        {
+            // Xử lý từ khóa tìm kiếm như trim, kiểm tra null, v.v...
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                keyword = keyword.Trim().ToLower();
+                keyword = Util.ConvertVnString(keyword);
+            }
+            return RedirectToAction("Index", new { keyword = keyword });
+        }
 
 		// GET: Service/Details/5
 		public async Task<IActionResult> Details(int? id)
@@ -52,12 +64,16 @@ namespace Dental_Clinic_System.Controllers
             {
                 return NotFound();
             }
-
+            var clinicId = HttpContext.Session.GetInt32("clinicId");
+            if (clinicId == null)
+            {   // Check if session has expired, log out
+                return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+            }
             var service = await _context.Services
                 .Include(s => s.Clinic)
                 .Include(s => s.Specialty)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (service == null)
+            if (service == null || service.ClinicID != clinicId)
             {
                 return NotFound();
             }
@@ -69,7 +85,13 @@ namespace Dental_Clinic_System.Controllers
 		// GET: Service/Create
 		public IActionResult Create()
         {
-            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name");
+            var clinicId = HttpContext.Session.GetInt32("clinicId");
+            if (clinicId == null)
+            {   // Check if session has expired, log out
+                return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+            }
+            ViewBag.ClinicID = clinicId;
+           // ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name");
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name");
             return View();
         }
@@ -121,13 +143,17 @@ namespace Dental_Clinic_System.Controllers
             {
                 return NotFound();
             }
-
+            var clinicId = HttpContext.Session.GetInt32("clinicId");
+            if (clinicId == null)
+            {   // Check if session has expired, log out
+                return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+            }
             var service = await _context.Services.FindAsync(id);
-            if (service == null)
+            if (service == null || service.ClinicID != clinicId)
             {
                 return NotFound();
             }
-            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
+            ViewBag.ClinicID = clinicId;
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
             return View(service);
         }
@@ -172,7 +198,7 @@ namespace Dental_Clinic_System.Controllers
                 }
                 return RedirectToAction(nameof(Details), new { id = id });
             }
-            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
+           // ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
             return View(service);
         }
@@ -184,12 +210,16 @@ namespace Dental_Clinic_System.Controllers
             {
                 return NotFound();
             }
-
+            var clinicId = HttpContext.Session.GetInt32("clinicId");
+            if (clinicId == null)
+            {   // Check if session has expired, log out
+                return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+            }
             var service = await _context.Services
                 .Include(s => s.Clinic)
                 .Include(s => s.Specialty)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (service == null)
+            if (service == null || service.ClinicID != clinicId)
             {
                 return NotFound();
             }

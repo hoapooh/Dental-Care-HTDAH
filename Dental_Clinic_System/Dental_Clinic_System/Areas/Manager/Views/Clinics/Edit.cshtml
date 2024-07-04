@@ -1,7 +1,7 @@
 ﻿@model Dental_Clinic_System.Models.Data.Clinic
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Phòng khám";
     Layout = "_LayoutManager";
 }
 @section Styles {
@@ -48,19 +48,62 @@
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <div class="col-md-3">
-        <label>Thời gian làm việc buổi sáng</label>
-        <select asp-for="AmWorkTimeID" asp-items="ViewBag.AmWorkTimes" class="form-control" style="font-size: 2rem;" required>
-            <option value="">-- Thời gian làm việc ca sáng --</option>
+    <div class="col-md-6">
+        <label for="ClinicStatus">Trạng thái</label>
+        <select asp-for="ClinicStatus" class="form-control">
+            @if (Model.ClinicStatus == "Hoạt Động")
+            {
+                <option value="Hoạt Động">Hoạt Động</option>
+                <option value="Đóng cửa">Đóng Cửa</option>
+            }
+            else
+            {
+                <option value="Đóng cửa">Đóng Cửa</option>
+                <option value="Hoạt Động">Hoạt Động</option>
+            }
+
         </select>
-        <span asp-validation-for="AmWorkTimeID" class="text-danger"></span>
     </div>
-    <div class="col-md-3">
-        <label>Thời gian làm việc buổi chiều</label>
-        <select asp-for="PmWorkTimeID" asp-items="ViewBag.PmWorkTimes" class="form-control" style="font-size: 2rem;" required>
-            <option value="">-- Thời gian làm việc ca chiều --</option>
+
+    <div class="form-group col-md-3">
+        <label for="am_start">Sáng - Bắt đầu</label>
+        <select id="am_start" name="amStartTime" class="form-control">
+            <option value="@ViewBag.AmStartTime">@ViewBag.AmStartTime.ToString("HH:mm")</option>
+            @foreach (var time in ViewBag.AmTimes)
+            {
+                <option value="@time">@time.ToString("HH:mm")</option>
+            }
         </select>
-        <span asp-validation-for="PmWorkTimeID" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="am_end">Sáng - Kết thúc</label>
+        <select id="am_end" name="amEndTime" class="form-control">
+            <option value="@ViewBag.AmEndTime">@ViewBag.AmEndTime.ToString("HH:mm")</option>
+            @foreach (var time in ViewBag.AmTimes)
+            {
+                <option value="@time">@time.ToString("HH:mm")</option>
+            }
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="pm_start">Chiều - Bắt đầu</label>
+        <select id="pm_start" name="pmStartTime" class="form-control">
+            <option value="@ViewBag.PmStartTime">@ViewBag.PmStartTime.ToString("HH:mm")</option>
+            @foreach (var time in ViewBag.PmTimes)
+            {
+                <option value="@time">@time.ToString("HH:mm")</option>
+            }
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="pm_end">Chiều - Kết thúc</label>
+        <select id="pm_end" name="pmEndTime" class="form-control">
+            <option value="@ViewBag.PmEndTime">@ViewBag.PmEndTime.ToString("HH:mm")</option>
+            @foreach (var time in ViewBag.PmTimes)
+            {
+                <option value="@time">@time.ToString("HH:mm")</option>
+            }
+        </select>
     </div>
     <!-- UPLOAD -->
     <div class="col-md-12 image-file">
@@ -156,9 +199,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <input asp-for="ClinicStatus" class="form-control" type="hidden" />
-    </div>
+    
     <div class="col-md-6">
         <input asp-for="ManagerID" class="form-control" type="hidden" />
     </div>
