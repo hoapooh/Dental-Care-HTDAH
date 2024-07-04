@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using StackExchange.Redis;
+using Dental_Clinic_System.Areas.Admin.ViewModels;
 
 namespace Dental_Clinic_System.Areas.Manager.Controllers
 {
     [Area("Manager")]
-	[Authorize(AuthenticationSchemes = "ManagerScheme", Roles = "Quản Lý")]
-	public class ClinicsController : Controller
+    [Authorize(AuthenticationSchemes = "ManagerScheme", Roles = "Quản Lý")]
+    public class ClinicsController : Controller
     {
         private readonly DentalClinicDbContext _context;
 
@@ -86,6 +88,30 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                 return NotFound();
             }
             ViewData["ManagerID"] = new SelectList(_context.Accounts, "ID", "AccountStatus", clinic.ManagerID);
+
+            #region Worktime List
+            var amWorkTimes = await _context.WorkTimes
+    .Where(w => w.Session == "Sáng")
+    .Select(w => new WorkTimeVM
+    {
+        ID = w.ID,
+        DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+    })
+    .ToListAsync();
+
+            var pmWorkTimes = await _context.WorkTimes
+                .Where(w => w.Session == "Chiều")
+                .Select(w => new WorkTimeVM
+                {
+                    ID = w.ID,
+                    DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+                })
+                .ToListAsync();
+
+            ViewBag.AmWorkTimes = new SelectList(amWorkTimes, "ID", "DisplayText");
+            ViewBag.PmWorkTimes = new SelectList(pmWorkTimes, "ID", "DisplayText");
+            #endregion
+
             return View(clinic);
         }
 
@@ -94,7 +120,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ManagerID,Name,Province,Ward,District,Address,Basis,PhoneNumber,Email,Description,Image,ClinicStatus")] ClinicVM clinic)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ManagerID,Name,Province,Ward,District,Address,Basis,PhoneNumber,Email,Description,MapLinker,Image,AmWorkTimeID,PmWorkTimeID,ClinicStatus")] ClinicVM clinic)
         {
             if (id != clinic.ID)
             {
@@ -109,7 +135,8 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                     if (upClinic != null)
                     {
                         upClinic.Name = clinic.Name;
-                        upClinic.Basis = clinic.Basis;
+                        upClinic.AmWorkTimeID = clinic.AmWorkTimeID;
+                        upClinic.PmWorkTimeID = clinic.PmWorkTimeID;
                         upClinic.Image = clinic.Image ?? "";
                         upClinic.Province = clinic.Province;
                         upClinic.Ward = clinic.Ward;
@@ -118,6 +145,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                         upClinic.Email = clinic.Email;
                         upClinic.PhoneNumber = clinic.PhoneNumber;
                         upClinic.Description = clinic.Description;
+                        upClinic.MapLinker = clinic.MapLinker;
                     }
                     _context.Update(upClinic);
                     await _context.SaveChangesAsync();

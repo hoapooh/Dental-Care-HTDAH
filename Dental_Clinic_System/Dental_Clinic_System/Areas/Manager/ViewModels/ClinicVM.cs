@@ -32,5 +32,9 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
         public string ClinicStatus { get; set; } = null!;
 
         public string? MapLinker { get; set; }
+
+        public int AmWorkTimeID { get; set; }
+
+        public int PmWorkTimeID { get; set; }
     }
 }

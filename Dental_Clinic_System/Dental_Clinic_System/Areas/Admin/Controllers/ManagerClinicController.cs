@@ -504,7 +504,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 ClinicName = order.ClinicName,
                 DomainName = order.DomainName,
                 Content = order.Content,
-                Image = order.Image ?? "",
+                Image = order.Image,
                 Status = order.Status,
 
                 AmWorkTime = $"{amWorkTime?.Session}: {amWorkTime?.StartTime.ToString("HH:mm")} - {amWorkTime?.EndTime.ToString("HH:mm")}",

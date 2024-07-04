@@ -65,7 +65,7 @@ namespace Dental_Clinic_System.Models.Data
         public string Image { get; set; } = null!;
 
         [Column("OtherImage", TypeName = "varchar(MAX)")]
-        public string? OtherImage { get; set; } = null;
+        public string? OtherImage { get; set; } = "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Dental%20Care%20Logo%2Flogo_2_new.png?alt=media&token=403a09b5-ff01-42f9-bcc9-73c7f94c782c";
 
         [Column("ClinicStatus", TypeName = "nvarchar(30)")]
         public string ClinicStatus { get; set; } = null!;
