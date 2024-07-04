@@ -1,85 +1,32 @@
 ﻿@{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Đăng Nhập";
     Layout = null;
 }
+<head>
+<link rel="stylesheet" href="~/assets/css/login_dentist.css">
+</head>
 
-<title>Login</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-    }
-
-    .login-container {
-        width: 300px;
-        margin: 100px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-        .login-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-        }
-
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-    .error-message {
-        color: red;
-    }
-</style>
-
-<div class="login-container">
-    <h2>Login</h2>
-    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-    {
-        <p class="error-message">@ViewBag.ErrorMessage</p>
-    }
-    <form id="loginForm" asp-controller="DentistAccount" asp-action="Login" method="post">
-        <input type="text" id="username" name="username" placeholder="Username" required />
-        <input type="password" id="password" name="password" placeholder="Password" required />
-        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-        <button type="submit">Login</button>
-    </form>
-    <p class="error-message" id="error-message"></p> <!-- Ensure there's always an element to set textContent -->
+<div class="form">
+    <div class="leftside">
+        <img src="/assets/images/login-dentist-illus.png" style="position:relative;right: 93%;">
+        <h1>CHÀO MỪNG NHA SĨ!</h1>
+        <img src="/assets/images/dentist-login-illus.png" style="position:relative;left: 65%;">
+    </div>
+    <div class="rightside">
+        <form asp-controller="dentistaccount" asp-action="login" method="post">
+        <div class="input-container">
+                <img src="~/assets/images/DentalCare.png" style="position:relative;left: 33px;"><br />
+            <div class="input">
+                <i class="fa fa-user"></i>
+                <input type="text" placeholder="Tên Đăng Nhập">
+            </div>
+            <div class="input">
+                <i class="fa fa-lock"></i>
+                <input type="password" placeholder="Mật Khẩu">
+            </div>
+            <input type="submit" class="login" value="Đăng Nhập">
+            <p style="font-size: 15px;"><sup>**Quên Mật Khẩu Vui Lòng Liên Hệ Quản Lý Phòng Khám. Xin Cảm Ơn!</sup></p>
+        </div>
+        </form>
+    </div>
 </div>
-
-@* <script>
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
-        var returnUrl = document.querySelector('input[name="returnUrl"]').value;
-
-        fetch('/Dentist/DentistAccount/Login', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'RequestVerificationToken': '@Html.AntiForgeryToken()'
-            },
-            body: JSON.stringify({ username: username, password: password, returnUrl: returnUrl })
-        })
-            .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    response.text().then(text => {
-                        var errorMessageElement = document.getElementById('error-message');
-                        if (errorMessageElement) {
-                            errorMessageElement.textContent = text;
-                        }
-                    });
-                }
-            });
-    });
-</script> *@
