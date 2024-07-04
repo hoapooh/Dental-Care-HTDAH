@@ -65,7 +65,59 @@
         </select>
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-6">
+        <label style="margin-top: 5px;">Thời gian làm việc Sáng:</label>
+        <div class="row">
+            <div class="col">
+                <select id="am_start" name="amStartTime" class="form-control">
+                    <option value="@ViewBag.AmStartTime">@ViewBag.AmStartTime.ToString("HH:mm")</option>
+                    @foreach (var time in ViewBag.AmTimes)
+                    {
+                        <option value="@time">@time.ToString("HH:mm")</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <label for="am_end" style="margin-top: 5px;">đến</label>
+            </div>
+            <div class="col">
+                <select id="am_end" name="amEndTime" class="form-control">
+                    <option value="@ViewBag.AmEndTime">@ViewBag.AmEndTime.ToString("HH:mm")</option>
+                    @foreach (var time in ViewBag.AmTimes)
+                    {
+                        <option value="@time">@time.ToString("HH:mm")</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-6">
+        <label style="margin-top: 5px;">Thời gian làm việc Chiều:</label>
+        <div class="row">
+            <div class="col">
+                <select id="pm_start" name="pmStartTime" class="form-control">
+                    <option value="@ViewBag.PmStartTime">@ViewBag.PmStartTime.ToString("HH:mm")</option>
+                    @foreach (var time in ViewBag.PmTimes)
+                    {
+                        <option value="@time">@time.ToString("HH:mm")</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <label for="pm_end" style="margin-top: 5px;">đến</label>
+            </div>
+            <div class="col">
+                <select id="pm_end" name="pmEndTime" class="form-control">
+                    <option value="@ViewBag.PmEndTime">@ViewBag.PmEndTime.ToString("HH:mm")</option>
+                    @foreach (var time in ViewBag.PmTimes)
+                    {
+                        <option value="@time">@time.ToString("HH:mm")</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+  @*   <div class="form-group col-md-3">
         <label for="am_start">Sáng - Bắt đầu</label>
         <select id="am_start" name="amStartTime" class="form-control">
             <option value="@ViewBag.AmStartTime">@ViewBag.AmStartTime.ToString("HH:mm")</option>
@@ -84,8 +136,8 @@
                 <option value="@time">@time.ToString("HH:mm")</option>
             }
         </select>
-    </div>
-    <div class="form-group col-md-3">
+    </div> *@
+    @* <div class="form-group col-md-3">
         <label for="pm_start">Chiều - Bắt đầu</label>
         <select id="pm_start" name="pmStartTime" class="form-control">
             <option value="@ViewBag.PmStartTime">@ViewBag.PmStartTime.ToString("HH:mm")</option>
@@ -104,7 +156,7 @@
                 <option value="@time">@time.ToString("HH:mm")</option>
             }
         </select>
-    </div>
+    </div> *@
     <!-- UPLOAD -->
     <div class="col-md-12 image-file">
         <label for="imageInput">Hình ảnh</label>

@@ -159,8 +159,6 @@
 			}
 			@foreach (var group in groupedData)
 			{
-				List<int> slotIDs_DaDat = new();
-				List<int> slotIDs_Nghi = new();
 				var dentist = group.FirstOrDefault()?.Dentist;
 				var account = dentist?.Account;
 				<tr style="vertical-align: middle">

@@ -92,12 +92,12 @@
 				/* padding: 5px 10px; */
 				/* border-radius: 5px; */
 				/* border: 1px solid #4880ff;
-						color: #4880ff; */
+										color: #4880ff; */
 			}
 
-			.row {
-				justify-content: end;
-			}
+		.row {
+			justify-content: end;
+		}
 
 	</style>
 
@@ -106,7 +106,7 @@
 <div class="manager__management__header">
 	<div class="title">Khung giờ làm việc</div>
 	<div class="action-btn">
-	<a asp-controller="Schedules" asp-action="Create" class="add__new">+ Thêm</a>
+		<a asp-controller="Schedules" asp-action="Create" class="add__new">+ Thêm</a>
 	</div>
 </div>
 <!-- Filters Section -->
@@ -206,57 +206,88 @@
 											slotIDs_Nghi.Add(item.TimeSlotID);
 										else if (item.ScheduleStatus == "Còn Trống")
 											slotIDs_ConTrong.Add(item.TimeSlotID);
-										else
+										else if (item.TimeSlotID == 1 || item.TimeSlotID == 2)
 											slotIDs_AmPm.Add(item.TimeSlotID); //xem có id 23 24 ko -> có làm sáng chiều ko
 									}
 
 									if (ViewBag.Status == null)
 									{
-										foreach (var slot in @ViewBag.AmTimeSlots)
+										foreach (var slot in @ViewBag.TimeSlots)
 										{
-											if (slotIDs_DaDat.Contains(slot.ID))
+											if (@ViewBag.AmTimeSlots.Contains(slot))
 											{
-												<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												if (slotIDs_DaDat.Contains(slot.ID))
+												{
+													<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
+												else if (slotIDs_Nghi.Contains(slot.ID))
+												{
+													<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
+												else if (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID))
+												{
+													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
 											}
-											else if (slotIDs_Nghi.Contains(slot.ID))
+											else if (@ViewBag.PmTimeSlots.Contains(slot))
 											{
-												<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												if (slotIDs_DaDat.Contains(slot.ID))
+												{
+													<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
+												else if (slotIDs_Nghi.Contains(slot.ID))
+												{
+													<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
+												else if (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID))
+												{
+													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
 											}
-											else if (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID))
+											else
 											{
-												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-											}
-										}
-										foreach (var slot in @ViewBag.PmTimeSlots)
-										{
-											if (slotIDs_DaDat.Contains(slot.ID))
-											{
-												<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-											}
-											else if (slotIDs_Nghi.Contains(slot.ID))
-											{
-												<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-											}
-											else if (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID))
-											{
-												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												if (slotIDs_DaDat.Contains(slot.ID))
+												{
+													<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
+												else if (slotIDs_Nghi.Contains(slot.ID))
+												{
+													<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
+												else if (slotIDs_ConTrong.Contains(slot.ID))
+												{
+													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
 											}
 										}
 									}
 									else if (ViewBag.Status == "Còn Trống")
 									{
-										foreach (var slot in @ViewBag.AmTimeSlots)
+										foreach (var slot in @ViewBag.TimeSlots)
 										{
-											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID)))
+											if (@ViewBag.AmTimeSlots.Contains(slot))
 											{
-												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID)
+												&& (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID)))
+												{
+													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
 											}
-										}
-										foreach (var slot in @ViewBag.PmTimeSlots)
-										{
-											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID)))
+											else if (@ViewBag.PmTimeSlots.Contains(slot))
 											{
-												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID)
+												&& (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID)))
+												{
+													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
+											}
+											else
+											{
+												if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID)
+												&& (slotIDs_ConTrong.Contains(slot.ID)))
+												{
+													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+												}
 											}
 										}
 									}
@@ -280,19 +311,9 @@
 							</div>
 						</td>
 						<td>
-							@* <a asp-action="Edit" asp-route-id="" class="button-link">
-					<i class="bx bxs-edit"></i>
-					</a>
-					<a asp-action="Delete" asp-route-id="" class="button-link">
-					<i class="bx bxs-trash"></i>
-					</a> *@
-
 							<a asp-action="Edit" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
 								<i class="bx bxs-edit"></i>
 							</a>
-							@* <a asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
-					<i class="bx bxs-trash"></i>
-					</a> *@
 						</td>
 					</tr>
 				}

@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
         mobiscroll.setOptions({
             theme: "ios",
             themeVariant: "light",
+            locale: mobiscroll.localeVi,
+            firstDay: 1 // Set Monday as the first day of the week
         });
 
         mobiscroll.datepicker('#demo-counter', {

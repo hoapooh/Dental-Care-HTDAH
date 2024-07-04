@@ -41,6 +41,9 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
 			ViewBag.AmTimeSlots = amTimeSlots;
 			ViewBag.PmTimeSlots = pmTimeSlots;
+
+			List<TimeSlot> timeSlots = GenerateTimeSlots(new TimeOnly(7, 0), new TimeOnly(21, 0));
+			ViewBag.TimeSlots = timeSlots;
 			//--------------------------------------------------
 			ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).ToListAsync();
 			ViewBag.Status = null;
@@ -76,19 +79,8 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		}
 		public async Task<IActionResult> ViewHistory(int? dentistId, DateTime? date)
 		{
-			//---------------------------------------------------
-			//Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
-			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == 1);
-			var amID = clinic.AmWorkTimeID;
-			var pmID = clinic.PmWorkTimeID;
-			List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
-			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
-			ViewBag.AmTimeSlots = amTimeSlots;
-			ViewBag.PmTimeSlots = pmTimeSlots;
-			//--------------------------------------------------
-			ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).ToListAsync();
-			//--------------------------------------------------
-			// Filter schedules - in the past
+            ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).ToListAsync();
+			
 			var today = DateOnly.FromDateTime(DateTime.Today);
 			var schedulesQuery = _context.Schedules
 					.Include(s => s.Dentist)
@@ -108,8 +100,14 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 			return View("ViewHistory", dentalClinicDbContext);
 		}
+        private List<TimeSlot> GenerateTimeSlots(TimeOnly startTime, TimeOnly endTime)
+        {
+            // Retrieve the matching TimeSlots
+            return _context.TimeSlots
+                          .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime && ts.ID != 1 && ts.ID != 2).ToList();
 
-		private List<TimeSlot> GenerateTimeSlots(int workTimeId)
+        }
+        private List<TimeSlot> GenerateTimeSlots(int workTimeId)
 		{
 
 			// Retrieve the WorkTime based on the given ID

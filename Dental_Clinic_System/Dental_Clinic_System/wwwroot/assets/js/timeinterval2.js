@@ -2,7 +2,7 @@
     function updateSlots() {
         var interval = document.getElementById("timeInterval").value;
         var startHour = 7;
-        var endHour = 18; // Extend to 18:00 for the 1-hour intervals
+        var endHour = 21; // Extend to 18:00 for the 1-hour intervals
         var totalSlots = Math.ceil((endHour - startHour) * (60 / interval));
         var slotsPerColumn = Math.ceil(totalSlots / 5);
         var checkboxContainer = document.getElementById("checkboxContainer");
