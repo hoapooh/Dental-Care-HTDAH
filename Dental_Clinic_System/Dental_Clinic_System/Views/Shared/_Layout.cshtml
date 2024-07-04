@@ -48,12 +48,12 @@
         </script>
     }
 
-    @Html.Partial("_Header")
+    @await Html.PartialAsync("_Header")
     <main>
         @RenderBody()
 
     </main>
-    @Html.Partial("_Footer")
+    @await Html.PartialAsync("_Footer")
     <div id="toasts"></div>
     <script src="~/assets/js/toastmessage.js"></script>
 </body>

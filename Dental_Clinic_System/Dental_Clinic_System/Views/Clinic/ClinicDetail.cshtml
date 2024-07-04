@@ -59,21 +59,21 @@
                         <div class="address">
                             <div class="style__item">
                                 <i class="fa-solid fa-location-dot"></i>
-                                <span>@Model.Address</span>
+                                <span>@Model.Address, @Model.WardName, @Model.DistrictName, @Model.ProvinceName</span>
                             </div>
                         </div>
                         <div class="time">
                             <div class="style__item">
                                 <i class="fa-solid fa-clock"></i>
                                 <span>
-                                    Thứ 2 - Thứ 6 (08:30 - 19:00), Thứ 7 - CN (08:30 - 20:00)
+                                    Thứ 2 - Thứ 6 (@Model.AmWorkTimes.StartTime.ToString("HH:mm") - @Model.PmWorkTimes.EndTime.ToString("HH:mm"))
                                 </span>
                             </div>
                         </div>
                         <div class="phone">
                             <div class="style__item">
                                 <i class="fa-solid fa-phone"></i>
-                                <span>Hỗ trợ đặt khám: 0963 333 844</span>
+                                <span>Hỗ trợ đặt khám: @Model.PhoneNumber</span>
                             </div>
                         </div>
                         <div class="book">

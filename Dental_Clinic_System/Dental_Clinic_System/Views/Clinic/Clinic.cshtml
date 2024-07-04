@@ -82,10 +82,10 @@
                             @clinic.Address, @clinic.WardName, @clinic.DistrictName, @clinic.ProvinceName
                         </p>
                         <p class="time">
-                            <i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
+                            <i class="fa-solid fa-clock"></i>@clinic.AmWorkTimes.StartTime.ToString("HH:mm") - @clinic.PmWorkTimes.EndTime.ToString("HH:mm") (Thứ 2 - Thứ 6)
                         </p>
                         <div class="notification">
-                            Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
+                            Hôm nay là <span>@ViewBag.CurrentDateTime</span>
                         </div>
                         <br />
                         <div class="buttons">

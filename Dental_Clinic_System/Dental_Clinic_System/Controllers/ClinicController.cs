@@ -20,14 +20,24 @@ namespace Dental_Clinic_System.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var clinics = await _context.Clinics.ToListAsync();
-            return View("clinic", clinics);
+            var clinics = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).ToListAsync();
+
+			// Format the current date and time
+			var now = Util.GetUtcPlus7Time();
+			var weekdays = new[] { "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
+			var dayOfWeek = weekdays[(int)now.DayOfWeek];
+			var formattedDate = $"{dayOfWeek}, {now:dd/MM/yyyy}";
+
+			// Pass the formatted date to the view
+			ViewBag.CurrentDateTime = formattedDate;
+
+			return View("clinic", clinics);
         }
 
         [HttpGet]
         public async Task<IActionResult> ClinicDetail(int clinicID)
         {
-            var clinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == clinicID);
+            var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(c => c.ID == clinicID);
             if (clinic == null)
             {
                 return NotFound();
