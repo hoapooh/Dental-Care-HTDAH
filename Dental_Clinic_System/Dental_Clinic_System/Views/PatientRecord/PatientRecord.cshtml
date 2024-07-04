@@ -44,7 +44,7 @@
 					{
 						Console.WriteLine(patientRecordAmount);
 						<div class="record__container__card__style">
-							<a asp-controller="patientrecord" asp-action="confirmappointment" asp-route-scheduleID="@ViewBag.scheduleID" asp-route-dentistID="@ViewBag.dentistID" asp-route-specialtyID="@ViewBag.specialtyID" asp-route-clinicID="@ViewBag.clinicID" asp-route-patientRecordID="@patientRecord.ID">
+							<a asp-controller="patientrecord" asp-action="confirmappointment" asp-route-bookingDateTime="@ViewBag.bookingDateTime" asp-route-dentistID="@ViewBag.dentistID" asp-route-specialtyID="@ViewBag.specialtyID" asp-route-clinicID="@ViewBag.clinicID" asp-route-patientRecordID="@patientRecord.ID">
 						<div class="record__card">
 							<div class="record__card__body">
 								<div class="card__body__style">
@@ -107,7 +107,7 @@
 				@if (patientRecordAmount < 10)
 				{
 					<form asp-controller="patientrecord" asp-action="ShowFormCreatingNewPatientRecord" method="get">
-						<input type="hidden" name="returnUrl" value="/patientrecord/patientrecord?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID&dentistID=@ViewBag.dentistID&scheduleID=@ViewBag.scheduleID" />
+						<input type="hidden" name="returnUrl" value="/patientrecord/patientrecord?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID&dentistID=@ViewBag.dentistID&bookingDateTime=@ViewBag.bookingDateTime" />
 						<button type="submit" class="add-record-btn">
 							<i class="fa-solid fa-user-plus"></i> Thêm hồ sơ
 						</button>

@@ -4,11 +4,16 @@
 @model Dictionary<string, object>
 @{
     ViewData["Title"] = "PatientRecordPayment";
-    var schedule = Model["Schedule"] as Schedule;
     var patientRecord = Model["PatientRecord"] as PatientRecord;
     var specialty = Model["Specialty"] as Specialty;
     var dentist = Model["Dentist"] as Dentist;
     var clinic = Model["Clinic"] as Clinic;
+
+    string[] bookingDateTime = ViewBag.bookingDateTime.Split(" ");
+
+    string bookingDate = DateTime.ParseExact(bookingDateTime[0], "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("dd-MM-yyyy");
+    string bookingStartTime = bookingDateTime[1];
+    string bookingEndTime = bookingDateTime[2];
 }
 
 <head>
@@ -79,10 +84,11 @@
             <div class="pt__rcd__service__details__style col-md-9">
                 <!-- ========== PAYMENT ========== -->
                 <form asp-controller="payment" asp-action="ProcessCheckout" method="post">
-                    <input type="hidden" name="scheduleID" value="@ViewBag.scheduleID" />
+                    <input type="hidden" name="bookingDateTime" value="@ViewBag.bookingDateTime" />
                     <input type="hidden" name="patientRecordID" value="@ViewBag.patientRecordID" />
                     <input type="hidden" name="specialtyID" value="@ViewBag.specialtyID" />
-                    <input type="hidden" name="clinicID" value="@ViewBag.clinicID"></input>
+                    <input type="hidden" name="clinicID" value="@ViewBag.clinicID" />
+                    <input type="hidden" name="dentistID" value="@ViewBag.dentistID" />
                     <div class="pt__rcd__payment">
                         <div class="pt__rcd__title text-center">
                             Chọn phương thức thanh toán
@@ -174,7 +180,7 @@
                                                         <i class="fa-solid fa-calendar-day"></i>
                                                         <span>Ngày khám</span>
                                                     </p>
-                                                    <p class="style__item__value">@string.Format("{0:dd/MM/yyyy}", schedule?.Date)</p>
+                                                    <p class="style__item__value">@bookingDate</p>
                                                 </div>
                                             </li>
                                             <li>
@@ -183,7 +189,7 @@
                                                         <i class="fa-solid fa-clock"></i>
                                                         <span>Giờ khám</span>
                                                     </p>
-                                                    <p class="style__item__value">@schedule?.TimeSlot.StartTime - @schedule?.TimeSlot.EndTime</p>
+                                                    <p class="style__item__value">@bookingStartTime - @bookingEndTime</p>
                                                 </div>
                                             </li>
                                             <li>

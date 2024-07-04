@@ -20,6 +20,7 @@ using Dental_Clinic_System.Services.EmailSender;
 using Microsoft.EntityFrameworkCore;
 using static Dental_Clinic_System.Services.VNPAY.VNPAYLibrary;
 using Dental_Clinic_System.Services;
+using System.Globalization;
 namespace Dental_Clinic_System.Controllers
 {
     public class PaymentController : Controller
@@ -43,7 +44,7 @@ namespace Dental_Clinic_System.Controllers
 
         [Authorize(Roles = "Bệnh Nhân")]
         [HttpPost]
-        public async Task<IActionResult> ProcessCheckout(int scheduleID, int patientRecordID, int specialtyID, decimal totalDeposit, string paymentMethod, int clinicID)
+        public async Task<IActionResult> ProcessCheckout(string bookingDateTime,int patientRecordID, int specialtyID, decimal totalDeposit, string paymentMethod, int clinicID, int dentistID)
         {
             var patient = _context.PatientRecords.FirstOrDefault(p => p.ID == patientRecordID);
 
@@ -60,7 +61,8 @@ namespace Dental_Clinic_System.Controllers
                         Description = "Thanh toán tiền đặt cọc",
 
                         // For Appointment Info
-                        ScheduleID = scheduleID,
+                        //ScheduleID = scheduleID,
+                        
                         PatientRecordID = patientRecordID,
                         SpecialtyID = specialtyID
 
@@ -76,12 +78,17 @@ namespace Dental_Clinic_System.Controllers
                         Amount = (long)totalDeposit,
 
                         // For Appointment Info
-                        ScheduleID = scheduleID,
+                        //ScheduleID = scheduleID,
+                        BookingDateTime = bookingDateTime,
                         PatientRecordID = patientRecordID,
                         SpecialtyID = specialtyID
                     };
                     TempData.SetObjectAsJson("MOMOPaymentRequestModel", momoModel);
-                    TempData["ScheduleIDTempData"] = scheduleID;
+                    //TempData["ScheduleIDTempData"] = scheduleID;
+                    //============================================
+                    TempData["BookingDateTime"] = bookingDateTime;
+                    TempData["DentistID"] = dentistID;
+                    //============================================
                     TempData["SpecialtyIDTempData"] = specialtyID;
                     TempData["PatientRecordIDTempData"] = patientRecordID;
                     TempData["ClinicIDTempData"] = clinicID;
@@ -259,12 +266,40 @@ namespace Dental_Clinic_System.Controllers
                 // Thanh toán thành công
                 // Lưu vào database
 
-                int scheduleID = (int)TempData["ScheduleIDTempData"];
+                //======================================================================================
+                //Soyu: Lấy dữ liệu mới thêm từ TempData
+                string bookingDateTime = (string)TempData["BookingDateTime"];
+                int dentistID = (int)TempData["DentistID"];
+                //======================================================================================
+
+                //int scheduleID = (int)TempData["ScheduleIDTempData"];
                 int patientRecordID = (int)TempData["PatientRecordIDTempData"];
                 int specialtyID = (int)TempData["SpecialtyIDTempData"];
                 int clinicID = (int)TempData["ClinicIDTempData"];
 
-                if(_context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus == "Đã Đặt")
+                //======================================================================================
+                // Soyu: Tạo mới schedule và thực hiện trên schedule mới
+                string[] booking = bookingDateTime.Split(" ");
+                var bookingDate = DateOnly.ParseExact(booking[0], @"yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy");
+                var bookingStartTime = TimeOnly.ParseExact(booking[1], "HH:mm", CultureInfo.InvariantCulture);
+                var bookingEndTime = TimeOnly.ParseExact(booking[2], "HH:mm", CultureInfo.InvariantCulture);
+
+                int timeSlotID = _context.TimeSlots.Where(t => t.StartTime == bookingStartTime && t.EndTime == bookingEndTime).Select(ts => ts.ID).First();
+
+                Schedule schedule = new() {
+                    DentistID = dentistID,
+                    Date = DateOnly.Parse(bookingDate),
+                    TimeSlotID = timeSlotID,
+                    ScheduleStatus = "Còn Trống"
+
+                };
+                _context.Schedules.Add(schedule);
+                _context.SaveChanges();
+                int scheduleID = schedule.ID;
+
+                //======================================================================================
+
+                if (_context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus == "Đã Đặt")
                 {
                     await _momoPayment.RefundPayment(long.Parse(amount), long.Parse(transId), message);
                     ViewBag.ResultCode = 999;

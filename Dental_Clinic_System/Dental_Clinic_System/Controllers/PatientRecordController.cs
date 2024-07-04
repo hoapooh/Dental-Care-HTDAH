@@ -26,7 +26,7 @@ namespace Dental_Clinic_System.Controllers
         //=============================== PATIENT RECORD - CLINIC PART =========================================
         #region Hàm lấy tất cả patient record có liên quan đến user hiện tại
         [HttpGet]
-        public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string scheduleID)
+        public async Task<IActionResult> PatientRecord(int clinicID, int specialtyID, int dentistID, string bookingDateTime)
         {
             var claimsEmailValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var username = claimsEmailValue;
@@ -36,7 +36,7 @@ namespace Dental_Clinic_System.Controllers
                                         .Where(pr => pr.Account.Email == username && pr.PatientRecordStatus == "Đang Tồn Tại")
                                         .ToListAsync();
             TempData["Patient Amount"] = patientRecord.Count;
-            ViewBag.scheduleID = scheduleID;
+            ViewBag.bookingDateTime = bookingDateTime;
             ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;
             ViewBag.clinicID = clinicID;
@@ -179,18 +179,18 @@ namespace Dental_Clinic_System.Controllers
         #region Hàm hiện ra thông tin xác nhận tất cả thông tin về clinic, dentist và patient record
         [HttpGet]
         [Route("/appointment/confirm")]
-        public async Task<IActionResult> ConfirmAppointment(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
+        public async Task<IActionResult> ConfirmAppointment(string bookingDateTime, int patientRecordID, int specialtyID, int clinicID, int dentistID)
         {
             var appointment = new Dictionary<string, object>
             {
-                { "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
+                //{ "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
                 { "PatientRecord", await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID)},
                 { "Specialty", await _context.Specialties.FirstOrDefaultAsync(sp => sp.ID == specialtyID)},
                 { "Dentist", await _context.Dentists.Include(d => d.Account). FirstOrDefaultAsync(d => d.ID == dentistID)},
                 { "Clinic", await _context.Clinics. FirstOrDefaultAsync(c => c.ID == clinicID) }
             };
 
-            ViewBag.scheduleID = scheduleID;
+            ViewBag.bookingDateTime = bookingDateTime;
             ViewBag.patientRecordID = patientRecordID;
             ViewBag.specialtyID = specialtyID;
             ViewBag.clinicID = clinicID;
@@ -201,17 +201,17 @@ namespace Dental_Clinic_System.Controllers
 
         #region Hàm lấy thông tin liên quan đến việc tạo appointment, show ra và chọn phương thức thanh toán
         [HttpGet]
-        public async Task<IActionResult> PatientRecordPaymentChoosing(int scheduleID, int patientRecordID, int specialtyID, int clinicID, int dentistID)
+        public async Task<IActionResult> PatientRecordPaymentChoosing(string bookingDateTime, int patientRecordID, int specialtyID, int clinicID, int dentistID)
         {
             var appointment = new Dictionary<string, object>
             {
-                { "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
+                //{ "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
                 { "PatientRecord", await _context.PatientRecords.FirstOrDefaultAsync(pr => pr.ID == patientRecordID)},
                 { "Specialty", await _context.Specialties.FirstOrDefaultAsync(sp => sp.ID == specialtyID)},
                 { "Dentist", await _context.Dentists.Include(d => d.Account). FirstOrDefaultAsync(d => d.ID == dentistID)},
                 { "Clinic", await _context.Clinics. FirstOrDefaultAsync(c => c.ID == clinicID) }
             };
-            ViewBag.scheduleID = scheduleID;
+            ViewBag.bookingDateTime = bookingDateTime;
             ViewBag.patientRecordID = patientRecordID;
             ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;

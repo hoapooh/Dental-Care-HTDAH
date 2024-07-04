@@ -4,12 +4,18 @@
 @model Dictionary<string, object>
 
 @{
-    ViewData["Title"] = "ConfirmAppointment";
-    var schedule = Model["Schedule"] as Schedule;
+    ViewData["Title"] = "Xác Nhận Đơn Khám";
+    //var schedule = Model["Schedule"] as Schedule;
     var patientRecord = Model["PatientRecord"] as PatientRecord;
     var specialty = Model["Specialty"] as Specialty;
     var dentist = Model["Dentist"] as Dentist;
     var clinic = Model["Clinic"] as Clinic;
+
+    string[] bookingDateTime = ViewBag.bookingDateTime.Split(" ");
+
+    string bookingDate = DateTime.ParseExact(bookingDateTime[0], "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("dd-MM-yyyy");
+    string bookingStartTime = bookingDateTime[1];
+    string bookingEndTime = bookingDateTime[2];
 
 }
 
@@ -84,8 +90,8 @@
                                             </td>
                                             <td class="style__col__sub__other">@dentist?.Account.LastName @dentist?.Account.FirstName</td>
                                             <td class="style__col__sub__other">
-                                                <p>@schedule?.TimeSlot?.StartTime.ToString("HH:mm") - @schedule?.TimeSlot?.EndTime.ToString("HH:mm")</p>
-                                                <p>@schedule?.Date.ToString("dd/MM/yyyy")</p>
+                                                <p>@bookingStartTime - @bookingEndTime</p>
+                                                <p>@bookingDate</p>
                                             </td>
                                             <td class="style__col__sub__other">@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", specialty?.Deposit)</td>
                                             @* <td>
@@ -160,7 +166,7 @@
                         <a asp-controller="patientrecord" asp-action="patientrecordpaymentchoosing" asp-route-specialtyID="@ViewBag.specialtyID"
                            asp-route-dentistID="@ViewBag.dentistID"
                            asp-route-patientRecordID="@ViewBag.patientRecordID"
-                           asp-route-scheduleID="@ViewBag.scheduleID"
+                           asp-route-bookingDateTime="@ViewBag.bookingDateTime"
                            asp-route-clinicID="@ViewBag.clinicID">
                             <button type="button" class="add-record-btn">Xác nhận</button> @* -------------------------------------------*@
                         </a>

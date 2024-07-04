@@ -81,7 +81,7 @@
 				<input type="hidden" name="specialtyID" value="@ViewBag.specialtyID" />
 				<input type="hidden" name="dentistID" value="@ViewBag.dentistID" />
 
-				<input type="hidden" id="scheduleID" name="scheduleID" />
+				<input type="hidden" id="bookingDateTime" name="bookingDateTime" />
 				<div class="btn-wrapper">
 					<a href="/clinic/choosedentist?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID">
 						<button type="button" class="back-btn">
@@ -129,7 +129,7 @@
 
 				var scheduleMap = new Map();
 				data.forEach(function (item) {
-					scheduleMap.set(item.date + 'T' + item.startTime, item.scheduleID);
+					scheduleMap.set(item.date + 'T' + item.startTime, item.date + " " + item.startTime + " " + item.endTime);
 				});
 				//console.log(schedules);
 				console.log(scheduleMap);
@@ -139,24 +139,23 @@
 				mobiscroll.datepicker("#demo-single-day", {
 					controls: ["calendar", "timegrid"],
 					firstDay: 1,
-					min: current.setHours(current.getHours() + 4),
+					//min: current.setHours(current.getHours() + 4),
 					display: "inline",
 					touchUI: true,
 					selectMultiple: false,
 					valid: schedules.map(item => ({
 						start: item.start,
 						end: item.end,
-						item: item.title,
-
 					})),
 
 					locale: mobiscroll.localeVi,
 
 					onChange: function (event, inst) {
 						console.log(formatDate(event.value));
-						document.getElementById('scheduleID').value = scheduleMap.get(formatDate(event.value));
+						//Lấy ngày + thời gian từ event và gán vào input hidden
+						document.getElementById('bookingDateTime').value = scheduleMap.get(formatDate(event.value));
 						//Ẩn hoặc hiện button submit theo giá trị scheduleID
-						if (document.getElementById('scheduleID').value === 'undefined') {
+						if (document.getElementById('bookingDateTime').value === '' || document.getElementById('bookingDateTime').value === 'undefined') {
 							document.querySelectorAll('.add-record-btn').forEach(btn => {
 								btn.classList.add('hidding');
 							})
@@ -184,7 +183,6 @@
 		const year = date.getFullYear();
 		const hours = pad(date.getHours());
 		const minutes = pad(date.getMinutes());
-
 		return `${year}-${month}-${day}T${hours}:${minutes}`;
 	}
 </script>

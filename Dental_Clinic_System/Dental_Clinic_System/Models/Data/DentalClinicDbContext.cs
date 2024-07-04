@@ -27,6 +27,7 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual DbSet<ClinicTransaction> ClinicTransactions { get; set; }
 		public virtual DbSet<News> News { get; set; }
 		public virtual DbSet<Order> Orders { get; set; }
+		public virtual DbSet<FutureAppointment> FutureAppointments { get; set; }
 
 		//================================================================================================================================
 		public virtual DbSet<Dentist_Session> Dentist_Sessions { get; set; }
@@ -284,6 +285,17 @@ namespace Dental_Clinic_System.Models.Data
 				entity.HasMany(d => d.AmWorkTimeClinics).WithOne(p => p.AmWorkTimes).HasForeignKey(fk => fk.AmWorkTimeID).HasConstraintName("FK__AmWorkTime__Clinic").IsRequired(false);
 
 				entity.HasMany(d => d.PmWorkTimeClinics).WithOne(p => p.PmWorkTimes).HasForeignKey(fk => fk.PmWorkTimeID).HasConstraintName("FK__PmWorkTime__Clinic").IsRequired(false);
+			});
+
+			modelBuilder.Entity<FutureAppointment>(entity =>
+			{
+				entity.HasKey(e => e.ID).HasName("PK_FutureAppointment");
+				
+				entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+				entity.HasOne(fa => fa.Dentist).WithMany(d => d.FutureAppointments).HasConstraintName("FK__Dentist__FutureAppointments").OnDelete(DeleteBehavior.Restrict);
+
+				entity.HasOne(fa => fa.PatientRecord).WithMany(pr => pr.FutureAppointments).HasConstraintName("FK__PatientRecord__FutureAppointments").OnDelete(DeleteBehavior.Restrict);
 			});
 
 			OnModelCreatingPartial(modelBuilder);
