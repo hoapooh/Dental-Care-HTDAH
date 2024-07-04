@@ -4,6 +4,7 @@ using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services.EmailSender;
+using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -479,6 +480,42 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             };
 
             return View(businessPartnershipViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ViewApprovalRequest(int id)
+        {
+            var order = await _context.Orders.SingleOrDefaultAsync(o => o.ID == id);
+            if(order == null)
+            {
+                return NotFound();
+            }
+
+            var amWorkTime = await _context.WorkTimes.SingleOrDefaultAsync(w => w.ID == order.AmWorkTimeID);
+            var pmWorkTime = await _context.WorkTimes.SingleOrDefaultAsync(w => w.ID == order.PmWorkTimeID);
+
+            var orderVM = new OrderVM
+            {
+                ID = id,
+                CompanyName = order.CompanyName,
+                CompanyPhonenumber = order.CompanyPhonenumber,
+                CompanyEmail = order.CompanyEmail,
+                RepresentativeName = order.RepresentativeName,
+                ClinicName = order.ClinicName,
+                DomainName = order.DomainName,
+                Content = order.Content,
+                Image = order.Image ?? "",
+                Status = order.Status,
+
+                AmWorkTime = $"{amWorkTime?.Session}: {amWorkTime?.StartTime.ToString("HH:mm")} - {amWorkTime?.EndTime.ToString("HH:mm")}",
+                PmWorkTime = $"{pmWorkTime?.Session}: {pmWorkTime?.StartTime.ToString("HH:mm")} - {pmWorkTime?.EndTime.ToString("HH:mm")}",
+
+                ClinicAddress = $"{order.ClinicAddress}, {await LocalAPIReverseString.GetProvinceNameById(order.Province ?? 0)}, {await LocalAPIReverseString.GetDistrictNameById(order.Province ?? 0, order.District ?? 0)}, {await LocalAPIReverseString.GetWardNameById(order.District ?? 0, order.Ward ?? 0)}"
+            };
+
+            await Console.Out.WriteLineAsync("================");
+            await Console.Out.WriteLineAsync($"comapanyName = {orderVM.CompanyName}");
+            return Json(orderVM);
         }
 
         [HttpPost]

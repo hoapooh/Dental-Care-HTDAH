@@ -4,6 +4,30 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<link rel="stylesheet" href="~/assets/fonts/stylesheet.css" />
+
+<style>
+    .modal-content {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+    }
+
+    .modal-body input {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+    }
+
+    .modal-body textarea {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+    }
+
+    .modal-body p {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+</style>
 
 <div class="account__management__header">
     <div class="title">Thông Tin Hợp Tác Kinh Doanh</div>
@@ -28,7 +52,7 @@
             <th>Địa Chỉ Email</th>
             <th>Tên Người Đại Diện</th>
             <th>Tên Phòng Khám</th>
-            <th>Địa Chỉ Phòng Khám</th>
+            @* <th>Địa Chỉ Phòng Khám</th> *@
             <th>Tên Miền</th>
             <th>Nội Dung</th>
             <th class="text-center">Hành Động</th>
@@ -41,51 +65,197 @@
 
             @foreach (var order in Model.BusinessPartnerships)
             {
-                @if (order.Status == "Chưa Duyệt") {
-                <tr style="vertical-align: middle">
-                    <td class="text-center">@count</td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.CompanyName</td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.CompanyPhonenumber</td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.CompanyEmail</td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.RepresentativeName</td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.ClinicName</td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.ClinicAddress</td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">
-                        @if (!string.IsNullOrEmpty(order.DomainName))
-                        {
-                            <a href="@order.DomainName" target="_blank">@order.DomainName</a>
-                        }
-                    </td>
-                    <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">
-                        <div class="content-preview">
-                            @(order.Content.Length > 50 ? order.Content.Substring(0, 50) : order.Content)
-                            @if (order.Content.Length > 50)
+                @if (order.Status == "Chưa Duyệt")
+                {
+                    <tr style="vertical-align: middle">
+                        <td class="text-center">@count</td>
+                        <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.CompanyName</td>
+                        <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.CompanyPhonenumber</td>
+                        <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.CompanyEmail</td>
+                        <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.RepresentativeName</td>
+                        <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.ClinicName</td>
+                        @* <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">@order.ClinicAddress</td> *@
+                        <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">
+                            @if (!string.IsNullOrEmpty(order.DomainName))
                             {
-                                <a href="javascript:void(0);" onclick="showFullContent(this);" data-full-content="@order.Content" data-short-content="@order.Content.Substring(0, 50)">Xem Thêm</a>
+                                <a href="@order.DomainName" target="_blank">@order.DomainName</a>
                             }
-                        </div>
-                    </td>
-                    <td class="text-center" style="display: flex; justify-content: center; align-items: center; word-wrap: break-word; max-width: 300px; padding: 10px;">
-                        <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        </td>
+                        <td style="word-wrap: break-word; max-width: 300px; padding: 10px;">
+                            <div class="content-preview">
+                                @(order.Content.Length > 50 ? order.Content.Substring(0, 50) : order.Content)
+                                @if (order.Content.Length > 50)
+                                {
+                                    <a href="javascript:void(0);" onclick="showFullContent(this);" data-full-content="@order.Content" data-short-content="@order.Content.Substring(0, 50)">Xem Thêm</a>
+                                }
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            <form style="display: inline;">
+                                <button type="button" class="btn btn-view btn-icon" onclick="viewApprovalRequest(@order.ID)">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </form>
+
                             <form action="@Url.Action("ProcessRequest", "ManagerClinic", new {area = "Admin"})" method="post" style="display: inline;">
                                 <input type="hidden" name="orderId" value="@order.ID" />
                                 <input type="hidden" name="orderStatus" value="Đồng Ý" />
-                                <button type="submit" class="btn btn-success" style="font-size: 1.4rem; padding: 10px 30px; width: 120px;">Đồng Ý</button>
+                                <button type="submit" class="btn btn-success" style="font-size: 1.4rem; padding: 10px 30px; width: 120px;">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
                             </form>
                             <form action="@Url.Action("ProcessRequest", "ManagerClinic", new {area = "Admin"})" method="post" style="display: inline;">
                                 <input type="hidden" name="orderId" value="@order.ID" />
                                 <input type="hidden" name="orderStatus" value="Từ Chối" />
-                                <button type="submit" class="btn btn-danger" style="font-size: 1.4rem; padding: 10px 30px; width: 120px;">Từ Chối</button>
+                                <button type="submit" class="btn btn-danger" style="font-size: 1.4rem; padding: 10px 30px; width: 120px;">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
                             </form>
-                        </div>
-                    </td>
-                </tr>
-                count++;
+                        </td>
+                    </tr>
+                    count++;
                 }
             }
         }
     </tbody>
 </table>
+
+<!-- Requet Modal-->
+<div class="modal fade" id="viewApprovalRequestModal" tabindex="-1" aria-labelledby="viewApprovalRequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 50% !important">
+        <div class="modal-content">
+            <div class="modal-header" style="flex-direction: column-reverse;">
+                <h1 class="modal-title" id="viewApprovalRequestModalLabel">Chi tiết đơn duyệt</h1>
+                @* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Tên doanh nghiệp</p>
+                        <input type="text" id="viewCompanyName" class="form-control" readonly />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Số điện thoại</p>
+                        <input type="number" id="viewCompanyPhoneNumber" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Địa chỉ Email</p>
+                        <input type="email" id="viewCompanyEmail" class="form-control" value="" readonly />
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Tên người đại diện</p>
+                        <input type="text" id="viewRepresentativeName" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Tên phòng khám</p>
+                        <input type="text" id="viewClinicName" class="form-control" readonly />
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Địa chỉ phòng khám</p>
+                        <input type="text" id="viewClinicAddress" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-12">
+                        <p class="form-label">Tên miền</p>
+                        <a href="" id="viewDomainName" class="form-control">
+                            <p id="textDomainName"></p>
+                        </a>
+
+                    </div>
+                </div>
+
+                @* <div class="row">
+                <div class="mb-3 col-md-4">
+                <p class="form-label">Tỉnh / Thành phố</p>
+                <input type="text" id="viewProvinceName" class="form-control" readonly />
+                </div>
+
+                <div class="mb-3 col-md-4">
+                <p class="form-label">Quận / Huyện</p>
+                <input type="text" id="viewDistrictName" class="form-control" readonly />
+                </div>
+
+                <div class="mb-3 col-md-4">
+                <p class="form-label">Phường / Xã</p>
+                <input type="text" id="viewWardName" class="form-control" readonly />
+                </div>
+                </div> *@
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Thời gian làm việc buổi sáng</p>
+                        <input type="text" id="viewAmWorkTime" class="form-control" readonly />
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Thời gian làm việc buổi chiều</p>
+                        <input type="text" id="viewPmWorkTime" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-12">
+                        <div class="text-center">
+                            <p class="form-label">Logo phòng khám</p>
+                            <img id="viewImage" src="" alt="Clinic Image" style="max-width: 50%; border-radius: 10px;" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-12">
+                        <p class="form-label">Nội dung</p>
+                        <textarea type="text" id="viewContent" class="form-control" rows="10" readonly></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 2rem; background-color: #dc3545; border-color: #dc3545;">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewApprovalRequest(id) {
+        $.ajax({
+            url: '@Url.Action("ViewApprovalRequest", "ManagerClinic")',
+            type: 'POST',
+            data: { id: id },
+            success: function (data) {
+                $('#viewCompanyName').val(data.companyName);
+                $('#viewCompanyEmail').val(data.companyEmail);
+                $('#viewCompanyPhoneNumber').val(data.companyPhonenumber);
+                $('#viewRepresentativeName').val(data.representativeName);
+                $('#viewClinicName').val(data.clinicName);
+                $('#viewClinicAddress').val(data.clinicAddress);
+                $('#textDomainName').text(data.domainName);
+                $('#viewContent').val(data.content);
+                $('#viewProvinceName').val(data.provinceName);
+                $('#viewDistrictName').val(data.districtName);
+                $('#viewWardName').val(data.wardName);
+                $('#viewAmWorkTime').val(data.amWorkTime);
+                $('#viewPmWorkTime').val(data.pmWorkTime);
+
+                $('#viewDomainName').attr('href', data.domainName);
+                $('#viewImage').attr('src', data.image);
+                $('#viewApprovalRequestModal').modal('show');
+            }
+        });
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
