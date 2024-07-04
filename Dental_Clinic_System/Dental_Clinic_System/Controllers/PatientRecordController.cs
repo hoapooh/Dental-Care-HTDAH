@@ -1,4 +1,5 @@
 ﻿using Dental_Clinic_System.Areas.Manager.ViewModels;
+using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.ViewModels;
 using Google.Apis.PeopleService.v1.Data;
@@ -203,6 +204,9 @@ namespace Dental_Clinic_System.Controllers
         [HttpGet]
         public async Task<IActionResult> PatientRecordPaymentChoosing(string bookingDateTime, int patientRecordID, int specialtyID, int clinicID, int dentistID)
         {
+            var patientRecord = await _context.PatientRecords.FirstOrDefaultAsync(p => p.ID == patientRecordID);
+            
+
             var appointment = new Dictionary<string, object>
             {
                 //{ "Schedule", await _context.Schedules.Include(s => s.TimeSlot).FirstOrDefaultAsync(s => s.ID == scheduleID)},
@@ -216,6 +220,10 @@ namespace Dental_Clinic_System.Controllers
             ViewBag.specialtyID = specialtyID;
             ViewBag.dentistID = dentistID;
             ViewBag.clinicID = clinicID;
+            ViewBag.WardName = await LocalAPIReverseString.GetWardNameById(patientRecord?.District ?? 0, patientRecord?.Ward ?? 0);
+            ViewBag.DistrictName = await LocalAPIReverseString.GetDistrictNameById(patientRecord?.Province ?? 0, patientRecord?.District ?? 0);
+            ViewBag.ProvinceName = await LocalAPIReverseString.GetProvinceNameById(patientRecord?.Province ?? 0);
+
             return View(appointment);
         }
         #endregion

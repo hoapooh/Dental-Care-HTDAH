@@ -49,11 +49,11 @@
 			});
 		</script>
 	}
-	else if (ViewBag.ToastMessage != null)
+	else if (ViewBag.ToastFailMessage != null)
 	{
 		<script>
 			window.addEventListener('DOMContentLoaded', (event) => {
-				showErrorToasts('@ViewBag.ToastMessage');
+				showErrorToasts('@ViewBag.ToasFailtMessage');
 			});
 		</script>
 	}

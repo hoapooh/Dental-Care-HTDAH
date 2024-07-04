@@ -413,4 +413,10 @@
     <Folder Include="Areas\Manager\Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="wkhtmltox\libwkhtmltox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

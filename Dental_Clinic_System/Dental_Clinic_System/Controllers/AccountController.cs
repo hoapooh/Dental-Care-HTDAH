@@ -606,7 +606,7 @@ namespace Dental_Clinic_System.Controllers
             var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             if (_context.Accounts.FirstOrDefault(u => u.Email == claimsValue) == null)
             {
-                HttpContext.SignOutAsync();
+                await HttpContext.SignOutAsync();
                 return RedirectToAction("Index", "Home");
             }
 
@@ -852,9 +852,9 @@ namespace Dental_Clinic_System.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RescheduleAppointment(int scheduleID, int appointmentID)
+        public async Task<IActionResult> RescheduleAppointment(string bookingDateTime, int appointmentID)
         {
-            var appointment = await _context.Appointments.Include(a => a.Schedule).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
+            var appointment = await _context.Appointments.Include(a => a.Schedule).ThenInclude(a => a.TimeSlot).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
 
             if (appointment == null)
             {
@@ -862,36 +862,25 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
-            // Change current Schedule Status to Empty
-            appointment.Schedule.ScheduleStatus = "Còn Trống";
-            _context.Update(appointment);
-            await _context.SaveChangesAsync();
-            //await Console.Out.WriteLineAsync("================================");
-            //await Console.Out.WriteLineAsync($"Current Status = {appointment.Schedule.ScheduleStatus} of {appointment.ScheduleID}");
-            //await Console.Out.WriteLineAsync("================================");
-            // Update current ScheduleID to a new Slot
-            appointment.ScheduleID = scheduleID;
-            _context.Update(appointment);
-            await _context.SaveChangesAsync();
-            //await Console.Out.WriteLineAsync("================================");
-            //await Console.Out.WriteLineAsync($"New ScheduleID = {appointment.ScheduleID}");
-            //await Console.Out.WriteLineAsync("================================");
-            // Retrieve the new Schedule
-            var newSchedule = await _context.Schedules.FindAsync(scheduleID);
-            if (newSchedule == null)
+            string[] newSchedule = bookingDateTime.Split(' ');
+            var formatedDate = DateOnly.ParseExact(newSchedule[0], "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy");
+            appointment.Schedule.Date = DateOnly.Parse(formatedDate);
+
+            var newTimeSlot = await _context.TimeSlots.FirstOrDefaultAsync(t => t.StartTime == TimeOnly.Parse(newSchedule[1]) && t.EndTime == TimeOnly.Parse(newSchedule[2]));
+
+            //await Console.Out.WriteLineAsync("=====================================");
+            //await Console.Out.WriteLineAsync($"New timeslot = {newTimeSlot.ID}");
+            //await Console.Out.WriteLineAsync("=====================================");
+
+            if (newTimeSlot == null)
             {
-                TempData["ToastMessageFailTempData"] = "Không tìm thấy lịch khám.";
+                TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra";
                 return RedirectToAction("Profile", "Account");
             }
 
-            // Update new Schedule Status to Booked
-            newSchedule.ScheduleStatus = "Đã Đặt";
-            _context.Update(newSchedule);
-            await _context.SaveChangesAsync();
-            //await Console.Out.WriteLineAsync("================================");
-            //await Console.Out.WriteLineAsync($"New Status = {newSchedule.ScheduleStatus} of {newSchedule.ID}");
-            //await Console.Out.WriteLineAsync("================================");
+            appointment.Schedule.TimeSlotID = newTimeSlot.ID;
 
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Profile", "Account");
         }
@@ -1166,7 +1155,7 @@ namespace Dental_Clinic_System.Controllers
 
             if (appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
             {
-                appointment.Schedule.ScheduleStatus = "Còn Trống";
+                appointment.Schedule.ScheduleStatus = "Đã Hủy";
                 await _context.SaveChangesAsync();
             }
 

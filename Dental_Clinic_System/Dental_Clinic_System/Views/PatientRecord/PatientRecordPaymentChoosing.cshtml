@@ -60,7 +60,7 @@
                         <div class="patient__info">
                             <i class="fa-solid fa-map-location-dot"></i>
                             <div class="patient__info__details">
-                                @patientRecord?.Address, @await LocalAPIReverseString.GetWardNameById(patientRecord?.District??0, patientRecord?.Ward??0), @await LocalAPIReverseString.GetDistrictNameById(patientRecord?.Province??0, patientRecord?.District??0), @await LocalAPIReverseString.GetProvinceNameById(patientRecord?.Province??0)
+                                @patientRecord?.Address, @ViewBag.WardName, @ViewBag.DistrictName, @ViewBag.ProvinceName
                             </div>
                         </div>
                     </div>
@@ -99,14 +99,14 @@
                                 <div class="payment__type col-md-7">
                                     <div class="payment__type__collapse">
                                         <div class="collapse__item">
-                                            <div class="collapse__item__header">
+                                            @* <div class="collapse__item__header">
                                                 <div class="collapse__item__header--text">
                                                     <label>
                                                         <div class="dots"></div>
                                                         <p>Thanh toán bằng VNPay</p>
                                                     </label>
                                                 </div>
-                                            </div>
+                                            </div> *@
                                             <div class="collapse__item__content">
                                                 <div class="collapse__item__content--box">
                                                     <div class="style__box">
@@ -223,7 +223,7 @@
                             </div>
                         </div>
                         <div class="btn-wrapper payment">
-                            <a href="/appointment/confirm?scheduleID=@ViewBag.scheduleID&dentistID=@ViewBag.dentistID&specialtyID=@ViewBag.specialtyID&clinicID=@ViewBag.clinicID&patientRecordID=@ViewBag.patientRecordID">
+                            <a href="/appointment/confirm?bookingDateTime=@ViewBag.bookingDateTime&dentistID=@ViewBag.dentistID&specialtyID=@ViewBag.specialtyID&clinicID=@ViewBag.clinicID&patientRecordID=@ViewBag.patientRecordID">
                                  <button type="button" class="back-btn">
                                     Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
                             </button>

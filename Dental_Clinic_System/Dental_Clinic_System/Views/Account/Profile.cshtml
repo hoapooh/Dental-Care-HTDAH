@@ -245,27 +245,27 @@
                                     </div>
                                     <div style="width: 100%">
                                         <label>Mật khẩu mới</label><br /><input type="password"
-                                                                                                name="newPassword"
-                                                                                                id="firstname"
-                                                                                                pattern="^[a-zA-Z][a-zA-Z0-9]*$"
-                                                                                                minlength="3"
-                                                                                                maxlength="30"
-                                                                                                required
-                                                                                                placeholder="Nhập mật khẩu mới"
+                                                                                name="newPassword"
+                                                                                id="firstname"
+                                                                                pattern="^[a-zA-Z][a-zA-Z0-9]*$"
+                                                                                minlength="3"
+                                                                                maxlength="30"
+                                                                                required
+                                                                                placeholder="Nhập mật khẩu mới"
                                         @(User.Identity.IsAuthenticated && (User.Identity as ClaimsIdentity)?.Claims.Any(c => c.Issuer == "Google") == true ? "readonly" : "required")
-                                                                                                style="width: 100%" />
+                                                                                style="width: 100%" />
                                     </div>
                                     <div style="width: 100%">
                                         <label>Nhập lại mật khẩu mới</label><br /><input type="password"
-                                                                                                         name="confirmPassword"
-                                                                                                         id="firstname"
-                                                                                                         pattern="^[a-zA-Z][a-zA-Z0-9]*$"
-                                                                                                         minlength="3"
-                                                                                                         maxlength="30"
-                                                                                                         required
-                                                                                                         placeholder="Nhập lại mật khẩu mới"
+                                                                                         name="confirmPassword"
+                                                                                         id="firstname"
+                                                                                         pattern="^[a-zA-Z][a-zA-Z0-9]*$"
+                                                                                         minlength="3"
+                                                                                         maxlength="30"
+                                                                                         required
+                                                                                         placeholder="Nhập lại mật khẩu mới"
                                         @(User.Identity.IsAuthenticated && (User.Identity as ClaimsIdentity)?.Claims.Any(c => c.Issuer == "Google") == true ? "readonly" : "required")
-                                                                                                         style="width: 100%" />
+                                                                                         style="width: 100%" />
                                     </div>
                                     <div class="submit__button">
                                         <button type="reset" class="reset">Nhập lại</button>
@@ -305,7 +305,7 @@
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
                                                 );
-                                                                                                                                                                                                                                    ">
+                                                                                                                                                                                                                                                    ">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -346,7 +346,7 @@
                                             </div>
                                             <div class="item" style="display: flex; align-items: center; margin-bottom: 8px;">
                                                 <span style="font-weight: bold; white-space: nowrap; margin-right: 8px; min-width: 180px;">Giờ hẹn:</span>
-                                                <span style="flex-grow: 1;">@appointment?.Schedule?.TimeSlot?.StartTime - @appointment?.Schedule?.TimeSlot?.EndTime</span>
+                                                <span style="flex-grow: 1;">@appointment?.Schedule?.TimeSlot?.StartTime.ToString("HH:mm") - @appointment?.Schedule?.TimeSlot?.EndTime.ToString("HH:mm")</span>
                                             </div>
                                             <div class="item" style="display: flex; align-items: center; margin-bottom: 8px;">
                                                 <span style="font-weight: bold; white-space: nowrap; margin-right: 8px; min-width: 180px;">Giá tiền:</span>
@@ -480,7 +480,7 @@
                 <div class="modal-body">
                     <form id="rescheduleForm" asp-controller="Account" asp-action="RescheduleAppointment" method="post">
 
-                        <input type="hidden" name="scheduleID" id="scheduleID" />
+                        <input type="hidden" name="bookingDateTime" id="bookingDateTime" />
                         <input type="hidden" name="appointmentID" id="appointmentID" />
 
                         <!-- THẺ NÀY ĐỂ HIỂN THỊ LỊCH THEO GIAO DIỆN MOBISCROLL  -->
@@ -539,37 +539,37 @@
 
                             var scheduleMap = new Map();
                             data.forEach(function (item) {
-                                scheduleMap.set(item.date + 'T' + item.startTime, item.scheduleID);
+                                scheduleMap.set(item.date + 'T' + item.startTime, item.date + " " + item.startTime + " " + item.endTime);
                             });
                             //console.log(schedules);
                             console.log(scheduleMap);
 
-                            let current = new Date();
+                            // let current = new Date();
                             //initialize mobiscroll calendar with the valid dates
                             mobiscroll.datepicker("#demo-single-day", {
                                 controls: ["calendar", "timegrid"],
                                 firstDay: 1,
-                                min: current.setHours(current.getHours() + 4),
+                                //min: current.setHours(current.getHours() + 4),
                                 display: "inline",
                                 touchUI: true,
                                 selectMultiple: false,
                                 valid: schedules.map(item => ({
                                     start: item.start,
                                     end: item.end,
-                                    item: item.title,
-
                                 })),
 
                                 locale: mobiscroll.localeVi,
 
                                 onChange: function (event, inst) {
                                     console.log(formatDate(event.value));
-                                    document.getElementById('scheduleID').value = scheduleMap.get(formatDate(event.value));
+                                    //Lấy ngày + thời gian từ event và gán vào input hidden
+                                    document.getElementById('bookingDateTime').value = scheduleMap.get(formatDate(event.value));
                                     //Ẩn hoặc hiện button submit theo giá trị scheduleID
-                                    if (document.getElementById('scheduleID').value !== 'undefined') {
-                                        document.getElementById('saveButton').disabled = false;
-                                    } else {
+                                    if (document.getElementById('bookingDateTime').value === '' || document.getElementById('bookingDateTime').value === 'undefined') {
                                         document.getElementById('saveButton').disabled = true;
+                                    }
+                                    else {
+                                        document.getElementById('saveButton').disabled = false;
                                     }
                                 }
                             });
@@ -582,16 +582,6 @@
                 });
             });
         });
-
-        // Check if the selected date conflicts with any existing appointments
-        function isConflict(appointments, selectedDate) {
-            const selectedDateTime = new Date(selectedDate);
-            return appointments.some(appointment => {
-                const appointmentStart = new Date(appointment.date + 'T' + appointment.startTime);
-                const appointmentEnd = new Date(appointment.date + 'T' + appointment.endTime);
-                return selectedDateTime >= appointmentStart && selectedDateTime < appointmentEnd;
-            });
-        }
 
         // Hàm này nhận value của ngày trong event và trả về theo định dạng
         function formatDate(date) {

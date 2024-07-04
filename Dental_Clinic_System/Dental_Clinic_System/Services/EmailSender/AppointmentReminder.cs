@@ -8,6 +8,10 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Dental_Clinic_System.Helper;
+    using Microsoft.EntityFrameworkCore;
+    using Dental_Clinic_System.Areas.Admin.ViewModels;
+    using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
     public class AppointmentReminder : BackgroundService
     {
@@ -31,39 +35,46 @@
                         var context = scope.ServiceProvider.GetRequiredService<DentalClinicDbContext>();
                         var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSenderCustom>();
 
-                        // Get the current UTC time
-                        var now = DateTime.UtcNow;
-                        var reminderTime = now.AddDays(1);
+                        var now = Util.GetUtcPlus7Time();
+                        var tomorrow = now.Date.AddDays(1);
 
-                        var appointments = context.Appointments
-                            .Where(a => a.Schedule.Date == DateOnly.FromDateTime(reminderTime.Date)
-                                && a.Schedule.TimeSlot.StartTime.Hour == reminderTime.Hour
-                                && a.Schedule.TimeSlot.StartTime.Minute == reminderTime.Minute
-                                && a.AppointmentStatus == "Đã Chấp Nhận")
-                            .ToList();
+                        var appointments = await context.Appointments.Include(a => a.PatientRecords).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Where(a => a.Schedule.Date == DateOnly.FromDateTime(tomorrow)
+                                        && (a.AppointmentStatus == "Đã Chấp Nhận" || a.AppointmentStatus == "Chờ Xác Nhận"))
+                            .ToListAsync();
 
-                        foreach (var appointment in appointments)
+                        if (appointments.Count > 0)
                         {
-                            var user = context.Accounts.Find(appointment.PatientRecordID);
-                            if (user != null)
+                            foreach (var appointment in appointments)
                             {
-                                var email = user.Email;
-                                var subject = "Nhắc nhở lịch hẹn khám";
-                                var message = $"Xin chào {user.FirstName},\n\nĐây là lời nhắc nhở về lịch hẹn khám của bạn vào ngày mai lúc {appointment.Schedule.TimeSlot.StartTime}.\n\nTrân trọng,\nDental Clinic System";
-                                await emailSender.SendEmailConfirmationAsync(email, subject, message);
+                                var user = await context.Accounts.FirstOrDefaultAsync(a => a.ID == appointment.PatientRecords.AccountID);
+                                if (user != null)
+                                {
+                                    var email = user.Email ?? "Rivinger7@gmail.com";
+                                    var subject = "Nhắc nhở lịch hẹn khám";
+                                    
+                                    var message = $"Xin chào {user.FirstName},\n\nĐây là lời nhắc nhở về lịch hẹn khám của bạn vào ngày mai lúc {appointment.Schedule.TimeSlot.StartTime}.\n\nTrân trọng,\nDental Clinic System";
+                                    await emailSender.SendEmailAsync(email, subject, message);
+
+                                    // Wait for 20 seconds before sending the next email
+                                    //await Task.Delay(TimeSpan.FromSeconds(120), stoppingToken);
+                                }
                             }
                         }
                     }
+
 
                     _logger.LogInformation("Appointment reminders sent successfully.");
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "An error occurred while sending appointment reminders.");
+                    _logger.LogError(ex.Message, "An error occurred while sending appointment reminders.");
                 }
 
-                // Wait for 24 hours before checking again
+                // For testing
+                //await Task.Delay(TimeSpan.FromSeconds(20), stoppingToken);
+
                 await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
+                
             }
         }
     }
