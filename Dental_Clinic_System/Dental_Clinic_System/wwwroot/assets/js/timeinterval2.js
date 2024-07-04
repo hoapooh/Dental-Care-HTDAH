@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
     function updateSlots() {
         var interval = document.getElementById("timeInterval").value;
         var startHour = 7;
@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // Calculate the integer value based on the time slot
             var value;
             if (interval === "30") {
-                value = (Math.floor(i) - startHour) * 2 + (startMinute === 30 ? 1 : 0) + 1;
+                value = (Math.floor(i) - startHour) * 2 + (startMinute === 30 ? 1 : 0) + 3; // bắt đầu từ 3
             } else if (interval === "60") {
-                value = (Math.floor(i) - startHour) + 23;
+                value = (Math.floor(i) - startHour) + 25; //bắt đầu từ 25 
             }
 
             slots.push({

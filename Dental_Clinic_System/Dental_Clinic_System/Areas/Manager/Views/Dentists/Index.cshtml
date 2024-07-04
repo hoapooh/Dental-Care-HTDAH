@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Dentist>
 
 @{
-	ViewData["Title"] = "Danh sách nha sĩ";
+	ViewData["Title"] = "Nha sĩ";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -16,7 +16,7 @@
 			background: #4880ff;
 		}
 
-		a.button-link {
+		a.button-link, button {
 			display: inline-block;
 			padding: 5px 10px;
 			background-color: transparent;
@@ -27,32 +27,34 @@
 			border-radius: 6px;
 		}
 
-		.manager__management table a.button-link i {
+		.manager__management table a.button-link i,
+		.manager__management table button i {
 			vertical-align: middle;
 		}
 
-		.manager__management table a.button-link:first-child,
+		.manager__management table a.button-link,
 		.manager__management .submit-btn {
 			background: #4880ff;
 			color: white;
 		}
 
-			.manager__management table a.button-link:first-child:hover,
+			.manager__management table a.button-link:hover,
 			.manager__management .submit-btn:hover {
 				background: #3b6cd9;
 			}
 
-		.manager__management table a.button-link:last-child,
 		.manager__management .close-btn {
 			margin-left: 5px;
 			background: rgb(255, 66, 66);
 			color: white;
 		}
-
-			.manager__management table a.button-link:last-child:hover,
 			.manager__management .close-btn:hover {
 				background: #f81f1f;
 			}
+
+		.inline {
+			display: inline-block;
+		}
 	</style>
 }
 
@@ -112,12 +114,14 @@
 					@item.Account.AccountStatus
 				</td>
 				<td>
-					<a asp-action="Edit" asp-route-id="@item.ID" class="button-link" title="Chỉnh sửa thông tin">
+					<a asp-action="Edit" asp-route-id="@item.ID" class="button-link inline" title="Chỉnh sửa thông tin">
 						<i class="bx bxs-edit"></i>
 					</a>
-					<a asp-action="Delete" asp-route-id="@item.ID" class="button-link" title="Khóa tài khoản">
-						<i class="bx bxs-trash"></i>
-					</a>
+					<form asp-action="Delete" asp-route-id="@item.ID" class="button-link inline" title="Khóa tài khoản">
+						<button type="submit" class="close-btn">
+							<i class="bx bxs-trash"></i>
+						</button>
+					</form>
 				</td>
 
 			</tr>

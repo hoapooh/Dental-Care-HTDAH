@@ -44,7 +44,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			//--------------------------------------------------
 			ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).ToListAsync();
 			ViewBag.Status = null;
-			
+
 			//--------------------------------------------------
 			// Filter schedules from today onwards
 			var today = DateOnly.FromDateTime(DateTime.Today);
@@ -70,8 +70,8 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				ViewBag.Status = status;
 			}
 
-			var dentalClinicDbContext = await schedulesQuery.ToListAsync();
-			
+			var dentalClinicDbContext = await schedulesQuery.OrderBy(s => s.Date).ToListAsync();
+
 			return View("Index", dentalClinicDbContext);
 		}
 		public async Task<IActionResult> ViewHistory(int? dentistId, DateTime? date)
@@ -104,7 +104,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			{
 				schedulesQuery = schedulesQuery.Where(s => s.Date == DateOnly.FromDateTime(date.Value));
 			}
-			var dentalClinicDbContext = await schedulesQuery.ToListAsync();
+			var dentalClinicDbContext = await schedulesQuery.OrderBy(s => s.Date).ToListAsync();
 
 			return View("ViewHistory", dentalClinicDbContext);
 		}
@@ -239,7 +239,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 									Date = date,
 									TimeSlotID = timeSlotId,
 									ScheduleStatus = (timeSlotId == 1) ? "Lịch Sáng" : "Lịch Chiều"
-								}) ;
+								});
 							}
 						}
 					}
@@ -273,7 +273,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			_context.SaveChanges();
 		}
 
-		
+
 
 
 		#region Lấy lịch làm việc của Dentist cụ thể, đưa vào Calendar - ORIGINAL AUTHOR: PHẠM DUY HOÀNG
@@ -391,9 +391,6 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 						   .ToList();
 
 			ViewData["DentistID"] = new SelectList(dentists, "DentistID", "FullName");
-
-			//ViewData["DentistID"] = new SelectList(_context.Dentists, "ID", "ID");
-			//ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID");
 			return View();
 		}
 
@@ -468,6 +465,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			var dentist = await _context.Dentists.Include(d => d.Account).FirstOrDefaultAsync(m => m.ID == dentistId);
 			ViewBag.DentistName = dentist.Account.LastName + " " + dentist.Account.FirstName;
 			ViewBag.Date = DateOnly.FromDateTime(date.Value);
+			ViewBag.DentistID = dentistId;
 			//---------------------------------------------------
 			//Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
 			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == 1);
@@ -481,7 +479,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			return View(await scheduleSubList.ToListAsync());
 
 			//-----
-			
+
 		}
 
 		// POST: Manager/Schedules/Edit/5
@@ -521,7 +519,45 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			return View(schedule);
 		}
 		#endregion
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> EditStatusTo_Nghi(int dentistId, DateOnly date, int timeSlotId)
+		{
+			var schedule = await _context.Schedules.FirstOrDefaultAsync(m => m.DentistID == dentistId && m.Date == date && m.TimeSlotID == timeSlotId);
 
+			if (schedule != null)
+			{
+				schedule.ScheduleStatus = "Nghỉ";
+				_context.Schedules.Update(schedule);
+				await _context.SaveChangesAsync();
+			}
+			else
+			{
+				_context.Add(new Schedule
+				{
+					DentistID = dentistId,
+					Date = date,
+					TimeSlotID = timeSlotId,
+					ScheduleStatus = "Nghỉ"
+				});
+				await _context.SaveChangesAsync();
+			}
+			return RedirectToAction("Edit", new { dentistId = dentistId, date = date });
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> EditStatusTo_ConTrong(int? dentistId, DateOnly? date , int? timeSlotId)
+		{
+			var schedule = await _context.Schedules.FirstOrDefaultAsync(m => m.DentistID == dentistId && m.Date == date && m.TimeSlotID == timeSlotId);
+			
+			if (schedule != null)
+			{
+				schedule.ScheduleStatus = "Còn Trống";
+				_context.Schedules.Update(schedule);
+				await _context.SaveChangesAsync();
+			}
+			return RedirectToAction("Edit", new { dentistId = dentistId, date = date });
+		}
 		#region Xóa lịch khám theo ID - autoCreate
 		// GET: Manager/Schedules/Delete/5
 		public async Task<IActionResult> Delete(int? id)

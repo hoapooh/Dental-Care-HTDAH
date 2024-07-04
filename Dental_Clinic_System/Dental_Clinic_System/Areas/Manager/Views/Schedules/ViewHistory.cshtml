@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Schedule>
 
 @{
-	ViewData["Title"] = "ViewHistory";
+	ViewData["Title"] = "Lịch trình";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -103,18 +103,13 @@
 }
 <!-- account management header -->
 <div class="manager__management__header">
-	<div class="title">Khung giờ làm việc</div>
-	<div class="action-btn">
-		<p style="color: #0d6efd"> Chú thích: </p>
-		<p class="time_Dat">Đã đặt</p>
-
-	</div>
+	<div class="title">Lịch sử khám (điều trị)</div>
 </div>
 
 <!-- Filters Section -->
-<div>
+<div style="padding: 0 ">
 	<form method="get" asp-action="ViewHistory" class="manager__management__clinic row">
-		<div class="form-group col-md-3">
+		<div class="form-group col-md-3" style="padding: 0; padding-right: 20px">
 			<label for="dentist">Nha sĩ</label>
 			<select id="dentist" name="dentistId" class="form-control">
 				<option value=""></option>
@@ -124,17 +119,25 @@
 				}
 			</select>
 		</div>
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-2" style="padding: 0; padding-right: 20px">
 			<label for="date">Ngày</label>
 			<input type="date" id="date" name="date" class="form-control" />
 		</div>
-		<div class="col-md-1" style="margin-top: 33px;">
-			<button type="submit" class="btn btn-primary" style="min-width: 78px;">
+		<div class="col-md-1" style="margin-top: 33px; padding: 0">
+			<button type="submit" class="btn btn-primary" style="
+				min-width: 84px; background: #ccc;">
 				Tìm
 			</button>
 		</div>
 
 	</form>
+</div>
+<div class="manager__management__header">
+	<div class="title"></div>
+	<div class="action-btn">
+		<p style="color: #0d6efd"> Chú thích: </p>
+		<p class="time_Dat">Đã đặt</p>
+	</div>
 </div>
 <!-- Nội dung -->
 <div class="table-responsive">

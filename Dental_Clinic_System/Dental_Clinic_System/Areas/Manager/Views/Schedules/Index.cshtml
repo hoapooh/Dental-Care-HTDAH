@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Schedule>
 
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = "Lịch trình";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -98,6 +98,7 @@
 			.row {
 				justify-content: end;
 			}
+
 	</style>
 
 }
@@ -105,17 +106,13 @@
 <div class="manager__management__header">
 	<div class="title">Khung giờ làm việc</div>
 	<div class="action-btn">
-		<p style="color: #0d6efd"> Chú thích: </p>
-		<p class="time_ChuaDat">Còn trống</p>
-		<p class="time_Dat">Đã đặt</p>
-		<p class="time_Nghi">Nghỉ</p>
-
+	<a asp-controller="Schedules" asp-action="Create" class="add__new">+ Thêm</a>
 	</div>
 </div>
 <!-- Filters Section -->
-<div>
+<div style="padding: 0 ">
 	<form method="get" asp-action="Index" class="manager__management__clinic row">
-		<div class="form-group col-md-3">
+		<div class="form-group col-md-3" style="padding: 0; padding-right: 20px">
 			<label for="dentist">Nha sĩ</label>
 			<select id="dentist" name="dentistId" class="form-control">
 				<option value=""></option>
@@ -125,11 +122,11 @@
 				}
 			</select>
 		</div>
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-2" style="padding: 0; padding-right: 20px">
 			<label for="date">Ngày</label>
 			<input type="date" id="date" name="date" class="form-control" />
 		</div>
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-2" style="padding: 0; padding-right: 20px">
 			<label for="status">Trạng thái</label>
 			<select id="status" name="status" class="form-control">
 				<option value=""></option>
@@ -138,9 +135,9 @@
 				<option value="Nghỉ">Nghỉ</option>
 			</select>
 		</div>
-		<div class="col-md-1" style="margin-top: 33px;">
+		<div class="col-md-1" style="margin-top: 33px; padding: 0">
 			<button type="submit" class="btn btn-primary" style="
-				min-width: 78px;">
+				min-width: 84px; background: #ccc;">
 				Tìm
 			</button>
 		</div>
@@ -148,7 +145,16 @@
 	</form>
 </div>
 
+<div class="manager__management__header">
+	<div class="title"></div>
+	<div class="action-btn">
+		<p style="color: #0d6efd"> Chú thích: </p>
+		<p class="time_ChuaDat">Còn trống</p>
+		<p class="time_Dat">Đã đặt</p>
+		<p class="time_Nghi">Nghỉ</p>
 
+	</div>
+</div>
 
 <!-- Nội dung -->
 <div class="table-responsive">
@@ -173,10 +179,12 @@
 			{
 				List<int> slotIDs_DaDat = new();
 				List<int> slotIDs_Nghi = new();
+				List<int> slotIDs_ConTrong = new();
 				List<int> slotIDs_AmPm = new();
 				var checkAm = group.Any(g => g.TimeSlotID == 1);
 				var checkPm = group.Any(g => g.TimeSlotID == 2);
-				if (ViewBag.Status != "Còn Trống" || checkAm == true || checkPm == true)
+				var checkConTrongLe = group.Any(g => g.ScheduleStatus == "Còn Trống");
+				if (ViewBag.Status != "Còn Trống" || checkAm == true || checkPm == true || checkConTrongLe == true)
 				{
 					var dentist = group.FirstOrDefault()?.Dentist;
 					var account = dentist?.Account;
@@ -196,6 +204,8 @@
 											slotIDs_DaDat.Add(item.TimeSlotID);
 										else if (item.ScheduleStatus == "Nghỉ")
 											slotIDs_Nghi.Add(item.TimeSlotID);
+										else if (item.ScheduleStatus == "Còn Trống")
+											slotIDs_ConTrong.Add(item.TimeSlotID);
 										else
 											slotIDs_AmPm.Add(item.TimeSlotID); //xem có id 23 24 ko -> có làm sáng chiều ko
 									}
@@ -212,7 +222,7 @@
 											{
 												<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 											}
-											else if (slotIDs_AmPm.Contains(1))
+											else if (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID))
 											{
 												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 											}
@@ -227,7 +237,7 @@
 											{
 												<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 											}
-											else if (slotIDs_AmPm.Contains(2))
+											else if (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID))
 											{
 												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 											}
@@ -237,14 +247,14 @@
 									{
 										foreach (var slot in @ViewBag.AmTimeSlots)
 										{
-											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && slotIDs_AmPm.Contains(1))
+											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID)))
 											{
 												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 											}
 										}
 										foreach (var slot in @ViewBag.PmTimeSlots)
 										{
-											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && slotIDs_AmPm.Contains(2))
+											if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID) && (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID)))
 											{
 												<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 											}
