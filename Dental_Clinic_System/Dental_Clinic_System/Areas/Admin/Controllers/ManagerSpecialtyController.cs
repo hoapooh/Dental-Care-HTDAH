@@ -126,6 +126,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 _context.Specialties.Update(specialty);
                 await _context.SaveChangesAsync();
 
+                TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa chuyên khoa thành công";
                 return RedirectToAction(nameof(ListSpecialty));
             }
 
@@ -139,6 +140,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         public IActionResult DeleteSpecialty(int id)
         {
             _hiddenSpecialty.HiddenSpecialty(id);
+            TempData["ToastMessageSuccessTempData"] = "Xóa chuyên khoa thành công";
             return RedirectToAction(nameof(ListSpecialty));
         }
         #endregion
@@ -203,6 +205,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             _context.Specialties.Add(specialty);
             await _context.SaveChangesAsync();
 
+            TempData["ToastMessageSuccessTempData"] = "Thêm mới chuyên khoa thành công";
             return RedirectToAction(nameof(ListSpecialty));
         }
         #endregion

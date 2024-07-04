@@ -1,7 +1,7 @@
 ﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.EditAccountVM
 
 @{
-    ViewData["Title"] = "EditAccountDentist";
+    ViewData["Title"] = "Chỉnh sửa tài khoản nha sĩ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -50,14 +50,6 @@
             </select>
         </div>
         <div class="col-md-6">
-            <label for="degreeID">Bằng cấp</label>
-            <select name="DegreeID" id="degreeID" class="form-control" asp-items="ViewBag.DegreeID" required></select>
-        </div>
-        <div class="col-md-6">
-            <label for="clinicID">Phòng khám</label>
-            <select name="ClinicID" id="clinicID" class="form-control" asp-items="ViewBag.ClinicID" required></select>
-        </div>
-        <div class="col-md-6">
             <label for="email">Email</label>
             <input type="email" name="Email" id="email" value="@Model.Email" />
             <span asp-validation-for="Email" class="text-danger"></span>
@@ -66,6 +58,14 @@
             <label for="phonenumber">Số điện thoại</label>
             <input type="text" name="PhoneNumber" id="phonenumber" value="@Model.PhoneNumber" />
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="degreeID">Bằng cấp</label>
+            <select name="DegreeID" id="degreeID" class="form-control" asp-items="ViewBag.DegreeID" required></select>
+        </div>
+        <div class="col-md-6">
+            <label for="clinicID">Phòng khám</label>
+            <select name="ClinicID" id="clinicID" class="form-control" asp-items="ViewBag.ClinicID" required></select>
         </div>
         <div class="col-md-6">
             <label for="address">Địa chỉ</label>

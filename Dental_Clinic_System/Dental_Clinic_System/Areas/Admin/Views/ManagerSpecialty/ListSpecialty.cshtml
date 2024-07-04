@@ -3,16 +3,8 @@
 @model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.ManagerSpecialtyVM>
 
 @{
-	ViewData["Title"] = "ListSpecialty";
+	ViewData["Title"] = "Danh sách chuyên khoa";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-}
-
-@if (!ViewData.ModelState.IsValid)
-{
-	<div class="alert alert-danger" role="alert">
-		@Html.ValidationMessage("Name")
-		@Html.ValidationMessage("Deposit")
-	</div>
 }
 
 
@@ -109,7 +101,7 @@
 				</div>
 				<div class="mb-3">
 					<label for="viewDesc" class="form-label">Mô tả</label>
-					<textarea id="viewDesc" class="form-control" rows="4" readonly></textarea>
+					<div id="viewDesc" class="form-control" style="height:auto;"></div>
 				</div>
 				<div class="mb-3">
 					<div class="text-center">
@@ -124,6 +116,15 @@
 		</div>
 	</div>
 </div>
+
+
+@if (!ViewData.ModelState.IsValid)
+{
+	<div class="alert alert-danger" role="alert">
+		@Html.ValidationMessage("Name")
+		@Html.ValidationMessage("Deposit")
+	</div>
+}
 
 
 <!--SHOW LIST-->
@@ -186,7 +187,7 @@
 			success: function (data) {
 				$('#viewName').val(data.name);
 				$('#viewDeposit').val(data.deposit);
-				$('#viewDesc').val(data.description);
+				$('#viewDesc').html(data.description);
 				$('#viewImage').attr('src', data.image);
 				$('#viewSpecialtyModal').modal('show');
 			}

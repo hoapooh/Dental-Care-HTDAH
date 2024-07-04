@@ -40,9 +40,17 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
         [Required(ErrorMessage = "Vui lòng nhập Quận/ Huyện.")]
         public int? District { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng nhập Phường/ Xã")]
         public int? Ward { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập địa chỉ.")]
+        public string? ProvinceName { get; set; }
+
+		public string? DistrictName { get; set; }
+
+		public string? WardName { get; set; }
+
+
+		[Required(ErrorMessage = "Vui lòng nhập địa chỉ.")]
         public string Address { get; set; }
 
         public int AmWorkTimeID { get; set; }

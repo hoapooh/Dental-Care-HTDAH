@@ -1,6 +1,6 @@
-﻿namespace Dental_Clinic_System.Areas.Admin.DTO
+﻿namespace Dental_Clinic_System.Areas.Admin.ViewModels
 {
-	public class WorkTimeDto
+	public class WorkTimeVM
 	{
 		public int ID { get; set; }
 		public string DisplayText { get; set; }

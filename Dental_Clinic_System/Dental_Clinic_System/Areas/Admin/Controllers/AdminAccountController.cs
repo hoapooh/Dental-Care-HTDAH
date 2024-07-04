@@ -29,7 +29,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			var user = _context.Accounts.FirstOrDefault(d => username == d.Username && password == d.Password);
 			if (user == null)
 			{
-				ViewBag.ErrorMessage = "Invalid username or password";
+				ViewBag.ErrorMessage = "Tài khoản đăng nhập hoặc mật khẩu không hợp lệ!!";
 				return BadRequest("Sai Tên đăng nhập hoặc Mật khẩu");
 			}
 

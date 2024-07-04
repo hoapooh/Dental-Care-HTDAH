@@ -1,7 +1,7 @@
 ﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.AppointmentVM
 
 @{
-    ViewData["Title"] = "GetAppointmentStatus";
+    ViewData["Title"] = "Dashboard";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
     var yearOptions = new System.Text.StringBuilder();
@@ -64,12 +64,12 @@
         <div class="dashboard__info__chartDai">
             <canvas id="myChart" style="width: 100%; height: 400px"></canvas>
             </br>
-            <h5 style="text-align: center">Tổng đặt khám thành công/thất bại của mỗi tháng trong 1 năm</h5>
+            <h3 style="text-align: center">Tổng đặt khám thành công/thất bại của mỗi tháng trong 1 năm</h3>
         </div>
         <div class="dashboard__info__chartTron">
             <canvas id="dailyChart" style="width: 100%; height: 300px"></canvas>
             </br>
-            <h5 style="text-align: center">Đặt khám thành công/thất bại trong ngày</h5>
+            <h3 style="text-align: center">Đặt khám thành công/thất bại trong ngày</h3>
         </div>
     </div>
 
@@ -169,6 +169,7 @@
                 }
             });
 
+            //Biểu đồ troàn
             var dailyCtx = document.getElementById('dailyChart').getContext('2d');
             var successfulToday = @Model.SuccessfulAppointmentsToday;
             var failedToday = @Model.FailedAppointmentsToday;

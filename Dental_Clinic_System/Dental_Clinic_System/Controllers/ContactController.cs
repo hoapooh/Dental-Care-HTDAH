@@ -1,5 +1,4 @@
-﻿using Dental_Clinic_System.Areas.Admin.DTO;
-using Dental_Clinic_System.Areas.Admin.ViewModels;
+﻿using Dental_Clinic_System.Areas.Admin.ViewModels;
 using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,7 +19,7 @@ namespace Dental_Clinic_System.Controllers
 		{
             var amWorkTimes = await _context.WorkTimes
             .Where(w => w.Session == "Sáng")
-            .Select(w => new WorkTimeDto
+            .Select(w => new WorkTimeVM
             {
                 ID = w.ID,
                 DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
@@ -29,7 +28,7 @@ namespace Dental_Clinic_System.Controllers
 
             var pmWorkTimes = await _context.WorkTimes
                 .Where(w => w.Session == "Chiều")
-                .Select(w => new WorkTimeDto
+                .Select(w => new WorkTimeVM
                 {
                     ID = w.ID,
                     DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"

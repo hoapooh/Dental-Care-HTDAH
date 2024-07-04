@@ -87,7 +87,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         //===================THÊM TÀI KHOẢN===================
         //[Route("AddAccount")]
         [HttpPost]
-        public async Task<IActionResult> AddAccount(string username, string password, string firstname, string lastname, string phoneNumber, string email, string address, string role)
+        public async Task<IActionResult> AddAccount(string username, string password, string firstname, string lastname, string phoneNumber, string email, string? address)
         {
             //Check thông tin trùng lặp
             var existingAccount = await _context.Accounts
@@ -95,8 +95,20 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
             if (existingAccount != null)
             {
-                //Thấy thông tin bị trùng, thông báo lỗi
-                ModelState.AddModelError(string.Empty, "Thông tin người dùng đã tồn tại.");
+                //Kiểm tra Tên đăng nhập đã tồn tại chưa
+                bool accountUsername = await _context.Accounts.AnyAsync(a => a.Username == username);
+                if (accountUsername)
+                    ModelState.AddModelError("Username", "Tên đăng nhập đã tồn tại");
+                
+                //Kiểm tra Email đã tồn tại chưa
+                bool accountEmail = await _context.Accounts.AnyAsync(a => a.Email == email);
+                if (accountEmail)
+                    ModelState.AddModelError("Email", "Email đã tồn tại");
+
+                //Kiểm tra Sđt đã tồn tại chưa
+                bool accountPhoneNumber = await _context.Accounts.AnyAsync(a => a.PhoneNumber == phoneNumber);
+                if (accountPhoneNumber)
+                    ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại");
 
                 //Lấy lại list account để hiển thị
                 var accounts = await _context.Accounts
@@ -109,7 +121,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     Username = a.Username,
                     Email = a.Email,
                     PhoneNumber = a.PhoneNumber,
-                    Address = a.Address,
+                    Address = a.Address ?? "",
                     Role = a.Role
                 }).ToList();
 
@@ -125,13 +137,15 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 Password = DataEncryptionExtensions.ToMd5Hash(password),
                 PhoneNumber = phoneNumber,
                 Email = email,
-                Address = address,
+                Address = address ?? "",
                 Role = "Bệnh Nhân",
                 AccountStatus = "Hoạt Động"
             };
 
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
+
+            TempData["ToastMessageSuccessTempData"] = "Đăng ký tài khoản bệnh nhân thành công";
             return RedirectToAction(nameof(ListAccountPatient));
         }
         #endregion
@@ -180,6 +194,27 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 					return NotFound();
 				}
 
+                //Kiểm tra Tên đăng nhập đã tồn tại chưa
+                if(await _context.Accounts.AnyAsync(a => a.Username == model.Username && a.ID != model.Id))
+                {
+                    ModelState.AddModelError("Username", "Tên đăng nhập đã tồn tại");
+                    return View(model);
+                }
+
+                //Kiểm tra Email đã tồn tại chưa
+                if(await _context.Accounts.AnyAsync(a => a.Email == model.Email && a.ID != model.Id))
+                {
+                    ModelState.AddModelError("Email", "Email đã tồn tại");
+                    return View(model);
+                }
+
+                //Kiểm tra Sđt đã tồn tại chưa
+                if(await _context.Accounts.AnyAsync(a => a.PhoneNumber == model.PhoneNumber && a.ID != model.Id))
+                {
+                    ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại");
+                    return View(model);
+                }
+
 				if (!string.IsNullOrEmpty(model.NewPassword) || !string.IsNullOrEmpty(model.ConfirmPassword))
 				{
 					if (model.NewPassword != model.ConfirmPassword)
@@ -216,6 +251,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				_context.Update(account);
                 await _context.SaveChangesAsync();
 
+                TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa tài khoản bệnh nhân thành công";
                 //Chuyển đến ListAccount
                 return RedirectToAction(nameof(ListAccountPatient));
             }
@@ -237,6 +273,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 account.AccountStatus = status;
                 await _context.SaveChangesAsync();
             }
+            TempData["ToastMessageSuccessTempData"] = "Cấm tài khoản bệnh nhân thành công";
             return RedirectToAction(nameof(ListAccountPatient));
         }
         #endregion

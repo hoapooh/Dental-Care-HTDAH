@@ -1,5 +1,4 @@
-﻿using Dental_Clinic_System.Areas.Admin.DTO;
-using Dental_Clinic_System.Areas.Admin.Models;
+﻿using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Areas.Admin.ViewModels;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Helper;
@@ -37,16 +36,15 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                                  join account in _context.Accounts
                                  on clinic.ManagerID equals account.ID
 
-                                 where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
-                                 select new ManagerClinicVM
-                                 {
-                                     ClinicName = clinic.Name,
-                                     //Address = clinic.Address,
-                                     Province = clinic.Province,
-                                     Image = clinic.Image,
-                                     Id = clinic.ID,
-                                     ManagerName = account.LastName + " " + account.FirstName
-                                 }).ToListAsync();
+								 where account.Role == "Quản Lý" && clinic.ClinicStatus == "Hoạt Động"
+								 select new ManagerClinicVM
+								 {
+									 ClinicName = clinic.Name,
+									 ProvinceName = clinic.ProvinceName,
+									 Image = clinic.Image,
+									 Id = clinic.ID,
+									 ManagerName = account.LastName + " " + account.FirstName
+								 }).ToListAsync();
 
             return View(clinics);
         }
@@ -110,23 +108,23 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 FullName = a.LastName + " " + a.FirstName
             }).ToListAsync();
 
-            var amWorkTimes = await _context.WorkTimes
-            .Where(w => w.Session == "Sáng")
-            .Select(w => new WorkTimeDto
-            {
-                ID = w.ID,
-                DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-            })
-            .ToListAsync();
+			var amWorkTimes = await _context.WorkTimes
+			.Where(w => w.Session == "Sáng")
+			.Select(w => new WorkTimeVM
+			{
+				ID = w.ID,
+				DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+			})
+			.ToListAsync();
 
-            var pmWorkTimes = await _context.WorkTimes
-                .Where(w => w.Session == "Chiều")
-                .Select(w => new WorkTimeDto
-                {
-                    ID = w.ID,
-                    DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-                })
-                .ToListAsync();
+			var pmWorkTimes = await _context.WorkTimes
+				.Where(w => w.Session == "Chiều")
+				.Select(w => new WorkTimeVM
+				{
+					ID = w.ID,
+					DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+				})
+				.ToListAsync();
 
             var model = new AddClincVM
             {
@@ -178,23 +176,23 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                         })
                         .ToListAsync();
 
-                    var amWorkTime = await _context.WorkTimes
-                        .Where(w => w.Session == "Sáng")
-                        .Select(w => new WorkTimeDto
-                        {
-                            ID = w.ID,
-                            DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-                        })
-                        .ToListAsync();
+					var amWorkTime = await _context.WorkTimes
+						.Where(w => w.Session == "Sáng")
+						.Select(w => new WorkTimeVM
+						{
+							ID = w.ID,
+							DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+						})
+						.ToListAsync();
 
-                    var pmWorkTime = await _context.WorkTimes
-                        .Where(w => w.Session == "Chiều")
-                        .Select(w => new WorkTimeDto
-                        {
-                            ID = w.ID,
-                            DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-                        })
-                        .ToListAsync();
+					var pmWorkTime = await _context.WorkTimes
+						.Where(w => w.Session == "Chiều")
+						.Select(w => new WorkTimeVM
+						{
+							ID = w.ID,
+							DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+						})
+						.ToListAsync();
 
                     model.UnassignedManagers = new SelectList(unassignedManager, "ID", "FullName");
                     model.AmWorkTimes = new SelectList(amWorkTime, "ID", "DisplayText");
@@ -213,55 +211,60 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     return View(model);
                 }
 
-                var clinic = new Clinic
-                {
-                    Name = model.Name,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    ManagerID = manager.ID,
-                    Province = model.Province,
-                    District = model.District,
-                    Ward = model.Ward,
-                    Basis = model.Basis,
-                    Address = model.Address,
-                    Description = model.Description,
-                    Image = model.Image,
-                    ClinicStatus = "Hoạt Động",
-                    AmWorkTimeID = model.AmWorkTimeID,
-                    PmWorkTimeID = model.PmWorkTimeID
-                };
+				var clinic = new Clinic
+				{
+					Name = model.Name,
+					PhoneNumber = model.PhoneNumber,
+					Email = model.Email,
+					ManagerID = manager.ID,
+					Province = model.Province,
+					District = model.District,
+					Ward = model.Ward,
+					ProvinceName = model.ProvinceName,
+					DistrictName = model.DistrictName,
+					WardName = model.WardName,
+					Basis = model.Basis,
+					Address = model.Address,
+					Description = model.Description,
+					Image = model.Image,
+					ClinicStatus = "Hoạt Động",
+					AmWorkTimeID = model.AmWorkTimeID,
+					PmWorkTimeID = model.PmWorkTimeID
+				};
 
                 _context.Clinics.Add(clinic);
                 await _context.SaveChangesAsync();
 
+                TempData["ToastMessageSuccessTempData"] = "Thêm mới phòng khám thành công";
                 return RedirectToAction(nameof(ListClinic));
-            }
+			}
 
-            var unassignedManagers = await _context.Accounts
-                .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
-                .Select(a => new
-                {
-                    a.ID,
-                    FullName = a.LastName + " " + a.FirstName
-                }).ToListAsync();
+			// Load lại dữ liệu khi ModelState không hợp lệ
+			var unassignedManagers = await _context.Accounts
+				.Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+				.Select(a => new
+				{
+					a.ID,
+					FullName = a.LastName + " " + a.FirstName
+				}).ToListAsync();
 
-            var amWorkTimes = await _context.WorkTimes
-            .Where(w => w.Session == "Sáng")
-            .Select(w => new WorkTimeDto
-            {
-                ID = w.ID,
-                DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-            })
-            .ToListAsync();
+			var amWorkTimes = await _context.WorkTimes
+			.Where(w => w.Session == "Sáng")
+			.Select(w => new WorkTimeVM
+			{
+				ID = w.ID,
+				DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+			})
+			.ToListAsync();
 
-            var pmWorkTimes = await _context.WorkTimes
-                .Where(w => w.Session == "Chiều")
-                .Select(w => new WorkTimeDto
-                {
-                    ID = w.ID,
-                    DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-                })
-                .ToListAsync();
+			var pmWorkTimes = await _context.WorkTimes
+				.Where(w => w.Session == "Chiều")
+				.Select(w => new WorkTimeVM
+				{
+					ID = w.ID,
+					DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
+				})
+				.ToListAsync();
 
             model.UnassignedManagers = new SelectList(unassignedManagers, "ID", "FullName");
             model.AmWorkTimes = new SelectList(amWorkTimes, "ID", "DisplayText");
@@ -293,92 +296,68 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = new AddClincVM
-            {
-                ID = clinic.ID,
-                Name = clinic.Name,
-                PhoneNumber = clinic.PhoneNumber,
-                Email = clinic.Email,
-                ManagerID = clinic.ManagerID,
-                Province = clinic.Province,
-                District = clinic.District,
-                Ward = clinic.Ward,
-                Basis = clinic.Basis,
-                Address = clinic.Address,
-                Description = clinic.Description,
-                Image = clinic.Image,
-                ClinicStatus = "Hoạt Động",
-                UnassignedManagers = new SelectList(await _context.Accounts
-                    .Where(a => a.Role == "Quản Lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID))
-                    .Select(a => new
-                    {
-                        a.ID,
-                        FullName = a.LastName + " " + a.FirstName
-                    }).ToListAsync(), "ID", "FullName")
-            };
+			var model = new AddClincVM
+			{
+				ID = clinic.ID,
+				Name = clinic.Name,
+				PhoneNumber = clinic.PhoneNumber,
+				Email = clinic.Email,
+				ManagerID = clinic.ManagerID,
+				Province = clinic.Province,
+				District = clinic.District,
+				Ward = clinic.Ward,
+				ProvinceName = clinic.ProvinceName,
+				DistrictName = clinic.DistrictName,
+				WardName = clinic.WardName,
+				Basis = clinic.Basis,
+				Address = clinic.Address,
+				Description = clinic.Description,
+				Image = clinic.Image,
+				ClinicStatus = "Hoạt Động",
+				UnassignedManagers = new SelectList(await _context.Accounts
+					.Where(a => a.Role == "Quản Lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID))
+					.Select(a => new
+					{
+						a.ID,
+						FullName = a.LastName + " " + a.FirstName
+					}).ToListAsync(), "ID", "FullName")
+			};
 
             return View(model);
         }
 
-        [HttpPost]
-        //[Route("EditClinic")]
-        public async Task<IActionResult> EditClinic(AddClincVM model)
-        {
-            if (ModelState.IsValid)
-            {
-                ////Kiểm tra Tên phòng khám đã tồn tại chưa
-                //bool existingName = await _context.Clinics.AnyAsync(c => c.Name == model.Name);
-                //if(existingName)
-                //	ModelState.AddModelError("Name", "Tên phòng khám đã tồn tại.");
+		[HttpPost]
+		//[Route("EditClinic")]
+		public async Task<IActionResult> EditClinic(AddClincVM model)
+		{
+			if (ModelState.IsValid)
+			{
+				var clinic = await _context.Clinics.FindAsync(model.ID);
+				if (clinic == null)
+				{
+					return NotFound();
+				}
 
-                ////Kiểm tra Email đã tồn tại chưa
-                //bool existingEmail = await _context.Clinics.AnyAsync(c => c.Email == model.Email);
-                //if (existingEmail)
-                //	ModelState.AddModelError("Email", "Email đã tồn tại.");
+				clinic.Name = model.Name;
+				clinic.PhoneNumber = model.PhoneNumber;
+				clinic.Email = model.Email;
+				clinic.ManagerID = model.ManagerID;
+				clinic.Province = model.Province;
+				clinic.District = model.District;
+				clinic.Ward = model.Ward;
+				clinic.ProvinceName = model.ProvinceName;
+				clinic.DistrictName = model.DistrictName;
+				clinic.WardName = model.WardName;
+				clinic.Basis = model.Basis;
+				clinic.Address = model.Address;
+				clinic.Description = model.Description;
+				clinic.Image = model.Image;
+				clinic.ClinicStatus = "Hoạt Động";
 
-                ////Kiểm tra Số điện thoại đã tồn tại chưa
-                //bool existingPhone = await _context.Clinics.AnyAsync(c => c.PhoneNumber == model.PhoneNumber);
-                //if (existingPhone)
-                //	ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
-
-                //            //Nếu đã tồn tại, load lại danh sách người quản lý chưa có gắn phòng khám
-                //if(!ModelState.IsValid)
-                //{
-                //                var unassignedManager = await _context.Accounts
-                //                    .Where(a => a.Role == "Quản lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
-                //                    .Select(a => new
-                //                    {
-                //                        a.ID,
-                //                        FullName = a.LastName + " " + a.FirstName
-                //                    })
-                //                    .ToListAsync();
-
-                //                model.UnassignedManagers = new SelectList(unassignedManager, "ID", "FullName");
-                //                return View(model);
-                //            }
-
-                var clinic = await _context.Clinics.FindAsync(model.ID);
-                if (clinic == null)
-                {
-                    return NotFound();
-                }
-
-                clinic.Name = model.Name;
-                clinic.PhoneNumber = model.PhoneNumber;
-                clinic.Email = model.Email;
-                clinic.ManagerID = model.ManagerID;
-                clinic.Province = model.Province;
-                clinic.District = model.District;
-                clinic.Ward = model.Ward;
-                clinic.Basis = model.Basis;
-                clinic.Address = model.Address;
-                clinic.Description = model.Description;
-                clinic.Image = model.Image;
-                clinic.ClinicStatus = "Hoạt Động";
-
-                await _context.SaveChangesAsync();
+				await _context.SaveChangesAsync();
+                TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa phòng khám thành công";
                 return RedirectToAction(nameof(ListClinic));
-            }
+			}
 
             //Ghi lại List Manager chưa được chỉ định phòng khám nào
             model.UnassignedManagers = new SelectList(await _context.Accounts
@@ -406,9 +385,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 _context.SaveChanges();
             }
 
+            TempData["ToastMessageSuccessTempData"] = "Đóng cửa phòng khám thành công";
             return RedirectToAction(nameof(ListClinic));
-        }
-        #endregion
+		}
+		#endregion
 
         //=====================PHÒNG KHÁM ĐÓNG CỬA=====================
 
@@ -420,15 +400,15 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                                       join account in _context.Accounts
                                       on clinic.ManagerID equals account.ID
 
-                                      where account.Role == "Quản Lý" && clinic.ClinicStatus == "Đóng Cửa"
-                                      select new ManagerClinicVM
-                                      {
-                                          ClinicName = clinic.Name,
-                                          Province = clinic.Province,
-                                          Id = clinic.ID,
-                                          Image = clinic.Image,
-                                          ManagerName = account.LastName + " " + account.FirstName
-                                      }).ToListAsync();
+									  where account.Role == "Quản Lý" && clinic.ClinicStatus == "Đóng Cửa"
+									  select new ManagerClinicVM
+									  {
+										  ClinicName = clinic.Name,
+										  ProvinceName = clinic.ProvinceName,
+										  Id = clinic.ID,
+										  Image = clinic.Image,
+										  ManagerName = account.LastName + " " + account.FirstName
+									  }).ToListAsync();
 
             return View(clinicClosed);
 
@@ -451,9 +431,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                                     PhoneNumber = c.PhoneNumber,
                                     Email = c.Email,
                                     ManagerName = a.LastName + " " + a.FirstName,
-                                    Province = c.Province,
-                                    District = c.District,
-                                    Ward = c.Ward,
                                     ProvinceName = c.ProvinceName,
                                     DistrictName = c.DistrictName,
                                     WardName = c.WardName,
@@ -485,9 +462,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 _context.SaveChanges();
             }
 
+            TempData["ToastMessageSuccessTempData"] = "Mở cửa phòng khám thành công";
             return RedirectToAction(nameof(ListClinicClosed));
-        }
-        #endregion
+		}
+		#endregion
 
         #region Duyệt Yêu Cầu Hợp Tác Kinh Doanh
         [HttpGet]

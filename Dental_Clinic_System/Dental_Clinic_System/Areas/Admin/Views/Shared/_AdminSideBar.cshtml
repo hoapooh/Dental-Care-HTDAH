@@ -1,21 +1,41 @@
-﻿<nav class="sidebar" style="width: 15%">
+﻿<style>
+	.nav-item .nav-link.active {
+		background-color: #007bff;
+		color: white;
+		font-weight: bold;
+	}
+
+	.nav-item.menu-items .nav-link.active {
+		background-color: #007bff;
+		color: white;
+	}
+
+	.nav-item .nav-link1.active {
+		background-color: #007bff;
+		color: white;
+		font-weight: bold;
+	}
+
+	.nav-item.menu-items .nav-link1.active {
+		background-color: #007bff;
+		color: white;
+	}
+</style>
+
+<nav class="sidebar" style="width: 15%">
 	<p class="dashboard__logo"><span>Dental</span>Care</p>
 	<ul class="nav">
 		<li class="nav-item">
-			<a href="~/Admin/Dashboard/GetAppointmentStatus" class="">
+			<a href="~/Admin/Dashboard/GetAppointmentStatus">
 				<span class="menu-icon"><i class="bx bxs-dashboard"></i></span>Dashboard
 			</a>
 		</li>
 
 		<!-- =========== DROPDOWN MENU =========== -->
 		<li class="nav-item menu-items">
-			<a class="nav-link collapsed"
-			   data-bs-toggle="collapse"
-			   href="#manage-account"
-			   aria-expanded="false"
-			   aria-controls="manage-account">
+			<a class="collapsed" data-bs-toggle="collapse" href="#manage-account" aria-expanded="false" aria-controls="manage-account">
 				<span class="menu-icon"><i class="bx bxs-user"></i></span>
-				<span class="menu-title Quan_ly_tai_khoan">Quản lý tài khoản</span>
+				<span class="menu-title">Quản lý tài khoản</span>
 				<span class="menu-down" style="margin-left: auto">
 					<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
 				</span>
@@ -23,53 +43,45 @@
 			<div class="collapse" id="manage-account">
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountDentist/ListAccountDentist" onclick="document.getElementById('form_nhasi').submit();">
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountDentist/ListAccountDentist">
 							<i class="fa-solid fa-stethoscope"></i> Tài khoản nha sĩ
 						</a>
 					</li>
-
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountPatient/ListAccountPatient" onclick="document.getElementById('form_benh_nhan').submit();">
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountPatient/ListAccountPatient">
 							<i class="fa-solid fa-hospital-user"></i> Tài khoản bệnh nhân
 						</a>
 					</li>
-
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountManager/ListAccountManager" onclick="document.getElementById('form_quan_ly').submit();">
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountManager/ListAccountManager">
 							<i class="fa-solid fa-hospital"></i> Tài khoản của quản lý
 						</a>
 					</li>
-
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link"
-						   href="~/Admin/AccountLocked/ListLockedAccount"><i class="fa-solid fa-ban"></i> Tài khoản bị cấm</a>
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/AccountLocked/ListLockedAccount">
+							<i class="fa-solid fa-ban"></i> Tài khoản bị cấm
+						</a>
 					</li>
 				</ul>
 			</div>
 		</li>
-
 		<li class="nav-item menu-items">
-			<a class="nav-link collapsed"
-			   data-bs-toggle="collapse"
-			   href="#manage-specialty"
-			   aria-expanded="false"
-			   aria-controls="manage-specialty">
+			<a class="collapsed" data-bs-toggle="collapse" href="#manage-clinic" aria-expanded="false" aria-controls="manage-clinic">
 				<span class="menu-icon"><i class="bx bx-list-ul"></i></span>
-				<span class="menu-title Quan_ly_tai_khoan">Quản lý phòng khám</span>
+				<span class="menu-title">Quản lý phòng khám</span>
 				<span class="menu-down" style="margin-left: auto">
 					<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
 				</span>
 			</a>
-			<div class="collapse" id="manage-specialty">
+			<div class="collapse" id="manage-clinic">
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/ManagerClinic/ListClinic">
-							<i class="fa-solid fa-stethoscope"></i> Phòng khám hiện tại
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link1" href="~/Admin/ManagerClinic/ListClinic">
+							<i class="fa-solid fa-hospital"></i> Phòng khám hiện tại
 						</a>
 					</li>
-
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="~/Admin/ManagerClinic/ListClinicClosed">
+						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link1" href="~/Admin/ManagerClinic/ListClinicClosed">
 							<i class="fa-solid fa-ban"></i> Phòng khám đã đóng cửa
 						</a>
 					</li>
@@ -102,3 +114,92 @@
 	</ul>
 	<div class="copyright">©️ All rights reserved | Dental Care</div>
 </nav>
+
+
+<script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+		function setActiveLink() {
+			const currentPath = window.location.pathname;
+			const menuLinks = document.querySelectorAll('.nav-link');
+			const menuLinkClinic = document.querySelectorAll('.nav-link1');
+
+			//Đặt trạng thái hoạt động dựa trên link hiện tại
+			menuLinks.forEach(link => {
+				if (link.href.includes(currentPath)) {
+					link.classList.add('active');
+					const parentCollapse = link.closest('.collapse');
+					if (parentCollapse) {
+						parentCollapse.classList.add('show');
+						const parentLink = parentCollapse.previousElementSibling;
+						if (parentLink) {
+							parentLink.classList.add('active');
+						}
+					}
+				}
+			});
+
+			// Xóa tất cả active states trước đó
+			menuLinks.forEach(link => {
+				link.classList.remove('active');
+				const parentCollapse = link.closest('.collapse');
+				if (parentCollapse) {
+					parentCollapse.previousElementSibling.classList.remove('active');
+				}
+			});
+
+
+			menuLinkClinic.forEach(link => {
+				if (link.href.includes(currentPath)) {
+					link.classList.add('active');
+					const parentCollapses = link.closest('.collapse');
+					if (parentCollapses) {
+						parentCollapses.classList.add('show');
+						const parentLink = parentCollapses.previousElementSibling;
+						if (parentLink) {
+							parentLink.classList.add('active');
+						}
+					}
+				}
+			});
+
+			menuLinkClinic.forEach(link => {
+				link.classList.remove('active');
+				const parentCollapses = link.closest('.collapse');
+				if (parentCollapses) {
+					parentCollapses.previousElementSibling.classList.remove('active');
+				}
+			});
+		}
+
+		setActiveLink();
+
+		// const menuLinks = document.querySelectorAll('.nav-link');
+		// menuLinks.forEach(link => {
+		// 	link.addEventListener('click', function () {
+		// 		setTimeout(() => {
+		// 			setActiveLink();
+		// 		}, 10);
+		// 	});
+		// });
+
+
+		// const menuLinkClinic = document.querySelectorAll('.nav-link1');
+		// menuLinkClinic.forEach(link => {
+		// 	link.addEventListener('click', function () {
+		// 		setTimeout(() => {
+		// 			setActiveLink();
+		// 		}, 50);
+		// 	});
+		// });
+
+		// document.querySelectorAll('.nav-link, .nav-link1').forEach(link => {
+		// 	link.addEventListener('click', function (e) {
+		// 		setTimeout(() => {
+		// 			setActiveLink();
+		// 		}, 10);
+		// 	});
+		// });
+
+	});
+
+</script>

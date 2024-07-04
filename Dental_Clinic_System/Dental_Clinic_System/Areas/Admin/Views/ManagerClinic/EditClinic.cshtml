@@ -1,7 +1,7 @@
 ﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.AddClincVM
 
 @{
-	ViewData["Title"] = "EditClinic";
+	ViewData["Title"] = "Chỉnh sửa phòng khám";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -69,6 +69,9 @@
 	<form id="uploadForm" action="~/Admin/ManagerClinic/EditClinic" method="post" class="modal-content">
 		<input type="hidden" asp-for="ID" />
 		<input type="hidden" asp-for="ClinicStatus" value="Hoạt động" />
+		<input type="hidden" name="ProvinceName" id="ProvinceName" />
+		<input type="hidden" name="DistrictName" id="DistrictName" />
+		<input type="hidden" name="WardName" id="WardName" />
 
 		<div class="modal-body row">
 			@* HIỂN THỊ LỖI *@
@@ -262,9 +265,9 @@
 			var selectedOption = $(this).find('option:selected');
 			var idtinh = selectedOption.val();
 			var fullnameTinh = selectedOption.data('fullname');
-			$('#Province').val(fullnameTinh);
+			$('#ProvinceName').val(fullnameTinh);
 
-			// Load districts based on selected province
+			//Tải Quận/ Huyện dựa trên Tỉnh/ Thành phố đã chọn
 			loadDistricts(idtinh);
 		});
 
@@ -272,16 +275,16 @@
 			var selectedOption = $(this).find('option:selected');
 			var idquan = selectedOption.val();
 			var fullnameQuan = selectedOption.data('fullname');
-			$('#District').val(fullnameQuan);
+			$('#DistrictName').val(fullnameQuan);
 
-			// Load wards based on selected district
+			// Tải Phường/ Xã dựa trên Quận/ Huyện đã chọn
 			loadWards(idquan);
 		});
 
 		$("#ward").change(function (e) {
 			var selectedOption = $(this).find('option:selected');
 			var fullnamePhuong = selectedOption.data('fullname');
-			$('#Ward').val(fullnamePhuong);
+			$('#WardName').val(fullnamePhuong);
 		});
 	});
 </script>

@@ -117,8 +117,26 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			if (existingAccount != null)
 			{
-				//Thấy thông tin bị trùng, thông báo lỗi
-				ModelState.AddModelError(string.Empty, "Thông tin người dùng đã tồn tại.");
+				//Kiểm tra tên đăng nhập đã tồn tại chưa
+				bool accountName = await _context.Accounts.AnyAsync(a => a.Username == username);
+				if (accountName)
+				{
+					ModelState.AddModelError("Name", "Tên đăng nhập đã tồn tại");
+				}
+
+				//Kiểm tra sđt đã tồn tại chưa
+				bool accountPhoneNumber = await _context.Accounts.AnyAsync (a => a.PhoneNumber == phoneNumber);
+				if (accountPhoneNumber)
+				{
+					ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại");
+				}
+
+				//Kiểm tra Email đã tồn tại chưa
+				bool accountEmail = await _context.Accounts.AnyAsync (a => a.Email == email);
+				if (accountEmail)
+				{
+					ModelState.AddModelError("Email", "Email đã tồn tại");
+				}
 
 				//Lấy lại list account để hiển thị
 				var account1 = await _context.Accounts
@@ -133,8 +151,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 					Username = a.Username,
 					Email = a.Email,
 					Gender = a.Gender,
-					PhoneNumber = a.PhoneNumber,
-					Role = a.Role
+					PhoneNumber = a.PhoneNumber
 				}).ToList();
 
 				return View("ListAccountDentist", accountList);
@@ -169,7 +186,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			var dentists = await _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).ToListAsync();
 
-			return RedirectToAction(nameof(ListAccountDentist), dentists);
+            TempData["ToastMessageSuccessTempData"] = "Đăng ký tài khoản nha sĩ thành công";
+            return RedirectToAction(nameof(ListAccountDentist), dentists);
 		}
 
 		#endregion
@@ -223,16 +241,46 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		//[Route("EditAccount")]
 		public async Task<IActionResult> EditAccountDentist(EditAccountVM model)
 		{
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
 			{
-				var account = await _context.Accounts.FindAsync(model.Id);
+                var account = await _context.Accounts.FindAsync(model.Id);
 				if (account == null)
 				{
 					return NotFound();
 				}
 
+				//Kiểm tra tên đăng nhập đã tồn tại chưa
+				if(await _context.Accounts.AnyAsync(a => a.Username == model.Username && a.ID != model.Id))
+				{
+					ModelState.AddModelError("Username", "Tên đăng nhập đã tồn tại");
+
+					//Đặt lại ViewData trước khi trả về View
+                    ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
+                    ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", model.ClinicID);
+                    return View(model);
+				}
+
+				//Kiểm tra Sđt đã tồn tại chưa
+				if(await _context.Accounts.AnyAsync(a => a.PhoneNumber == model.PhoneNumber && a.ID != model.Id))
+				{
+					ModelState.AddModelError("PhoneNumber", "Số điện thoại này đã tồn tại");
+					ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
+					ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", model.ClinicID);
+					return View(model);
+				}
+
+				//Kiểm tra Email đã tồn tại chưa
+				if(await _context.Accounts.AnyAsync(a => a.Email == model.Email && a.ID != model.Id))
+				{
+					ModelState.AddModelError("Email", "Email đã tồn tại");
+					ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
+                    ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", model.ClinicID);
+                    return View(model) ;
+				}
+
                 if (!string.IsNullOrEmpty(model.NewPassword) || !string.IsNullOrEmpty(model.ConfirmPassword))
                 {
+					//Kiểm tra mật khẩu mới có khớp với mk mới nhập không
                     if (model.NewPassword != model.ConfirmPassword)
                     {
                         ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp.");
@@ -274,8 +322,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 _context.Update(account);
 				await _context.SaveChangesAsync();
 
-				//Chuyển đến ListAccount
-				return RedirectToAction(nameof(ListAccountDentist));
+                TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa tài khoản nha sĩ thành công";
+                //Chuyển đến ListAccount
+                return RedirectToAction(nameof(ListAccountDentist));
 			}
 
             ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
@@ -297,7 +346,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				account.AccountStatus = status;
 				await _context.SaveChangesAsync();
 			}
-			return RedirectToAction(nameof(ListAccountDentist));
+            TempData["ToastMessageSuccessTempData"] = "Cấm tài khoản nha sĩ thành công";
+            return RedirectToAction(nameof(ListAccountDentist));
 		}
 		#endregion
 	}

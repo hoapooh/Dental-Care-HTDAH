@@ -1,21 +1,8 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.ManagerAccountVM>
 
 @{
-	ViewData["Title"] = "ListAccountManager";
+	ViewData["Title"] = "Danh sách tài khoản quản lý";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-}
-
-<!-- Thông báo lỗi bị trùng -->
-@if (!ViewData.ModelState.IsValid)
-{
-	<div class="alert alert-danger" role="alert">
-		@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-		{
-			<span>@error.ErrorMessage</span>
-
-			<br />
-		}
-	</div>
 }
 
 <style>
@@ -90,7 +77,7 @@
 					<div class="col">
 						<label for="username">Tên đăng nhập<sup style="color:red">*</sup></label>
 						<input type="text" name="Username" id="username" required />
-						<span id="usernameError" class="text-danger"></span>
+						<span id="usernameError" for="Username" class="text-danger"></span>
 					</div>
 					<div class="col">
 						<label for="password">Mật khẩu<sup style="color:red">*</sup></label>
@@ -112,12 +99,12 @@
 					<div class="col">
 						<label for="email">Email<sup style="color:red">*</sup></label>
 						<input type="email" name="Email" id="email" required />
-						<span id="emailError" class="text-danger"></span>
+						<span id="emailError" for="Email" class="text-danger"></span>
 					</div>
 					<div class="col">
 						<label for="phonenumber">Số điện thoại<sup style="color:red">*</sup></label>
 						<input type="tel" name="PhoneNumber" id="phonenumber" required />
-						<span id="phoneNumberError" class="text-danger"></span>
+						<span id="phoneNumberError" for="PhoneNumber" class="text-danger"></span>
 					</div>
 				</div>
 				<div class="user-address">
@@ -137,6 +124,20 @@
 		</form>
 	</div>
 </div>
+
+
+<!-- Thông báo lỗi bị trùng -->
+@if (!ViewData.ModelState.IsValid)
+{
+	<div class="alert alert-danger" role="alert">
+		@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+		{
+			<span>@error.ErrorMessage</span>
+
+			<br />
+		}
+	</div>
+}
 
 
 <!--SHOW LIST-->

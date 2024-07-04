@@ -89,6 +89,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
             }
 
+            TempData["ToastMessageSuccessTempData"] = "Bỏ chặn tài khoản thành công";
             return RedirectToAction(nameof(ListLockedAccount));
         }
         #endregion
