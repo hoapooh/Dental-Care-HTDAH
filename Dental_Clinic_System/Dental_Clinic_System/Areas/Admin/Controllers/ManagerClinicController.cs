@@ -520,13 +520,21 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
         [HttpPost]
         //[Route("GetApprovalRequest")]
-        public async Task<IActionResult> GetApprovalRequest(string companyName, string companyPhonenumber, string companyEmail, string representativeName, string clinicName, string clinicAddress, string? domainName, string logo, int provinceID, int districtID, int wardID, int amWorkTimeID, int pmWorkTimeID, string content)
+        public async Task<IActionResult> GetApprovalRequest(string companyName, string companyPhonenumber, string companyEmail, string representativeName, string clinicName, string clinicAddress, string? domainName, string logo, int provinceID, int districtID, int wardID, string amStartTime, string amEndTime, string pmStartTime, string pmEndTime, string content)
         {
-            //var companyNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyName == companyName);
-            //var companyPhonenumberExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyPhonenumber == companyPhonenumber);
-            //var companyEmailExisted = await _context.Orders.FirstOrDefaultAsync(c => c.CompanyEmail == companyEmail);
-            //var clinicNameExisted = await _context.Orders.FirstOrDefaultAsync(c => c.ClinicName == clinicName);
-            //var domainExisted = await _context.Orders.FirstOrDefaultAsync(c => c.DomainName == domainName);
+
+            #region Parse String To TimeOnly
+            TimeOnly amS = TimeOnly.Parse(amStartTime);
+            TimeOnly amE = TimeOnly.Parse(amEndTime);
+            TimeOnly pmS = TimeOnly.Parse(pmStartTime);
+            TimeOnly pmE = TimeOnly.Parse(pmEndTime);
+            #endregion
+
+            if (amS >= amE || pmS >= pmE)
+            {
+                TempData["ToastMessageFailTempData"] = "Thời gian làm việc không phù hợp";
+                return RedirectToAction("index", "contact", new { area = "" });
+            }
 
             var checkResult = await CheckExistingDetails(companyName, companyPhonenumber, companyEmail, clinicName, domainName);
 
@@ -553,6 +561,34 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     return RedirectToAction("index", "contact", new { area = "" });
             }
 
+            #region Check worktime is alredy existed or yet
+            var checkExistAm = await _context.WorkTimes.AnyAsync(t => t.Session == "Sáng" && t.StartTime == amS && t.EndTime == amE);
+            if (checkExistAm == false)
+            {
+                _context.WorkTimes.Add(new WorkTime
+                {
+                    Session = "Sáng",
+                    StartTime = amS,
+                    EndTime = amE
+                });
+                await _context.SaveChangesAsync();
+            }
+            var amWorkTime = await _context.WorkTimes.FirstOrDefaultAsync(t => t.Session == "Sáng" && t.StartTime == amS && t.EndTime == amE);
+            //--------------
+            var checkExistPm = await _context.WorkTimes.AnyAsync(t => t.Session == "Chiều" && t.StartTime == pmS && t.EndTime == pmE);
+            if (checkExistPm == false)
+            {
+                _context.WorkTimes.Add(new WorkTime
+                {
+                    Session = "Chiều",
+                    StartTime = pmS,
+                    EndTime = pmE
+                });
+                await _context.SaveChangesAsync();
+            }
+            var pmWorkTime = await _context.WorkTimes.FirstOrDefaultAsync(t => t.Session == "Chiều" && t.StartTime == pmS && t.EndTime == pmE);
+            #endregion
+
             var order = new Order
             {
                 CompanyName = companyName,
@@ -567,8 +603,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 Province = provinceID,
                 District = districtID,
                 Ward = wardID,
-                AmWorkTimeID = amWorkTimeID,
-                PmWorkTimeID =  pmWorkTimeID,
+                AmWorkTimeID = amWorkTime.ID,
+                PmWorkTimeID =  pmWorkTime.ID,
                 Status = "Chưa Duyệt"
             };
 

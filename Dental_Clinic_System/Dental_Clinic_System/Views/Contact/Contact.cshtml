@@ -94,20 +94,58 @@
                     <option value="0">Phường Xã</option>
                 </select>
             </div>
+        </div>
+        <div class="form-group col-md-12">
+            <p>Thời gian làm việc buổi sáng<sup style="color:red">*</sup></p>
             <div class="row">
-                <div class="col-md-6">
-                    <p>Thời gian làm việc buổi sáng<sup style="color:red">*</sup></p>
-                    <select name="amWorkTimeID" asp-items="Model.AmWorkTimes" class="form-control" style="font-size: 2rem;" required>
-                        <option value="">-- Thời gian làm việc ca sáng --</option>
+                <div class="col">
+                    <select name="amStartTime" class="form-control" style="font-size: 2rem;" required>
+                        <option value="">-- Bắt đầu --</option>
+                        @foreach (var time in ViewBag.AmTimes)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
                     </select>
-                    <span asp-validation-for="AmWorkTimeID" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <p>Thời gian làm việc buổi chiều<sup style="color:red">*</sup></p>
-                    <select name="pmWorkTimeID" asp-items="Model.PmWorkTimes" class="form-control" style="font-size: 2rem;" required>
-                        <option value="">-- Thời gian làm việc ca chiều --</option>
+                <div class="col-auto">
+                    <p style="margin-top: 5px;">đến</p>
+                </div>
+                <div class="col">
+                    <select name="amEndTime" class="form-control" style="font-size: 2rem;" required>
+                        <option value="">-- Kết thúc --</option>
+                        @foreach (var time in ViewBag.AmTimes)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
                     </select>
-                    <span asp-validation-for="PmWorkTimeID" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-12 mt-3">
+            <p>Thời gian làm việc buổi chiều<sup style="color:red">*</sup></p>
+            <div class="row">
+                <div class="col">
+
+                    <select name="pmStartTime" class="form-control" style="font-size: 2rem;" required>
+                        <option value="">-- Bắt đầu --</option>
+                        @foreach (var time in ViewBag.PmTimes)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <p style="margin-top: 5px;">đến</p>
+                </div>
+
+                <div class="col">
+                    <select name="pmEndTime" class="form-control" style="font-size: 2rem;" required>
+                        <option value="">-- Kết thúc --</option>
+                        @foreach (var time in ViewBag.PmTimes)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
+                    </select>
                 </div>
             </div>
         </div>
