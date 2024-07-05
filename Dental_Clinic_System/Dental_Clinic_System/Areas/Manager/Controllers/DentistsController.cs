@@ -295,7 +295,7 @@ namespace Dental_Clinic_System.Controllers
 					{
 						if(!string.IsNullOrEmpty(newPass))
 						{
-							account.Password = newPass;
+							account.Password = DataEncryptionExtensions.ToMd5Hash(newPass);
 						}
 						account.LastName = dentistForm.LastName;
 						account.FirstName = dentistForm.FirstName;

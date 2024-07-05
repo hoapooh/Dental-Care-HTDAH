@@ -27,16 +27,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			ViewBag.ReturnUrl = returnUrl;
 			return View();
 		}
-		//public IActionResult Login(string returnUrl = "/Manager/Dentists/Index")
-		//{
-		//	ViewBag.ReturnUrl = returnUrl;
-		//	return View();
-		//}
-		//public IActionResult Login()
-		//{
-		//	ViewBag.ReturnUrl = "/Manager/ManagerAccount/Login";
-		//	return View();
-		//}
+
 		[HttpPost]
 		public async Task<IActionResult> Login(string username, string password, string? returnUrl)
 		{

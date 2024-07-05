@@ -137,7 +137,7 @@
                     <div class="collapse" id="manage-account">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item">
-                                <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec1" asp-controller="Schedules" asp-action="LichLamViec">
+                                <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec1" asp-controller="Schedules" asp-action="GetWorkingSchedule">
                                     <i class="fa-solid fa-stethoscope"></i> Lịch làm việc -> Tạo
                                 </a>
                             </li>
@@ -243,6 +243,7 @@
 
     <div id="toasts"></div>
     <script src="~/assets/js/toastmessage.js"></script>
+    <!--Tự động dropdown khi vô lịch trình-->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Define the paths that should trigger the submenu to open

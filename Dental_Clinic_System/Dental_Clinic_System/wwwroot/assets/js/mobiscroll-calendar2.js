@@ -1,26 +1,25 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿let date = new Date();
+let formattedDate =
+    date.getFullYear() +
+    "-" +
+    String(date.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(date.getDate()).padStart(2, "0");
+
+let futureDate = new Date(date.getTime()); // Create a copy of the original date
+futureDate.setMonth(futureDate.getMonth() + 2);
+let futureFormattedDate =
+    futureDate.getFullYear() +
+    "-" +
+    String(futureDate.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(futureDate.getDate()).padStart(2, "0");
+
+console.log("Formatted Date: ", formattedDate);
+console.log("Future Formatted Date: ", futureFormattedDate);
+
+document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded and parsed");
-
-    let date = new Date();
-    let formattedDate =
-        date.getFullYear() +
-        "-" +
-        String(date.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(date.getDate()).padStart(2, "0");
-
-    let futureDate = new Date(date.getTime()); // Create a copy of the original date
-    futureDate.setMonth(futureDate.getMonth() + 1);
-    let futureFormattedDate =
-        futureDate.getFullYear() +
-        "-" +
-        String(futureDate.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(futureDate.getDate()).padStart(2, "0");
-
-    console.log("Formatted Date: ", formattedDate);
-    console.log("Future Formatted Date: ", futureFormattedDate);
-
     // Check if mobiscroll is loaded
     if (typeof mobiscroll !== 'undefined') {
         console.log("Mobiscroll is loaded");
@@ -44,11 +43,11 @@
 
             onInit: function (event, inst) {
                 console.log("onInit event fired"); // Debug log
-                setTimeout(addWeekButtons, 1000); // Ensure buttons are added after rendering
+                setTimeout(addWeekButtons, 2000); // Ensure buttons are added after rendering
             },
             onPageChange: function (event, inst) {
                 console.log("onPageChange event fired"); // Debug log
-                setTimeout(addWeekButtons, 1000); // Ensure buttons are added after page change
+                setTimeout(addWeekButtons, 2000); // Ensure buttons are added after page change
             }
         });
     } else {
@@ -156,7 +155,16 @@ function addWeekButtons() {
 
     // Add a button for each week
     weeks.forEach((week, index) => {
-        console.log(`Processing week ${index + 1}`);
+        const weekDates = week.map(dayElement => {
+            const ariaLabel = dayElement.querySelector('[aria-label]').getAttribute('aria-label');
+            return parseDateFromAriaLabel(ariaLabel);
+        }).filter(date => date !== null);
+        // Log the weekDates for debugging
+        console.log(`Week ${index + 1} dates:`, weekDates);
+        // Check if at least one date in the week falls within the specified range
+        const isWithinRange = weekDates.some(date => new Date(date) >= new Date(formattedDate) && new Date(date) <= new Date(futureFormattedDate));
+
+        console.log(`Processing week ${index + 1} - Within range: ${isWithinRange}`);
 
         const weekButton = document.createElement('button');
         weekButton.className = 'week-button';
@@ -169,13 +177,14 @@ function addWeekButtons() {
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'week-button-container';
         buttonContainer.style.marginTop = '2px'; // Adjust as necessary
-        //buttonContainer.style.visibility = 'hidden';
+        buttonContainer.style.visibility = (isWithinRange == true) ? 'visible' : 'hidden';
         buttonContainer.appendChild(weekButton);
 
         // Append the button container after the first day of the week
         week[0].parentNode.appendChild(buttonContainer);
     });
 }
+
 function submitWeek(week) {
     const dates = week.map(dayElement => {
         const ariaLabel = dayElement.querySelector('[aria-label]').getAttribute('aria-label');
@@ -251,4 +260,3 @@ ariaLabels.forEach(label => {
     const formattedDate = parseDateFromAriaLabel(label);
     console.log(`${label} => ${formattedDate}`);
 });
-

@@ -111,13 +111,14 @@
 	<thead>
 		<tr>
 			<th class="text-center">STT</th>
+			<th>Tên đăng nhập</th>
 			<th>Tên nha sĩ</th>
 			<th>Giới tính</th>
 			<th>Email</th>
 			<th>Số điện thoại</th>
 			<th>Bằng cấp</th>
 			<th>Trạng thái</th>
-			<th>Hành động</th>
+			
 		</tr>
 	</thead>
 	<tbody id="myTableBody">
@@ -129,6 +130,9 @@
 			<tr style="vertical-align: middle">
 				<td class="text-center">
 					<a asp-action="Details" asp-route-id="@item.ID">@(++index)</a>
+				</td>
+				<td>
+					@item.Account.Username
 				</td>
 				<td>
 					@item.Account.LastName @item.Account.FirstName
@@ -145,9 +149,7 @@
 				<td>
 					@item.Degree?.Name
 				</td>
-				<td>
-					@item.Account.AccountStatus
-				</td>
+				
 				<td>
 					<a asp-action="Edit" asp-route-id="@item.ID" class="button-link inline" title="Chỉnh sửa thông tin">
 						<i class="bx bxs-edit"></i>

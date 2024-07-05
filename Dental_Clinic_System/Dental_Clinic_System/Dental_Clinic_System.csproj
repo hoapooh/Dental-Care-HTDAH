@@ -36,7 +36,7 @@
     <None Include="Areas\Manager\Views\Schedules\Details.cshtml" />
     <None Include="Areas\Manager\Views\Schedules\Edit.cshtml" />
     <None Include="Areas\Manager\Views\Schedules\Index.cshtml" />
-    <None Include="Areas\Manager\Views\Schedules\LichLamViec.cshtml" />
+    <None Include="Areas\Manager\Views\Schedules\GetWorkingSchedule.cshtml" />
     <None Include="Areas\Manager\Views\Service\Create.cshtml" />
     <None Include="Areas\Manager\Views\Service\Delete.cshtml" />
     <None Include="Areas\Manager\Views\Service\Details.cshtml" />
