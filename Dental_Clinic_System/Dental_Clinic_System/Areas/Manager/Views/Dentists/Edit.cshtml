@@ -60,7 +60,7 @@
 <!--Form create -->
 <div class="modal-dialog modal-dialog-centered form-modal-styles">
 	@* enctype: để thêm hình ảnh *@
-	<form asp-action="Edit" enctype="multipart/form-data" style="font-size: 2rem" class="modal-content">
+	<form id="uploadForm" asp-action="Edit" enctype="multipart/form-data" style="font-size: 2rem" class="modal-content" method="post">
 		<!--header -->
 		<div class="manager__management__header">
 			<div class="title">Chỉnh sửa nha sĩ</div>
@@ -69,9 +69,13 @@
 		<!--body -->
 		@* Kiểm tra dữ liệu đầu vào, dựa trên VM *@
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-		<input type="hidden" asp-for="DentistId" />
+		<input type="hidden" asp-for="DentistId" id="fileName" />
 		<input type="hidden" asp-for="AccountId" />
+		<input type="hidden" value="Profile/Dentist" id="folderName" />
 		<div class="modal-body ">
+			
+
+
 			<div class="user-name modal-body-card2">
 				<label for="LastName">Họ (Tên đệm)</label>
 				<input asp-for="LastName" type="text" class="form-control" required />
@@ -80,12 +84,59 @@
 				<label for="FirstName">Tên</label>
 				<input asp-for="FirstName" type="text" class="form-control" required />
 			</div>
+			
 			<div class="user-name modal-body-card3">
 				<label for="Gender">Giới tính</label>
 				<select asp-for="Gender" class="form-control" class="form-control" required>
 					<option value="Nam">Nam</option>
 					<option value="Nữ">Nữ</option>
 				</select>
+			</div>
+			<!-- UPLOAD ảnh -->
+			<div class="user-pic modal-body-card">
+				<label for="imageInput">Hình ảnh</label>
+				<div class="preview-image col-md-12">
+					<input class="form-control"
+						   type="file"
+						   name="imageInput"
+						   id="imageInput" />
+					<input type="hidden" id="imageUrl" asp-for="Image" />
+				</div>
+				<div class="container__image__preview">
+					<div class="style__image__preview row">
+
+						<div class="final-image col-md-6">
+							<h3 class="title">Hiện ảnh hiện tại</h3>
+							<img src="@Model.Image"
+								 alt=""
+								 id="imageDisplay"
+								 style="
+									display: block;
+									height: 260px;
+									width: auto;
+									text-align: center;
+									border-radius: 5px;
+									border: 1px solid #d4d4d4;" />
+						</div>
+						<div class="preview-image col-md-6">
+							<h3 class="title">Hình ảnh được chọn</h3>
+							<img src=""
+								 alt=""
+								 id="imagePreview"
+								 style="
+									display: block;
+									height: 260px;
+									width: auto;
+									text-align: center;
+									border-radius: 5px;
+													" />
+						</div>
+
+					</div>
+				</div>
+				<br />
+
+
 			</div>
 			<div class="user-name modal-body-card4">
 				<label for="province">Tỉnh / Thành phố </label>
@@ -128,8 +179,24 @@
 			<div class="user-address modal-body-card">
 				<label for="DegreeID">Bằng cấp</label>
 				<select asp-items="ViewBag.DegreeID" asp-for="DegreeID" class="form-control" required></select>
-			</div>
 
+				<label for="status">Trạng thái</label>
+				<select asp-for="Status" class="form-control">
+					@if (Model.Status == "Hoạt Động")
+					{
+						<option value="Hoạt Động" selected >Hoạt Động</option>
+						<option value="Bị Khóa">Bị Khóa</option>
+					}
+					else
+					{
+						<option value="Hoạt Động">Hoạt Động</option>
+						<option value="Bị Khóa" selected>Bị Khóa</option>
+					}
+				</select>
+
+				<label for="newPass">Mật khẩu mới</label>
+				<input type="password" name="newPass" id="newPass" class="form-control" title="Chỉ nhập khi muốn đổi mật khẩu" />
+			</div>
 			<div class="user-address modal-body-card">
 				<label>Chuyên khoa</label>
 				@{
@@ -177,6 +244,9 @@
 	@* Dùng editor *@
 	<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 	<script src="~/assets/js/richtexteditor2.js"></script>
+
+	@* Đưa ảnh lên firebase *@
+	<script src="~/assets/js/upload-image-firebase-general.js" type="module"></script>
 
 	@* Call API from https://esgoo.net to get data*@
 	<script src="https://esgoo.net/scripts/jquery.js"></script>

@@ -37,7 +37,9 @@ namespace Dental_Clinic_System.Controllers
             var serviceList = await _context.Services.Include(s => s.Clinic).Include(s => s.Specialty).Where(d => d.ClinicID == clinicId).ToListAsync();
             if (!string.IsNullOrEmpty(keyword))
             {
-                serviceList = serviceList.Where(p =>
+				keyword = keyword.Trim().ToLower();
+				keyword = Util.ConvertVnString(keyword);
+				serviceList = serviceList.Where(p =>
                     (Util.ConvertVnString(p.Specialty.Name).Contains(keyword)) ||
                     Util.ConvertVnString(p.Name).Contains(keyword) ||
                     Util.ConvertVnString(p.Price).Contains(keyword)).ToList();

@@ -8,7 +8,7 @@
 	<style>
 		.form-container {
 			display: flex;
-			gap: 5px; /* Khoảng cách giữa các form */
+			gap: 15px; /* Khoảng cách giữa các form */
 		}
 
 		.sidebar .nav-item a.Quan_ly_nha_si {
@@ -55,6 +55,17 @@
 		.inline {
 			display: inline-block;
 		}
+
+		.manager__management__header .action-btn .search__bar {
+			height: 43.6px;
+			padding: 5px 10px;
+			border: 1px solid #4880ff;
+			border-radius: 0px;
+			font-size: 1em;
+			margin: 0;
+			/* color: #757575; */
+			align-content: center;
+		}
 	</style>
 }
 
@@ -62,7 +73,31 @@
 <div class="manager__management__header">
 	<div class="title">Danh sách nha sĩ</div>
 	<div class="action-btn">
-		<form asp-action="Search">
+@* 		<select id="searchStatus" name="searchStatus" class="search__bar" style="padding: 0; width: 115px;">
+			@if (ViewBag.SearchStatus == "Bị Khóa")
+			{
+				<option value="Hoạt Động" >Hoạt Động</option>
+				<option value="Bị Khóa" selected>Bị Khóa</option>
+			} 
+			else
+			{
+				<option value="Hoạt Động" selected>Hoạt Động</option>
+				<option value="Bị Khóa">Bị Khóa</option>
+			}
+			</select> *@
+		<form id="filterForm" method="get" asp-action="Index" class="form-container">
+			<select id="searchStatus" name="searchStatus" class="search__bar" style="padding: 0; width: 115px;" onchange="document.getElementById('filterForm').submit();">
+				@if (ViewBag.SearchStatus == "Bị Khóa")
+				{
+					<option value="Hoạt Động">Hoạt Động</option>
+					<option value="Bị Khóa" selected>Bị Khóa</option>
+				}
+				else
+				{
+					<option value="Hoạt Động" selected>Hoạt Động</option>
+					<option value="Bị Khóa">Bị Khóa</option>
+				}
+			</select>
 			<div class="search__bar">
 				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
 			</div>
@@ -117,11 +152,11 @@
 					<a asp-action="Edit" asp-route-id="@item.ID" class="button-link inline" title="Chỉnh sửa thông tin">
 						<i class="bx bxs-edit"></i>
 					</a>
-					<form asp-action="Delete" asp-route-id="@item.ID" class="button-link inline" title="Khóa tài khoản">
+@* 					<form asp-action="Delete" asp-route-id="@item.ID" class="button-link inline" title="Khóa tài khoản">
 						<button type="submit" class="close-btn">
 							<i class="bx bxs-trash"></i>
 						</button>
-					</form>
+					</form> *@
 				</td>
 
 			</tr>

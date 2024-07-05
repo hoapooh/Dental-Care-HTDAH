@@ -41,8 +41,8 @@
     <!--body -->
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="ID" />
-
+    <input type="hidden" asp-for="ID" id="fileName" />
+    <input type="hidden" value="Clinic" id="folderName" />
     <div class="col-md-6">
         <label>Tên phòng khám</label>
         <input asp-for="Name" class="form-control" />
@@ -117,47 +117,8 @@
             </div>
         </div>
     </div>
-  @*   <div class="form-group col-md-3">
-        <label for="am_start">Sáng - Bắt đầu</label>
-        <select id="am_start" name="amStartTime" class="form-control">
-            <option value="@ViewBag.AmStartTime">@ViewBag.AmStartTime.ToString("HH:mm")</option>
-            @foreach (var time in ViewBag.AmTimes)
-            {
-                <option value="@time">@time.ToString("HH:mm")</option>
-            }
-        </select>
-    </div>
-    <div class="form-group col-md-3">
-        <label for="am_end">Sáng - Kết thúc</label>
-        <select id="am_end" name="amEndTime" class="form-control">
-            <option value="@ViewBag.AmEndTime">@ViewBag.AmEndTime.ToString("HH:mm")</option>
-            @foreach (var time in ViewBag.AmTimes)
-            {
-                <option value="@time">@time.ToString("HH:mm")</option>
-            }
-        </select>
-    </div> *@
-    @* <div class="form-group col-md-3">
-        <label for="pm_start">Chiều - Bắt đầu</label>
-        <select id="pm_start" name="pmStartTime" class="form-control">
-            <option value="@ViewBag.PmStartTime">@ViewBag.PmStartTime.ToString("HH:mm")</option>
-            @foreach (var time in ViewBag.PmTimes)
-            {
-                <option value="@time">@time.ToString("HH:mm")</option>
-            }
-        </select>
-    </div>
-    <div class="form-group col-md-3">
-        <label for="pm_end">Chiều - Kết thúc</label>
-        <select id="pm_end" name="pmEndTime" class="form-control">
-            <option value="@ViewBag.PmEndTime">@ViewBag.PmEndTime.ToString("HH:mm")</option>
-            @foreach (var time in ViewBag.PmTimes)
-            {
-                <option value="@time">@time.ToString("HH:mm")</option>
-            }
-        </select>
-    </div> *@
-    <!-- UPLOAD -->
+ 
+    <!-- UPLOAD ảnh -->
     <div class="col-md-12 image-file">
         <label for="imageInput">Hình ảnh</label>
         <div class="preview-image col-md-12">
@@ -177,9 +138,11 @@
                          id="imageDisplay"
                          style="
 												display: block;
-												max-width: 100%;
+												height: 260px;
+									            width: auto;
 												text-align: center;
 												border-radius: 5px;
+												border: 1px solid #d4d4d4;
                                             " />
                 </div>
                 <div class="preview-image col-md-6">
@@ -189,7 +152,8 @@
                          id="imagePreview"
                          style="
 												display: block;
-												max-width: 100%;
+												height: 260px;
+                                                width: auto;
 												text-align: center;
 												border-radius: 5px;
                                             " />
@@ -266,8 +230,7 @@
 
 @section Scripts {
     @* Đưa ảnh lên firebase *@
-
-    <script src="~/assets/js/upload-image-firebase.js" type="module"></script>
+    <script src="~/assets/js/upload-image-firebase-general.js" type="module"></script>
 
     @* Dùng editor *@
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>

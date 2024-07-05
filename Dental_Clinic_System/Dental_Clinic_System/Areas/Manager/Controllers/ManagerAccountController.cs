@@ -18,24 +18,33 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Login(string returnUrl = "/Manager/Dentists/Index")
+		public IActionResult Login(string? returnUrl)
 		{
 			ViewBag.ReturnUrl = returnUrl;
 			return View();
 		}
+		//public IActionResult Login(string returnUrl = "/Manager/Dentists/Index")
+		//{
+		//	ViewBag.ReturnUrl = returnUrl;
+		//	return View();
+		//}
 		//public IActionResult Login()
 		//{
 		//	ViewBag.ReturnUrl = "/Manager/ManagerAccount/Login";
 		//	return View();
 		//}
 		[HttpPost]
-		public async Task<IActionResult> Login(string username, string password)
+		public async Task<IActionResult> Login(string username, string password, string? returnUrl)
 		{
+			ViewBag.ReturnUrl = returnUrl;
 			var user = _context.Accounts.FirstOrDefault(d => username == d.Username && password == d.Password);
 			if (user == null)
 			{
-				ViewBag.ErrorMessage = "Invalid username or password";
-				return BadRequest("Sai Tên đăng nhập hoặc Mật khẩu");
+				//ViewBag.ToastFailMessage = "Sai Tên đăng nhập hoặc Mật khẩu";
+				TempData["ToastMessageFailTempData"] = "Sai Tên đăng nhập hoặc Mật khẩu";
+				return RedirectToAction("Login");	
+				//ViewBag.ErrorMessage = "Invalid username or password";
+				//return BadRequest("Sai Tên đăng nhập hoặc Mật khẩu");
 			}
 
 			if (user.Role == "Quản Lý")
@@ -57,11 +66,26 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				HttpContext.Session.SetInt32("amWtId", clinic?.AmWorkTimeID ?? 0);
 				HttpContext.Session.SetInt32("pmWtId", clinic?.PmWorkTimeID ?? 0);
 
-				return RedirectToAction("Index", "Dentists", new { area = "Manager" });
+				//return RedirectToAction("Index", "Dentists", new { area = "Manager" });
+
+				if (!string.IsNullOrEmpty(returnUrl))
+				{
+					TempData["ToastMessageSuccessTempData"] = "Đăng nhập thành công!";
+					return Redirect(returnUrl);
+				}
+				else
+				{
+					ViewBag.ToastMessageSuccess = "Đăng nhập thành công!";
+					TempData["ToastMessageSuccessTempData"] = "Đăng nhập thành công!";
+					return RedirectToAction("Index", "Dentists", new { area = "Manager" });
+				}
 			}
 
-			ViewBag.ErrorMessage = "Invalid role";
-			return NotFound("Account của bạn có Role không hợp lệ, vui lòng thử lại!");
+			TempData["ToastMessageFailTempData"] = "Tài khoản không hợp lệ, vui lòng thử lại!";
+			return View();
+
+			//ViewBag.ErrorMessage = "Invalid role";
+			//return NotFound("Account của bạn có Role không hợp lệ, vui lòng thử lại!");
 		}
 
 		public async Task<IActionResult> Logout()
