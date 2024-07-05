@@ -73,6 +73,12 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
         #endregion
         public SelectList? UnassignedManagers { get; set; }
 
+		public string AmStartTime { get; set; }
 
-    }
+		public string AmEndTime { get; set; }
+
+		public string PmStartTime { get; set; }
+
+		public string PmEndTime { get; set; }
+	}
 }

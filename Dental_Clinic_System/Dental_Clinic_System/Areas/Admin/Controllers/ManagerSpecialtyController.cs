@@ -111,7 +111,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
                 // Kiểm tra tên chuyên khoa có bị trùng không
                 var isDuplicateName = await _context.Specialties
-                    .FirstOrDefaultAsync(s => s.Name == model.Name);
+                    .FirstOrDefaultAsync(s => s.Name == model.Name && s.ID != model.Id);
                 if (isDuplicateName != null)
                 {
                     ModelState.AddModelError("Name", "Tên chuyên khoa đã tồn tại.");
