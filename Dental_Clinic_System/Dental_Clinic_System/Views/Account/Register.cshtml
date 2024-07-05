@@ -70,6 +70,11 @@
 					<input type="password" placeholder="Nhập mật khẩu" asp-for="@Model.Password"/>
 					<span class="text-danger" asp-validation-for="Password"></span>
 				</div>
+				<div class="password">
+					<i class="fa-solid fa-lock"></i>
+					<input type="password" placeholder="Nhập mật khẩu xác nhận" asp-for="@Model.ConfirmedPassword" />
+					<span class="text-danger" asp-validation-for="ConfirmedPassword"></span>
+				</div>
 				<label class="policies_check">
 					<input type="checkbox" required/>
 					Tôi đã đọc và đồng ý với Điều khoản Dịch vụ

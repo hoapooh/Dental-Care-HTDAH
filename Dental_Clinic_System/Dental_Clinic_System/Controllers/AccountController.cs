@@ -61,6 +61,12 @@ namespace Dental_Clinic_System.Controllers
             if (ModelState.IsValid)
             {
 
+                if(model.Password != model.ConfirmedPassword)
+                {
+					ViewBag.ToastMessage = "Mật khẩu và mật khẩu xác nhận không giống";
+					return View();
+				}
+
                 var patient = _context.Accounts.SingleOrDefault(p => p.Username == model.Username);
                 if (patient != null)
                 {
@@ -1091,10 +1097,10 @@ namespace Dental_Clinic_System.Controllers
             // Get the current UTC time
             DateTime now = Util.GetUtcPlus7Time();
 
-            await Console.Out.WriteLineAsync("==================================");
-            await Console.Out.WriteLineAsync($"Date = {appointmentDate}");
-            await Console.Out.WriteLineAsync($"Hour = {appointmentHour}");
-            await Console.Out.WriteLineAsync("==================================");
+            //await Console.Out.WriteLineAsync("==================================");
+            //await Console.Out.WriteLineAsync($"Date = {appointmentDate}");
+            //await Console.Out.WriteLineAsync($"Hour = {appointmentHour}");
+            //await Console.Out.WriteLineAsync("==================================");
 
             double refundPercentage = 0;
 

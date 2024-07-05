@@ -590,7 +590,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
         [HttpPost]
         //[Route("GetApprovalRequest")]
-        public async Task<IActionResult> GetApprovalRequest(string companyName, string companyPhonenumber, string companyEmail, string representativeName, string clinicName, string clinicAddress, string? domainName, string logo, int provinceID, int districtID, int wardID, string amStartTime, string amEndTime, string pmStartTime, string pmEndTime, string content)
+        public async Task<IActionResult> GetApprovalRequest(string companyName, string companyPhonenumber, string companyEmail, string representativeName, string clinicName, string clinicAddress, string? domainName, string managerPhonenumber, string managerEmail, string logo, int provinceID, int districtID, int wardID, string amStartTime, string amEndTime, string pmStartTime, string pmEndTime, string content)
         {
 
             #region Parse String To TimeOnly
@@ -606,7 +606,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction("index", "contact", new { area = "" });
             }
 
-            var checkResult = await CheckExistingDetails(companyName, companyPhonenumber, companyEmail, clinicName, domainName);
+            var checkResult = await CheckExistingDetails(companyName, companyPhonenumber, companyEmail, managerEmail, managerPhonenumber, clinicName, domainName);
 
             switch (checkResult)
             {
@@ -615,11 +615,19 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     return RedirectToAction("index", "contact", new { area = "" });
 
                 case "CompanyPhonenumberExists":
-                    TempData["ToastMessageFailTempData"] = "Số điện thoại đã được đăng ký";
+                    TempData["ToastMessageFailTempData"] = "Hotline đã được đăng ký";
                     return RedirectToAction("index", "contact", new { area = "" });
 
                 case "CompanyEmailExists":
-                    TempData["ToastMessageFailTempData"] = "Địa chỉ Email đã được đăng ký";
+                    TempData["ToastMessageFailTempData"] = "Địa chỉ Email Doanh Nghiệp đã được đăng ký";
+                    return RedirectToAction("index", "contact", new { area = "" });
+
+                case "ManagerPhonenumberExists":
+                    TempData["ToastMessageFailTempData"] = "Số điện thoại liên hệ đã được đăng ký";
+                    return RedirectToAction("index", "contact", new { area = "" });
+
+                case "ManagerEmailExists":
+                    TempData["ToastMessageFailTempData"] = "Địa chỉ Email Người Đại Diện đã được đăng ký";
                     return RedirectToAction("index", "contact", new { area = "" });
 
                 case "ClinicNameExists":
@@ -664,6 +672,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 CompanyName = companyName,
                 CompanyPhonenumber = companyPhonenumber,
                 CompanyEmail = companyEmail,
+                ManagerPhonenumber = managerPhonenumber,
+                ManagerEmail = managerEmail,
                 RepresentativeName = representativeName,
                 ClinicName = clinicName,
                 ClinicAddress = clinicAddress,
@@ -684,7 +694,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             return RedirectToAction("index", "contact", new { area = "" });
         }
 
-        private async Task<string> CheckExistingDetails(string companyName, string companyPhonenumber, string companyEmail, string clinicName, string domainName)
+        private async Task<string> CheckExistingDetails(string companyName, string companyPhonenumber, string companyEmail, string managerEmail, string managerPhonenumber, string clinicName, string domainName)
         {
             if (await _context.Orders.AnyAsync(c => c.CompanyName == companyName))
             {
@@ -699,6 +709,16 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             if (await _context.Orders.AnyAsync(c => c.CompanyEmail == companyEmail))
             {
                 return "CompanyEmailExists";
+            }
+
+            if(await _context.Orders.AnyAsync(c => c.ManagerPhonenumber == managerPhonenumber))
+            {
+                return "ManagerPhonenumberExists";
+            }
+
+            if( await _context.Orders.AnyAsync(c => c.ManagerEmail == managerEmail))
+            {
+                return "ManagerEmailExists";
             }
 
             if (await _context.Orders.AnyAsync(c => c.ClinicName == clinicName))
@@ -733,8 +753,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     Password = DataEncryptionExtensions.ToMd5Hash(encryptedPassword),
                     Role = "Quản Lý",
                     FirstName = order.RepresentativeName,
-                    Email = order.CompanyEmail,
-                    PhoneNumber = order.CompanyPhonenumber,
+                    Email = order.ManagerEmail,
+                    PhoneNumber = order.ManagerPhonenumber,
                     AccountStatus = "Hoạt Động"
                 };
 

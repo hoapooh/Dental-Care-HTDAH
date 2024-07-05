@@ -40,18 +40,18 @@
                 <input type="text" name="companyName" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Tên doanh nghiệp chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
             </div>
             <div class="col-md-6">
-                <p>Số Điện Thoại Liên Hệ <sup style="color:red">*</sup></p>
-                <input type="tel" name="companyPhonenumber" class="form-control" required pattern="^[0-9]{9,12}$" title="Số điện thoại chỉ được chứa chữ số và có độ dài từ 9-12 chữ số." />
+                <p>Tên Người Đại Diện <sup style="color:red">*</sup></p>
+                <input type="text" name="representativeName" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Tên người đại diện chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <p>Địa Chỉ Email <sup style="color:red">*</sup></p>
-                <input type="email" name="companyEmail" class="form-control" required />
+                <p>Số Điện Thoại Liên Lạc <sup style="color:red">*</sup></p>
+                <input type="tel" name="managerPhonenumber" class="form-control" required pattern="^[0-9]{9,12}$" title="Số điện thoại chỉ được chứa chữ số và có độ dài từ 9-12 chữ số." />
             </div>
             <div class="col-md-6">
-                <p>Tên Người Đại Diện <sup style="color:red">*</sup></p>
-                <input type="text" name="representativeName" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Tên người đại diện chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
+                <p>Địa Chỉ Email Người Đại Diện <sup style="color:red">*</sup></p>
+                <input type="email" name="managerEmail" class="form-control" required />
             </div>
         </div>
         <div class="row">
@@ -60,14 +60,24 @@
                 <input type="text" id="fileName" name="clinicName" class="form-control" required />
             </div>
             <div class="col-md-6">
-                <p>Địa Chỉ Phòng Khám <sup style="color:red">*</sup></p>
-                <input type="text" name="clinicAddress" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Địa chỉ phòng khám chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
+                <p>Tên Miền hoặc URL Website</p>
+                <input type="url" name="domainName" class="form-control" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <p>Tên Miền hoặc URL Website</p>
-                <input type="url" name="domainName" class="form-control" />
+                <p>Hotline (Đường Dây Nóng) <sup style="color:red">*</sup></p>
+                <input type="tel" name="companyPhonenumber" class="form-control" required pattern="^[0-9]{9,12}$" title="Số điện thoại chỉ được chứa chữ số và có độ dài từ 9-12 chữ số." />
+            </div>
+            <div class="col-md-6">
+                <p>Địa Chỉ Email Doanh Nghiệp <sup style="color:red">*</sup></p>
+                <input type="email" name="companyEmail" class="form-control" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Địa Chỉ Phòng Khám <sup style="color:red">*</sup></p>
+                <input type="text" name="clinicAddress" class="form-control" required pattern="^[0-9a-zA-Z\sÀ-ỹ.,-]+$" title="Địa chỉ phòng khám chỉ được chứa chữ cái, chữ số, khoảng trắng và các ký tự đặc biệt như dấu chấm, dấu phẩy và dấu gạch ngang." />
             </div>
             <div class="col-md-6">
                 <p>Logo Phòng Khám (900 x 900 px) <sup style="color:red">*</sup></p>

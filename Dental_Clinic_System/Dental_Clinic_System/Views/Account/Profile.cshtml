@@ -119,7 +119,7 @@
                                 <span class="text-danger" asp-validation-for="LastName"></span>
                             </div>
                             <div style="width: 50%">
-                                <label for="phone">Số điện thoại <sup>*</sup></label><br /><input type="text"
+                                <label for="phone">Số điện thoại</label><br /><input type="text"
                                                                                                   id="phone"
                                                                                                   placeholder="Vui lòng nhập số điện thoại ..."
                                                                                                   pattern="[0-9]*"
@@ -186,7 +186,8 @@
                                                                                  id="birth"
                                                                                  value="@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") : string.Empty)"
                                                                                  asp-for="@Model.DateOfBirth"
-                                                                                 max="@Util.GetUtcPlus7Time().AddYears(-16).ToString("yyyy-MM-dd")"
+                                                                                 min="@Util.GetUtcPlus7Time().AddYears(-150).ToString("yyyy-MM-dd")"
+                                                                                 max="@Util.GetUtcPlus7Time().AddYears(-1).ToString("yyyy-MM-dd")"
                                                                                  placeholder="Vui lòng nhập ngày sinh"
                                                                                  style="width: 100%" />
                             </div>
@@ -288,6 +289,8 @@
                             {
                                 @foreach (var appointment in appointments)
                                 {
+                                    var timeDifference = appointment.Schedule.TimeSlot.StartTime - TimeOnly.FromDateTime(Util.GetUtcPlus7Time());
+
                                     <div class="appointment-card" style="border: 1px solid #1376f8; border-radius: 8px; padding: 16px; margin-bottom: 16px; background-color: #fff;">
                                         <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                                             <div class="code" style="font-weight: bold; color: #007bff;">@index</div>
@@ -373,9 +376,11 @@
 
                                                         break;
                                                     case "Chờ Xác Nhận":
+                                                        @if (timeDifference.TotalHours > 7) {
                                                         <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
                                                             Đổi lịch khám
                                                         </button>
+                                                        }
 
                                                         <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
                                                             <input type="hidden" name="appointmentID" value="@appointment?.ID" />
