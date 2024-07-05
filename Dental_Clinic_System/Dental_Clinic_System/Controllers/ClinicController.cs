@@ -22,16 +22,16 @@ namespace Dental_Clinic_System.Controllers
         {
             var clinics = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).ToListAsync();
 
-			// Format the current date and time
-			var now = Util.GetUtcPlus7Time();
-			var weekdays = new[] { "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
-			var dayOfWeek = weekdays[(int)now.DayOfWeek];
-			var formattedDate = $"{dayOfWeek}, {now:dd/MM/yyyy}";
+            // Format the current date and time
+            var now = Util.GetUtcPlus7Time();
+            var weekdays = new[] { "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
+            var dayOfWeek = weekdays[(int)now.DayOfWeek];
+            var formattedDate = $"{dayOfWeek}, {now:dd/MM/yyyy}";
 
-			// Pass the formatted date to the view
-			ViewBag.CurrentDateTime = formattedDate;
+            // Pass the formatted date to the view
+            ViewBag.CurrentDateTime = formattedDate;
 
-			return View("clinic", clinics);
+            return View("clinic", clinics);
         }
 
         [HttpGet]
@@ -71,10 +71,11 @@ namespace Dental_Clinic_System.Controllers
                 .ToList();
 
             var specialties = dentistAvailable
-                .SelectMany(d => d.DentistSpecialties)
-                .Select(ds => ds.Specialty)
-                .Distinct()
-                .ToList();
+           .SelectMany(d => d.DentistSpecialties)
+           .Where(ds => ds.Check == true)  // Add this line to filter specialties where Check is true
+           .Select(ds => ds.Specialty)
+           .Distinct()
+           .ToList();
 
             ViewBag.ClinicID = clinicID;
 
@@ -90,7 +91,7 @@ namespace Dental_Clinic_System.Controllers
                 .Include(d => d.DentistSpecialties)
                     .ThenInclude(ds => ds.Specialty)
                 .Include(d => d.Degree)
-                .Where(d => d.ClinicID == clinicID && d.Account.AccountStatus == "Hoạt Động" && d.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID));
+                .Where(d => d.ClinicID == clinicID && d.Account.AccountStatus == "Hoạt Động" && d.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID && ds.Check == true));
 
             if (degreeID != null)
             {
@@ -154,171 +155,171 @@ namespace Dental_Clinic_System.Controllers
         }
 
         [HttpGet]
-		//     public async Task<IActionResult> GetSchedules(int? dentistID)
-		//     {
-		//         if (dentistID == null || dentistID == 0)
-		//         {
-		//             return NotFound("Không tìm thấy nha sĩ này");
-		//         }
+        //     public async Task<IActionResult> GetSchedules(int? dentistID)
+        //     {
+        //         if (dentistID == null || dentistID == 0)
+        //         {
+        //             return NotFound("Không tìm thấy nha sĩ này");
+        //         }
 
-		//         //Lấy thông tin phòng khám từ nha sĩ
-		//         var dentist = _context.Dentists.Include(d => d.Clinic).First(d => d.ID == dentistID);
+        //         //Lấy thông tin phòng khám từ nha sĩ
+        //         var dentist = _context.Dentists.Include(d => d.Clinic).First(d => d.ID == dentistID);
 
-		//         //Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
-		//         var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == dentist.Clinic.ID);
-		//         var amID = clinic.AmWorkTimeID;
-		//         var pmID = clinic.PmWorkTimeID;
-		//         List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
-		//         List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
-		//         foreach (var s in amTimeSlots)
-		//         {
-		//             Console.WriteLine(s.StartTime + "         " + s.EndTime);
-		//         }
+        //         //Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
+        //         var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == dentist.Clinic.ID);
+        //         var amID = clinic.AmWorkTimeID;
+        //         var pmID = clinic.PmWorkTimeID;
+        //         List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
+        //         List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
+        //         foreach (var s in amTimeSlots)
+        //         {
+        //             Console.WriteLine(s.StartTime + "         " + s.EndTime);
+        //         }
 
-		//         foreach (var s in pmTimeSlots)
-		//         {
-		//             Console.WriteLine(s.StartTime + "         " + s.EndTime);
-		//         }
+        //         foreach (var s in pmTimeSlots)
+        //         {
+        //             Console.WriteLine(s.StartTime + "         " + s.EndTime);
+        //         }
 
-		//         //Generate lịch làm việc ảo dựa theo dentist ID. 
+        //         //Generate lịch làm việc ảo dựa theo dentist ID. 
 
-		//         //var today = DateOnly.FromDateTime(DateTime.Today);
-		//         DateTime utc7Now = Util.GetUtcPlus7Time().AddHours(12); //Thêm thời gian 12 tiếng cho phù hợp với business rule
-		//         DateOnly todayDate = DateOnly.FromDateTime(utc7Now);
-		//         TimeOnly todayTime = TimeOnly.FromDateTime(utc7Now);
-		//         var schedules = _context.Schedules
-		//                 .Include(s => s.Dentist)
-		//                 //.ThenInclude(d => d.Account)
-		//                 .Include(s => s.TimeSlot)
-		//                 .Where(s => (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime) && s.DentistID == dentistID); // && s.ScheduleStatus == "Còn Trống"
-		//																														   //.Select(s => new
-		//																														   //{
-		//																														   //    s.DentistID,
-		//																														   //    Date = s.Date.ToString("yyyy-MM-dd"),
-		//																														   //    StartTime = s.TimeSlot.StartTime.ToString("HH:mm"),
-		//																														   //    EndTime = s.TimeSlot.EndTime.ToString("HH:mm"),
-		//																														   //    scheduleID = s.ID
-		//																														   //})
-		//																														   //.ToList();
+        //         //var today = DateOnly.FromDateTime(DateTime.Today);
+        //         DateTime utc7Now = Util.GetUtcPlus7Time().AddHours(12); //Thêm thời gian 12 tiếng cho phù hợp với business rule
+        //         DateOnly todayDate = DateOnly.FromDateTime(utc7Now);
+        //         TimeOnly todayTime = TimeOnly.FromDateTime(utc7Now);
+        //         var schedules = _context.Schedules
+        //                 .Include(s => s.Dentist)
+        //                 //.ThenInclude(d => d.Account)
+        //                 .Include(s => s.TimeSlot)
+        //                 .Where(s => (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime) && s.DentistID == dentistID); // && s.ScheduleStatus == "Còn Trống"
+        //																														   //.Select(s => new
+        //																														   //{
+        //																														   //    s.DentistID,
+        //																														   //    Date = s.Date.ToString("yyyy-MM-dd"),
+        //																														   //    StartTime = s.TimeSlot.StartTime.ToString("HH:mm"),
+        //																														   //    EndTime = s.TimeSlot.EndTime.ToString("HH:mm"),
+        //																														   //    scheduleID = s.ID
+        //																														   //})
+        //																														   //.ToList();
 
-		////Làm sao để lấy được danh sách các future appointment
-		////
-		////dính tới ngày làm việc của dentist này với số lượng tối đa là 2 slot 
+        ////Làm sao để lấy được danh sách các future appointment
+        ////
+        ////dính tới ngày làm việc của dentist này với số lượng tối đa là 2 slot 
 
-		//var groupData = schedules.GroupBy(s => new { s.Date, s.DentistID });
-		//         groupData.Select(gd => new
-		//{
-		//	Date = gd.Key.Date,
-		//	DentistID = gd.Key.DentistID,
-		//	TimeSlots = gd.Select(s => new
-		//	{
-		//		StartTime = s.TimeSlot.StartTime,
-		//		EndTime = s.TimeSlot.EndTime,
-		//		ScheduleID = s.ID
-		//	})
-		//});
-		//         foreach (var group in groupData)
-		//         {
-		//             Console.WriteLine(group.Key.Date);
-		//         }
+        //var groupData = schedules.GroupBy(s => new { s.Date, s.DentistID });
+        //         groupData.Select(gd => new
+        //{
+        //	Date = gd.Key.Date,
+        //	DentistID = gd.Key.DentistID,
+        //	TimeSlots = gd.Select(s => new
+        //	{
+        //		StartTime = s.TimeSlot.StartTime,
+        //		EndTime = s.TimeSlot.EndTime,
+        //		ScheduleID = s.ID
+        //	})
+        //});
+        //         foreach (var group in groupData)
+        //         {
+        //             Console.WriteLine(group.Key.Date);
+        //         }
 
-		//         foreach (var s in schedules)
-		//         {
-		//             Console.WriteLine(s);
-		//         }
+        //         foreach (var s in schedules)
+        //         {
+        //             Console.WriteLine(s);
+        //         }
 
-		//         return Json(groupData);
-		//     }
-		public async Task<IActionResult> GetSchedules(int? dentistID)
-		{
-			// Lấy thông tin phòng khám từ nha sĩ
-			var dentist = await _context.Dentists.Include(d => d.Clinic).FirstOrDefaultAsync(d => d.ID == dentistID);
+        //         return Json(groupData);
+        //     }
+        public async Task<IActionResult> GetSchedules(int? dentistID)
+        {
+            // Lấy thông tin phòng khám từ nha sĩ
+            var dentist = await _context.Dentists.Include(d => d.Clinic).FirstOrDefaultAsync(d => d.ID == dentistID);
 
-			if (dentist == null)
-			{
-				return NotFound("Không tìm thấy nha sĩ này");
-			}
+            if (dentist == null)
+            {
+                return NotFound("Không tìm thấy nha sĩ này");
+            }
 
-			// Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
-			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == dentist.Clinic.ID);
-			var amID = clinic.AmWorkTimeID;
-			var pmID = clinic.PmWorkTimeID;
-			List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
-			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
+            // Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
+            var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == dentist.Clinic.ID);
+            var amID = clinic.AmWorkTimeID;
+            var pmID = clinic.PmWorkTimeID;
+            List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
+            List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
 
-			DateTime utc7Now = Util.GetUtcPlus7Time().AddHours(12); // Thêm thời gian 12 tiếng cho phù hợp với business rule
-			DateOnly todayDate = DateOnly.FromDateTime(utc7Now);
-			TimeOnly todayTime = TimeOnly.FromDateTime(utc7Now);
+            DateTime utc7Now = Util.GetUtcPlus7Time().AddHours(12); // Thêm thời gian 12 tiếng cho phù hợp với business rule
+            DateOnly todayDate = DateOnly.FromDateTime(utc7Now);
+            TimeOnly todayTime = TimeOnly.FromDateTime(utc7Now);
 
-			var schedules = await _context.Schedules
-				.Include(s => s.Dentist)
-				.Include(s => s.TimeSlot)
-				.Where(s => (s.Date > todayDate || (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime)) && s.DentistID == dentistID) // && s.ScheduleStatus == "Còn Trống"
-				.ToListAsync();
+            var schedules = await _context.Schedules
+                .Include(s => s.Dentist)
+                .Include(s => s.TimeSlot)
+                .Where(s => (s.Date > todayDate || (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime)) && s.DentistID == dentistID) // && s.ScheduleStatus == "Còn Trống"
+                .ToListAsync();
 
-			// Lấy tất cả các ngày có trong schedules
-			var allDates = schedules.Select(s => s.Date).Distinct().ToList();
+            // Lấy tất cả các ngày có trong schedules
+            var allDates = schedules.Select(s => s.Date).Distinct().ToList();
 
-			// Tạo danh sách các time slot với thời gian 30 phút cho từng ngày
-			var timeSlots = new List<object>();
-			foreach (var date in allDates)
-			{
-				var dailyTimeSlots = new List<object>();
+            // Tạo danh sách các time slot với thời gian 30 phút cho từng ngày
+            var timeSlots = new List<object>();
+            foreach (var date in allDates)
+            {
+                var dailyTimeSlots = new List<object>();
 
-				foreach (var slot in amTimeSlots.Concat(pmTimeSlots))
-				{
-					var startTime = slot.StartTime;
-					var endTime = slot.EndTime;
-					while (startTime < endTime)
-					{
-						var nextTime = startTime.AddMinutes(30);
-						if (nextTime > endTime) nextTime = endTime;
+                foreach (var slot in amTimeSlots.Concat(pmTimeSlots))
+                {
+                    var startTime = slot.StartTime;
+                    var endTime = slot.EndTime;
+                    while (startTime < endTime)
+                    {
+                        var nextTime = startTime.AddMinutes(30);
+                        if (nextTime > endTime) nextTime = endTime;
 
-						dailyTimeSlots.Add(new
-						{
-							Date = date.ToString("yyyy-MM-dd"),
-							StartTime = startTime.ToString("HH:mm"),
-							EndTime = nextTime.ToString("HH:mm"),
-							ScheduleID = (int?)null
-						});
+                        dailyTimeSlots.Add(new
+                        {
+                            Date = date.ToString("yyyy-MM-dd"),
+                            StartTime = startTime.ToString("HH:mm"),
+                            EndTime = nextTime.ToString("HH:mm"),
+                            ScheduleID = (int?)null
+                        });
 
-						startTime = nextTime;
-					}
-				}
+                        startTime = nextTime;
+                    }
+                }
 
-				// Add dailyTimeSlots vào timeSlots chung
-				timeSlots.AddRange(dailyTimeSlots);
-			}
+                // Add dailyTimeSlots vào timeSlots chung
+                timeSlots.AddRange(dailyTimeSlots);
+            }
 
-			return Json(timeSlots);
-		}
-
-
+            return Json(timeSlots);
+        }
 
 
 
-		#region helper method. Author: Ngoc Anh
-		private List<TimeSlot> GenerateTimeSlots(int workTimeId)
-		{
 
-			// Retrieve the WorkTime based on the given ID
-			var workTime = _context.WorkTimes
-								  .FirstOrDefault(wt => wt.ID == workTimeId);
 
-			if (workTime == null)
-			{
-				Console.WriteLine("WorkTime not found.");
-				return new List<TimeSlot>();
-			}
+        #region helper method. Author: Ngoc Anh
+        private List<TimeSlot> GenerateTimeSlots(int workTimeId)
+        {
 
-			var startTime = workTime.StartTime;
-			var endTime = workTime.EndTime;
+            // Retrieve the WorkTime based on the given ID
+            var workTime = _context.WorkTimes
+                                  .FirstOrDefault(wt => wt.ID == workTimeId);
 
-			// Retrieve the matching TimeSlots
-			return _context.TimeSlots
-						  .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime).ToList();
+            if (workTime == null)
+            {
+                Console.WriteLine("WorkTime not found.");
+                return new List<TimeSlot>();
+            }
 
-		}
+            var startTime = workTime.StartTime;
+            var endTime = workTime.EndTime;
+
+            // Retrieve the matching TimeSlots
+            return _context.TimeSlots
+                          .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime).ToList();
+
+        }
         #endregion
     }
 }
