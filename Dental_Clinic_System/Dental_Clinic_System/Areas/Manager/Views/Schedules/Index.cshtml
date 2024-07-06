@@ -190,9 +190,19 @@
 					var account = dentist?.Account;
 					<tr style="vertical-align: middle">
 						<td class="text-center">@(++index)</td>
-						<td>
-							@account?.LastName @account?.FirstName
-						</td>
+						@if (account.AccountStatus == "Bị Khóa")
+						{
+							<td>
+								<p style="color: red" title="Đã bị khóa. Bệnh nhân không thể đặt tất cả lịch của nha sĩ này!"> @account?.LastName @account?.FirstName (Bị khóa)</p>
+							</td>
+						}
+						else
+						{
+							<td>
+								<p title="Đang hoạt động"> @account?.LastName @account?.FirstName </p>
+							</td>
+						}
+
 						<td title="ngày/tháng/năm">@group.Key.Date.ToString("dd/MM/yyyy")</td>
 						<td class="ws__style">
 							<div class="work__schedule">
