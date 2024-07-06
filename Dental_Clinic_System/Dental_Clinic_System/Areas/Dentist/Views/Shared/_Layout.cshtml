@@ -24,22 +24,35 @@
 </head>
 
 <body>
-    @if (ViewBag.message == "success")
+    @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     {
+        var message = TempData["SuccessMessage"] as string;
         <script>
             window.addEventListener('DOMContentLoaded', (event) => {
-                showSuccessToasts('Cập Nhật Thay Đổi Thành Công!');
+                showSuccessToasts('@message');
             });
         </script>
     }
-    else if ( ViewBag.message != null)
+    else if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
     {
+        var message = TempData["ErrorMessage"] as string;
         <script>
             window.addEventListener('DOMContentLoaded', (event) => {
-                showErrorToasts('@ViewBag.message');
+                showErrorToasts('@message');
             });
         </script>
     }
+    else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string) || !string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+    {
+        var successMessage = TempData["SuccessMessage"] as string;
+        var errorMessage = TempData["ErrorMessage"] as string;
+		<script>
+			window.addEventListener('DOMContentLoaded', (event) => {
+                showSuccessToasts('@successMessage');
+                showErrorToasts('@errorMessage');
+			});
+		</script>
+	}
 
 
 	<div class="dashboard__container d-flex">

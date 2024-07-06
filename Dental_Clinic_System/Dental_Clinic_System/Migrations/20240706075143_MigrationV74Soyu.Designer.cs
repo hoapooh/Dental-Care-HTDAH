@@ -4,6 +4,7 @@ using Dental_Clinic_System.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    partial class DentalClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240706075143_MigrationV74Soyu")]
+    partial class MigrationV74Soyu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,10 +156,6 @@ namespace Dental_Clinic_System.Migrations
                     b.Property<string>("IsRated")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("IsRated");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("Note");
 
                     b.Property<int>("PatientRecordID")
                         .HasColumnType("int")

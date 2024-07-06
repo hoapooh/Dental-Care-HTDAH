@@ -186,7 +186,7 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.Property(e => e.ID).ValueGeneratedOnAdd();
 
-				entity.HasIndex(e => e.Name).IsUnique();
+				//entity.HasIndex(e => e.Name).IsUnique();
 
 				entity.HasOne(d => d.Clinic).WithMany(p => p.Services).HasConstraintName("FK__Service__Clinic").OnDelete(DeleteBehavior.Cascade);
 

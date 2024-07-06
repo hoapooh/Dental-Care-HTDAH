@@ -29,8 +29,14 @@ namespace Dental_Clinic_System.Models.Data
         [Column("Description", TypeName = "nvarchar(1000)")]
         public string? Description { get; set; }
 
+        [Column("Note", TypeName = "nvarchar(1000)")]
+        public string? Note { get; set; }
+
         [Column("CreatedDate", TypeName = "datetime")]
         public DateTime? CreatedDate { get; set; }
+
+        [Column("Future_Appointment_ID", TypeName = "int")]
+        public int? Future_Appointment_ID { get; set; }
 
         [Column("IsRated")]
         public string? IsRated { get; set; } = null;

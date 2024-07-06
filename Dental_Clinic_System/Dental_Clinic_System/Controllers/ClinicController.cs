@@ -275,6 +275,7 @@ namespace Dental_Clinic_System.Controllers
                         var nextTime = startTime.AddMinutes(30);
                         if (nextTime > endTime) nextTime = endTime;
 
+                        if(date.ToDateTime(startTime) >= utc7Now)
                         dailyTimeSlots.Add(new
                         {
                             Date = date.ToString("yyyy-MM-dd"),
@@ -282,7 +283,6 @@ namespace Dental_Clinic_System.Controllers
                             EndTime = nextTime.ToString("HH:mm"),
                             ScheduleID = (int?)null
                         });
-
                         startTime = nextTime;
                     }
                 }

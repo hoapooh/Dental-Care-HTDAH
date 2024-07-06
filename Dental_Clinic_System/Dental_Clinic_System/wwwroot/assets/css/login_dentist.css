@@ -1,6 +1,4 @@
-﻿body {
-}
-* {
+﻿* {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
@@ -38,6 +36,8 @@ body {
         font-size: 50px;
         color: white;
         padding: 20px 0px;
+        position: fixed;
+        left: 100px;
     }
 
 .rightside {
@@ -164,4 +164,156 @@ sup{
     .rightside{
         width: 100%;
     }
-} 
+}
+
+/*========= toasts MESSAGE ===========*/
+/*========= toasts MESSAGE ===========*/
+#toasts {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 999999;
+    display: block;
+}
+
+.toasts {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 20px 0;
+    min-width: 400px;
+    max-width: 450px;
+    border-left: 4px solid;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    transition: all linear 0.3s;
+}
+
+@-webkit-keyframes slideInLeft {
+    from {
+        opacity: 0;
+        -webkit-transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+    }
+}
+
+@-moz-keyframes slideInLeft {
+    from {
+        opacity: 0;
+        -moz-transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        -moz-transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+.toasts--success {
+    border-color: #2de400;
+    opacity: 100%;
+}
+
+    .toasts--success .toasts__icon {
+        color: #2de400;
+        opacity: 100%;
+    }
+
+.toasts--info {
+    border-color: #2de400;
+}
+
+    .toasts--info .toasts__icon {
+        color: #2de400;
+        opacity: 100%;
+    }
+
+.toasts--warning {
+    border-color: #ff0000;
+}
+
+    .toasts--warning .toasts__icon {
+        color: #ff0000;
+        opacity: 100%;
+    }
+
+.toasts--error {
+    border-color: #ff0000;
+}
+
+    .toasts--error .toasts__icon {
+        color: #ff0000;
+        opacity: 100%;
+    }
+
+.toasts + .toasts {
+    margin-top: 24px;
+}
+
+.toasts__icon {
+    font-size: 24px;
+}
+
+.toasts__icon,
+.toasts__close {
+    padding: 0 16px;
+}
+
+.toasts__body {
+    flex-grow: 1;
+}
+
+.toasts__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    padding-left: 5px;
+}
+
+.toasts__msg {
+    font-size: 15px;
+    color: #888;
+    margin-top: 6px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.toasts__close {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
