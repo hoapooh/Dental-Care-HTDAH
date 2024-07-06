@@ -1,22 +1,16 @@
 ﻿//==============================================TÀI KHOẢN BỆNH NHÂN================================================
-using AutoMapper;
-using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Areas.Admin.ViewModels;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
-using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Data;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
-    //[Route("Admin/[controller]")]
     public class AccountPatientController : Controller
     {
         private readonly DentalClinicDbContext _context;
@@ -28,13 +22,11 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
         #region Show List Account với Role Bệnh nhân
         //===================LIST ACCOUNT===================
-        //[Route("ListAccountPatient")]
         public async Task<IActionResult> ListAccountPatient()
         {
-            var accountsQuery = _context.Accounts
-            .Where(a => a.AccountStatus == "Hoạt Động" && a.Role == "Bệnh Nhân");
-
-            var accounts = await accountsQuery.ToListAsync();
+            var accounts = await _context.Accounts
+            .Where(a => a.AccountStatus == "Hoạt Động" && a.Role == "Bệnh Nhân")
+            .ToListAsync();
 
             var accountList = accounts.Select(a => new ManagerAccountVM
             {
@@ -44,18 +36,22 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 PhoneNumber = a.PhoneNumber,
                 Gender = a.Gender,
                 Address = a.Address,
-                Role = a.Role
+                ProvinceId = a.Province,
+                WardId = a.Ward,
+                DistrictId = a.District,
+				Role = a.Role
             }).ToList();
 
 
             return View(accountList);
         }
-        #endregion
 
-        #region Tìm kiếm (Search)
-        //===================TÌM KIẾM===================
-        //[Route("SearchAccount")]
-        public async Task<IActionResult> SearchAccount(string keyword)
+		#endregion
+
+		#region Tìm kiếm (Search)
+		//===================TÌM KIẾM===================
+		//[Route("SearchAccount")]
+		public async Task<IActionResult> SearchAccount(string keyword)
         {
             //Nếu keyword rỗng, sẽ chuyển hướng đến ListAccount
             if (string.IsNullOrEmpty(keyword))

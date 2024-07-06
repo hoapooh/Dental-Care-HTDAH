@@ -1,19 +1,12 @@
 ﻿//==============================================TÀI KHOẢN NHA SĨ================================================
-using AutoMapper;
-using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Areas.Admin.ViewModels;
-using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
-using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Data;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
@@ -90,8 +83,18 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 PhoneNumber = a.PhoneNumber,
                 Address = a.Address,
                 Gender = a.Gender,
-                Role = a.Role
-                //Status = a.AccountStatus
+                Role = a.Role,
+
+                ClinicName = _context.Dentists
+                    .Where(d => d.AccountID == a.ID)
+                    .Select(d => d.Clinic.Name)
+                    .FirstOrDefault(),
+
+                Specialties = _context.DentistSpecialties
+                    .Where(ds => ds.Dentist.AccountID == a.ID && ds.Check == true)
+                    .Select(ds => ds.Specialty.Name)
+                    .ToList()
+                
             }).ToList();
 
             return View("ListAccountDentist", accountList);
@@ -245,7 +248,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 .Select(ds => ds.SpecialtyID)
                 .ToListAsync();
 
-            var accountVM = new EditAccountVM
+            var accountVM = new EditAccountDentistVM
             {
                 Id = account.ID,
                 FirstName = account.FirstName,
@@ -272,7 +275,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAccountDentist(EditAccountVM model)
+        public async Task<IActionResult> EditAccountDentist(EditAccountDentistVM model)
         {
             if (ModelState.IsValid)
             {
@@ -372,7 +375,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             return View(model);
         }
 
-        private void SetViewData(EditAccountVM model)
+        private void SetViewData(EditAccountDentistVM model)
         {
             ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
             ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", model.ClinicID);

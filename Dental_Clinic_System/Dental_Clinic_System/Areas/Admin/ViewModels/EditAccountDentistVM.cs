@@ -2,7 +2,7 @@
 
 namespace Dental_Clinic_System.Areas.Admin.ViewModels
 {
-	public class EditAccountVM
+	public class EditAccountDentistVM
 	{
 		public int Id { get; set; }
 		public string? FirstName { get; set; }
@@ -54,5 +54,6 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
 		public int ClinicID { get; set; }
 
+		public List<int> SelectSpecialty { get; set; }
 	}
 }

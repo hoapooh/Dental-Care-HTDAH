@@ -30,12 +30,16 @@
 		--mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
 		border: 0;
 		box-shadow: var(--mdb-modal-box-shadow);
-		padding: 1px 8px !important; /* Reduced padding for top/bottom and left/right */
+		padding: 1px 8px !important;
 		border-radius: 7px;
 	}
 
 	.form-modal-styles {
 		width: 46%;
+	}
+
+	.account__management .table tbody span {
+		font-weight: 200;
 	}
 </style>
 
@@ -172,8 +176,9 @@
 					<td>@account.Gender</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
-					<td>@account.Address</td>
-					@* <td>@account.Status</td> *@
+					<td class="address-cell">
+						@account.Address, <span class="title-Ward" data-id="@account.WardId">N/A</span>, <span class="title-District" data-id="@account.DistrictId">N/A</span>, <span class="title-Province" data-id="@account.ProvinceId">N/A</span>
+					</td>
 					<td>
 						<!--EDIT-->
 						<a href="@Url.Action("EditAccount", "AccountPatient", new {id = account.Id})" class="inline-block">
@@ -256,5 +261,69 @@
 
 			return isValid;
 		}
+	</script>
+
+
+	<!--Hiển thị các Tỉnh/Thành phố, Quận/Huyện, Phường/Xã-->
+	<script src="https://esgoo.net/scripts/jquery.js"></script>
+	<script>
+		$(document).ready(function () {
+			function loadNames() {
+				$(".title-Province").each(function () {
+					var provinceId = $(this).data("id");
+					var element = $(this);
+					console.log(`Loading Province for ID: ${provinceId}`); // Debug log
+					$.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data) {
+						console.log(`Province API response for ID ${provinceId}:`, data); // Debug log
+						if (data.error == 0) {
+							$.each(data.data, function (key, val) {
+								if (val.id == provinceId) {
+									element.text(val.full_name);
+									return false;
+								}
+							});
+						}
+					});
+				});
+
+				$(".title-District").each(function () {
+					var districtId = $(this).data("id");
+					var provinceId = $(this).closest('tr').find('.title-Province').data("id");
+					var element = $(this);
+					console.log(`Loading District for ID: ${districtId} in Province: ${provinceId}`); // Debug log
+					$.getJSON(`https://esgoo.net/api-tinhthanh/2/${provinceId}.htm`, function (data) {
+						console.log(`District API response for ID ${districtId} in Province ${provinceId}:`, data); // Debug log
+						if (data.error == 0) {
+							$.each(data.data, function (key, val) {
+								if (val.id == districtId) {
+									element.text(val.full_name);
+									return false;
+								}
+							});
+						}
+					});
+				});
+
+				$(".title-Ward").each(function () {
+					var wardId = $(this).data("id");
+					var districtId = $(this).closest('tr').find('.title-District').data("id");
+					var element = $(this);
+					console.log(`Loading Ward for ID: ${wardId} in District: ${districtId}`); // Debug log
+					$.getJSON(`https://esgoo.net/api-tinhthanh/3/${districtId}.htm`, function (data) {
+						console.log(`Ward API response for ID ${wardId} in District ${districtId}:`, data); // Debug log
+						if (data.error == 0) {
+							$.each(data.data, function (key, val) {
+								if (val.id == wardId) {
+									element.text(val.full_name);
+									return false;
+								}
+							});
+						}
+					});
+				});
+			}
+
+			loadNames();
+		});
 	</script>
 }

@@ -53,13 +53,13 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 		[Required(ErrorMessage = "Vui lòng nhập địa chỉ.")]
         public string Address { get; set; }
 
-        public int AmWorkTimeID { get; set; }
+        //public int AmWorkTimeID { get; set; }
 
-        public int PmWorkTimeID { get; set; }
+        //public int PmWorkTimeID { get; set; }
 
-        public SelectList? AmWorkTimes { get; set; }
+        //public SelectList? AmWorkTimes { get; set; }
 
-        public SelectList? PmWorkTimes { get; set; }
+        //public SelectList? PmWorkTimes { get; set; }
 
         #region Start Time and End Time
         public SelectList? AmStartTimes { get; set; }
