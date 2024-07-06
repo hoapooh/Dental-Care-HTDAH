@@ -14,13 +14,13 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
     [Area("Dentist")]
     public class AppointmentPdfController : Controller
     {
-        private readonly PdfService _pdfService;
+        //private readonly PdfService _pdfService;
         private readonly DentalClinicDbContext _context;
         IWebHostEnvironment _webHostEnvironment;
 
-        public AppointmentPdfController(PdfService pdfService, DentalClinicDbContext context, IWebHostEnvironment webHostEnvironment)
+        public AppointmentPdfController( DentalClinicDbContext context, IWebHostEnvironment webHostEnvironment)
         {
-            _pdfService = pdfService;
+            //_pdfService = pdfService;
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -143,11 +143,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 ";
 
 
-            byte[] pdf = _pdfService.GeneratePdf(htmlContent);
+            //byte[] pdf = _pdfService.GeneratePdf(htmlContent);
             string fileName = $"donkham_{appointmentID}.pdf";
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pdf", fileName);
 
-            System.IO.File.WriteAllBytes(filePath, pdf);
+            //System.IO.File.WriteAllBytes(filePath, pdf);
 
             //Thêm appointment với giờ tạo vào FutureAppointments =====================
             if (appointment.a.Future_Appointment_ID == null) { 
