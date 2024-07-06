@@ -5,6 +5,22 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<style>
+    .specialties-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .form-check {
+        flex: 1 1 200px;
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        margin-right: 5px;
+    }
+</style>
+
 <!-- ============ INFO ============ -->
 <div class="account__management">
     <div class="account__management__header">
@@ -89,7 +105,18 @@
                 <option value="0">Phường Xã</option>
             </select>
         </div>
-
+        <div class="col-md-12">
+            <label for="specialties">Chọn các chuyên khoa:</label>
+            <div id="specialties" class="form-check-inline specialties-container">
+                @foreach (var specialty in ViewData["Specialties"] as List<Dental_Clinic_System.Models.Data.Specialty>)
+                {
+                    <div class="form-check">
+                        <label class="form-check-label" for="spe">@specialty.Name</label>
+                        <input class="form-check-input" type="checkbox" value="@specialty.ID" id="spe" name="SelectSpecialty" @(Model.SelectSpecialty.Contains(specialty.ID) ? "checked" : "") />
+                    </div>
+                }
+            </div>
+        </div>
         <div class="col-md-12 text-end">
             <button type="reset" class="btn" id="newBtn">Quay lại</button>
             <button type="submit" class="btn">Lưu</button>

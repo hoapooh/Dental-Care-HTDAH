@@ -37,6 +37,25 @@
 	.form-modal-styles {
 		width: 46%;
 	}
+
+	.specialties-container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.form-check {
+		flex: 1 1 200px;
+		margin-right: 10px;
+
+	}
+
+	.form-check-label {
+		margin-left: 5px;
+	}
+
+	.account__management .table tbody span {
+		font-weight: 200;
+	}
 </style>
 
 
@@ -127,6 +146,13 @@
 						<select name="ClinicID" id="clinicID" class="form-control" required></select>
 					</div>
 				</div>
+				<div class="row mb-3">
+					<div class="col">
+						<label for="specialties">Các chuyên khoa gồm có:<sup style="color:red">*</sup></label>
+						<div id="specialties" class="form-check-inline specialties-container"></div>
+					</div>
+				</div>
+
 			</div>
 
 			<div class="modal-footer">
@@ -162,7 +188,8 @@
 			<th class="text-center">STT</th>
 			<th>Tên đăng nhập</th>
 			<th>Giới tính</th>
-			@* <th>Bằng cấp</th> *@
+			<th>Phòng khám</th>
+			<th>Chuyên khoa</th>
 			<th>Email</th>
 			<th>Số điện thoại</th>
 			<th>Hành động</th>
@@ -175,13 +202,19 @@
 			@foreach (var account in Model)
 			{
 				<tr style="vertical-align: middle">
-					<td style="text-align: center">@stt @* (ID: @account.Id) *@</td>
+					<td style="text-align: center">@stt</td>
 					<td>
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
 					<td>@account.Gender</td>
-					@* <td>@account.DegreeID</td> *@
+					<td>@account.ClinicName</td>
+					<td>
+						@foreach (var specialty in account.Specialties)
+						{
+							<span class="specialty-item">@specialty</span> <br />
+						}
+					</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
 					<td>
@@ -286,9 +319,15 @@
 					type: 'GET'
 				});
 
-				$.when(degreesRequest, clinicsRequest).done(function (degreesResponse, clinicsResponse) {
+				var specialtiesRequest = $.ajax({
+					url: '@Url.Action("GetSpecialties", "AccountDentist")',
+					type: 'GET'
+				});
+
+				$.when(degreesRequest, clinicsRequest, specialtiesRequest).done(function (degreesResponse, clinicsResponse, specialtiesResponse) {
 					var degreesData = degreesResponse[0];
 					var clinicsData = clinicsResponse[0];
+					var specialtiesData = specialtiesResponse[0];
 
 					var degreeSelect = $('#degreeID');
 					degreeSelect.empty();
@@ -301,8 +340,22 @@
 					clinicsData.forEach(function (clinic) {
 						clinicSelect.append(new Option(clinic.name, clinic.id));
 					});
+
+					// var specialtySelect = $('#specialtyID');
+					// specialtySelect.empty();
+					// specialtiesData.forEach(function (specialty) {
+					// 	specialtySelect.append(new Option(specialty.name, specialty.id));
+					// });
+					var specialtyDiv = $('#specialties');
+					specialtyDiv.empty();
+					specialtiesData.forEach(function (specialty) {
+						specialtyDiv.append('<div class="form-check">' +
+							'<label class="form-check-label" for="specialty' + specialty.id + '">' + specialty.name + '</label>' +
+							'<input class="form-check-input" type="checkbox" value="' + specialty.id + '" id="specialty' + specialty.id + '" name="selectSpecialty">' +
+							'</div>');
+					});
 				}).fail(function () {
-					alert('Không truy cập được bằng cấp và phòng khám.');
+					alert('Không truy cập được bằng cấp, phòng khám hoặc chuyên khoa.');
 				});
 			});
 		});

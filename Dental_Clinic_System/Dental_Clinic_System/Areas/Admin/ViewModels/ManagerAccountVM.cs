@@ -18,12 +18,12 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
         [RegularExpression("^[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Tên đăng nhập chỉ được chứa các ký tự chữ cái và số, và phải bắt đầu bằng chữ cái.")]
         public string Username { get; set; } = null!;
 
-        [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
-        [DataType(DataType.Password)]
-        [StringLength(30, ErrorMessage = "Mật khẩu không được quá 30 ký tự.")]
-        [MinLength(3, ErrorMessage = "Mật khẩu phải có ít nhất 3 ký tự.")]
-        [RegularExpression("[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Mật khẩu chỉ được chứa các ký tự chữ cái và số, và phải bắt đầu bằng chữ cái.")]
-        public string Password { get; set; } = null!;
+        //[Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
+        //[DataType(DataType.Password)]
+        //[StringLength(30, ErrorMessage = "Mật khẩu không được quá 30 ký tự.")]
+        //[MinLength(3, ErrorMessage = "Mật khẩu phải có ít nhất 3 ký tự.")]
+        //[RegularExpression("[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Mật khẩu chỉ được chứa các ký tự chữ cái và số, và phải bắt đầu bằng chữ cái.")]
+        //public string Password { get; set; } = null!;
 
         [Required(ErrorMessage = "Vui lòng nhập email.")]
         [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
@@ -42,22 +42,23 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
         public string Role { get; set; }
 
-        public string Status { get; set; }
+        //public string Status { get; set; }
 
-        public int? Province { get; set; }
+        //public int? Province { get; set; }
 
-        public int? District { get; set; }
+        //public int? District { get; set; }
 
-        public int? Ward { get; set; }
+        //public int? Ward { get; set; }
 
-        public bool IsHidden { get; set; }
+        //public bool IsHidden { get; set; }
 
-        public int DegreeID { get; set; }
+        //public int DegreeID { get; set; }
 
-        public string Description { get; set; }
+        //public string Description { get; set; }
 
         public string? ClinicName { get; set; }
 
+        public List<string> Specialties { get; set; }
     }
 }
 
