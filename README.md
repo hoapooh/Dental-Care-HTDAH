@@ -9,7 +9,7 @@
 - Sau khi Drop Database thành công rồi thì gõ `Update-Database`
 
 ### 3. Thêm Dữ Liệu Vào Database
-- Script để insert dữ liệu vào Database lấy [ở đây nè!!!](https://github.com/Hoapooh/Dental-Care-HTDAH/blob/Database-Data-Script/Clinic_InsertDB_Script_V16.sql)
+- Script để insert dữ liệu vào Database lấy [ở đây nè!!!](https://github.com/Hoapooh/Dental-Care-HTDAH/blob/master/Clinic_InsertDB_Script_V20_Hoa.sql)
 - Mở File .sql lên và chỉ cần ấn Execute (hoặc F5) 🔥🔥🔥. Không cần chọn tên DB luôn 😎 Quá đãããã...
 
 ### 4. Các lệnh cần lưu ý:
