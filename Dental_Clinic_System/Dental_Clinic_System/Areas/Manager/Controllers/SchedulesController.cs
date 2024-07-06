@@ -132,7 +132,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 		#region Lich làm việc của Nha Sĩ - Hàng tuần - Lịch này hỗ trợ generatr lịch khám theo tuần nhanh chóng
 		// GET: Manager/LichLamViec
-		public async Task<IActionResult> LichLamViec()
+		public async Task<IActionResult> GetWorkingSchedule()
 		{
 			//Lịch làm việc sáng chiều của phòng khám. Mô phỏng: clinicID = 1
 			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == 1);
@@ -157,7 +157,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> LichLamViec(List<int> SelectedDenSesList)
+		public async Task<IActionResult> GetWorkingSchedule(List<int> SelectedDenSesList)
 		{
 			//Lịch làm việc sáng chiều của phòng khám. Mô phỏng: clinicID = 1
 			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == 1);

@@ -41,7 +41,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 										 Username = account.Username,
 										 Email = account.Email,
 										 PhoneNumber = account.PhoneNumber,
-										 Address = account.Address,
 										 Role = account.Role,
 										 ClinicName = clinic != null ? clinic.Name : "N/A"
 									 }).ToListAsync();
@@ -74,7 +73,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 										 Username = account.Username,
 										 Email = account.Email,
 										 PhoneNumber = account.PhoneNumber,
-										 Address = account.Address,
 										 Role = account.Role,
 										 ClinicName = clinic != null ? clinic.Name : "N/A"
 									 }).ToListAsync();

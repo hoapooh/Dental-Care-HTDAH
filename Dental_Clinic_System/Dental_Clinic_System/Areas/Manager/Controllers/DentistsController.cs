@@ -32,17 +32,30 @@ namespace Dental_Clinic_System.Controllers
 
 		//[Route("Index")]
 		// GET: Dentists
-		public async Task<IActionResult> Index(string keyword)
+		public async Task<IActionResult> Index(string keyword, string searchStatus)
 		{
 			var clinicId = HttpContext.Session.GetInt32("clinicId");
 			if (clinicId == null)
 			{   // Check if session has expired, log out
 				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
 			}
+			
 			var dentists = await _context.Dentists.Include(d => d.Account).Include(d => d.Clinic).Include(d => d.Degree).Where(d => d.ClinicID == clinicId).ToListAsync();
 
+			if (searchStatus != null)
+			{
+				ViewBag.SearchStatus = searchStatus;
+				dentists = dentists.Where(d => d.Account.AccountStatus == searchStatus).ToList();
+			}
+			else
+			{
+				ViewBag.SearchStatus = "Hoạt Động";
+				dentists = dentists.Where(d => d.Account.AccountStatus == "Hoạt Động").ToList();
+			}	
 			if (!string.IsNullOrEmpty(keyword))
 			{
+				keyword = keyword.Trim().ToLower();
+				keyword = Util.ConvertVnString(keyword);
 				dentists = dentists.Where(p =>
 					(p.Account.FirstName != null && Util.ConvertVnString(p.Account.FirstName).Contains(keyword)) ||
 					(p.Account.LastName != null && Util.ConvertVnString(p.Account.LastName).Contains(keyword)) ||
@@ -52,19 +65,6 @@ namespace Dental_Clinic_System.Controllers
 					.ToList();
 			}
 			return View(dentists);
-		}
-		//[Route("Search")]
-		[HttpPost]
-		public async Task<IActionResult> Search(string keyword)
-		{
-			// Xử lý từ khóa tìm kiếm như trim, kiểm tra null, v.v...
-			if (!string.IsNullOrEmpty(keyword))
-			{
-				keyword = keyword.Trim().ToLower();
-				keyword = Util.ConvertVnString(keyword);
-
-			}
-			return RedirectToAction("Index", new { keyword = keyword });
 		}
 		
 		// GET: Dentists/Details/5
@@ -100,13 +100,13 @@ namespace Dental_Clinic_System.Controllers
 			ViewBag.Province = null;
 			ViewBag.District = null;
 			ViewBag.Ward = null;
-			if (dentist.Account.Province != null)
+			if (dentist.Account.Province != null && dentist.Account.Province != 0)
 			{
 				ViewBag.Province = ", " + await LocalAPIReverseString.GetProvinceNameById((int)(dentist.Account.Province));
-				if (dentist.Account.District != null)
+				if (dentist.Account.District != null && dentist.Account.District != 0)
 				{
 					ViewBag.District = ", " + await LocalAPIReverseString.GetDistrictNameById((int)(dentist.Account.Province), (int)(dentist.Account.District));
-					if (dentist.Account.Ward != null)
+					if (dentist.Account.Ward != null && dentist.Account.Ward != 0)
 						ViewBag.Ward = await LocalAPIReverseString.GetWardNameById((int)(dentist.Account.District), (int)(dentist.Account.Ward));
 				}
 			}
@@ -169,8 +169,8 @@ namespace Dental_Clinic_System.Controllers
 				PhoneNumber = dentist.PhoneNumber,
 				Email = dentist.Email,
 				Role = "Nha Sĩ",
-				AccountStatus = "Hoạt động",
-				Image = "https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=762f2f04-4f0d-447d-bb0a-6fed99eda354"
+				AccountStatus = "Hoạt Động",
+				Image = dentist.Gender == "Nam"? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FDentist%2Fdentist-default-men.png?alt=media&token=f519d272-3f65-4269-9d0e-657ad36d4c87" : "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FDentist%2Fdentist-default-women.png?alt=media&token=f7412f77-1ed3-4383-8f37-c0cbe9048bc1"
 			};
 
 			_context.Accounts.Add(newAccount);
@@ -259,7 +259,9 @@ namespace Dental_Clinic_System.Controllers
 				Ward = dentist.Account?.Ward ?? 0,
 				Address = dentist.Account?.Address,
 				DateOfBirth = dentist.Account?.DateOfBirth,
-				Description = dentist.Description ?? ""
+				Description = dentist.Description ?? "",
+				Status = dentist.Account.AccountStatus,
+				Image = dentist.Account.Image ?? ""
 			};
 			// Xử lý các chuyên khoa - BẢNG DENTIST_SPECIALTY
 			var den_speList = _context.DentistSpecialties.Include(d => d.Dentist).Include(d => d.Specialty).AsQueryable();
@@ -276,7 +278,7 @@ namespace Dental_Clinic_System.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("SpecialtyIDs, DentistId, AccountId, LastName, FirstName, Gender, Province, Ward, District, Address, DateOfBirth, PhoneNumber, Email, DegreeID, Description")] EditDentistVM dentistForm)
+		public async Task<IActionResult> Edit(int id, [Bind("SpecialtyIDs, DentistId, AccountId, LastName, FirstName, Gender, Province, Ward, District, Address, DateOfBirth, PhoneNumber, Email, DegreeID, Description, Status, Image")] EditDentistVM dentistForm, string? newPass)
 		{
 			if (id != dentistForm.DentistId)
 			{
@@ -291,6 +293,10 @@ namespace Dental_Clinic_System.Controllers
 					var account = _context.Accounts.Find(dentistForm.AccountId);
 					if (account != null)
 					{
+						if(!string.IsNullOrEmpty(newPass))
+						{
+							account.Password = DataEncryptionExtensions.ToMd5Hash(newPass);
+						}
 						account.LastName = dentistForm.LastName;
 						account.FirstName = dentistForm.FirstName;
 						account.Gender = dentistForm.Gender;
@@ -301,6 +307,8 @@ namespace Dental_Clinic_System.Controllers
 						account.Ward = dentistForm.Ward;
 						account.Address = dentistForm.Address;
 						account.DateOfBirth = dentistForm.DateOfBirth;
+						account.AccountStatus = dentistForm.Status;
+						account.Image = dentistForm.Image;
 					};
 					_context.Update(account);
 					await _context.SaveChangesAsync();
@@ -336,6 +344,8 @@ namespace Dental_Clinic_System.Controllers
 						throw;
 					}
 				}
+
+				TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công!";
 				return RedirectToAction(nameof(Details), new { id = id });
 			}
 

@@ -58,7 +58,7 @@
 <div class="manager__management__header">
 	<div class="title">Dịch vụ làm răng</div>
 	<div class="action-btn">
-		<form asp-action="Search" asp-controller="Service">
+		<form id="filterForm" method="get" asp-action="Index" class="form-container">
 			<div class="search__bar">
 				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
 			</div>

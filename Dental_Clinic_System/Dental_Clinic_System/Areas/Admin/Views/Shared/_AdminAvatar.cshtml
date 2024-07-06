@@ -1,4 +1,30 @@
-﻿<nav class="nav__header d-flex flex-row justify-content-end">
+﻿<style>
+    .modal-content {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+    }
+
+    .modal-body input {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+    }
+
+    .modal-body textarea {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+    }
+
+    .modal-body p {
+        font-family: "Baloo Paaji 2" !important;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .modal-footer button {
+    }
+</style>
+
+<nav class="nav__header d-flex flex-row justify-content-end">
 	<div>
 		<div class="d-flex align-items-center nav__header__profile">
 			<img src="@ViewBag.AdminAvatar" alt="" />
@@ -6,9 +32,65 @@
 				Chào mừng, Admin <br />
 				<span>@ViewBag.AdminName</span>
 			</p>
+			<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+				<i class="bx bx-key" style="color: red;"></i>
+			</button>
 			<a asp-area="Admin" asp-controller="AdminAccount" asp-action="Logout">
 				<i class="bx bx-log-out" style="color: red; transform: rotate(180deg)"></i>
 			</a>
 		</div>
 	</div>
 </nav>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 50% !important">
+        <div class="modal-content">
+            <div class="modal-header" style="flex-direction: column-reverse;">
+                <h2 class="modal-title" id="changePasswordModalLabel">Đổi mật khẩu</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="mb-3">
+                        <p class="form-label">Mật khẩu hiện tại</p>
+                        <input type="password" class="form-control" id="Password" name="oldPassword" required />
+                    </div>
+                    <div class="mb-3">
+                        <p class="form-label">Mật khẩu mới</p>
+                        <input type="password" class="form-control" id="NewPassword" name="newPassword" required />
+                    </div>
+                    <div class="mb-3">
+                        <p class="form-label">Xác nhận mật khẩu mới</p>
+                        <input type="password" class="form-control" id="ConfirmPassword" name="confirmPassword" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3" style="font-size: 2rem;">Đổi mật khẩu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password -->
+<script>
+    $(document).ready(function () {
+        $('#changePasswordForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChangePassword", "ManagerAccount")',
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        // alert(response.message);
+                        $('#changePasswordModal').modal('hide');
+                        location.reload();  // Reload the page
+                    } else {
+                        location.reload();  // Reload the page
+                    }
+                }
+            });
+        });
+    });
+</script>

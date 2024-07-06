@@ -19,7 +19,13 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("CompanyEmail", TypeName = "varchar(50)")]
 		public string CompanyEmail { get; set; } = null!;
 
-		[Column("RepresentativeName", TypeName = "nvarchar(200)")]
+        [Column("ManagerPhonenumber", TypeName = "varchar(12)")]
+        public string ManagerPhonenumber { get; set; } = null!;
+
+        [Column("ManagerEmail", TypeName = "varchar(50)")]
+        public string ManagerEmail { get; set; } = null!;
+
+        [Column("RepresentativeName", TypeName = "nvarchar(200)")]
 		public string RepresentativeName { get; set; } = null!;
 
 		[Column("ClinicName", TypeName = "nvarchar(200)")]

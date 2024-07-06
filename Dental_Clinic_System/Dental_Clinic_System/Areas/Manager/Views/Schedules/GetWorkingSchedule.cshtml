@@ -1,0 +1,538 @@
+﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Dentist_Session>
+@{
+	ViewData["Title"] = "Lịch trình";
+	Layout = "_LayoutManager";
+}
+
+@section Styles {
+	<style>
+		.sidebar .nav-item a.Lich_lam_viec1 {
+			color: #fff;
+			background: #4880ff;
+		}
+
+		.manager__management__header {
+			justify-content: space-around;
+		}
+
+		.form-modal-styles {
+			width: 90%;
+		}
+
+
+
+		.float-checkbox {
+			float: left;
+			margin-right: 10px; /* Khoảng cách giữa các checkbox */
+		}
+
+		.manager__management table {
+			width: auto;
+			min-width: 1000px;
+			margin: 0 auto;
+		}
+
+		.table .form-check-input {
+			width: 30px;
+			height: 30px;
+			display: flex;
+			position: relative;
+		}
+
+		.table th {
+			font-weight: 600;
+			padding-left: 21px;
+			padding-bottom: 3px;
+			color: seagreen;
+		}
+
+		.table .session th {
+			font-weight: 400;
+			padding-left: 13px;
+			padding-bottom: 0;
+			padding-top: 0;
+			color: #3f97f6;
+		}
+
+		.table td {
+			padding: 10px 15px 10px 15px;
+			display: table-cell;
+			align-content: center;
+		}
+
+		.modal-content .vt {
+			--mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
+			border: 0;
+			box-shadow: var(--mdb-modal-box-shadow);
+			padding: 24px 40px !important; /* Reduced padding for top/bottom and left/right */
+			border-radius: 10px; /* Adjust this value to change the roundness of the corners */
+		}
+
+		.modal-content {
+			/* padding: 24px 40px !important; */ /* Reduced padding for top/bottom and left/right */
+		}
+
+		.form-check-input[type="checkbox"]:checked {
+			/* background-color: #3f97f6ba; */
+			background-color: #007bff;
+			border-color: aliceblue;
+		}
+
+		.mbsc-ios.mbsc-calendar-week-day {
+			font-size: 1em;
+			color: brown;
+		}
+
+		.mbsc-ios.mbsc-calendar-day {
+			font-size: 0.9em;
+		}
+
+		.mbsc-calendar-cell-inner {
+			display: inline-block;
+			padding: 0 .25em;
+			vertical-align: middle;
+			align-content: center;
+			/* margin-top: -11px; */
+		}
+
+		.week-button, .week-buttonTitile {
+			margin-top: 5px;
+			padding: 5px 10px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+			.week-button:hover, .week-buttonTitile:hover {
+				background-color: #0056b3;
+				margin-left: 0;
+				margin-top: 5px;
+			}
+
+		.mbsc-calendar-day {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 50px;
+			// Adjust as necessary
+		}
+
+		.modal-footer {
+			gap: 10px;
+			padding: 0 10px;
+		}
+
+			.modal-footer button[type="reset"] {
+				background: #ffb54a;
+				font-size: 2rem;
+				padding: 5px 10px;
+				color: #fff;
+			}
+
+				.modal-footer button[type="reset"]:hover {
+					background: #ff9c00;
+				}
+
+			.modal-footer button.submit-btn.btn {
+				font-size: 2rem;
+				padding: 5px 10px;
+				color: #fff;
+			}
+	</style>
+}
+<div class="modal-dialog modal-dialog-centered form-modal-styles">
+	<div style="font-size: 2rem" class="modal-content">
+		<div class="vt">
+			<!--header -->
+			<div class="manager__management__header">
+				<div class="title">Lịch làm việc</div>
+				@* <div class="action-btn">
+				<a asp-action="Create" class="add__new">+ Thêm lịch khám</a>
+				</div> *@
+
+			</div>
+			<h3 style="padding-left: 45px; color: lightskyblue;">
+				Sáng: &nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.SangStart - @ViewBag.SangEnd
+			</h3>
+			<h3 style="padding-left: 45px; color: lightskyblue;">
+				Chiều: &nbsp;&nbsp; @ViewBag.ChieuStart - @ViewBag.ChieuEnd
+			</h3>
+			<!-- Table -->
+			<table class="table table-striped mt-4" style="font-size: 2rem">
+				<thead>
+					<tr>
+						<th style="padding-left: 15px;">Nha sĩ</th>
+						<th>Thứ 2</th>
+						<th>Thứ 3</th>
+						<th>Thứ 4</th>
+						<th>Thứ 5</th>
+						<th>Thứ 6</th>
+						<th>Thứ 7</th>
+						<th style="padding-left: 6px;">Chủ nhật</th>
+					</tr>
+
+					<tr class="session">
+						<th></th>
+						<th>AM | PM</th>
+						<th>AM | PM</th>
+						<th>AM | PM</th>
+						<th>AM | PM</th>
+						<th>AM | PM</th>
+						<th>AM | PM</th>
+						<th>AM | PM</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					@{
+						var ModelList = ViewBag.DenSesList as List<Dental_Clinic_System.Models.Data.Dentist_Session>;
+						var groupedDentist = ModelList?.GroupBy(s => new { s.Dentist_ID });
+						//var groupedDentist = Model.GroupBy(s => new { s.Dentist_ID });
+					}
+					@if (groupedDentist != null && groupedDentist.Any())
+					{
+						@foreach (var group in groupedDentist)
+						{
+							//Lấy account => Tên nha sĩ
+							var dentist = group.FirstOrDefault()?.Dentist;
+							var account = dentist?.Account;
+							//Lấy list ID của Session của dentist đã được select trước đó (theo Db)
+							var sessions = group.Where(s => s.Check == true).Select(s => s.Session_ID).ToList();
+							bool isChecked;
+							<tr style="vertical-align: middle">
+								<td>
+									@account?.LastName @account?.FirstName
+								</td>
+
+								<td>
+									@{
+										<!--Thứ 2 - sáng-->
+										isChecked = sessions != null && sessions.Contains(1);
+										<input title="Sáng Thứ 2" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 1)?.ID" @(isChecked ? "checked" : "") disabled>
+										<!--Thứ 2 - chiều-->
+										isChecked = sessions != null && sessions.Contains(2);
+										<input title="Chiều Thứ 2" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 2)?.ID" @(isChecked ? "checked" : "") disabled>
+									}
+								</td>
+								<td>
+									@{
+										<!--Thứ 3 - sáng-->
+										isChecked = sessions != null && sessions.Contains(3);
+										<input title="Sáng Thứ 3" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 3)?.ID" @(isChecked ? "checked" : "") disabled>
+										<!--Thứ 3 - chiều-->
+										isChecked = sessions != null && sessions.Contains(4);
+										<input title="Chiều Thứ 3" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 4)?.ID" @(isChecked ? "checked" : "") disabled>
+									}
+								</td>
+								<td>
+									@{
+										<!--Thứ 4 - sáng-->
+										isChecked = sessions != null && sessions.Contains(5);
+										<input title="Sáng Thứ 4" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 5)?.ID" @(isChecked ? "checked" : "") disabled>
+										<!--Thứ 4 - chiều-->
+										isChecked = sessions != null && sessions.Contains(6);
+										<input title="Chiều Thứ 4" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 6)?.ID" @(isChecked ? "checked" : "") disabled>
+									}
+								</td>
+								<td>
+									@{
+										<!--Thứ 5 - sáng-->
+										isChecked = sessions != null && sessions.Contains(7);
+										<input title="Sáng Thứ 5" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 7)?.ID" @(isChecked ? "checked" : "") disabled>
+										<!--Thứ 5 - chiều-->
+										isChecked = sessions != null && sessions.Contains(8);
+										<input title="Chiều Thứ 5" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 8)?.ID" @(isChecked ? "checked" : "") disabled>
+									}
+								</td>
+								<td>
+									@{
+										<!--Thứ 6 - sáng-->
+										isChecked = sessions != null && sessions.Contains(9);
+										<input title="Sáng Thứ 6" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 9)?.ID" @(isChecked ? "checked" : "") disabled>
+										<!--Thứ 6 - chiều-->
+										isChecked = sessions != null && sessions.Contains(10);
+										<input title="Chiều Thứ 6" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 10)?.ID" @(isChecked ? "checked" : "") disabled>
+									}
+								</td>
+								<td>
+									@{
+										<!--Thứ 7 - sáng-->
+										isChecked = sessions != null && sessions.Contains(11);
+										<input title="Sáng Thứ 7" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 11)?.ID" @(isChecked ? "checked" : "") disabled>
+										<!--Thứ 7 - chiều-->
+										isChecked = sessions != null && sessions.Contains(12);
+										<input title="Chiều Thứ 7" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 12)?.ID" @(isChecked ? "checked" : "") disabled>
+									}
+								</td>
+								<td>
+									@{
+										<!--Chủ nhật - sáng-->
+										isChecked = sessions != null && sessions.Contains(13);
+										<input title="Sáng Chủ nhật" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 13)?.ID" @(isChecked ? "checked" : "") disabled>
+										<!--Chủ nhật - chiều-->
+										isChecked = sessions != null && sessions.Contains(14);
+										<input title="Chiều Chủ nhật" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 14)?.ID" @(isChecked ? "checked" : "") disabled>
+									}
+								</td>
+
+							</tr>
+						}
+					}
+
+
+				</tbody>
+			</table>
+
+			<div style="height: 20px"> </div>
+			<div class="modal-footer">
+				<button type="button" class="submit-btn btn" onclick="scrollToSection()">
+					Tạo lịch khám theo tuần
+				</button>
+				|
+				<button type="button" class="submit-btn btn" data-bs-toggle="modal" data-bs-target="#changeWorkingScheduleModal">
+					Chỉnh sửa
+				</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<br />
+<!-- Change Working Schedule - Start -->
+<div class="modal fade" id="changeWorkingScheduleModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 75% !important">
+		<div class="modal-content">
+			<div class="modal-header" style="padding: 10px 20px;">
+				<div class="manager__management__header">
+					<div class="title" id="changePasswordModalLabel">Chỉnh sửa Lịch làm việc</div>
+				</div>
+				<div style="font-size: 2rem; padding-left: 50px">
+					<h3 style="color: lightskyblue;">
+						Sáng: &nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.SangStart - @ViewBag.SangEnd
+					</h3>
+					<h3 style="color: lightskyblue;">
+						Chiều: &nbsp;&nbsp; @ViewBag.ChieuStart - @ViewBag.ChieuEnd
+					</h3>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+
+			<form id="changeWorkingScheduleForm" asp-action="GetWorkingSchedule" enctype="multipart/form-data" style="font-size: 2rem">
+				<!-- Table -->
+				<table class="table table-striped mt-1" style="font-size: 2rem; min-width: 1070px;">
+					<thead>
+						<tr>
+							<th style="padding-left: 15px;">Nha sĩ</th>
+							<th>Thứ 2</th>
+							<th>Thứ 3</th>
+							<th>Thứ 4</th>
+							<th>Thứ 5</th>
+							<th>Thứ 6</th>
+							<th>Thứ 7</th>
+							<th style="padding-left: 6px;">Chủ nhật</th>
+						</tr>
+
+						<tr class="session">
+							<th></th>
+							<th>AM | PM</th>
+							<th>AM | PM</th>
+							<th>AM | PM</th>
+							<th>AM | PM</th>
+							<th>AM | PM</th>
+							<th>AM | PM</th>
+							<th>AM | PM</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						@{
+							var ModelList = ViewBag.DenSesList as List<Dental_Clinic_System.Models.Data.Dentist_Session>;
+							var groupedDentist = ModelList?.GroupBy(s => new { s.Dentist_ID });
+							//var groupedDentist = Model.GroupBy(s => new { s.Dentist_ID });
+						}
+						@if (groupedDentist != null && groupedDentist.Any())
+						{
+							@foreach (var group in groupedDentist)
+							{
+								//Lấy account => Tên nha sĩ
+								var dentist = group.FirstOrDefault()?.Dentist;
+								var account = dentist?.Account;
+								//Lấy list ID của Session của dentist đã được select trước đó (theo Db)
+								var sessions = group.Where(s => s.Check == true).Select(s => s.Session_ID).ToList();
+								bool isChecked;
+								<tr style="vertical-align: middle">
+									<td>
+										@account?.LastName @account?.FirstName
+									</td>
+
+									<td>
+										@{
+											<!--Thứ 2 - sáng-->
+											isChecked = sessions != null && sessions.Contains(1);
+											<input title="Sáng Thứ 2" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 1)?.ID" @(isChecked ? "checked" : "")>
+											<!--Thứ 2 - chiều-->
+											isChecked = sessions != null && sessions.Contains(2);
+											<input title="Chiều Thứ 2" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 2)?.ID" @(isChecked ? "checked" : "")>
+										}
+									</td>
+									<td>
+										@{
+											<!--Thứ 3 - sáng-->
+											isChecked = sessions != null && sessions.Contains(3);
+											<input title="Sáng Thứ 3" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 3)?.ID" @(isChecked ? "checked" : "")>
+											<!--Thứ 3 - chiều-->
+											isChecked = sessions != null && sessions.Contains(4);
+											<input title="Chiều Thứ 3" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 4)?.ID" @(isChecked ? "checked" : "")>
+										}
+									</td>
+									<td>
+										@{
+											<!--Thứ 4 - sáng-->
+											isChecked = sessions != null && sessions.Contains(5);
+											<input title="Sáng Thứ 4" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 5)?.ID" @(isChecked ? "checked" : "")>
+											<!--Thứ 4 - chiều-->
+											isChecked = sessions != null && sessions.Contains(6);
+											<input title="Chiều Thứ 4" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 6)?.ID" @(isChecked ? "checked" : "")>
+										}
+									</td>
+									<td>
+										@{
+											<!--Thứ 5 - sáng-->
+											isChecked = sessions != null && sessions.Contains(7);
+											<input title="Sáng Thứ 5" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 7)?.ID" @(isChecked ? "checked" : "")>
+											<!--Thứ 5 - chiều-->
+											isChecked = sessions != null && sessions.Contains(8);
+											<input title="Chiều Thứ 5" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 8)?.ID" @(isChecked ? "checked" : "")>
+										}
+									</td>
+									<td>
+										@{
+											<!--Thứ 6 - sáng-->
+											isChecked = sessions != null && sessions.Contains(9);
+											<input title="Sáng Thứ 6" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 9)?.ID" @(isChecked ? "checked" : "")>
+											<!--Thứ 6 - chiều-->
+											isChecked = sessions != null && sessions.Contains(10);
+											<input title="Chiều Thứ 6" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 10)?.ID" @(isChecked ? "checked" : "")>
+										}
+									</td>
+									<td>
+										@{
+											<!--Thứ 7 - sáng-->
+											isChecked = sessions != null && sessions.Contains(11);
+											<input title="Sáng Thứ 7" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 11)?.ID" @(isChecked ? "checked" : "")>
+											<!--Thứ 7 - chiều-->
+											isChecked = sessions != null && sessions.Contains(12);
+											<input title="Chiều Thứ 7" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 12)?.ID" @(isChecked ? "checked" : "")>
+										}
+									</td>
+									<td>
+										@{
+											<!--Chủ nhật - sáng-->
+											isChecked = sessions != null && sessions.Contains(13);
+											<input title="Sáng Chủ nhật" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 13)?.ID" @(isChecked ? "checked" : "")>
+											<!--Chủ nhật - chiều-->
+											isChecked = sessions != null && sessions.Contains(14);
+											<input title="Chiều Chủ nhật" class="form-check-input float-checkbox" type="checkbox" name="SelectedDenSesList" value="@group?.FirstOrDefault(a => a.Session_ID == 14)?.ID" @(isChecked ? "checked" : "")>
+										}
+									</td>
+
+								</tr>
+							}
+						}
+
+
+					</tbody>
+				</table>
+				<div style="height: 20px"></div>
+				<div class="modal-footer" style="padding: 5px 30px;">
+					<button type="reset" class="btn">Đặt lại</button>
+					|
+					<button type="submit" class="submit-btn btn">
+						Cập nhật lịch làm việc
+					</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+<!-- Change Working Schedule - End -->
+<br />
+<div class="modal-dialog modal-dialog-centered form-modal-styles" id="scheduleSection">
+
+	<form asp-action="CreateWeekSchedule" enctype="multipart/form-data" style="font-size: 2rem" class="modal-content" id="weekScheduleForm">
+		<div class="vt">
+			<!--header -->
+			<div class="manager__management__header">
+				<div class="title">Tạo lịch khám theo tuần</div>
+				@* <div class="action-btn">
+				<a asp-action="Create" class="add__new">+ Thêm lịch khám</a>
+				</div> *@
+			</div>
+			<h3 style="padding-left: 45px; color: lightskyblue;">
+				- Hướng dẫn: <br>
+				&nbsp;&nbsp;-> Bấm vào nút "Tạo lịch khám" ứng với tuần bạn muốn trên lịch <br>
+				&nbsp;&nbsp;-> Lịch khám tuần đó được tạo (dựa trên Lịch làm việc của phòng khám). <br>
+				&nbsp;&nbsp;-> Nếu khung giờ nào đã tồn tại lịch khám hoặc lịch điều trị => Không tạo lịch khám.
+			</h3>
+
+			<!-- body -->
+			<!-- ========== TEST MOBISCROLL SCHEDULE - CHỌN NGÀY ========== -->
+			<div class="col-md-12">
+				<div class="mbsc-grid">
+					<div class="mbsc-col-sm-12 mbsc-col-md-12">
+						<div class="mbsc-form-group">
+							<div id="calendar-container">
+								<div id="demo-counter">
+									<!-- Mobiscroll calendar will render here -->
+								</div>
+							</div>
+							<input type="hidden" name="selectedDates" id="selectedDates" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="height:15px"></div>
+		</div>
+	</form>
+</div>
+<br />
+
+@section Scripts {
+	<script>
+		function scrollToSection() {
+			document.getElementById("scheduleSection").scrollIntoView({ behavior: 'smooth' });
+		}
+	</script>
+
+	<!-- Change Password -->
+	<script>
+		$(document).ready(function () {
+			$('#changeWorkingScheduleForm').on('submit', function (e) {
+				e.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					url: '@Url.Action("GetWorkingSchedule", "Schedules")',
+					data: $(this).serialize(),
+					success: function (response) {
+						if (response.success) {
+							// alert(response.message);
+							$('#changeWorkingScheduleModal').modal('hide');
+							location.reload();  // Reload the page
+						} else {
+							location.reload();  // Reload the page
+						}
+					}
+				});
+			});
+		});
+	</script>
+
+	<script src="~/assets/js/timeinterval2.js"></script>
+	<script src="~/assets/js/mobiscroll.javascript.min.js"></script>
+	<!-- ========== MOBISCROLL SCHEDULE ========== -->
+	<script src="~/assets/js/mobiscroll-calendar2.js"></script>
+}

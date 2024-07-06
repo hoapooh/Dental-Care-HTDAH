@@ -134,21 +134,22 @@
                         <p class="form-label">Tên doanh nghiệp</p>
                         <input type="text" id="viewCompanyName" class="form-control" readonly />
                     </div>
+                    
                     <div class="mb-3 col-md-6">
-                        <p class="form-label">Số điện thoại</p>
-                        <input type="number" id="viewCompanyPhoneNumber" class="form-control" readonly />
+                        <p class="form-label">Tên người đại diện</p>
+                        <input type="text" id="viewRepresentativeName" class="form-control" readonly />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="mb-3 col-md-6">
-                        <p class="form-label">Địa chỉ Email</p>
-                        <input type="email" id="viewCompanyEmail" class="form-control" value="" readonly />
+                        <p class="form-label">Số điện thoại liên hệ</p>
+                        <input type="number" id="viewManagerPhoneNumber" class="form-control" readonly />
                     </div>
 
                     <div class="mb-3 col-md-6">
-                        <p class="form-label">Tên người đại diện</p>
-                        <input type="text" id="viewRepresentativeName" class="form-control" readonly />
+                        <p class="form-label">Địa chỉ Email người đại diện</p>
+                        <input type="email" id="viewManagerEmail" class="form-control" value="" readonly />
                     </div>
                 </div>
 
@@ -161,6 +162,18 @@
                     <div class="mb-3 col-md-6">
                         <p class="form-label">Địa chỉ phòng khám</p>
                         <input type="text" id="viewClinicAddress" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Hotline (Đường dây nóng)</p>
+                        <input type="number" id="viewCompanyPhoneNumber" class="form-control" readonly />
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <p class="form-label">Địa chỉ Email Doanh Nghiệp</p>
+                        <input type="email" id="viewCompanyEmail" class="form-control" value="" readonly />
                     </div>
                 </div>
 
@@ -238,6 +251,8 @@
                 $('#viewCompanyName').val(data.companyName);
                 $('#viewCompanyEmail').val(data.companyEmail);
                 $('#viewCompanyPhoneNumber').val(data.companyPhonenumber);
+                $('#viewManagerEmail').val(data.managerEmail);
+                $('#viewManageryPhoneNumber').val(data.managerPhonenumber);
                 $('#viewRepresentativeName').val(data.representativeName);
                 $('#viewClinicName').val(data.clinicName);
                 $('#viewClinicAddress').val(data.clinicAddress);

@@ -82,10 +82,6 @@
 				<input type="text" name="Name" id="name" class="form-control" value="@Model.Name" />
 				<span asp-validation-for="Name" class="text-danger"></span>
 			</div>
-			<div class="clinic-tel col-md-6">
-				<label for="basis">Cơ sở</label>
-				<input type="text" name="Basis" id="basis" class="form-control" value="@Model.Basis" />
-			</div>
 			<div class="clinic-manager col-md-6">
 				<label for="manager">Người quản lý phòng khám</label>
 				<select asp-for="ManagerID" asp-items="Model.UnassignedManagers" class="form-control">
@@ -97,15 +93,47 @@
 				<input type="tel" name="PhoneNumber" id="tel" class="form-control" value="@Model.PhoneNumber" />
 				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 			</div>
-			<div class="clinic-mail col-md-12">
+			<div class="clinic-worktime col-md-6">
+				<label>Thời gian làm việc buổi Sáng:</label>
+				<div class="row">
+					<div class="col-5">
+						<select asp-for="AmStartTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.AmTimes))" class="form-control"></select>
+					</div>
+					<div class="col-2 text-center align-self-center">
+						<h3>đến</h3>
+					</div>
+					<div class="col-5">
+						<select asp-for="AmEndTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.AmTimes))" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+			<div class="clinic-mail col-md-6">
 				<label for="mail">Email</label>
 				<input type="email" name="Email" id="mail" class="form-control" value="@Model.Email" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
-			<div class="clinic-address col-md-12">
+			<div class="clinic-worktime col-md-6">
+				<label>Thời gian làm việc buổi Chiều:</label>
+				<div class="row">
+					<div class="col-5">
+						<select asp-for="PmStartTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.PmTimes))" class="form-control"></select>
+					</div>
+					<div class="col-2 text-center align-self-center">
+						<h3>đến</h3>
+					</div>
+					<div class="col-5">
+						<select asp-for="PmEndTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.PmTimes))" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+			<div class="clinic-address col-md-6">
 				<label for="addrSpecialty">Địa chỉ phòng khám</label>
 				<input type="text" name="Address" id="addrSpecialty" class="form-control" value="@Model.Address" />
 				<span asp-validation-for="Address" class="text-danger"></span>
+			</div>
+			<div class="clinic-tel col-md-6">
+				<label for="basis">Cơ sở</label>
+				<input type="text" name="Basis" id="basis" class="form-control" value="@Model.Basis" />
 			</div>
 			<div class="clinic-province col-md-4">
 				<label for="province">Tỉnh / Thành phố</label>
@@ -125,7 +153,8 @@
 					<option value="0">-- Chọn Phường Xã --</option>
 				</select>
 			</div>
-
+			
+			
 			<!--UPLOAD IMAGE-->
 			<div class="clinic-image col-md-12">
 				<label>Hình ảnh</label>

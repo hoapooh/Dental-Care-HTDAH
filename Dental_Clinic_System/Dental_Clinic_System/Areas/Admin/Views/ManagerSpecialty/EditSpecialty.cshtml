@@ -27,7 +27,7 @@
                 </div>
                 <div class="special-deposis">
                     <label for="deposisSpecialty">Tiền cọc</label>
-                    <input type="number" name="Deposit" id="deposisSpecialty" value="@Model.Deposit" step="0.01" required />
+                    <input type="number" name="Deposit" id="deposisSpecialty" value="@Model.Deposit" required />
                     <span asp-validation-for="Deposit" class="text-danger"></span>
                 </div> 
                 <div class="clinic-image col-md-12">
@@ -57,7 +57,7 @@
                 </div>
                 </br>
                 <div class="special-desc">
-                    <label for="descSpecialty">Mô tả</label>
+                    <label for="descSpecialty">Mô tả chuyên khoa</label>
                     <div id="container">
                         <div id="editor">
                             <textarea name="Description" class="form-control">@Model.Description</textarea>

@@ -61,8 +61,24 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
         public SelectList? PmWorkTimes { get; set; }
 
+        #region Start Time and End Time
+        public SelectList? AmStartTimes { get; set; }
+
+        public SelectList? PmStartTimes { get; set; }
+
+        public SelectList? AmEndTimes { get; set; }
+
+        public SelectList? PmEndTimes { get; set; }
+
+        #endregion
         public SelectList? UnassignedManagers { get; set; }
 
+		public string AmStartTime { get; set; }
 
-    }
+		public string AmEndTime { get; set; }
+
+		public string PmStartTime { get; set; }
+
+		public string PmEndTime { get; set; }
+	}
 }

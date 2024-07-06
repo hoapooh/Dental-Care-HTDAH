@@ -149,7 +149,6 @@
 			<th>Tên phòng khám</th>
 			<th>Email</th>
 			<th>Số điện thoại</th>
-			<th>Địa chỉ</th>
 			<th>Hành động</th>
 		</tr>
 	</thead>
@@ -168,7 +167,6 @@
 					<td>@account.ClinicName</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
-					<td>@account.Address</td>
 					<td>
 						<!--EDIT-->
 						<a href="@Url.Action("EditAccountManager", "AccountManager", new {id = account.Id})" class="inline-block">

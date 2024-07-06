@@ -54,11 +54,16 @@
 	<hr /> @* Đường phân cách *@
 	<div style="min-height: 420px;">
 		<dl class="row" style="padding-left: 100px; padding-right: 100px;font-size: 2rem">
+			
+
 			<dt class="col-sm-2">Họ tên</dt>
 			<dd class="col-sm-10">@Model.Account.LastName @Model.Account.FirstName</dd>
 
 			<dt class="col-sm-2">Giới tính</dt>
 			<dd class="col-sm-10">@Model.Account.Gender</dd>
+
+			<dt class="col-sm-2">Trạng thái</dt>
+			<dd class="col-sm-10">@Model.Account.AccountStatus</dd>
 
 			<dt class="col-sm-2">Ngày sinh</dt>
 			<dd class="col-sm-10">@Model.Account.DateOfBirth?.ToString("dd/MM/yyyy")</dd>
@@ -89,8 +94,21 @@
 				}
 			</dd>
 
-			<dt class="col-sm-2">Mô tả</dt>
-			<dd class="col-sm-12" style="border: 1px solid #af6d233b; border-radius: 5px; padding: 15px 20px;">@Html.Raw(@Model.Description)</dd>
+			<dt class="col-sm-12">Mô tả</dt>
+			<dd class="col-sm-4">
+				<img src="@Model.Account.Image"
+					 alt=""
+					 id="imageDisplay"
+					 style="
+												display: block;
+												height: 300px;
+												width: auto;
+												text-align: center;
+												border-radius: 5px;
+												border:1px solid #d4d4d4;
+											" />
+			</dd>
+			<dd class="col-sm-8" style="border: 1px solid #af6d233b; padding: 15px 20px;">@Html.Raw(@Model.Description)</dd>
 		</dl>
 	</div>
 	<hr />
@@ -105,11 +123,11 @@
 					Chỉnh sửa
 				</button>
 			</a>
-			<a asp-action="Delete" asp-route-id="@Model.ID">
+			@* <a asp-action="Delete" asp-route-id="@Model.ID">
 				<button class="add__new1">
 					Xóa
 				</button>
-			</a>
+			</a> *@
 		</div>
 	</div>
 </div>
