@@ -415,7 +415,7 @@
 
   <ItemGroup>
     <None Update="wkhtmltox\libwkhtmltox.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

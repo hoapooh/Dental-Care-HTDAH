@@ -262,6 +262,16 @@ namespace Dental_Clinic_System.Controllers
 
             // Tạo danh sách các time slot với thời gian 30 phút cho từng ngày
             var timeSlots = new List<object>();
+            // Tải tất cả các cuộc hẹn của nha sĩ trước
+            var appointments = _context.Appointments
+                .Where(a => a.Schedule.DentistID == dentistID)
+                .ToList();
+
+            // Chuyển đổi danh sách các cuộc hẹn thành từ điển để dễ tra cứu
+            var appointmentDict = appointments
+                .GroupBy(a => new { a.Schedule.Date, a.Schedule.TimeSlot.StartTime })
+                .ToDictionary(g => g.Key, g => g.Count());
+
             foreach (var date in allDates)
             {
                 var dailyTimeSlots = new List<object>();
@@ -275,14 +285,21 @@ namespace Dental_Clinic_System.Controllers
                         var nextTime = startTime.AddMinutes(30);
                         if (nextTime > endTime) nextTime = endTime;
 
-                        if(date.ToDateTime(startTime) >= utc7Now)
-                        dailyTimeSlots.Add(new
+                        // Kiểm tra xem có cuộc hẹn nào trong khung thời gian này không
+                        var key = new { Date = date, StartTime = startTime };
+                        appointmentDict.TryGetValue(key, out var appointmentCount);
+
+                        if (date.ToDateTime(startTime) >= utc7Now && (appointmentCount < 2 || !appointmentDict.ContainsKey(key)))
                         {
-                            Date = date.ToString("yyyy-MM-dd"),
-                            StartTime = startTime.ToString("HH:mm"),
-                            EndTime = nextTime.ToString("HH:mm"),
-                            ScheduleID = (int?)null
-                        });
+                            dailyTimeSlots.Add(new
+                            {
+                                Date = date.ToString("yyyy-MM-dd"),
+                                StartTime = startTime.ToString("HH:mm"),
+                                EndTime = nextTime.ToString("HH:mm"),
+                                ScheduleID = (int?)null
+                            });
+                        }
+
                         startTime = nextTime;
                     }
                 }

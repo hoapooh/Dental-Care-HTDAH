@@ -86,6 +86,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 Title = s.appointmentID != 0 ? $"#{s.appointmentID} - {s.patientName}" : "Trống",
                 Start = s.scheduleDate != null && s.startTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.startTime.Value:HH:mm:ss}" : null,
                 End = s.scheduleDate != null && s.endTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.endTime.Value:HH:mm:ss}" : null,
+                Url = "/dentist/dentistdetail/patientappointments?appointmentID=" + s.appointmentID
             }).ToList();
 
 
@@ -155,7 +156,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         #region Lấy dữ liệu quản lý lịch đặt khám của bệnh nhân cho nha sĩ
 
         [HttpGet]
-        public async Task<IActionResult> PatientAppointments()
+        public async Task<IActionResult> PatientAppointments(int? appointmentID)
         {
             var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
             if (dentistAccountID == null)
@@ -170,6 +171,10 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                                     .Include(a => a.Specialty)
                                     .Where(a => a.Schedule.DentistID == dentist.ID)
                                     .ToListAsync();
+            if(appointmentID != null)
+            {
+                appointments = appointments.Where(a => a.ID == appointmentID).ToList();
+            }
             ViewBag.DentistAvatar = dentist?.Account.Image ?? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744";
             ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
             TempData["ErrorMessage"] = TempData["ErrorMessage"] as string;
