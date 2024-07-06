@@ -61,28 +61,29 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 failedData[item.Month - 1] = item.Count;
             }
 
-            //Đặt khám thành công/thất bại trong ngày
-            var successfulAppointmentsToday = await _context.Appointments
-                .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Date == today && a.AppointmentStatus == "Đã Khám")
+            //Tổng Hợp Tác/Từ Chối Yêu Cầu Của Phòng Khám
+            var acceptOrderToday = await _context.Orders
+                .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Date == today && o.Status == "Đồng Ý")
                 .CountAsync();
 
-            var failedAppointmentsToday = await _context.Appointments
-                .Where(a => a.CreatedDate.HasValue && a.CreatedDate.Value.Date == today && a.AppointmentStatus == "Đã Hủy")
+            var rejectOrderToday = await _context.Orders
+                .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Date == today && o.Status == "Từ Chối")
                 .CountAsync();
 
-            var model = new AppointmentVM
+            //Thêm mới vào DashboardVM
+            var model = new DashboardVM
             {
                 SelectedYear = currentYear,
                 SuccessfulAppointments = successfulAppointmentsPerMonth.Sum(x => x.Count),
                 FailedAppointments = failedAppointmentsPerMonth.Sum(x => x.Count),
                 MonthlySuccessfulAppointments = successfulData.ToList(),
                 MonthlyFailedAppointments = failedData.ToList(),
-                SuccessfulAppointmentsToday = successfulAppointmentsToday,
-                FailedAppointmentsToday = failedAppointmentsToday
-            };
+                AcceptedOrdersToday = acceptOrderToday,
+                RejectedOrdersToday = rejectOrderToday
 
-            Console.WriteLine("SuccessfulAppointmentsToday: " + successfulAppointmentsToday);
-            Console.WriteLine("FailedAppointmentsToday: " + failedAppointmentsToday);
+            };
+            
+
 
             return View(model);
         }

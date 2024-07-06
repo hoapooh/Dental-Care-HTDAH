@@ -333,7 +333,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				AmStartTime = clinic.AmWorkTimes?.StartTime.ToString("HH:mm") ?? "07:00",
 				AmEndTime = clinic.AmWorkTimes?.EndTime.ToString("HH:mm") ?? "11:00",
 				PmStartTime = clinic.PmWorkTimes?.StartTime.ToString("HH:mm") ?? "13:00",
-				PmEndTime = clinic.PmWorkTimes?.EndTime.ToString("HH:mm") ?? "17:00",
+				PmEndTime = clinic.PmWorkTimes?.EndTime.ToString("HH:mm") ?? "21:00",
 			};
 
 			ViewBag.AmTimes = new List<TimeOnly>() {
