@@ -634,11 +634,6 @@ namespace Dental_Clinic_System.Controllers
                 PhoneNumber = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone)?.Value,
                 Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 Gender = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value,
-
-                Province = Int32.Parse((User.Claims.FirstOrDefault(c => c.Type == "ProvinceID")?.Value) ?? "0"),
-                Ward = Int32.Parse((User.Claims.FirstOrDefault(c => c.Type == "WardID")?.Value) ?? "0"),
-                District = Int32.Parse((User.Claims.FirstOrDefault(c => c.Type == "DistrictID")?.Value) ?? "0"),
-
                 Address = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value,
                 DateOfBirth = dateOfBirth
             };
@@ -865,6 +860,16 @@ namespace Dental_Clinic_System.Controllers
             if (appointment == null)
             {
                 TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra";
+                return RedirectToAction("Profile", "Account");
+            }
+
+            var currentTime = TimeOnly.FromDateTime(Util.GetUtcPlus7Time()).ToTimeSpan();
+            var startTime = appointment.Schedule.TimeSlot.StartTime.ToTimeSpan();
+            var timeDifference = startTime - currentTime;
+
+            if(timeDifference.TotalHours >= 7)
+            {
+                TempData["ToastMessageFailTempData"] = "Đã quá giờ đổi lịch hẹn";
                 return RedirectToAction("Profile", "Account");
             }
 

@@ -57,7 +57,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
                 await HttpContext.SignInAsync("ManagerScheme", new ClaimsPrincipal(claimsIdentity), authProperties);
                 HttpContext.Session.SetInt32("managerAccountID", user.ID);
-				HttpContext.Session.SetString("name", user.LastName + " " + user.FirstName);
+				HttpContext.Session.SetString("name", user.FirstName + " " + user.LastName);
 				HttpContext.Session.SetString("image", user.Image ?? "");
 				HttpContext.Session.SetInt32("clinicId", clinic?.ID ?? 0);
 				

@@ -289,7 +289,20 @@
                             {
                                 @foreach (var appointment in appointments)
                                 {
-                                    var timeDifference = appointment.Schedule.TimeSlot.StartTime - TimeOnly.FromDateTime(Util.GetUtcPlus7Time());
+                                    var currentTime = TimeOnly.FromDateTime(Util.GetUtcPlus7Time()).ToTimeSpan();
+                                    var startTime = appointment.Schedule.TimeSlot.StartTime.ToTimeSpan();
+                                    var timeDifference = startTime - currentTime;
+
+                                    @* Console.WriteLine("=================================================");
+                                    // Ghi log hoặc hiển thị giá trị để kiểm tra
+                                    Console.WriteLine($"Current Time: {currentTime}");
+                                    Console.WriteLine($"Appointment Start Time: {startTime}");
+                                    Console.WriteLine($"Time Difference (Hours): {timeDifference.TotalHours}");
+
+                                    var showRescheduleButton = timeDifference.TotalHours >= 7;
+                                    Console.WriteLine($"Show Reschedule Button: {showRescheduleButton}");
+                                    Console.WriteLine("================================================="); *@
+
 
                                     <div class="appointment-card" style="border: 1px solid #1376f8; border-radius: 8px; padding: 16px; margin-bottom: 16px; background-color: #fff;">
                                         <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
@@ -376,7 +389,7 @@
 
                                                         break;
                                                     case "Chờ Xác Nhận":
-                                                        @if (timeDifference.TotalHours > 7) {
+                                                        @if (timeDifference.TotalHours >= 7) {
                                                         <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
                                                             Đổi lịch khám
                                                         </button>
