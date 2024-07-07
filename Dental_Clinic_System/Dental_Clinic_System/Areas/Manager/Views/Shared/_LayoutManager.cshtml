@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
     var managerName = Context.Session.GetString("name");
+    var managerID = Context.Session.GetInt32("managerAccountID");
     var clinicID = Context.Session.GetInt32("clinicId");
 }
 <!DOCTYPE html>
@@ -213,7 +214,7 @@
                         <!-- Body -->
                         <div class="modal-body">
                             <div class="mb-3 mt-3">
-                                <p class="form-label">Số dư hiện tại: <strong>100.000 đ</strong></p>
+                                <p class="form-label">Số dư hiện tại: <strong id="currentBalance">Đang tải...</strong></p>
                             </div>
                             <div class="mb-3 mt-3">
                                 <p class="form-label"><strong>Số lần đặt khám</strong></p>
@@ -222,7 +223,7 @@
                             <div style="display: flex; margin-bottom: 20px;">
                                 <div id="today" style="display: flex; background-color: aquamarine; border-radius: 10px; padding: 10px; width: 30%; cursor: pointer;">
                                     <div class="col-md-12" style="margin-bottom: 5px;">
-
+                                        
                                         <div class="row">
                                             <p><i class="fa-solid fa-calendar-day"></i> Hôm nay</p>
                                         </div>
@@ -394,6 +395,8 @@
 
     <!-- Chart JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#showGraph").click(function () {
@@ -403,28 +406,37 @@
 
             $("#today").click(function () {
                 var chartType = $("#chartType").val();
-                var startDate = new Date().toISOString().slice(0, 10) + "T00:00:00";
-                var endDate = new Date().toISOString().slice(0, 10) + "T23:59:59";
+                var hanoiTime = getHanoiTime();
+                var startDate = hanoiTime.format('YYYY-MM-DD');
+                var endDate = hanoiTime.format('YYYY-MM-DD');
+                console.log(startDate + " " + endDate);
                 updateChart(chartType, startDate, endDate);
             });
 
             $("#thisWeek").click(function () {
                 var chartType = $("#chartType").val();
-                var startDate = new Date();
-                startDate.setDate(startDate.getDate() - startDate.getDay());
-                var endDate = new Date();
-                updateChart(chartType, startDate.toISOString().slice(0, 10) + "T00:00:00", endDate.toISOString().slice(0, 10) + "T23:59:59");
+                var today = getHanoiTime();
+
+                var startDate = today.clone().startOf('week');
+                var endDate = today.clone().endOf('week');
+                console.log(startDate.format('YYYY-MM-DD') + " " + endDate.format('YYYY-MM-DD'));
+                updateChart(chartType, startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
             });
 
             $("#thisMonth").click(function () {
                 var chartType = $("#chartType").val();
-                var startDate = new Date();
-                startDate.setDate(1);
-                var endDate = new Date();
-                updateChart(chartType, startDate.toISOString().slice(0, 10) + "T00:00:00", endDate.toISOString().slice(0, 10) + "T23:59:59");
+                var startDate = getHanoiTime().startOf('month');
+                var endDate = getHanoiTime().endOf('month');
+                console.log(startDate.format('YYYY-MM-DD') + " " + endDate.format('YYYY-MM-DD'));
+                updateChart(chartType, startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
             });
 
+            function getHanoiTime() {
+                return moment.tz("Asia/Ho_Chi_Minh");
+            }
+
             function updateChart(chartType, startDate, endDate) {
+                console.log(startDate + " " + endDate);
                 var chartView = document.getElementById('chartView');
                 chartView.innerHTML = '&nbsp;';
                 $('#chartView').append('<canvas id="myChart" style="width: 800px;"></canvas>');
@@ -432,13 +444,11 @@
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("GetAppointmentStats", "Ranking")', // Update with your actual controller route
-                    data: JSON.stringify({
-                        clinicId: @clinicID, // Update with your actual clinicId
+                    data: {
+                        clinicID: @clinicID,
                         startDate: startDate,
                         endDate: endDate
-                    }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
+                    },
                     success: OnSuccessResult,
                     error: OnError
                 });
@@ -464,6 +474,23 @@
                     console.error(error);
                 }
             }
+
+            // Current Manager's Balance
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCurrentBalance", "Wallet")',
+                data: { accountID: @managerID },
+                success: function (response) {
+                    if (response.success) {
+                        $('#currentBalance').text(response.balance.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+                    } else {
+                        $('#currentBalance').text('Not find balance');
+                    }
+                },
+                error: function (error) {
+                    $('#currentBalance').text('Error fetching balance');
+                }
+            });
         });
     </script>
 

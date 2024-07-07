@@ -289,14 +289,25 @@
                             {
                                 @foreach (var appointment in appointments)
                                 {
-                                    var currentTime = TimeOnly.FromDateTime(Util.GetUtcPlus7Time()).ToTimeSpan();
+                                    @* var currentTime = TimeOnly.FromDateTime(Util.GetUtcPlus7Time()).ToTimeSpan();
                                     var startTime = appointment.Schedule.TimeSlot.StartTime.ToTimeSpan();
-                                    var timeDifference = startTime - currentTime;
+                                    var timeDifference = startTime - currentTime; *@
+
+                                    // Lấy thời gian hiện tại tại Hà Nội
+                                    var currentTime = Util.GetUtcPlus7Time();
+
+                                    // Lấy thời gian bắt đầu của cuộc hẹn
+                                    var appointmentDate = appointment.Schedule.Date; // Ngày hẹn
+                                    var appointmentStartTime = appointment.Schedule.TimeSlot.StartTime; // Thời gian bắt đầu hẹn
+                                    var appointmentDateTime = new DateTime(appointmentDate.Year, appointmentDate.Month, appointmentDate.Day, appointmentStartTime.Hour, appointmentStartTime.Minute, 0);
+
+                                    // Tính toán sự khác biệt thời gian giữa thời gian hiện tại và thời gian bắt đầu cuộc hẹn
+                                    var timeDifference = appointmentDateTime - currentTime;
 
                                     @* Console.WriteLine("=================================================");
                                     // Ghi log hoặc hiển thị giá trị để kiểm tra
                                     Console.WriteLine($"Current Time: {currentTime}");
-                                    Console.WriteLine($"Appointment Start Time: {startTime}");
+                                    Console.WriteLine($"Appointment Start Time: {appointmentDateTime}");
                                     Console.WriteLine($"Time Difference (Hours): {timeDifference.TotalHours}");
 
                                     var showRescheduleButton = timeDifference.TotalHours >= 7;

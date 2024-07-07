@@ -130,6 +130,9 @@ public class Rankings
 
     public List<int> GetAppointmentStats(int clinicId, DateOnly startDate, DateOnly endDate)
     {
+        Console.WriteLine("========================================");
+        Console.WriteLine($"Date = {startDate} | {endDate}");
+        Console.WriteLine("========================================");
         var successfulAppointments = _context.Appointments
             .Where(a => a.AppointmentStatus == "Đã Khám" && a.Schedule.Date >= startDate && a.Schedule.Date <= endDate && a.Schedule.Dentist.ClinicID == clinicId)
             .Count();
