@@ -1,70 +1,99 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
 	string currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+	string currentStatus = ViewContext.RouteData.Values["status"]?.ToString();
 }
-
-<nav class="sidebar" style="width: 15%">
+<nav class="sidebar" style="width: 15%; background: aliceblue;">
 	@* <p class="dashboard__logo"><span>Dental</span>Care</p> *@
 	<a href="/dentist">
 		<center>
-			<img class="w-50 m-5" src="https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=8854a154-1dde-4aa3-b573-f3c0aca83776" alt="Dental Care logo">
+			<img style="width: 80%;" class="mb-5 mt-5" src="https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=8854a154-1dde-4aa3-b573-f3c0aca83776" alt="Dental Care logo">
 		</center>
 	</a>
 	<ul class="nav">
 		<li class="nav-item">
-			<a asp-area="dentist" asp-controller="dentistdetail" asp-action="dentistschedule" class="@(currentAction != "DentistDescription" && currentAction != "PatientAppointments" ? "active" : "")">
+			<a asp-area="dentist" asp-controller="dentistdetail" asp-action="dentistschedule" class="@(currentAction == "DentistSchedule" || currentAction == "Index" ? "active" : "")">
 				<span class="menu-icon"><i class="bx bxs-dashboard"></i></span>Lịch làm việc
 			</a>
 		</li>
 		<li class="nav-item">
 			<a asp-area="dentist" asp-controller="dentistdetail" asp-action="dentistdescription" class="@(currentAction == "DentistDescription" ? "active" : "")">
-				<span class="menu-icon"><i class="bx bxs-user"></i></span>Thêm mô
-				tả bản thân
+				<span class="menu-icon"><i class="bx bxs-user"></i></span>Chỉnh sửa mô tả nha sĩ
 			</a>
 		</li>
 		<li class="nav-item menu-items">
-			<a asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" class="@(currentAction == "PatientAppointments" ? "active" : "")">
-				<span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản
-				lý bệnh nhân
+			<a class="nav-link collapsed"
+			   data-bs-toggle="collapse"
+			   aria-expanded="false"
+			   href="#manage-appointment"
+			   aria-controls="manage-appointment"
+			   class="@(currentAction == "PatientAppointments" ? "active" : "")">
+				<span class="menu-icon"><i class="bx bx-list-ul"></i></span>
+				<span class="menu-title">Quản lý đơn khám</span>
+				<span class="menu-down" style="margin-left: auto">
+					<i aria-hidden="true"></i>
+				</span>
 			</a>
-			<div class="collapse" id="manage-account">
+			<div class="collapse" id="manage-appointment"> 
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_nhasi').submit();">
-							<i class="fa-solid fa-stethoscope"></i> Tài khoản nha sĩ
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" class="nav-link appointment0">
+							<i class='bx bx-folder-open'></i>  Tất cả đơn khám
 						</a>
-						<form id="form_nhasi" action="~/Admin/Admin/ListAccount" method="get">
-							<input type="hidden" name="Role" value="Nha sĩ">
-						</form>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_benh_nhan').submit();">
-							<i class="fa-solid fa-hospital-user"></i> Tài khoản bệnh nhân
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Chờ Xác Nhận" class="nav-link appointment1">
+							<i class='bx bx-copy-alt bx-flashing bx-flip-horizontal'></i> Đơn chờ xác nhận
 						</a>
-						<form id="form_benh_nhan" action="~/Admin/Admin/ListAccount" method="get">
-							<input type="hidden" name="Role" value="Bệnh nhân" />
-						</form>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.4rem" class="nav-link" href="javascript:void(0);" onclick="document.getElementById('form_quan_ly').submit();">
-							<i class="fa-solid fa-hospital"></i> Tài khoản quản lý
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Đã Chấp Nhận" class="nav-link appointment2">
+							<i class='bx bx-check'></i> Đơn đã chấp nhận
 						</a>
-						<form id="form_quan_ly" action="~/Admin/Admin/ListAccount" method="get">
-							<input type="hidden" name="Role" value="Quản lý" />
-						</form>
 					</li>
 
 					<li class="nav-item">
-						<form>
-							<a style="padding-left: 40px; font-size: 1.4rem"
-							   class="nav-link"
-							   href="#!"><i class="fa-solid fa-ban"></i> Tài khoản bị cấm</a>
-						</form>
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Đã Khám" class="nav-link appointment3">
+							<i class='bx bx-select-multiple'></i> Đơn đã khám
+						</a>
 					</li>
+
+					<li class="nav-item">
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Đã Hủy" class="nav-link appointment4">
+							<i class='bx bx-x bx-spin'></i> Đơn đã hủy
+						</a>
+					</li>
+
 				</ul>
 			</div>
 		</li>
+
+		<li class="nav-item">
+			<a asp-area="dentist" asp-controller="dentistdetail" asp-action="showperiodicappointment" class="@(currentAction == "ShowPeriodicAppointment" ? "active" : "")">
+				<span class="menu-icon"><i class='bx bx-file'></i></span>Đơn khám định kỳ
+			</a>
+		</li>
+
 	</ul>
 </nav>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Define the paths that should trigger the submenu to open
+		//var activePaths = ['/Schedules/LichLamViec', '/Schedules/Index', '/Schedules/Index'];
+		var activePath = '/patientappointments';
+		// Get the current path
+		var currentPath = window.location.pathname;
+
+		// Check if the current path is one of the defined paths
+		if (currentPath.includes(activePath)) {
+			var manageAccountMenu = document.getElementById('manage-appointment');
+			var collapseElement = new bootstrap.Collapse(manageAccountMenu, {
+				toggle: false
+			});
+			collapseElement.show();
+		}
+	});
+</script>
