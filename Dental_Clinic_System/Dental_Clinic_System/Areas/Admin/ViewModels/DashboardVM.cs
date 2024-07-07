@@ -16,5 +16,7 @@
         public int AcceptedOrdersToday { get; set; }
 
         public int RejectedOrdersToday { get; set; }
+
+        public List<int> MonthlyNewPost { get; set; }
     }
 }

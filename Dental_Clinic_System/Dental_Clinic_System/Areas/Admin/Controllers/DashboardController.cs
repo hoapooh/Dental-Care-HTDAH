@@ -70,6 +70,19 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Date == today && o.Status == "Từ Chối")
                 .CountAsync();
 
+            //Tổng New được đăng lên trong mỗi Tháng
+            var newPostPerMonth = await _context.News
+                .Where(n => n.CreatedDate.Year == currentYear)
+                .GroupBy(n => n.CreatedDate.Month)
+                .Select(g => new { Month = g.Key, Count = g.Count() })
+                .ToListAsync();
+
+            var newsData = new int[12];
+            foreach (var item in newPostPerMonth)
+            {
+                newsData[item.Month - 1] = item.Count;
+            }
+
             //Thêm mới vào DashboardVM
             var model = new DashboardVM
             {
@@ -79,8 +92,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 MonthlySuccessfulAppointments = successfulData.ToList(),
                 MonthlyFailedAppointments = failedData.ToList(),
                 AcceptedOrdersToday = acceptOrderToday,
-                RejectedOrdersToday = rejectOrderToday
-
+                RejectedOrdersToday = rejectOrderToday,
+                MonthlyNewPost = newsData.ToList()
             };
             
 

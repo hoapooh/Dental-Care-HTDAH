@@ -41,6 +41,35 @@
 	.account__management .table tbody span {
 		font-weight: 200;
 	}
+
+	/* Chiều rộng các cột cụ thể */
+	.table th.stt, .table td.stt {
+		width: 5%;
+	}
+
+	.table th.username, .table td.username {
+		width: 10%;
+	}
+
+	.table th.gender, .table td.gender {
+		width: 8%;
+	}
+
+	.table th.email, .table td.email {
+		width: 21%;
+	}
+
+	.table th.phone, .table td.phone {
+		width: 10%;
+	}
+
+	.table th.address, .table td.address {
+		width: 21%;
+	}
+
+	.table th.actions, .table td.actions {
+		width: 7%;
+	}
 </style>
 
 
@@ -152,13 +181,13 @@
 <table class="table table-striped mt-5" style="font-size: 1.6rem">
 	<thead>
 		<tr>
-			<th class="text-center">STT</th>
-			<th>Tên đăng nhập</th>
-			<th>Giới tính</th>
-			<th>Email</th>
-			<th>Số điện thoại</th>
-			<th>Địa chỉ</th>
-			<th>Hành động</th>
+			<th class="text-center stt">STT</th>
+			<th class="username">Tên đăng nhập</th>
+			<th class="gender text-center">Giới tính</th>
+			<th class="email">Email</th>
+			<th class="phone">Số điện thoại</th>
+			<th class="address">Địa chỉ</th>
+			<th class="actions">Hành động</th>
 		</tr>
 	</thead>
 	<tbody id="myTableBody">
@@ -173,7 +202,7 @@
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
-					<td>@account.Gender</td>
+					<td style="text-align: center">@account.Gender</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
 					<td class="address-cell">
