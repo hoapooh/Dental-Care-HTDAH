@@ -3,6 +3,7 @@
     public interface IMOMOPayment
     {
         Task<MOMOPaymentResponseModel?> CreatePaymentURL(MOMOPaymentRequestModel model);
+        Task<MOMOPaymentResponseModel?> CreateVisaPaymentURL(MOMOPaymentRequestModel model);
         Task<MOMORefundResponseModel?> RefundPayment(long amount, long transId, string description);
         Task<MOMOPaymentResponseModel?> DisburseSingle(MOMOPaymentRequestModel model);
     }

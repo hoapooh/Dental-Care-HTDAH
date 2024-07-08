@@ -1138,22 +1138,23 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
+            var patientRefund = (transaction.TotalPrice * decimal.Parse(refundPercentage.ToString())) ?? 0;
+            var managerRefund = (transaction.TotalPrice - patientRefund) ?? 0;
+
+            var managerClinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == appointment.Schedule.Dentist.ClinicID);
+
+            var manager = await _context.Accounts.Include(a => a.Clinics).Include(a => a.Wallet).FirstAsync(a => a.Clinics == managerClinic);
+
+            manager.Wallet.Money = (decimal)managerRefund;
+            _context.SaveChanges();
+            // Tạo hóa đơn cho doanh nghiệp thì để sau đi
+
             if (refundPercentage > 0)
             {
-                var patientRefund = transaction.TotalPrice * decimal.Parse(refundPercentage.ToString());
-                var managerRefund = transaction.TotalPrice - patientRefund;
-
                 var response = await _momoPayment.RefundPayment((long)(patientRefund), long.Parse(transaction.TransactionCode), "");
-
 
                 if (response != null)
                 {
-                    var manager = await _context.Accounts.Include(a => a.Clinics).Include(a => a.Wallet).FirstOrDefaultAsync(a => a.Clinics.ID == appointment.Schedule.Dentist.ClinicID);
-
-                    manager.Wallet.Money = (decimal)managerRefund;
-                    _context.SaveChanges();
-                    // Tạo hóa đơn cho doanh nghiệp thì để sau đi
-
                     var refundTransaction = new Transaction
                     {
                         AppointmentID = appointment.ID,
