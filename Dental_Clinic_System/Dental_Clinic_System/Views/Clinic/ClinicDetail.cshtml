@@ -28,8 +28,9 @@
 <main class="clinic__detail__style">
     <div class="clinic__detail">
 
-        <div class="row">
-            <div class="clinic__detail__info__map col-md-4">
+        <div class="clinic__detail__info__slide row">
+            @* =======Info ======= *@
+            <div class="col-md-4">
                 <div class="info">
                     <div class="info-title">
                         <img src="@Model.Image" alt="@Model.Name" />
@@ -83,20 +84,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="map">
-                    <iframe src="@Model.MapLinker"
-                            width="100%"
-                            height="100%"
-                            style="border: 0"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-
             </div>
-            <div class="clinic__detail__slide__desc col-md-8">
+            @* ======= Carousel ======= *@
+            <div class="col-md-8">
                 <div id="carouselRide"
-                     class="images carousel slide"
+                     class="images carousel slide clinicCarousel"
                      data-bs-ride="carousel">
                     <div class="carousel-inner" style="height: 100%">
                         @if (Model.OtherImage is not null)
@@ -129,6 +121,23 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
+            </div>
+        </div>
+        <div class="clinic__detail__map__desc row">
+            @* ======= Map ======= *@
+            <div class="col-md-4">
+                <div class="map">
+                    <iframe src="@Model.MapLinker"
+                            width="100%"
+                            height="100%"
+                            style="border: 0"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            @* ======= DESC ======= *@
+            <div class="col-md-8">
                 <div class="desc">
                     <div class="desc__style">
                         <h2>Mô tả</h2>
@@ -166,7 +175,7 @@
             </div>
         </div>
 
-        <!-- ========= REVIEWS ========= -->
+        @* ========= REVIEWS ========= *@
         <h2 class="clinic__detail__title text-center">
             Đánh giá của bệnh nhân
         </h2>
