@@ -255,29 +255,6 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			return RedirectToAction("Index");
 		}
 
-		private void CreateLichKham(int denId, DateOnly date, List<int> timeSlots)
-		{
-			foreach (var slot in timeSlots)
-			{
-				var existSchedule = _context.Schedules.FirstOrDefault(
-					a => a.DentistID == denId && a.Date == date && a.TimeSlotID == slot);
-				if (existSchedule == null)
-				{
-					var newSchedule = new Schedule
-					{
-						DentistID = denId,
-						Date = date,
-						TimeSlotID = slot,
-						ScheduleStatus = "Còn Trống"
-					};
-					_context.Add(newSchedule);
-				}
-			}
-			_context.SaveChanges();
-		}
-
-
-
 
 		#region Lấy lịch làm việc của Dentist cụ thể, đưa vào Calendar - ORIGINAL AUTHOR: PHẠM DUY HOÀNG
 		[HttpGet]
@@ -382,6 +359,11 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		// GET: Manager/Schedules/Create
 		public IActionResult Create()
 		{
+			var clinicId = HttpContext.Session.GetInt32("clinicId");
+			if (clinicId == null)
+			{   // Check if session has expired, log out
+				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+			}
 			var dentists = _context.Dentists
 						   .Join(_context.Accounts,
 								 dentist => dentist.AccountID,
@@ -389,12 +371,14 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 								 (dentist, account) => new
 								 {
 									 DentistID = dentist.ID,
-									 FullName = account.LastName + " " + account.FirstName
+									 FullName = account.LastName + " " + account.FirstName,
+									 ClinicID = dentist.ClinicID,
+									 Status = account.AccountStatus
 								 })
 						   .ToList();
 
-			ViewData["DentistID"] = new SelectList(dentists, "DentistID", "FullName");
-			return View();
+			ViewData["DentistID"] = new SelectList(dentists.Where(d => d.ClinicID == clinicId && d.Status == "Hoạt Động"), "DentistID", "FullName");
+			return View(new ScheduleVM());
 		}
 
 		// POST: Manager/Schedules/Create
@@ -404,8 +388,9 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("DentistIDs, Dates, TimeSlots")] ScheduleVM schedule)
 		{
-			if (ModelState.IsValid)
+			if (schedule.DentistIDs.Count > 0 && schedule.Dates != null && schedule.TimeSlots.Count > 0)
 			{
+				var newScheList = new List<Schedule>();
 				List<DateOnly> dateList = ConvertStringToDateOnlyList(schedule.Dates);
 				foreach (var dentist in schedule.DentistIDs)
 				{
@@ -415,26 +400,45 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 						{
 							var existSchedule = await _context.Schedules.FirstOrDefaultAsync(
 								a => a.DentistID == dentist && a.Date == date && a.TimeSlotID == slot);
+
 							if (existSchedule == null)
 							{
-								var newSchedule = new Schedule
+								newScheList.Add( new Schedule
 								{
 									//DentistID = schedule.DentistIDs,
 									DentistID = dentist,
 									Date = date,
 									TimeSlotID = slot,
 									ScheduleStatus = "Còn Trống"
-								};
-								_context.Add(newSchedule);
+								});
 							}
 						}
 					}
 				}
-
 				//------------
+				_context.AddRange(newScheList);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
+			var clinicId = HttpContext.Session.GetInt32("clinicId");
+			if (clinicId == null)
+			{   // Check if session has expired, log out
+				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+			}
+			var dentists = _context.Dentists
+						   .Join(_context.Accounts,
+								 dentist => dentist.AccountID,
+								 account => account.ID,
+								 (dentist, account) => new
+								 {
+									 DentistID = dentist.ID,
+									 FullName = account.LastName + " " + account.FirstName,
+									 ClinicID = dentist.ClinicID,
+									 Status = account.AccountStatus
+								 })
+						   .ToList();
+
+			ViewData["DentistID"] = new SelectList(dentists.Where(d => d.ClinicID == clinicId && d.Status == "Hoạt Động"), "DentistID", "FullName");
 			return View(schedule);
 		}
 		private List<DateOnly> ConvertStringToDateOnlyList(string dateString)
