@@ -3,7 +3,7 @@
 	Layout = null;
 }
 
-<title>Login</title>
+@* <title>Login</title>
 <style>
 	*,
 	*:before,
@@ -140,4 +140,60 @@
 	<button type="submit">Đăng nhập</button>
 
 	<p class="error-message" id="error-message"></p>
-</form>
+</form> *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Đăng Nhập Admin</title>
+	<link rel="stylesheet" href="~/assets/css/login_dentist.css">
+	<link rel="shortcut icon" type="image/x-icon" href="~/assets/images/dentalClinicLogoOfficial.png" />
+	<script src="~/assets/js/toastmessage.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+</head>
+
+<body>
+	@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+	{
+		var message = TempData["SuccessMessage"] as string;
+		<script>
+			window.addEventListener('DOMContentLoaded', (event) => {
+				showSuccessToasts('@message');
+			});
+		</script>
+	}
+	else if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+	{
+		var message = TempData["ErrorMessage"] as string;
+		<script>
+			window.addEventListener('DOMContentLoaded', (event) => {
+				showErrorToasts('@message');
+			});
+		</script>
+	}
+	<div class="form">
+		<div class="leftside">
+			<img src="/assets/images/login-dentist-illus.png" alt="Hình minh họa" style="position:relative; right: 90%;">
+			<h1>CHÀO MỪNG ADMIN!</h1>
+			<img src="/assets/images/dentist-login-illus.png" alt="Hình minh họa" style="position:relative; left: 65%; top: 100px;">
+		</div>
+		<div class="rightside">
+			<form asp-area="admin" asp-controller="AdminAccount" asp-action="Login" id="loginForm" method="post">
+				<div class="input-container">
+					<img src="~/assets/images/DentalCare.png" style="position:relative; left: 33px;"><br />
+					<div class="input">
+						<i class="fa fa-user"></i>
+						<input type="text" id="username" placeholder="Tên Đăng Nhập" name="username" required />
+					</div>
+					<div class="input">
+						<i class="fa fa-lock"></i>
+						<input type="password" id="password" placeholder="Mật Khẩu" name="password" required />
+					</div>
+					<input type="submit" class="login" value="Đăng Nhập">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div id="toasts"></div>
+</body>
+</html>

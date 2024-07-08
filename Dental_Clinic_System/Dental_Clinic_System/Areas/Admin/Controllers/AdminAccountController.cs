@@ -52,7 +52,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			}
 
 			ViewBag.ErrorMessage = "Invalid role";
-			return NotFound("Account của bạn có Role không hợp lệ, vui lòng thử lại!");
+			return NotFound("Account của bạn không hợp lệ, vui lòng thử lại!");
 		}
 
 		public async Task<IActionResult> Logout()
