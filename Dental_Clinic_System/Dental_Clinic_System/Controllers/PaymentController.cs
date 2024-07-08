@@ -241,7 +241,7 @@ namespace Dental_Clinic_System.Controllers
         public async Task<IActionResult> ReturnUrl(string partnerCode, string orderId, string requestId, string amount, string orderInfo, string orderType, string transId, int resultCode, string message, string payType, long responseTime, string extraData, string signature)
         {
             // Kiểm tra chữ ký (signature)
-            string rawHash = $"partnerCode={_configuration["MomoAPI:PartnerCode"]}&accessKey={_configuration["MomoAPI:AccessKey"]}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={_configuration["MomoAPI:ReturnUrl"]}&notifyUrl={_configuration["MomoAPI:NotifyUrl"]}&extraData=";
+            string rawHash = $"partnerCode={_configuration["MomoAPI:PartnerCode"]}&accessKey={_configuration["MomoAPI:AccessKey"]}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={_configuration["MomoAPI:ReturnUrl"]}&ipnUrl={_configuration["MomoAPI:NotifyUrl"]}&extraData=";
             string secretKey = _configuration["MomoAPI:SecretKey"];
             
             string signatureCheck = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);

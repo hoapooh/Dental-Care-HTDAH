@@ -311,9 +311,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     return View(model);
                 }
 
+                //Kiểm tra Mật khẩu mới có khớp với mật khẩu mới nhập lại không.
                 if (!string.IsNullOrEmpty(model.NewPassword) || !string.IsNullOrEmpty(model.ConfirmPassword))
                 {
-                    //Kiểm tra mật khẩu mới có khớp với mk mới nhập không
                     if (model.NewPassword != model.ConfirmPassword)
                     {
                         ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp.");
@@ -342,6 +342,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 account.Ward = model.Ward;
                 account.Address = model.Address;
                 account.Role = model.Role;
+                _context.Update(account);
 
                 //Update nha sĩ entity
                 var dentist = await _context.Dentists.FirstOrDefaultAsync(d => d.AccountID == model.Id);
@@ -363,7 +364,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     _context.DentistSpecialties.AddRange(newSpecialty);
                 }
 
-                _context.Update(account);
                 await _context.SaveChangesAsync();
 
                 TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa tài khoản nha sĩ thành công";
@@ -375,6 +375,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             return View(model);
         }
 
+        //Đặt lại ViewData
         private void SetViewData(EditAccountDentistVM model)
         {
             ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);

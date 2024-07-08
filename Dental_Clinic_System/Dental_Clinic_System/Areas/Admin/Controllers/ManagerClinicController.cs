@@ -216,7 +216,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 					ProvinceName = model.ProvinceName,
 					DistrictName = model.DistrictName,
 					WardName = model.WardName,
-					Basis = model.Basis,
 					Address = model.Address,
 					Description = model.Description,
 					Image = model.Image,
@@ -316,7 +315,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				ProvinceName = clinic.ProvinceName,
 				DistrictName = clinic.DistrictName,
 				WardName = clinic.WardName,
-				Basis = clinic.Basis,
 				Address = clinic.Address,
 				Description = clinic.Description,
 				Image = clinic.Image,
@@ -333,7 +331,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				AmStartTime = clinic.AmWorkTimes?.StartTime.ToString("HH:mm") ?? "07:00",
 				AmEndTime = clinic.AmWorkTimes?.EndTime.ToString("HH:mm") ?? "11:00",
 				PmStartTime = clinic.PmWorkTimes?.StartTime.ToString("HH:mm") ?? "13:00",
-				PmEndTime = clinic.PmWorkTimes?.EndTime.ToString("HH:mm") ?? "17:00",
+				PmEndTime = clinic.PmWorkTimes?.EndTime.ToString("HH:mm") ?? "21:00",
 			};
 
 			ViewBag.AmTimes = new List<TimeOnly>() {
@@ -378,7 +376,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				clinic.ProvinceName = model.ProvinceName;
 				clinic.DistrictName = model.DistrictName;
 				clinic.WardName = model.WardName;
-				clinic.Basis = model.Basis;
 				clinic.Address = model.Address;
 				clinic.Description = model.Description;
 				clinic.Image = model.Image;
@@ -505,7 +502,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                                     ProvinceName = c.ProvinceName,
                                     DistrictName = c.DistrictName,
                                     WardName = c.WardName,
-                                    Basis = c.Basis,
                                     Address = c.Address,
                                     Description = c.Description,
                                     Image = c.Image,
@@ -762,6 +758,12 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
                 _context.Accounts.Add(user);
                 await _context.SaveChangesAsync();
+
+                var managerBalance = new Wallet
+                {
+                    Account_ID = user.ID,
+                    Money = 0
+                };
 
                 var clinic = new Clinic
                 {

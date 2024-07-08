@@ -26,7 +26,7 @@
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
                 <div class="special-deposis">
-                    <label for="deposisSpecialty">Tiền cọc</label>
+                    <label for="deposisSpecialty">Tiền đặt cọc</label>
                     <input type="number" name="Deposit" id="deposisSpecialty" value="@Model.Deposit" required />
                     <span asp-validation-for="Deposit" class="text-danger"></span>
                 </div> 

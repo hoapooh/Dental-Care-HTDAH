@@ -108,8 +108,8 @@
 				</div>
 			</div>
 			<div class="clinic-mail col-md-6">
-				<label for="mail">Email</label>
-				<input type="email" name="Email của phòng khám" id="mail" class="form-control" value="@Model.Email" />
+				<label for="mail">Email của phòng khám</label>
+				<input type="email" name="Email" id="mail" class="form-control" value="@Model.Email" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="clinic-worktime col-md-6">
@@ -126,14 +126,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="clinic-address col-md-6">
+			<div class="clinic-address col-md-12">
 				<label for="addrSpecialty">Địa chỉ phòng khám</label>
 				<input type="text" name="Address" id="addrSpecialty" class="form-control" value="@Model.Address" />
 				<span asp-validation-for="Address" class="text-danger"></span>
-			</div>
-			<div class="clinic-tel col-md-6">
-				<label for="basis">Cơ sở</label>
-				<input type="text" name="Basis" id="basis" class="form-control" value="@Model.Basis" />
 			</div>
 			<div class="clinic-province col-md-4">
 				<label for="province">Tỉnh / Thành phố</label>

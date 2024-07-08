@@ -14,9 +14,6 @@ namespace Dental_Clinic_System.Models.Data
         [Column("AccountID")]
         public int AccountID { get; set; }
 
-		[Column("MemberCard",TypeName ="nvarchar(15)")]
-        public string? MemberCard { get; set; }
-
         [Column("FullName", TypeName ="nvarchar(75)")]
         public string FullName { get; set; } = null!;
 
