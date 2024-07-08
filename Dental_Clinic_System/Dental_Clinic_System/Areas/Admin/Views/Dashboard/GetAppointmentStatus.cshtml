@@ -1,4 +1,4 @@
-﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.AppointmentVM
+﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.DashboardVM
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -15,64 +15,103 @@
 <style>
     .dashboard__info__chartDai {
         width: 57%;
-        height: 500px
+        height: 500px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #ffffff;
+        margin-bottom: 20px;
     }
 
     .dashboard__info__chartTron {
-        display: block;
-        box-sizing: border-box;
-        height: 360px;
-        width: 25%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 501px;
+        width: 36%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 34px;
+        background-color: #ffffff;
+        margin-bottom: 37px;
+    }
+
+    .dashboard__info__chartCot {
+        width: 100%;
+        height: 500px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+    }
+
+    .chart-title {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .chart-legend {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
     }
 
     .charts-container {
         display: flex;
         justify-content: space-around;
-        align-items: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
         margin: 20px 0;
     }
+
+    .dashboard__info__title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 39px;
+        font-weight: bold;
+    }
+
 
 </style>
 
 <div class="dashboard__info">
     <h1 class="dashboard__info__title mb-0">Dashboard</h1>
-    <div class="dashboard__info__cards d-flex flex-row">
-        <div class="card-item">
-            <p>Tổng đặt khám thành công</p>
-            <p class="nums">@Model.SuccessfulAppointments</p>
-            <img src="~/assets/images/user.png" alt="" />
-        </div>
-
-        <div class="card-item">
-            <p>Tổng đặt khám thất bại</p>
-            <p class="nums">@Model.FailedAppointments</p>
-            <img src="~/assets/images/user.png" alt="" />
-        </div>
-    </div>
-
     </br>
-    <!-- Year Selection Dropdown -->
-    <div class="year-selection">
-        <label for="yearSelect">Chọn năm:</label>
-        <select id="yearSelect" onchange="location = this.value;">
-            @Html.Raw(yearOptions.ToString())
-        </select>
-    </div>
-
+    
     <!-- ============ CHART ============ -->
     <div class="charts-container">
+        @* Biểu đồ đường *@
         <div class="dashboard__info__chartDai">
-            <canvas id="myChart" style="width: 100%; height: 400px"></canvas>
-            </br>
-            <h3 style="text-align: center">Tổng đặt khám thành công/thất bại của mỗi tháng trong 1 năm</h3>
-        </div>
-        <div class="dashboard__info__chartTron">
-            <canvas id="dailyChart" style="width: 100%; height: 300px"></canvas>
-            </br>
-            <h3 style="text-align: center">Đặt khám thành công/thất bại trong ngày</h3>
-        </div>
-    </div>
+            <h2 style="text-align: center">Biểu Đồ Đường Tổng Đặt Lịch Khám Theo Tháng</h2>
 
+            <label for="yearSelect" style="font-weight: bold">Năm:</label>
+            <select id="yearSelect" onchange="location = this.value;">
+                @Html.Raw(yearOptions.ToString())
+            </select> </br>
+            
+            <canvas id="myChart" style="width: 100%; height: 400px"></canvas>
+        </div>
+
+        @* Biểu đồ tròn *@
+        <div class="dashboard__info__chartTron">
+            <h2 style="text-align: center">Biểu Đồ Tròn Tổng Số Hợp Tác/ Từ Chối Yêu Cầu Của Phòng Khám Trong Ngày</h2> </br>
+            <canvas id="orderChart" style="width: 100%; height: 300px"></canvas>
+            
+        </div>
+
+        @* Biểu đồ cột *@
+        <div class="dashboard__info__chartCot">
+            <h2 style="text-align: center">Biểu Đồ Cột Tổng Số Tin Tức Được Đăng Trong Mỗi Tháng</h2>
+            <canvas id="newsChart" style="width: 100%; height: 400px"></canvas>
+        </div>
+
+    </div>
 </div>
 
 @section Scripts {
@@ -102,12 +141,13 @@
                 monthLabels = Array.from({ length: 12 }, (v, i) => `Tháng ${i + 1}`);
             }
 
+            //Biểu đồ đường
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: monthLabels,
                     datasets: [{
-                        label: 'Tổng đặt khám thành công',
+                        label: 'Đặt Khám Thành Công',
                         data: successfulData,
                         borderColor: 'rgba(75, 192, 192, 1)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -118,7 +158,7 @@
                         pointHoverBackgroundColor: '#fff',
                         pointHoverBorderColor: 'rgba(75, 192, 192, 1)'
                     }, {
-                        label: 'Tổng đặt khám thất bại',
+                        label: 'Đặt Khám Thất Bại',
                         data: failedData,
                         borderColor: 'rgba(255, 99, 132, 1)',
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -155,9 +195,6 @@
                                 color: 'rgba(75, 192, 192, 1)',
                                 stepSize: 5,
                                 callback: function (value, index, values) {
-                                    if (value > 50) {
-                                        return '>50';
-                                    }
                                     return value;
                                 }
                             },
@@ -169,20 +206,17 @@
                 }
             });
 
-            //Biểu đồ troàn
-            var dailyCtx = document.getElementById('dailyChart').getContext('2d');
-            var successfulToday = @Model.SuccessfulAppointmentsToday;
-            var failedToday = @Model.FailedAppointmentsToday;
+            //Biểu đồ tròn
+            var orderCtx = document.getElementById('orderChart').getContext('2d');
+            var acceptedOrdersToday = @Model.AcceptedOrdersToday;
+            var rejectedOrdersToday = @Model.RejectedOrdersToday;
 
-            console.log('Successful today:', successfulToday);
-            console.log('Failed today:', failedToday);
-
-            var dailyChart = new Chart(dailyCtx, {
+            var orderChart = new Chart(orderCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['Đặt khám thành công', 'Đặt khám thất bại'],
+                    labels: ['Đồng ý', 'Từ chối'],
                     datasets: [{
-                        data: [successfulToday, failedToday],
+                        data: [acceptedOrdersToday, rejectedOrdersToday],
                         backgroundColor: [
                             'rgba(75, 192, 192, 0.2)',
                             'rgba(255, 99, 132, 0.2)'
@@ -198,7 +232,68 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            display: false
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+
+            //Biểu đồ cột
+            var newsCtx = document.getElementById('newsChart').getContext('2d');
+            var newsData = @Html.Raw(Json.Serialize(Model.MonthlyNewPost));
+
+            var newsChart = new Chart(newsCtx, {
+                type: 'bar',
+                data: {
+                    labels: Array.from({ length: 12 }, (v, i) => `Tháng ${i + 1}`),
+                    datasets: [{
+                        label: 'Số Lượng Tin Tức',
+                        data: newsData,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)', // Tháng 1
+                            'rgba(255, 99, 132, 0.2)', // Tháng 2
+                            'rgba(255, 206, 86, 0.2)', // Tháng 3
+                            'rgba(75, 192, 192, 0.2)', // Tháng 4
+                            'rgba(153, 102, 255, 0.2)', // Tháng 5
+                            'rgba(255, 159, 64, 0.2)', // Tháng 6
+                            'rgba(255, 99, 132, 0.2)', // Tháng 7
+                            'rgba(54, 162, 235, 0.2)', // Tháng 8
+                            'rgba(75, 192, 192, 0.2)', // Tháng 9
+                            'rgba(153, 102, 255, 0.2)', // Tháng 10
+                            'rgba(255, 206, 86, 0.2)', // Tháng 11
+                            'rgba(255, 159, 64, 0.2)'  // Tháng 12
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 5,
+                                callback: function (value, index, values) {
+                                    return value;
+                                }
+                            }
                         }
                     }
                 }

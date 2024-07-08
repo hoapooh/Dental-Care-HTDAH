@@ -146,9 +146,17 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(1000)")
                         .HasColumnName("Description");
 
+                    b.Property<int?>("Future_Appointment_ID")
+                        .HasColumnType("int")
+                        .HasColumnName("Future_Appointment_ID");
+
                     b.Property<string>("IsRated")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("IsRated");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("Note");
 
                     b.Property<int>("PatientRecordID")
                         .HasColumnType("int")
@@ -198,10 +206,6 @@ namespace Dental_Clinic_System.Migrations
                     b.Property<int>("AmWorkTimeID")
                         .HasColumnType("int")
                         .HasColumnName("AmWorkTime");
-
-                    b.Property<string>("Basis")
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("Basis");
 
                     b.Property<string>("ClinicStatus")
                         .IsRequired()
@@ -604,6 +608,16 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("varchar(256)")
                         .HasColumnName("Image");
 
+                    b.Property<string>("ManagerEmail")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("ManagerEmail");
+
+                    b.Property<string>("ManagerPhonenumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(12)")
+                        .HasColumnName("ManagerPhonenumber");
+
                     b.Property<int>("PmWorkTimeID")
                         .HasColumnType("int")
                         .HasColumnName("PmWorkTime");
@@ -700,11 +714,6 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("Job");
 
-                    b.Property<string>("MemberCard")
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("MemberCard")
-                        .IsFixedLength();
-
                     b.Property<string>("PatientRecordStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -726,10 +735,6 @@ namespace Dental_Clinic_System.Migrations
                         .HasName("PK_Patient");
 
                     b.HasIndex("AccountID");
-
-                    b.HasIndex("MemberCard")
-                        .IsUnique()
-                        .HasFilter("[MemberCard] IS NOT NULL");
 
                     b.ToTable("PatientRecord", t =>
                         {
@@ -850,9 +855,6 @@ namespace Dental_Clinic_System.Migrations
                         .HasName("PK_Service");
 
                     b.HasIndex("ClinicID");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.HasIndex("SpecialtyID");
 

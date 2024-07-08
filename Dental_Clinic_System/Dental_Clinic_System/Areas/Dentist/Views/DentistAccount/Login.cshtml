@@ -1,32 +1,61 @@
 ﻿@{
-    ViewData["Title"] = "Đăng Nhập";
     Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="~/assets/css/login_dentist.css">
+    <title>Đăng Nhập Nha Sĩ</title>
+    <link rel="stylesheet" href="~/assets/css/login_dentist.css">
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/dentalClinicLogoOfficial.png" />
+    <script src="~/assets/js/toastmessage.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 </head>
 
+<body>
+@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+    var message = TempData["SuccessMessage"] as string;
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            showSuccessToasts('@message');
+        });
+    </script>
+}
+else if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    var message = TempData["ErrorMessage"] as string;
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            showErrorToasts('@message');
+        });
+    </script>
+}
 <div class="form">
     <div class="leftside">
-        <img src="/assets/images/login-dentist-illus.png" style="position:relative;right: 93%;">
+        <img src="/assets/images/login-dentist-illus.png" alt="Hình minh họa" style="position:relative; right: 90%;">
         <h1>CHÀO MỪNG NHA SĨ!</h1>
-        <img src="/assets/images/dentist-login-illus.png" style="position:relative;left: 65%;">
+        <img src="/assets/images/dentist-login-illus.png" alt="Hình minh họa" style="position:relative; left: 65%; top: 100px;">
     </div>
     <div class="rightside">
-        <form asp-controller="dentistaccount" asp-action="login" asp-area="dentist" method="post">
+        <form asp-area="dentist" asp-controller="dentistaccount" asp-action="login" asp-area="dentist" method="post">
         <div class="input-container">
-                <img src="~/assets/images/DentalCare.png" style="position:relative;left: 33px;"><br />
+                <img src="~/assets/images/DentalCare.png" style="position:relative; left: 33px;"><br />
             <div class="input">
                 <i class="fa fa-user"></i>
-                <input type="text" name="username" placeholder="Tên Đăng Nhập">
+                <input type="text" placeholder="Tên Đăng Nhập" name="username">
             </div>
             <div class="input">
                 <i class="fa fa-lock"></i>
-                <input type="password" name="password" placeholder="Mật Khẩu">
+                <input type="password" placeholder="Mật Khẩu" name="password">
             </div>
             <input type="submit" class="login" value="Đăng Nhập">
-            <p style="font-size: 15px;"><sup>**Quên Mật Khẩu Vui Lòng Liên Hệ Quản Lý Phòng Khám. Xin Cảm Ơn!</sup></p>
+            <p style="font-size: 15px;"><sup>**Quên Mật Khẩu Vui Lòng Liên Hệ Admin. Xin Cảm Ơn!</sup></p>
         </div>
         </form>
     </div>
 </div>
+<div id="toasts"></div>
+</body>
+</html>
+
+

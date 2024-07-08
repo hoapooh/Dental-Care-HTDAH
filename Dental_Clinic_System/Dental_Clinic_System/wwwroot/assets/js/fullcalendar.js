@@ -50,11 +50,8 @@
             title: event.Title,
             start: event.Start,
             end: event.End,
-            type:'X',
-            eventColor: getRandomColor(),
-            allDay: false,
-            backgroundColor: getRandomColor(),
-            textColor: 'white'
+            url: event.Url,
+            backgroundColor: event.StatusColor,
         })),        
         locale: 'vi',
         dayHeaderFormat: { weekday: 'long' },

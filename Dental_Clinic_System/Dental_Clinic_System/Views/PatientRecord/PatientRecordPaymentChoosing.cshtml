@@ -99,20 +99,20 @@
                                 <div class="payment__type col-md-7">
                                     <div class="payment__type__collapse">
                                         <div class="collapse__item">
-                                            @* <div class="collapse__item__header">
+                                            <div class="collapse__item__header">
                                                 <div class="collapse__item__header--text">
                                                     <label>
                                                         <div class="dots"></div>
-                                                        <p>Thanh toán bằng VNPay</p>
+                                                        <p>Thanh toán bằng Thẻ Quốc Tế MOMO</p>
                                                     </label>
                                                 </div>
-                                            </div> *@
+                                            </div>
                                             <div class="collapse__item__content">
                                                 <div class="collapse__item__content--box">
                                                     <div class="style__box">
                                                         <div class="style__box__card active">
                                                             <figure>
-                                                                <img src="~/assets/images/vnpay.jpg"
+                                                                <img src="~/assets/images/momo-pay-with-visa.png"
                                                                      alt="" />
                                                             </figure>
                                                         </div>
@@ -127,7 +127,7 @@
                                                 <div class="collapse__item__header--text">
                                                     <label>
                                                         <div class="dots"></div>
-                                                        <p>Thanh toán bằng MOMO</p>
+                                                        <p>Thanh toán bằng ví điện tử MOMO</p>
                                                     </label>
                                                 </div>
                                             </div>
@@ -140,6 +140,12 @@
                                                                      alt="" />
                                                             </figure>
                                                         </div>
+                                                        @* <div class="style__box__card ms-3 active">
+                                                            <figure>
+                                                                <img src="~/assets/images/momo-pay-with-visa.png"
+                                                                     alt="" />
+                                                            </figure>
+                                                        </div> *@
                                                     </div>
                                                 </div>
                                             </div>
@@ -285,7 +291,7 @@
                         // Đặt giá trị của phần tử có id là 'payment' dựa trên index
                         var confirmButton = document.getElementsByClassName("add-record-btn");
                         if (collapseIndex === 0) {
-                            document.getElementById('payment').value = 'VNPAY';
+                            document.getElementById('payment').value = 'PayWithVisaMOMO';
                             confirmButton[0].classList.remove("disabled-btn");
                             confirmButton[0].removeAttribute('disabled');
                         } else if (collapseIndex === 1) {

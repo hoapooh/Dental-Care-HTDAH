@@ -634,11 +634,6 @@ namespace Dental_Clinic_System.Controllers
                 PhoneNumber = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone)?.Value,
                 Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 Gender = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value,
-
-                Province = Int32.Parse((User.Claims.FirstOrDefault(c => c.Type == "ProvinceID")?.Value) ?? "0"),
-                Ward = Int32.Parse((User.Claims.FirstOrDefault(c => c.Type == "WardID")?.Value) ?? "0"),
-                District = Int32.Parse((User.Claims.FirstOrDefault(c => c.Type == "DistrictID")?.Value) ?? "0"),
-
                 Address = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value,
                 DateOfBirth = dateOfBirth
             };
@@ -868,6 +863,23 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
+            // Lấy thời gian hiện tại tại Hà Nội
+            var currentTime = Util.GetUtcPlus7Time();
+
+            // Lấy thời gian bắt đầu của cuộc hẹn
+            var appointmentDate = appointment.Schedule.Date; // Ngày hẹn
+            var appointmentStartTime = appointment.Schedule.TimeSlot.StartTime; // Thời gian bắt đầu hẹn
+            var appointmentDateTime = new DateTime(appointmentDate.Year, appointmentDate.Month, appointmentDate.Day, appointmentStartTime.Hour, appointmentStartTime.Minute, 0);
+
+            // Tính toán sự khác biệt thời gian giữa thời gian hiện tại và thời gian bắt đầu cuộc hẹn
+            var timeDifference = appointmentDateTime - currentTime;
+
+            if (timeDifference.TotalHours >= 7)
+            {
+                TempData["ToastMessageFailTempData"] = "Đã quá giờ đổi lịch hẹn";
+                return RedirectToAction("Profile", "Account");
+            }
+
             string[] newSchedule = bookingDateTime.Split(' ');
             var formatedDate = DateOnly.ParseExact(newSchedule[0], "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy");
             appointment.Schedule.Date = DateOnly.Parse(formatedDate);
@@ -1082,7 +1094,7 @@ namespace Dental_Clinic_System.Controllers
         [HttpPost]
         public async Task<IActionResult> CancelAppointment(int appointmentID, int scheduleID, string appointmentStatus)
         {
-            var appointment = await _context.Appointments.Include(a => a.Transactions).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
+            var appointment = await _context.Appointments.Include(a => a.Transactions).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Include(a => a.Schedule).ThenInclude(s => s.Dentist).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
 
             if (appointment == null)
             {
@@ -1126,10 +1138,20 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
+            var patientRefund = (transaction.TotalPrice * decimal.Parse(refundPercentage.ToString())) ?? 0;
+            var managerRefund = (transaction.TotalPrice - patientRefund) ?? 0;
+
+            var managerClinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == appointment.Schedule.Dentist.ClinicID);
+
+            var manager = await _context.Accounts.Include(a => a.Clinics).Include(a => a.Wallet).FirstAsync(a => a.Clinics == managerClinic);
+
+            manager.Wallet.Money = (decimal)managerRefund;
+            _context.SaveChanges();
+            // Tạo hóa đơn cho doanh nghiệp thì để sau đi
+
             if (refundPercentage > 0)
             {
-                var response = await _momoPayment.RefundPayment((long)(transaction.TotalPrice * decimal.Parse(refundPercentage.ToString())), long.Parse(transaction.TransactionCode), "");
-
+                var response = await _momoPayment.RefundPayment((long)(patientRefund), long.Parse(transaction.TransactionCode), "");
 
                 if (response != null)
                 {
@@ -1159,7 +1181,7 @@ namespace Dental_Clinic_System.Controllers
             _context.Update(appointment);
             await _context.SaveChangesAsync();
 
-            if (appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
+            if (appointment.AppointmentStatus == "Đã Hủy")
             {
                 appointment.Schedule.ScheduleStatus = "Đã Hủy";
                 await _context.SaveChangesAsync();

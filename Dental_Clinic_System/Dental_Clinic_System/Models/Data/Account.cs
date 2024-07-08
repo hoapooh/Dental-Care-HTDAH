@@ -77,7 +77,7 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
 		[InverseProperty("Account")]
-		public virtual Wallet? Wallet { get; set; }
+		public virtual Wallet Wallet { get; set; }
 
 		[InverseProperty("Account")]
 		public virtual ICollection<News> News { get; set; } = new List<News>();

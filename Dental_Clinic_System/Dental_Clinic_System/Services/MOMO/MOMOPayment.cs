@@ -23,12 +23,15 @@ namespace Dental_Clinic_System.Services.MOMO
         public async Task<MOMOPaymentResponseModel?> CreatePaymentURL(MOMOPaymentRequestModel model)
         {
             string endpoint = _configuration["MomoAPI:MomoApiUrl"];
+            //string endpoint = _configuration["MomoAPI:MomoApiUrlV2"];
+            
             string partnerCode = _configuration["MomoAPI:PartnerCode"];
             string accessKey = _configuration["MomoAPI:AccessKey"];
             string secretKey = _configuration["MomoAPI:SecretKey"];
             string orderInfo = model.OrderInformation;
             string returnUrl = _configuration["MomoAPI:ReturnUrl"];
             string notifyUrl = _configuration["MomoAPI:NotifyUrl"];
+            string ipnUrl = _configuration["MomoAPI:IpnUrl"];
             string requestType = _configuration["MomoAPI:RequestType"];
             string amount = model.Amount.ToString(); // Số tiền thanh toán
             string orderId = model.OrderID;
@@ -38,6 +41,7 @@ namespace Dental_Clinic_System.Services.MOMO
 
             // Tạo chữ ký (signature)
             string rawHash = $"partnerCode={partnerCode}&accessKey={accessKey}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={notifyUrl}&extraData=";
+            //string rawHash = $"accessKey={accessKey}&amount={amount.ToString()}&extraData=&ipnUrl={ipnUrl}&orderId={orderId}&orderInfo={orderInfo}&partnerCode={partnerCode}&redirectUrl={""}&requestId={requestId}&requestType={requestType}";
 
             string signature = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
             //var signatureJson = JsonConvert.SerializeObject(new SignatureModelForJSON { Signature = signature });
@@ -54,6 +58,74 @@ namespace Dental_Clinic_System.Services.MOMO
                 orderInfo,
                 returnUrl,
                 notifyUrl,
+                //ipnUrl,
+                extraData,
+                lang,
+                requestType,
+                signature
+            };
+
+            string jsonPaymentRequest = JsonConvert.SerializeObject(paymentRequest);
+            Console.WriteLine("JSON Request: " + jsonPaymentRequest);
+
+            using (var client = new HttpClient())
+            {
+                var content = new StringContent(jsonPaymentRequest, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(endpoint, content);
+                var responseString = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("JSON Response: " + responseString);
+
+                var responseObject = JsonConvert.DeserializeObject<MOMOPaymentResponseModel>(responseString);
+                if (responseObject != null && !string.IsNullOrEmpty(responseObject.payUrl))
+                {
+                    //var paymentURL = responseObject.payUrl;
+                    return responseObject;
+                }
+                else
+                {
+                    Console.WriteLine("Fail from MOMO Payment");
+                    // Xử lý lỗi
+                    return responseObject;
+                }
+            }
+        }
+
+        [HttpPost]
+        public async Task<MOMOPaymentResponseModel?> CreateVisaPaymentURL(MOMOPaymentRequestModel model)
+        {
+            string endpoint = _configuration["MomoAPI:MomoApiUrlV2"];
+            string partnerCode = _configuration["MomoAPI:PartnerCode"];
+            string accessKey = _configuration["MomoAPI:AccessKey"];
+            string secretKey = _configuration["MomoAPI:SecretKey"];
+            string orderInfo = model.OrderInformation;
+            string redirectUrl = _configuration["MomoAPI:ReturnUrl"];
+            string notifyUrl = _configuration["MomoAPI:NotifyUrl"];
+            string ipnUrl = _configuration["MomoAPI:IpnUrl"];
+            string requestType = _configuration["MomoAPI:RequestTypeV2"];
+            string amount = model.Amount.ToString(); // Số tiền thanh toán
+            string orderId = model.OrderID;
+            string requestId = orderId;
+            string extraData = "";
+            string lang = "vi"; // or "vi"
+
+            // Tạo chữ ký (signature)
+            string rawHash = $"accessKey={accessKey}&amount={amount.ToString()}&extraData=&ipnUrl={ipnUrl}&orderId={orderId}&orderInfo={orderInfo}&partnerCode={partnerCode}&redirectUrl={redirectUrl}&requestId={requestId}&requestType={requestType}";
+
+            string signature = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
+            //var signatureJson = JsonConvert.SerializeObject(new SignatureModelForJSON { Signature = signature });
+            await Console.Out.WriteLineAsync("----------------------------------");
+            await Console.Out.WriteLineAsync($"Signature from MOMOPAYMENT = {signature}");
+
+            var paymentRequest = new
+            {
+                partnerCode,
+                accessKey,
+                requestId,
+                amount,
+                orderId,
+                orderInfo,
+                redirectUrl,
+                ipnUrl,
                 extraData,
                 lang,
                 requestType,

@@ -57,9 +57,12 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
                 await HttpContext.SignInAsync("ManagerScheme", new ClaimsPrincipal(claimsIdentity), authProperties);
                 HttpContext.Session.SetInt32("managerAccountID", user.ID);
-                HttpContext.Session.SetInt32("clinicId", clinic?.ID ?? 0);
-                HttpContext.Session.SetInt32("amWtId", clinic?.AmWorkTimeID ?? 0);
-                HttpContext.Session.SetInt32("pmWtId", clinic?.PmWorkTimeID ?? 0);
+				HttpContext.Session.SetString("name", user.FirstName + " " + user.LastName);
+				HttpContext.Session.SetString("image", user.Image ?? "");
+				HttpContext.Session.SetInt32("clinicId", clinic?.ID ?? 0);
+				
+				//  HttpContext.Session.SetInt32("amWtId", clinic?.AmWorkTimeID ?? 0);
+				// HttpContext.Session.SetInt32("pmWtId", clinic?.PmWorkTimeID ?? 0);
 
 				//return RedirectToAction("Index", "Dentists", new { area = "Manager" });
 
@@ -93,8 +96,11 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         public async Task<IActionResult> ChangePassword(string oldPassword, string newPassword, string confirmPassword)
         {
             int? managerAccountID = HttpContext.Session.GetInt32("managerAccountID");
-
-            var user = await _context.Accounts.FirstOrDefaultAsync(a => a.ID == managerAccountID && a.Role == "Quản Lý");
+			if (managerAccountID == null)
+			{   // Check if session has expired, log out
+				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+			}
+			var user = await _context.Accounts.FirstOrDefaultAsync(a => a.ID == managerAccountID && a.Role == "Quản Lý");
 
             if (user == null)
             {

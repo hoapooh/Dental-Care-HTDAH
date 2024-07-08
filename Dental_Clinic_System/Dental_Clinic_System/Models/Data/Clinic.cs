@@ -49,9 +49,6 @@ namespace Dental_Clinic_System.Models.Data
         [Column("Address", TypeName = "nvarchar(200)")]
         public string Address { get; set; } = null!;
 
-        [Column("Basis",TypeName = "nvarchar(200)")]
-        public string? Basis { get; set; } = null;
-
         [Column("PhoneNumber", TypeName = "varchar(11)")]
         public string? PhoneNumber { get; set; }
 

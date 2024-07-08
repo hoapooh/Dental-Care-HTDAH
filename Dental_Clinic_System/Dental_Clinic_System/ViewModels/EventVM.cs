@@ -5,5 +5,7 @@
         public string Title { get; set; }
         public string Start {  get; set; }
         public string End { get; set; }
+        public string Url { get; set; }
+        public string StatusColor { get; set; }
     }
 }

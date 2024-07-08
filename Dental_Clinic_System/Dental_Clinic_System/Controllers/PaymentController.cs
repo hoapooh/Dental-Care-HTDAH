@@ -101,6 +101,38 @@ namespace Dental_Clinic_System.Controllers
                     ViewBag.ResultCode = paymentResult.errorCode;
                     ViewBag.Message = paymentResult.localMessage;
                     return View("PaymentResult");
+                case "PayWithVisaMOMO":
+                    var PayWithVisaMOMOModel = new MOMOPaymentRequestModel
+                    {
+                        OrderID = Guid.NewGuid().ToString(),
+                        OrderInformation = "Thanh toán tiền đặt cọc",
+                        FullName = patient.FullName,
+                        Amount = (long)totalDeposit,
+
+                        // For Appointment Info
+                        //ScheduleID = scheduleID,
+                        BookingDateTime = bookingDateTime,
+                        PatientRecordID = patientRecordID,
+                        SpecialtyID = specialtyID
+                    };
+                    TempData.SetObjectAsJson("MOMOPaymentRequestModel", PayWithVisaMOMOModel);
+                    //TempData["ScheduleIDTempData"] = scheduleID;
+                    //============================================
+                    TempData["BookingDateTime"] = bookingDateTime;
+                    TempData["DentistID"] = dentistID;
+                    //============================================
+                    TempData["SpecialtyIDTempData"] = specialtyID;
+                    TempData["PatientRecordIDTempData"] = patientRecordID;
+                    TempData["ClinicIDTempData"] = clinicID;
+
+                    var paymentVisaResult = _momoPayment.CreateVisaPaymentURL(PayWithVisaMOMOModel).Result;
+                    if (!paymentVisaResult.payUrl.IsNullOrEmpty())
+                    {
+                        return Redirect(paymentVisaResult.payUrl);
+                    }
+                    ViewBag.ResultCode = paymentVisaResult.errorCode;
+                    ViewBag.Message = paymentVisaResult.localMessage;
+                    return View("PaymentResult");
             }
             return View();
         }
@@ -241,7 +273,7 @@ namespace Dental_Clinic_System.Controllers
         public async Task<IActionResult> ReturnUrl(string partnerCode, string orderId, string requestId, string amount, string orderInfo, string orderType, string transId, int resultCode, string message, string payType, long responseTime, string extraData, string signature)
         {
             // Kiểm tra chữ ký (signature)
-            string rawHash = $"partnerCode={_configuration["MomoAPI:PartnerCode"]}&accessKey={_configuration["MomoAPI:AccessKey"]}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={_configuration["MomoAPI:ReturnUrl"]}&notifyUrl={_configuration["MomoAPI:NotifyUrl"]}&extraData=";
+            string rawHash = $"partnerCode={_configuration["MomoAPI:PartnerCode"]}&accessKey={_configuration["MomoAPI:AccessKey"]}&requestId={requestId}&amount={amount.ToString()}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={_configuration["MomoAPI:ReturnUrl"]}&ipnUrl={_configuration["MomoAPI:NotifyUrl"]}&extraData=";
             string secretKey = _configuration["MomoAPI:SecretKey"];
             
             string signatureCheck = DataEncryptionExtensions.SignSHA256(rawHash, secretKey);
@@ -259,6 +291,15 @@ namespace Dental_Clinic_System.Controllers
                 Console.WriteLine("Thành công 1 nửa");
                 // Chữ ký không hợp lệ
                 return View("PaymentFail");
+            }
+
+            await Console.Out.WriteLineAsync("==================");
+            await Console.Out.WriteLineAsync($"Code = {resultCode} | Message = {message}");
+            await Console.Out.WriteLineAsync("==================");
+
+            if(message == "Thành công")
+            {
+                message = "Success";
             }
 
             if (resultCode == 0 && message == "Success")

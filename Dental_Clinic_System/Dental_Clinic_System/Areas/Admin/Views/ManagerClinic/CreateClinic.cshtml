@@ -57,7 +57,7 @@
 				</select>
 			</div>
 			<div class="clinic-tel col-md-6">
-				<label for="tel">Số điện thoại<sup style="color:red">*</sup></label>
+				<label for="tel">Hotline<sup style="color:red">*</sup></label>
 				<input type="tel" name="PhoneNumber" id="tel" class="form-control" />
 				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 			</div> </br>
@@ -76,7 +76,7 @@
 				</div>
 			</div> </br>
 			<div class="clinic-mail col-md-6">
-				<label for="mail">Email<sup style="color:red">*</sup></label>
+				<label for="mail">Email của phòng khám<sup style="color:red">*</sup></label>
 				<input type="email" name="Email" id="mail" class="form-control" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
@@ -94,14 +94,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="clinic-address col-md-6">
+			<div class="clinic-address col-md-12">
 				<label for="addrSpecialty">Địa chỉ phòng khám<sup style="color:red">*</sup></label>
 				<input type="text" name="Address" id="addrSpecialty" class="form-control" />
 				<span asp-validation-for="Address" class="text-danger"></span>
-			</div>
-			<div class="clinic-tel col-md-6">
-				<label for="basis">Cơ sở</label>
-				<input type="text" name="Basis" id="basis" class="form-control" />
 			</div>
 			<div class="clinic-province col-md-4">
 				<label for="province">Tỉnh / Thành phố<sup style="color:red">*</sup></label>

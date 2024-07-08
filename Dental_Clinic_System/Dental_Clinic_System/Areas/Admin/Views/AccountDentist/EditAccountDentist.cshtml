@@ -1,9 +1,25 @@
-﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.EditAccountVM
+﻿@model Dental_Clinic_System.Areas.Admin.ViewModels.EditAccountDentistVM
 
 @{
     ViewData["Title"] = "Chỉnh sửa tài khoản nha sĩ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+
+<style>
+    .specialties-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .form-check {
+        flex: 1 1 200px;
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        margin-left: -28px;
+    }
+</style>
 
 <!-- ============ INFO ============ -->
 <div class="account__management">
@@ -39,8 +55,7 @@
         </div>
         <div class="col-md-3">
             <label for="dateofbirth">Ngày sinh</label>
-            <input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" required 
-                   max="@DateTime.Now.AddYears(-16).ToString("yyyy-MM-dd")" />
+            <input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" required />
         </div>
         <div class="col-md-3">
             <label for="gender">Giới tính</label>
@@ -89,7 +104,18 @@
                 <option value="0">Phường Xã</option>
             </select>
         </div>
-
+        <div class="col-md-12">
+            <label for="specialties">Chọn các chuyên khoa:</label>
+            <div id="specialties" class="form-check-inline specialties-container">
+                @foreach (var specialty in ViewData["Specialties"] as List<Dental_Clinic_System.Models.Data.Specialty>)
+                {
+                    <div class="form-check">
+                        <label class="form-check-label" for="spe">@specialty.Name</label>
+                        <input class="form-check-input" type="checkbox" value="@specialty.ID" id="spe" name="SelectSpecialty" @(Model.SelectSpecialty.Contains(specialty.ID) ? "checked" : "") />
+                    </div>
+                }
+            </div>
+        </div>
         <div class="col-md-12 text-end">
             <button type="reset" class="btn" id="newBtn">Quay lại</button>
             <button type="submit" class="btn">Lưu</button>

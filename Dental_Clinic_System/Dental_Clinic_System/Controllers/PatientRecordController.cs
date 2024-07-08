@@ -124,12 +124,6 @@ namespace Dental_Clinic_System.Controllers
                     return View(patient);
                 }
 
-                if (string.IsNullOrEmpty(patient.FMEmail))
-                {
-                    ModelState.AddModelError("FMEmail", "Không được bỏ trống Email!");
-                    return View(patient);
-                }
-
                 if (string.IsNullOrEmpty(patient.FMPhoneNumber))
                 {
                     ModelState.AddModelError("FMPhoneNumber", "Không được bỏ trống Số điện thoại!");
@@ -353,12 +347,6 @@ namespace Dental_Clinic_System.Controllers
 				if (string.IsNullOrEmpty(patient.FMRelationship))
 				{
 					ModelState.AddModelError("FMRelationship", "Không được bỏ trống Quan hệ với bệnh nhân!");
-					return View(patient);
-				}
-
-				if (string.IsNullOrEmpty(patient.FMEmail))
-				{
-					ModelState.AddModelError("FMEmail", "Không được bỏ trống Email!");
 					return View(patient);
 				}
 

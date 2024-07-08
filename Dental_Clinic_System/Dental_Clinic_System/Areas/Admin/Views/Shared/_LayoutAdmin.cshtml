@@ -31,7 +31,7 @@
     <title> @ViewData["Title"] </title>
 </head>
 
-<body>
+<body style="overflow: hidden">
     <div class="dashboard__container d-flex">
 
         @if (ViewBag.ToastMessageSuccess != null)
@@ -80,7 +80,7 @@
         <div class="container-fluid" style="width: 85%; padding: 0">
            
             @Html.Partial("_AdminAvatar")
-            <div class="account__management">
+            <div class="account__management" style="overflow: auto; height: calc(100vh - 66px);">
 
                 @RenderBody()
 

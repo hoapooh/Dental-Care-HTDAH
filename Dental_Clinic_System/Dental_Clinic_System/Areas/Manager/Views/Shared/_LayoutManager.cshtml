@@ -1,5 +1,8 @@
 ﻿@{
     Layout = null;
+    var managerName = Context.Session.GetString("name");
+    var managerID = Context.Session.GetInt32("managerAccountID");
+    var clinicID = Context.Session.GetInt32("clinicId");
 }
 <!DOCTYPE html>
 
@@ -168,11 +171,6 @@
                         <span class="menu-icon"><i class="fa-solid fa-house-chimney-medical"></i></span>Phòng khám
                     </a>
                 </li>
-                @* <li class="nav-item">
-                <a asp-controller="ManagerAccount" asp-action="ChangePasswordManager" class="Doi_mat_khau">
-                <span class="menu-icon"><i class="fa-solid fa-house-chimney-medical"></i></span>Đổi mật khẩu
-                </a>
-                </li> *@
             </ul>
 
         </nav>
@@ -185,9 +183,12 @@
                     <div class="d-flex align-items-center nav__header__profile">
                         <img src="~/assets/images/avatar.jpg" alt="" />
                         <p>
-                            <span>Hoapooh</span> <br />
+                            <span>@managerName</span> <br />
                             Quản lý phòng khám
                         </p>
+                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#myWallet">
+                            <i class="bx bx-chart" style="color: red;"></i>
+                        </button>
                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
                             <i class="bx bx-key" style="color: red;"></i>
                         </button>
@@ -199,6 +200,107 @@
             </nav>
             <div class="manager__management">
                 @RenderBody()
+            </div>
+
+            <!-- Chart modal -->
+            <div class="modal fade" id="myWallet" tabindex="-1" aria-labelledby="myWalletModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 50% !important; margin-bottom:10px">
+                    <div class="modal-content">
+                        <!-- Header -->
+                        <div class="modal-header" style="flex-direction: column-reverse;">
+                            <h1 class="modal-title" id="myWalletModalLabel">Thống kê dữ liệu</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Body -->
+                        <div class="modal-body">
+                            <div class="mb-3 mt-3">
+                                <p class="form-label">Số dư hiện tại: <strong id="currentBalance">Đang tải...</strong></p>
+                            </div>
+                            <div class="mb-3 mt-3">
+                                <p class="form-label"><strong>Số lần đặt khám</strong></p>
+                            </div>
+                            <!-- Chart Summary -->
+                            <div style="display: flex; margin-bottom: 20px;">
+                                <div id="today" style="display: flex; background-color: aquamarine; border-radius: 10px; padding: 10px; width: 30%; cursor: pointer;">
+                                    <div class="col-md-12" style="margin-bottom: 5px;">
+                                        
+                                        <div class="row">
+                                            <p><i class="fa-solid fa-calendar-day"></i> Hôm nay</p>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <p style="font-size: 3rem;">5</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <p style="color: red;">-4.1%</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="thisWeek" style="display: flex; background-color: aquamarine; border-radius: 10px; padding: 10px; width: 30%; margin-left: 2rem; cursor: pointer;">
+                                    <div class="col-md-12" style="margin-bottom: 5px;">
+
+                                        <div class="row">
+                                            <p><i class="fa-solid fa-calendar-day"></i> Tuần nay</p>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <p style="font-size: 3rem;">300.000 đ</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <p style="color: red;">-4.1%</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="thisMonth" style="display: flex; background-color: aquamarine; border-radius: 10px; padding: 10px; width: 30%; margin-left: 2rem; cursor: pointer;">
+                                    <div class="col-md-12" style="margin-bottom: 5px;">
+
+                                        <div class="row">
+                                            <p><i class="fa-solid fa-calendar-day"></i> Tháng nay</p>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <p style="font-size: 3rem;">500.000 đ</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <p style="color: red;">-4.1%</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="d-flex">
+                                <div class="me-3" style="width:150px;">
+                                    <select id="chartType" class="form-control" style="height:100%;">
+                                        <option value="line" selected>Line</option>
+                                        <option value="bar">Bar</option>
+                                        <option value="pie">Pie</option>
+                                        <option value="doughnut">Doughnut</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input id="showGraph" value="Hiển thị" type="button" />
+                                </div>
+                            </div>
+
+                            <div class="" id="chartView">
+                                <canvas id="myChart"></canvas>
+                            </div>
+
+
+
+
+                            <!-- Body -->
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Change Password Modal -->
@@ -290,6 +392,108 @@
     <!-- MDB -->
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.1/mdb.umd.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#showGraph").click(function () {
+                var chartType = $("#chartType").val();
+                updateChart(chartType, null, null);
+            });
+
+            $("#today").click(function () {
+                var chartType = $("#chartType").val();
+                var hanoiTime = getHanoiTime();
+                var startDate = hanoiTime.format('YYYY-MM-DD');
+                var endDate = hanoiTime.format('YYYY-MM-DD');
+                console.log(startDate + " " + endDate);
+                updateChart(chartType, startDate, endDate);
+            });
+
+            $("#thisWeek").click(function () {
+                var chartType = $("#chartType").val();
+                var today = getHanoiTime();
+
+                var startDate = today.clone().startOf('week');
+                var endDate = today.clone().endOf('week');
+                console.log(startDate.format('YYYY-MM-DD') + " " + endDate.format('YYYY-MM-DD'));
+                updateChart(chartType, startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
+            });
+
+            $("#thisMonth").click(function () {
+                var chartType = $("#chartType").val();
+                var startDate = getHanoiTime().startOf('month');
+                var endDate = getHanoiTime().endOf('month');
+                console.log(startDate.format('YYYY-MM-DD') + " " + endDate.format('YYYY-MM-DD'));
+                updateChart(chartType, startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
+            });
+
+            function getHanoiTime() {
+                return moment.tz("Asia/Ho_Chi_Minh");
+            }
+
+            function updateChart(chartType, startDate, endDate) {
+                console.log(startDate + " " + endDate);
+                var chartView = document.getElementById('chartView');
+                chartView.innerHTML = '&nbsp;';
+                $('#chartView').append('<canvas id="myChart" style="width: 800px;"></canvas>');
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetAppointmentStats", "Ranking")', // Update with your actual controller route
+                    data: {
+                        clinicID: @clinicID,
+                        startDate: startDate,
+                        endDate: endDate
+                    },
+                    success: OnSuccessResult,
+                    error: OnError
+                });
+
+                function OnSuccessResult(data) {
+                    var _chartLabels = ["Đã Khám", "Đã Hủy Khám"];
+                    var _chartData = [data.successful, data.canceled];
+                    var dataColor = ["green", "red"];
+
+                    new Chart("myChart", {
+                        type: chartType,
+                        data: {
+                            labels: _chartLabels,
+                            datasets: [{
+                                backgroundColor: dataColor,
+                                data: _chartData
+                            }]
+                        }
+                    });
+                }
+
+                function OnError(error) {
+                    console.error(error);
+                }
+            }
+
+            // Current Manager's Balance
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCurrentBalance", "Wallet")',
+                data: { accountID: @managerID },
+                success: function (response) {
+                    if (response.success) {
+                        $('#currentBalance').text(response.balance.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+                    } else {
+                        $('#currentBalance').text('Not find balance');
+                    }
+                },
+                error: function (error) {
+                    $('#currentBalance').text('Error fetching balance');
+                }
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

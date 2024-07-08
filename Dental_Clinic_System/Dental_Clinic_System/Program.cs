@@ -174,7 +174,7 @@ app.UseEndpoints(endpoints =>
 	_ = endpoints.MapControllerRoute(
 	   name: "dentist_default",
 	   pattern: "Dentist",
-	   defaults: new { area = "Dentist", controller = "DentistDetail", action = "DentistSchedule" });
+	   defaults: new { area = "dentist", controller = "dentistdetail", action = "dentistschedule" });
 
 	_ = endpoints.MapControllerRoute(
 			name: "areas",

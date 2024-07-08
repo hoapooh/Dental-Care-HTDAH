@@ -1,16 +1,10 @@
 ﻿//==============================================TÀI KHOẢN BỊ KHÓA================================================
 
-using AutoMapper;
-using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Areas.Admin.ViewModels;
-using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
-using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Data;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers

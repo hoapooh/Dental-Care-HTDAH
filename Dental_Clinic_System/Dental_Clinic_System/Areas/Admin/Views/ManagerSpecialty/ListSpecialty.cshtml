@@ -49,8 +49,8 @@
 						<input type="text" name="name" id="name" required />
 					</div>
 					<div class="special-deposis">
-						<label for="deposis">Tiền cọc</label>
-						<input type="number" id="deposis" name="deposit" step="0.01" required />
+						<label for="deposis">Tiền đặt cọc</label>
+						<input type="number" id="deposis" name="deposit" required />
 					</div>
 					<div class="clinic-image">
 						<label>Hình ảnh</label>
@@ -96,8 +96,8 @@
 					<input type="text" id="viewName" class="form-control" readonly />
 				</div>
 				<div class="mb-3">
-					<label for="viewDeposit" class="form-label">Tiền cọc</label>
-					<input type="number" id="viewDeposit" class="form-control" readonly />
+					<label for="viewDeposit" class="form-label">Tiền đặt cọc</label>
+					<input type="text" id="viewDeposit" class="form-control" readonly />
 				</div>
 				<div class="mb-3">
 					<label for="viewDesc" class="form-label">Mô tả chuyên khoa</label>
@@ -178,22 +178,34 @@
 	</tbody>
 </table>
 
-<script>
-	function viewSpecialty(id) {
-		$.ajax({
-			url: '@Url.Action("ViewSpecialty", "ManagerSpecialty")',
-			type: 'GET',
-			data: { id: id },
-			success: function (data) {
-				$('#viewName').val(data.name);
-				$('#viewDeposit').val(data.deposit);
-				$('#viewDesc').html(data.description);
-				$('#viewImage').attr('src', data.image);
-				$('#viewSpecialtyModal').modal('show');
-			}
-		});
-	}
-</script>
+@section Scripts{
+	@* Định dạng tiền Việt Nam (VNĐ)*@
+	<script>
+		function formatCurrency(value) {
+			return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+		}
+	</script>
+
+	@* Lấy và Hiển thị chi tiết Specialty trong Modal*@
+	<script>
+		function viewSpecialty(id) {
+			$.ajax({
+				url: '@Url.Action("ViewSpecialty", "ManagerSpecialty")',
+				type: 'GET',
+				data: { id: id },
+				success: function (data) {
+					$('#viewName').val(data.name);
+					$('#viewDeposit').val(formatCurrency(data.deposit));
+					$('#viewDesc').html(data.description);
+					$('#viewImage').attr('src', data.image);
+					$('#viewSpecialtyModal').modal('show');
+				}
+			});
+		}
+	</script>
+}
+
+
 
 @functions {
 	public string TruncateDescription(string? description, int maxLength)

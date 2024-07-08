@@ -142,10 +142,6 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.Property(e => e.ID).ValueGeneratedOnAdd();
 
-				entity.Property(e => e.MemberCard).IsFixedLength();
-
-				entity.HasIndex(e => e.MemberCard).IsUnique();
-
 				entity.HasOne(d => d.Account).WithMany(p => p.PatientRecords).IsRequired(false).HasConstraintName("FK__Patient__Account").OnDelete(DeleteBehavior.Cascade);
 
 				entity.HasCheckConstraint("CK_Valid_PatientRecord_Status", "PatientRecordStatus = N'Đã Xóa' OR PatientRecordStatus = N'Đang Tồn Tại'");
@@ -186,7 +182,7 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.Property(e => e.ID).ValueGeneratedOnAdd();
 
-				entity.HasIndex(e => e.Name).IsUnique();
+				//entity.HasIndex(e => e.Name).IsUnique();
 
 				entity.HasOne(d => d.Clinic).WithMany(p => p.Services).HasConstraintName("FK__Service__Clinic").OnDelete(DeleteBehavior.Cascade);
 

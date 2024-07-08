@@ -35,6 +35,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                     .ThenInclude(c => c.Manager)
                 .Where(a => a.ID == appointmentID)
                 .Select(a => new {
+                    a, //lấy tất cả thông tin của appointment
                     // Phần Bệnh Nhân:
                     a.PatientRecords.FullName,
                     a.PatientRecords.Gender,
@@ -44,11 +45,10 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                     District = LocalAPIReverseString.GetDistrictNameById(a.PatientRecords.Province, a.PatientRecords.District).Result,
                     Ward = LocalAPIReverseString.GetWardNameById(a.PatientRecords.District, a.PatientRecords.Ward).Result,
                     a.PatientRecords.Address,
-                    a.TotalPrice,
-                    a.AppointmentStatus,
                     AppointmentDate = a.Schedule.Date.ToString("dd/MM/yyyy"), 
 
                     // Phần Phòng Khám + Nha Sĩ:
+                    DentistID = a.Schedule.Dentist.ID,
                     Specialty = a.Schedule.Dentist.DentistSpecialties.First().Specialty.Name,
                     ClinicName = a.Schedule.Dentist.Clinic.Name,
                     ClinicProvince = LocalAPIReverseString.GetProvinceNameById(a.Schedule.Dentist.Clinic.Province ?? 0).Result,
@@ -73,6 +73,10 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             string formattedDate = DateTime.Now.ToString("dd 'tháng' MM 'năm' yyyy", new System.Globalization.CultureInfo("vi-VN"));
 
+            //Lấy ngày và giờ riêng ra của hentaikham
+            FormatDateTime(hentaikham, out DateOnly desiredDate, out TimeOnly startTime, out TimeOnly endTime);
+
+            //PHẦN TẠO NÔI DUNG HTML CHO PDF
             string htmlContent = $@"
 <!DOCTYPE html>
 <html lang='vi'>
@@ -122,13 +126,13 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             <td>{appointment.Specialty}</td>
             <td>{appointment.AppointmentDate}</td>
             <td>1</td>
-            <td>{string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.TotalPrice)}</td>
+            <td>{string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.a.TotalPrice)}</td>
         </tr>
     </table>
-    <p><strong>Tổng chi phí: </strong> {string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.TotalPrice)}</p>
-    <p><strong>Tình Trạng: </strong>{appointment.AppointmentStatus}</p>
+    <p><strong>Tổng chi phí: </strong> {string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.a.TotalPrice)}</p>
+    <p><strong>Tình Trạng: </strong>{appointment.a.AppointmentStatus}</p>
     <p><strong>Kết Quả Khám: </strong>{ketquakham}</p>
-    <p><strong>HẸN TÁI KHÁM (nếu có): </strong>{hentaikham}</p>
+    <p><strong>HẸN TÁI KHÁM (nếu có): </strong>{startTime.ToString("HH:mm")}-{endTime.ToString("HH:mm")} {desiredDate.ToString("dd/MM/yyyy")}</p>
     <p><strong>Dặn dò (nếu có): </strong>{dando}</p> <br><br><br><br><br><br>
     <div class=""footer__signature"">
         <p style=""margin-left:10%; margin-right: 50%;""><strong>Bệnh Nhân</strong> <br>(Ký và ghi rõ họ tên)</p>
@@ -145,8 +149,55 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             System.IO.File.WriteAllBytes(filePath, pdf);
 
+            //Thêm appointment với giờ tạo vào FutureAppointments =====================
+            if (appointment.a.Future_Appointment_ID == null) { 
+                if (!string.IsNullOrEmpty(hentaikham))
+                {
+                    appointment.a.Note = $"Dặn dò: {dando}";
+                    appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
+                    FutureAppointment futureAppointment = new()
+                    {
+                        PatientRecord_ID = appointment.a.PatientRecordID,
+                        Dentist_ID = appointment.DentistID,
+                        StartTime = startTime,
+                        EndTime = endTime,
+                        DesiredDate = desiredDate,
+                        FutureAppointmentStatus = "Đã Đặt Chỗ"
+                    };
+                    _context.FutureAppointments.Add(futureAppointment);
+                    _context.SaveChanges();
+                    appointment.a.Future_Appointment_ID = futureAppointment.ID;
+                    _context.SaveChanges();
+                }
+            }
+            else if(appointment.a.Future_Appointment_ID != null)
+            {
+                if (!string.IsNullOrEmpty(hentaikham))
+                {
+                    appointment.a.Note = $"Dặn dò: {dando}";
+                    appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
+                    //Lấy FutureAppointment để cập nhật lại thời gian tái khám
+                    var futureAppointment = _context.FutureAppointments.Find(appointment.a.Future_Appointment_ID);
+                    if (futureAppointment == null) return NotFound("Không tìm thấy lịch định kỳ");
+
+                    futureAppointment.DesiredDate = desiredDate;
+                    futureAppointment.StartTime = startTime;
+                    futureAppointment.EndTime = endTime;
+                    _context.SaveChanges();
+                }
+            }
+            //=========================================================================
+
             //return File(pdf, "application/pdf", "appointment.pdf");
             return Redirect($"/pdf/{fileName}");
+        }
+
+        private void FormatDateTime(string dateTime, out DateOnly desiredDate ,out TimeOnly startTime, out TimeOnly endTime)
+        {
+            string[] periodicDateTime = dateTime.Split("T");
+            desiredDate = DateOnly.ParseExact(periodicDateTime[0], "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            startTime = TimeOnly.ParseExact(periodicDateTime[1], "HH:mm");
+            endTime = startTime.AddMinutes(30);
         }
     }
 }
