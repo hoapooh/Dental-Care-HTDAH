@@ -32,6 +32,11 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		// GET: Manager/Schedules
 		public async Task<IActionResult> Index(int? dentistId, DateTime? date, string status)
 		{
+			// Set ViewBag values to retain search criteria
+			ViewBag.SelectedDentistId = dentistId;
+			ViewBag.SelectedDate = date?.ToString("yyyy-MM-dd"); // Format the date for the input
+			ViewBag.SelectedStatus = status;
+			//--------------------------------------------
 			var clinicId = HttpContext.Session.GetInt32("clinicId");
 			if (clinicId == null)
 			{   // Check if session has expired, log out
