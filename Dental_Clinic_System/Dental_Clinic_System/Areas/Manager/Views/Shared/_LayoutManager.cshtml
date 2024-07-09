@@ -64,6 +64,12 @@
             font-weight: 600;
         }
 
+        .modal-body select {
+            font-family: "Baloo Paaji 2" !important;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
         .modal-footer button {
         }
     </style>
@@ -119,6 +125,11 @@
             <p class="dashboard__logo"><span>Dental</span>Care</p>
             <!-- ===========  MENU =========== -->
             <ul class="nav">
+                <li class="nav-item">
+                    <a asp-controller="ManagerAccount" asp-action="Profile" class="Quan_ly_tai_khoan">
+                        <span class="menu-icon"><i class="bx bxs-user"></i></span>Tài khoản
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a asp-controller="Dentists" asp-action="Index" class="Quan_ly_nha_si">
                         <span class="menu-icon"><i class="bx bxs-user"></i></span>Nha sĩ
@@ -182,8 +193,10 @@
                 <div>
                     <div class="d-flex align-items-center nav__header__profile">
                         <img src="~/assets/images/avatar.jpg" alt="" />
+
                         <p>
-                            <span>@managerName</span> <br />
+                            <span>@managerName</span>
+                            <br />
                             Quản lý phòng khám
                         </p>
                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#myWallet">
@@ -223,7 +236,7 @@
                             <div style="display: flex; margin-bottom: 20px;">
                                 <div id="today" style="display: flex; background-color: aquamarine; border-radius: 10px; padding: 10px; width: 30%; cursor: pointer;">
                                     <div class="col-md-12" style="margin-bottom: 5px;">
-                                        
+
                                         <div class="row">
                                             <p><i class="fa-solid fa-calendar-day"></i> Hôm nay</p>
                                         </div>
@@ -284,9 +297,6 @@
                                         <option value="pie">Pie</option>
                                         <option value="doughnut">Doughnut</option>
                                     </select>
-                                </div>
-                                <div>
-                                    <input id="showGraph" value="Hiển thị" type="button" />
                                 </div>
                             </div>
 
@@ -399,11 +409,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#showGraph").click(function () {
-                var chartType = $("#chartType").val();
-                updateChart(chartType, null, null);
-            });
-
             $("#today").click(function () {
                 var chartType = $("#chartType").val();
                 var hanoiTime = getHanoiTime();

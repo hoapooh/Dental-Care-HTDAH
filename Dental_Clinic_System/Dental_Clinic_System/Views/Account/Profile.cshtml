@@ -4,19 +4,6 @@
 @model Dental_Clinic_System.ViewModels.PatientVM
 @{
     ViewData["Title"] = "Thông tin bệnh nhân";
-    // var firstname = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
-
-    // var lastname = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
-
-    // var mobilePhone = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone)?.Value;
-
-    // var email = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-
-    // var gender = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value;
-
-    // var address = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value;
-    // if (mobilePhone is null) Console.WriteLine("NO mobilephone");
-
     var appointments = ViewBag.Appointment as List<Dental_Clinic_System.Models.Data.Appointment>;
     int index = 1; // Initialize the counter
 }

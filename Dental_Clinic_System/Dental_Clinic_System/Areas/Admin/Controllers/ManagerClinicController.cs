@@ -579,8 +579,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 ClinicAddress = $"{order.ClinicAddress}, {await LocalAPIReverseString.GetProvinceNameById(order.Province ?? 0)}, {await LocalAPIReverseString.GetDistrictNameById(order.Province ?? 0, order.District ?? 0)}, {await LocalAPIReverseString.GetWardNameById(order.District ?? 0, order.Ward ?? 0)}"
             };
 
-            await Console.Out.WriteLineAsync("================");
-            await Console.Out.WriteLineAsync($"comapanyName = {orderVM.CompanyName}");
             return Json(orderVM);
         }
 
