@@ -55,17 +55,74 @@ namespace Dental_Clinic_System.Controllers
             return View();
         }
 
+        private static async Task GetSpaceInfoAsync()
+        {
+            string backlogApiUrl = "https://rivinger.backlog.com/api/v2/space?apiKey=a4sf65GwuS7fqvUhebSZOt0ZgLUH8ZrCt8DmIpwddcx90iHQkvsRC5ekAgjGw7lm";
+
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync(backlogApiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("==================================================");
+                    Console.WriteLine($"Status code: {response.StatusCode}");
+                    Console.WriteLine("==================================================");
+
+                }
+                else
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Failed to get space info. Status code: {response.StatusCode}");
+                }
+            }
+        }
+
+        private static async Task SendErrorToWebhookAsync(string summary, string description)
+        {
+            string backlogApiUrl = "https://rivinger.backlog.com/api/v2/issues?apiKey=a4sf65GwuS7fqvUhebSZOt0ZgLUH8ZrCt8DmIpwddcx90iHQkvsRC5ekAgjGw7lm";
+
+            var newIssue = new FormUrlEncodedContent(new[]
+            {
+    new KeyValuePair<string, string>("projectId", "135037"),
+    new KeyValuePair<string, string>("summary", summary),
+    new KeyValuePair<string, string>("description", description),
+    new KeyValuePair<string, string>("issueTypeId", "575393"),
+    new KeyValuePair<string, string>("priorityId", "2"),
+    new KeyValuePair<string, string>("categoryId[]", "153746"),
+    new KeyValuePair<string, string>("milestoneId[]", "125475"),
+    new KeyValuePair<string, string>("startDate", "2024-07-12"),
+    new KeyValuePair<string, string>("dueDate", "2024-07-24"),
+    new KeyValuePair<string, string>("estimatedHours", "12")
+});
+
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.PostAsync(backlogApiUrl, newIssue);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("===============================================================");
+                    Console.WriteLine($"Failed to create issue. Status code: {response.StatusCode}");
+                    Console.WriteLine("===============================================================");
+
+                }
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model)
         {
             if (ModelState.IsValid)
             {
 
-                if(model.Password != model.ConfirmedPassword)
+                if (model.Password != model.ConfirmedPassword)
                 {
-					ViewBag.ToastMessage = "Mật khẩu và mật khẩu xác nhận không giống";
-					return View();
-				}
+                    ViewBag.ToastMessage = "Mật khẩu và mật khẩu xác nhận không giống";
+                    return View();
+                }
 
                 var patient = _context.Accounts.SingleOrDefault(p => p.Username == model.Username);
                 if (patient != null)
@@ -225,6 +282,7 @@ namespace Dental_Clinic_System.Controllers
                 {
                     //ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
                     ViewBag.ToastMessage = "Sai thông tin đăng nhập";
+                    await SendErrorToWebhookAsync("Sai thông tin đăng nhập", "TESTING");
                 }
                 else
                 {
@@ -234,27 +292,32 @@ namespace Dental_Clinic_System.Controllers
                             //ModelState.AddModelError("errorLogin", "Tài khoản đã bị khóa");
                             //ModelState.AddModelError("errorLoginSolution", "Vui lòng liên hệ với Support qua email - support@gmail.com");
                             ViewBag.ToastMessage = "Tài khoản đã bị khóa. Vui lòng liên hệ với Support qua email - support@gmail.com";
+                            await SendErrorToWebhookAsync("Tài khoản đã bị khóa. Vui lòng liên hệ với Support qua email - support@gmail.com", "TESTING");
                             return View();
                         case "BANNED":
                             //ModelState.AddModelError("errorLogin", "Tài khoản đã bị khóa");
                             //ModelState.AddModelError("errorLoginSolution", "Vui lòng liên hệ với Support qua email - support@gmail.com");
                             ViewBag.ToastMessage = "Tài khoản đã bị khóa. Vui lòng liên hệ với Support qua email - support@gmail.com";
+                            await SendErrorToWebhookAsync("Tài khoản đã bị khóa. Vui lòng liên hệ với Support qua email - support@gmail.com", "TESTING");
                             return View();
                         case "CHƯA KÍCH HOẠT":
                             //ModelState.AddModelError("errorLogin", "Tài khoản chưa kích hoạt");
                             //ModelState.AddModelError("errorLoginSolution", "Vui lòng kiểm tra email của bạn để được kích hoạt");
                             ViewBag.ToastMessage = "Tài khoản chưa kích hoạt. Vui lòng kiểm tra email của bạn để được kích hoạt";
+                            await SendErrorToWebhookAsync("Tài khoản chưa kích hoạt. Vui lòng kiểm tra email của bạn để được kích hoạt", "TESTING");
                             return View();
                         case "NOT ACTIVE":
                             //ModelState.AddModelError("errorLogin", "Tài khoản chưa kích hoạt");
                             //ModelState.AddModelError("errorLoginSolution", "Vui lòng kiểm tra email của bạn để được kích hoạt");
                             ViewBag.ToastMessage = "Tài khoản chưa kích hoạt. Vui lòng kiểm tra email của bạn để được kích hoạt";
+                            await SendErrorToWebhookAsync("Tài khoản chưa kích hoạt. Vui lòng kiểm tra email của bạn để được kích hoạt", "TESTING");
                             return View();
                     }
                     if (Helper.DataEncryptionExtensions.ToMd5Hash(model.Password) != patient.Password)
                     {
                         //ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
                         ViewBag.ToastMessage = "Sai thông tin đăng nhập";
+                        await SendErrorToWebhookAsync("Sai thông tin đăng nhập", "TESTING");
                     }
                     else
                     {
@@ -332,6 +395,7 @@ namespace Dental_Clinic_System.Controllers
                 if (errorMessages.Any())
                 {
                     ViewBag.ToastMessage = string.Join(". ", errorMessages); // Combine all error messages
+                    await SendErrorToWebhookAsync("Login Failed", string.Join(". ", errorMessages));
                 }
             }
             return View();

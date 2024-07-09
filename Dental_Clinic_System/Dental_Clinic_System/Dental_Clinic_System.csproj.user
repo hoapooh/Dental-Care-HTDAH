@@ -15,7 +15,7 @@
     <WebStackScaffolding_DependencyDialogWidth>650</WebStackScaffolding_DependencyDialogWidth>
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>Dental_Clinic_System.Models.Data.DentalClinicDbContext</WebStackScaffolding_DbContextTypeFullName>
-    <NameOfLastUsedPublishProfile>DentalCare</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>G:\My Project .NET\DentalCare - Github\Dental-Care-HTDAH\Dental_Clinic_System\Dental_Clinic_System\Properties\PublishProfiles\DentalCare.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
