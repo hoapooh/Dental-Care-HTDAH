@@ -27,7 +27,7 @@
         <input style="font-size:15px;" type="search" placeholder="Tìm kiếm ..." name="keyword">
         <button style="background-color: transparent; border:none;" type="submit"><i style="font-size:20px;" class="fas fa-search"></i></button>
     </div>
-        <table class="table table-striped mt-5" style="font-size: 2rem;">
+    <table class="table table-striped mt-5" style="font-size: 2rem;">
             <thead>
                 <tr>
                     <th>STT</th>
@@ -57,7 +57,7 @@
                             @case "Đã Hủy": statusColorClass = "status deny"; break;
                         }
                         <td><p class="@statusColorClass">@appointment.AppointmentStatus</p></td>
-                        <td>2024-05-21</td>
+                        <td>@DateOnly.FromDateTime(appointment.CreatedDate ?? new DateTime()).ToString("dd/MM/yyyy")</td>
                         <td>
                          @if (appointment.AppointmentStatus == "Chờ Xác Nhận")
                         {
@@ -96,6 +96,16 @@
                 }
             </tbody>
         </table>
+    @if (Model.Count() == 0)
+    {
+        <br>
+        <br>
+        <br>
+        <h2 style="color:red; text-align:center;">**Tạm thời chưa có đơn khám cho mục này!</h2>
+        <br>
+        <br>
+        <br>
+    }
         <ul class="pagination" id="pagination"></ul>
     </div>
 

@@ -4,6 +4,7 @@ using Dental_Clinic_System.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    partial class DentalClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240708035101_MigrationV77Soyu")]
+    partial class MigrationV77Soyu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -510,7 +513,7 @@ namespace Dental_Clinic_System.Migrations
 
                     b.ToTable("FutureAppointments", t =>
                         {
-                            t.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "FutureAppointmentStatus = N'Chưa Khám' OR FutureAppointmentStatus = N'Đã Khám' OR FutureAppointmentStatus = N'Đã Hủy'");
+                            t.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "FutureAppointmentStatus = 'Chưa Khám' OR FutureAppointmentStatus = 'Đã Khám' OR FutureAppointmentStatus = 'Đã Hủy'");
                         });
                 });
 
@@ -1346,8 +1349,7 @@ namespace Dental_Clinic_System.Migrations
 
                     b.Navigation("Reviews");
 
-                    b.Navigation("Wallet")
-                        .IsRequired();
+                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Appointment", b =>

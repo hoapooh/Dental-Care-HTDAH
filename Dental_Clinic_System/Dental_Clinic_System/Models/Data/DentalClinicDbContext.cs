@@ -292,6 +292,8 @@ namespace Dental_Clinic_System.Models.Data
 				entity.HasOne(fa => fa.Dentist).WithMany(d => d.FutureAppointments).HasConstraintName("FK__Dentist__FutureAppointments").OnDelete(DeleteBehavior.Restrict);
 
 				entity.HasOne(fa => fa.PatientRecord).WithMany(pr => pr.FutureAppointments).HasConstraintName("FK__PatientRecord__FutureAppointments").OnDelete(DeleteBehavior.Restrict);
+
+				entity.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "FutureAppointmentStatus = N'Chưa Khám' OR FutureAppointmentStatus = N'Đã Khám' OR FutureAppointmentStatus = N'Đã Hủy'");
 			});
 
 			OnModelCreatingPartial(modelBuilder);

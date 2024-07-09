@@ -162,7 +162,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                         StartTime = startTime,
                         EndTime = endTime,
                         DesiredDate = desiredDate,
-                        FutureAppointmentStatus = "Đã Đặt Chỗ"
+                        FutureAppointmentStatus = "Chưa Khám"
                     };
                     _context.FutureAppointments.Add(futureAppointment);
                     _context.SaveChanges();

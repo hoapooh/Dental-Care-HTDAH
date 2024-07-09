@@ -13,7 +13,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 {
     [Area("dentist")]
     [Authorize(AuthenticationSchemes = "DentistScheme", Roles = "Nha Sĩ")]
-    
+
     public class DentistDetailController : Controller
     {
         private readonly DentalClinicDbContext _context;
@@ -47,9 +47,67 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             // Lấy thông tin Nha sĩ
             var dentist = await _context.Dentists
                                         .Include(d => d.Account)
+                                        .Include(d => d.Clinic)
                                         .FirstOrDefaultAsync(d => d.Account.ID == dentistAccountID);
 
-            #region Gộp 3 bảng (left join) để lấy appointmentID và tên bệnh nhân sau đó xuất ra
+            #region Mã tiền đề
+            //#region Gộp 3 bảng (left join) để lấy appointmentID và tên bệnh nhân sau đó xuất ra
+            ////// Lấy Schedule của dentist cụ thể
+            ////var schedules = await _context.Schedules
+            ////                        .Include(s => s.Dentist)
+            ////                        .Include(s => s.TimeSlot)
+            ////                        .Where(s => s.Dentist.Account.ID == dentistAccountID)
+            ////                        .ToListAsync();
+
+            ////// Map 2 bên Schedule với appointment, sau đó map những cột appointment ko null với patient record
+            ////var scheduleAppointments = from schedule in schedules
+            ////                           join appointment in _context.Appointments
+            ////                           on schedule.ID equals appointment.ScheduleID into appointmentGroup
+            ////                           from appointment in appointmentGroup.DefaultIfEmpty()
+            ////                           select new
+            ////                           {
+            ////                               appointmentStatus = appointment?.AppointmentStatus ?? "",
+            ////                               appointmentID = appointment?.ID ?? 0,
+            ////                               scheduleDate = schedule.Date,
+            ////                               patientID = appointment?.PatientRecordID ?? 0,
+            ////                               startTime = schedule?.TimeSlot?.StartTime,
+            ////                               endTime = schedule?.TimeSlot?.EndTime,
+            ////                               patientRecordID = appointment?.PatientRecordID ?? 0
+            ////                           };
+
+
+            ////var result = from sa in scheduleAppointments
+            ////             join patientRecord in _context.PatientRecords
+            ////             on sa.patientRecordID equals patientRecord.ID into patientGroup
+            ////             from patientRecord in patientGroup.DefaultIfEmpty()
+            ////             select new
+            ////             {
+            ////                 sa.appointmentStatus,
+            ////                 sa.appointmentID,
+            ////                 sa.scheduleDate,
+            ////                 sa.startTime,
+            ////                 sa.endTime,
+            ////                 patientName = patientRecord?.FullName ?? "No Patient"
+            ////             };
+
+
+            ////// Map to EventVM
+            ////var events = result.Select(s => new EventVM
+            ////{
+            ////    Title = s.appointmentID != 0 ? $"#{s.appointmentID} - {s.patientName}" : "Trống",
+            ////    Start = s.scheduleDate != null && s.startTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.startTime.Value:HH:mm:ss}" : null,
+            ////    End = s.scheduleDate != null && s.endTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.endTime.Value:HH:mm:ss}" : null,
+            ////    Url = "/dentist/dentistdetail/patientappointments?appointmentID=" + s.appointmentID,
+            ////    StatusColor = s.appointmentStatus switch
+            ////    {
+            ////        "Chờ Xác Nhận" => "#d5c700", // Yellow
+            ////        "Đã Chấp Nhận" => "#0078d5", // Blue
+            ////        "Đã Hủy" => "#d53700", // Red
+            ////        "Đã Khám" => "#00d55f", // Green
+            ////        _ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
+            ////    }
+            ////}).ToList();
+            //#endregion
             //// Lấy Schedule của dentist cụ thể
             //var schedules = await _context.Schedules
             //                        .Include(s => s.Dentist)
@@ -73,7 +131,6 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             //                               patientRecordID = appointment?.PatientRecordID ?? 0
             //                           };
 
-
             //var result = from sa in scheduleAppointments
             //             join patientRecord in _context.PatientRecords
             //             on sa.patientRecordID equals patientRecord.ID into patientGroup
@@ -88,9 +145,49 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             //                 patientName = patientRecord?.FullName ?? "No Patient"
             //             };
 
+            //var events = new List<EventVM>();
 
-            //// Map to EventVM
-            //var events = result.Select(s => new EventVM
+            //foreach (var schedule in schedules)
+            //{
+            //    if (schedule.TimeSlot?.StartTime == null || schedule.TimeSlot?.EndTime == null)
+            //    {
+            //        continue;
+            //    }
+
+            //    var startTime = schedule.TimeSlot.StartTime;
+            //    var endTime = schedule.TimeSlot.EndTime;
+
+            //    var currentSlotStart = startTime;
+            //    while (currentSlotStart < endTime)
+            //    {
+            //        var currentSlotEnd = currentSlotStart.Add(TimeSpan.FromMinutes(30));
+            //        if (currentSlotEnd > endTime)
+            //        {
+            //            break;
+            //        }
+
+            //        var slotExists = result.Any(r => r.scheduleDate == schedule.Date &&
+            //                                         r.startTime == currentSlotStart &&
+            //                                         r.endTime == currentSlotEnd);
+
+            //        if (!slotExists)
+            //        {
+            //            events.Add(new EventVM
+            //            {
+            //                Title = "Trống",
+            //                Start = $"{schedule.Date:yyyy-MM-dd}T{currentSlotStart:HH:mm:ss}",
+            //                End = $"{schedule.Date:yyyy-MM-dd}T{currentSlotEnd:HH:mm:ss}",
+            //                Url = "/dentist/dentistdetail/patientappointments?appointmentID=0",
+            //                StatusColor = "#c2c2c2" // Default color (Grey)
+            //            });
+            //        }
+
+            //        currentSlotStart = currentSlotEnd;
+            //    }
+            //}
+
+            //// Add only the appointments to the events list, not the original time slots
+            //events.AddRange(result.Select(s => new EventVM
             //{
             //    Title = s.appointmentID != 0 ? $"#{s.appointmentID} - {s.patientName}" : "Trống",
             //    Start = s.scheduleDate != null && s.startTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.startTime.Value:HH:mm:ss}" : null,
@@ -104,108 +201,188 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             //        "Đã Khám" => "#00d55f", // Green
             //        _ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
             //    }
-            //}).ToList();
+            //}).ToList());
             #endregion
-            // Lấy Schedule của dentist cụ thể
-            var schedules = await _context.Schedules
-                                    .Include(s => s.Dentist)
-                                    .Include(s => s.TimeSlot)
-                                    .Where(s => s.Dentist.Account.ID == dentistAccountID)
-                                    .ToListAsync();
 
-            // Map 2 bên Schedule với appointment, sau đó map những cột appointment ko null với patient record
-            var scheduleAppointments = from schedule in schedules
-                                       join appointment in _context.Appointments
-                                       on schedule.ID equals appointment.ScheduleID into appointmentGroup
-                                       from appointment in appointmentGroup.DefaultIfEmpty()
-                                       select new
-                                       {
-                                           appointmentStatus = appointment?.AppointmentStatus ?? "",
-                                           appointmentID = appointment?.ID ?? 0,
-                                           scheduleDate = schedule.Date,
-                                           patientID = appointment?.PatientRecordID ?? 0,
-                                           startTime = schedule?.TimeSlot?.StartTime,
-                                           endTime = schedule?.TimeSlot?.EndTime,
-                                           patientRecordID = appointment?.PatientRecordID ?? 0
-                                       };
-
-            var result = from sa in scheduleAppointments
-                         join patientRecord in _context.PatientRecords
-                         on sa.patientRecordID equals patientRecord.ID into patientGroup
-                         from patientRecord in patientGroup.DefaultIfEmpty()
-                         select new
-                         {
-                             sa.appointmentStatus,
-                             sa.appointmentID,
-                             sa.scheduleDate,
-                             sa.startTime,
-                             sa.endTime,
-                             patientName = patientRecord?.FullName ?? "No Patient"
-                         };
-
-            var events = new List<EventVM>();
-
-            foreach (var schedule in schedules)
+            if (dentist == null)
             {
-                if (schedule.TimeSlot?.StartTime == null || schedule.TimeSlot?.EndTime == null)
+                return NotFound("Không tìm thấy nha sĩ này");
+            }
+
+            // Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
+            var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == dentist.Clinic.ID);
+            var amID = clinic.AmWorkTimeID;
+            var pmID = clinic.PmWorkTimeID;
+            List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
+            List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
+
+            DateTime utc7Now = Util.GetUtcPlus7Time().AddHours(12); // Thêm thời gian 12 tiếng cho phù hợp với business rule
+            DateOnly todayDate = DateOnly.FromDateTime(utc7Now);
+            TimeOnly todayTime = TimeOnly.FromDateTime(utc7Now);
+
+            var schedules = await _context.Schedules
+                .Include(s => s.Dentist)
+                .Include(s => s.TimeSlot)
+                .Include(s => s.Appointments)
+                .Where(s => s.DentistID == dentist.ID) // && s.ScheduleStatus == "Còn Trống"
+                                                       //(s.Date > todayDate || (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime)) &&
+                .ToListAsync();
+
+            // lấy tất cả các ngày có trong schedules
+            var allSchedules = schedules.Select(s => new
+            {
+                TimeSlotId = s.TimeSlot.ID,
+                Date = s.Date
+            }).Distinct().ToList();
+
+            // tạo danh sách các time slot với thời gian 30 phút cho từng ngày
+            var timeSlots = new List<object>();
+            var appointments = _context.Appointments
+                .Include(a => a.PatientRecords)
+                .Where(a => a.Schedule.DentistID == dentist.ID)
+                .ToList();
+
+            // chuyển đổi danh sách các cuộc hẹn thành dictionary để search
+            var appointmentDict = appointments
+                .GroupBy(a => new { a.Schedule.Date, a.Schedule.TimeSlot.StartTime })
+                .ToDictionary(g => g.Key
+                );
+
+            // Lấy danh sách các lịch đièu trị (future appoint...)
+            var futureAppointments = _context.FutureAppointments
+                .Include(f => f.PatientRecord)
+                .Where(f => f.Dentist_ID == dentist.ID)
+                .ToList();
+
+            // chuyển đổi danh sách lịch điều trị thành dictionary
+            var futureAppointmentDict = futureAppointments
+                .GroupBy(f => new { Date = f.DesiredDate, StartTime = f.StartTime })
+                .ToDictionary(g => g.Key
+                );
+
+            DateOnly maxDate = new DateOnly(1900,1,1);
+
+            foreach (var schedule in allSchedules)
+            {
+                var dailyTimeSlots = new List<object>();
+                List<TimeSlot> availableTimeSlot = new();
+                
+                //Lấy ngày lớn nhất trog d.sách schedule
+                if(maxDate < schedule.Date)
+                {
+                    maxDate = schedule.Date;
+                }
+
+                if (schedule.TimeSlotId == 1)
+                {
+                    availableTimeSlot = amTimeSlots;
+                }
+                else if (schedule.TimeSlotId == 2)
+                {
+                    availableTimeSlot = pmTimeSlots;
+                }
+                else
                 {
                     continue;
                 }
 
-                var startTime = schedule.TimeSlot.StartTime;
-                var endTime = schedule.TimeSlot.EndTime;
-
-                var currentSlotStart = startTime;
-                while (currentSlotStart < endTime)
+                foreach (var slot in availableTimeSlot)
                 {
-                    var currentSlotEnd = currentSlotStart.Add(TimeSpan.FromMinutes(30));
-                    if (currentSlotEnd > endTime)
+                    var startTime = slot.StartTime;
+                    var endTime = slot.EndTime;
+                    while (startTime < endTime)
                     {
-                        break;
-                    }
+                        var nextTime = startTime.AddMinutes(30);
+                        if (nextTime > endTime) nextTime = endTime;
 
-                    var slotExists = result.Any(r => r.scheduleDate == schedule.Date &&
-                                                     r.startTime == currentSlotStart &&
-                                                     r.endTime == currentSlotEnd);
+                        // Kiểm tra xem có cuộc hẹn nào trong khung thời gian này không
+                        var key = new { Date = schedule.Date, StartTime = startTime };
 
-                    if (!slotExists)
-                    {
-                        events.Add(new EventVM
+
+                        if (appointmentDict.ContainsKey(key) && appointmentDict.TryGetValue(key, out var values))
                         {
-                            Title = "Trống",
-                            Start = $"{schedule.Date:yyyy-MM-dd}T{currentSlotStart:HH:mm:ss}",
-                            End = $"{schedule.Date:yyyy-MM-dd}T{currentSlotEnd:HH:mm:ss}",
-                            Url = "/dentist/dentistdetail/patientappointments?appointmentID=0",
-                            StatusColor = "#c2c2c2" // Default color (Grey)
-                        });
-                    }
+                            foreach (var value in values)
+                            {
+                                dailyTimeSlots.Add(new EventVM
+                                {
+                                    Title = $"#{value.ID} {value.PatientRecords.FullName}",
+                                    Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
+                                    End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
+                                    Url = "/dentist/dentistdetail/patientappointments?appointmentID=" + value.ID,
+                                    StatusColor = value.AppointmentStatus switch
+                                    {
+                                        "Chờ Xác Nhận" => "#d5c700", // Yellow
+                                        "Đã Chấp Nhận" => "#0078d5", // Blue
+                                        "Đã Hủy" => "#d53700", // Red
+                                        "Đã Khám" => "#00d55f", // Green
+                                        _ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
+                                    }
+                                });
+                            }
 
-                    currentSlotStart = currentSlotEnd;
+                        }
+
+                        else if (futureAppointmentDict.ContainsKey(key) && futureAppointmentDict.TryGetValue(key, out var futureAppointmentValues))
+                        {
+                            foreach (var futureAppointment in futureAppointmentValues)
+                            {
+                                dailyTimeSlots.Add(new EventVM
+                                {
+                                    Title = $"ĐIỀU TRỊ - {futureAppointment.PatientRecord.FullName}",
+                                    Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
+                                    End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
+                                    Url = "/dentist/dentistdetail/showperiodicappointment?periodicappointmentID=" + futureAppointment.ID,
+                                    StatusColor = "aqua"
+                                });
+                            }
+                        }
+
+                        else// if(!appointmentDict.ContainsKey(key))
+                        {
+                            dailyTimeSlots.Add(new EventVM
+                            {
+                                Title = "Trống",
+                                Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
+                                End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
+                                Url = "/dentist/dentistdetail/patientappointments?appointmentID=0",
+                                StatusColor = "#c2c2c2"
+                            });
+                        }
+
+                        startTime = nextTime;
+                    }
+                }
+
+                // Add dailyTimeSlots vào timeSlots chung
+                timeSlots.AddRange(dailyTimeSlots);
+
+            }
+
+            Schedule lastSchedule = schedules.Find( ls => ls.Date == maxDate);
+            Console.WriteLine(lastSchedule.Date);
+            foreach (var futureAppoint in futureAppointments)
+            {
+
+
+                if (futureAppoint.DesiredDate > lastSchedule.Date)
+                {
+                    timeSlots.Add(new EventVM
+                    {
+                        Title = $"ĐIỀU TRỊ - {futureAppoint.PatientRecord.FullName}",
+                        Start = $"{futureAppoint.DesiredDate:yyyy-MM-dd}T{futureAppoint.StartTime:HH:mm:ss}",
+                        End = $"{futureAppoint.DesiredDate:yyyy-MM-dd}T{futureAppoint.EndTime:HH:mm:ss}",
+                        Url = "/dentist/dentistdetail/showperiodicappointment?periodicappointmentID=" + futureAppoint.ID,
+                        StatusColor = "aqua"
+                    });
                 }
             }
 
-            // Add only the appointments to the events list, not the original time slots
-            events.AddRange(result.Select(s => new EventVM
-            {
-                Title = s.appointmentID != 0 ? $"#{s.appointmentID} - {s.patientName}" : "Trống",
-                Start = s.scheduleDate != null && s.startTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.startTime.Value:HH:mm:ss}" : null,
-                End = s.scheduleDate != null && s.endTime.HasValue ? $"{s.scheduleDate:yyyy-MM-dd}T{s.endTime.Value:HH:mm:ss}" : null,
-                Url = "/dentist/dentistdetail/patientappointments?appointmentID=" + s.appointmentID,
-                StatusColor = s.appointmentStatus switch
-                {
-                    "Chờ Xác Nhận" => "#d5c700", // Yellow
-                    "Đã Chấp Nhận" => "#0078d5", // Blue
-                    "Đã Hủy" => "#d53700", // Red
-                    "Đã Khám" => "#00d55f", // Green
-                    _ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
-                }
-            }).ToList());
 
 
             // Gửi thông tin qua View
-            ViewBag.dentistAvatar = dentist?.Account.Image ?? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744";
+            ViewBag.dentistAvatar = dentist?.Account.Image;
             ViewBag.dentistName = $"{dentist?.Account.LastName} {dentist?.Account.FirstName}";
-            ViewBag.events = JsonConvert.SerializeObject(events);
+            ViewBag.events = JsonConvert.SerializeObject(timeSlots);
             TempData["SuccessMessage"] = TempData["SuccessMessage"] as string;
             return View();
         }
@@ -278,11 +455,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                                     .Include(a => a.Specialty)
                                     .Where(a => a.Schedule.DentistID == dentist.ID)
                                     .ToListAsync();
-            if(appointmentID != null)
+            if (appointmentID != null)
             {
                 appointments = appointments.Where(a => a.ID == appointmentID).ToList();
             }
-            if(status != null)
+            if (status != null)
             {
                 appointments = appointments.Where(a => a.AppointmentStatus == status).ToList();
             }
@@ -401,42 +578,44 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         }
         #endregion
 
-        #region Hàm lấy thông tin của tất cả lịch khám định kì cho nha sĩ đó - FUTURE APPOINTMENT
+        //================ FUTURE APPOINTMENT =================
+
+        #region Hàm lấy thông tin của tất cả lịch điều trị cho nha sĩ đó - FUTURE APPOINTMENT
         [HttpGet]
         [Route("periodicappointment")]
-        public async Task<IActionResult> ShowPeriodicAppointment(string? keyword)
-		{
-			var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
-			if (dentistAccountID == null)
-			{
-				return RedirectToAction("login", "dentistaccount", new { area = "dentist" });
-			}
-
-			var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
-
-			var periodicAppointment = await _context.FutureAppointments
-									.Include(p => p.PatientRecord)
-									.Include(p => p.Dentist)
-									.Where(p => p.Dentist.Account.ID == dentistAccountID)
-									.ToListAsync();
-
-            if(!string.IsNullOrEmpty(keyword))
+        public async Task<IActionResult> ShowPeriodicAppointment(int? periodicappointmentID, string? keyword)
+        {
+            var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
+            if (dentistAccountID == null)
             {
-				keyword = keyword.Trim().ToLower();
-				keyword = Util.ConvertVnString(keyword);
-                periodicAppointment = periodicAppointment.Where( p =>
-                    Util.ConvertVnString(p.PatientRecord.FullName).Contains(keyword) || 
+                return RedirectToAction("login", "dentistaccount", new { area = "dentist" });
+            }
+
+            var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
+
+            var periodicAppointment = await _context.FutureAppointments
+                                    .Include(p => p.PatientRecord)
+                                    .Include(p => p.Dentist)
+                                    .Where(p => p.Dentist.Account.ID == dentistAccountID)
+                                    .ToListAsync();
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                keyword = keyword.Trim().ToLower();
+                keyword = Util.ConvertVnString(keyword);
+                periodicAppointment = periodicAppointment.Where(p =>
+                    Util.ConvertVnString(p.PatientRecord.FullName).Contains(keyword) ||
                     Util.ConvertVnString(p.StartTime.ToString("HH:mm")).Contains(keyword) ||
-					Util.ConvertVnString(p.EndTime.ToString("HH:mm")).Contains(keyword) ||
-					Util.ConvertVnString(p.DesiredDate.ToString("dd/MM/yyyy")).Contains(keyword))
+                    Util.ConvertVnString(p.EndTime.ToString("HH:mm")).Contains(keyword) ||
+                    Util.ConvertVnString(p.DesiredDate.ToString("dd/MM/yyyy")).Contains(keyword))
                     .ToList();
                 TempData["ErrorMessage"] = "Không tìm thấy kết quả tương ứng!";
-			}
+            }
 
             ViewBag.DentistAvatar = dentist?.Account.Image ?? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744";
-			ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
-			return View("PeriodicAppointment", periodicAppointment);
-		}
+            ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
+            return View("PeriodicAppointment", periodicAppointment);
+        }
         #endregion
 
         #region Hàm xử lý nút bấm thay đổi trạng thái của lịch khám định kì - FUTURE APPOINTMENT
