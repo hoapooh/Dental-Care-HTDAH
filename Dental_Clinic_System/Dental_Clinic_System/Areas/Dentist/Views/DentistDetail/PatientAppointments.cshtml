@@ -2,384 +2,447 @@
 @using Dental_Clinic_System.Helper
 @using System.Globalization
 @{
-    ViewData["Title"] = "Quản Lý Đặt Khám";
-    string statusColorClass = "status";
-}     
+	ViewData["Title"] = "Quản Lý Đặt Khám";
+	string statusColorClass = "status";
+}
 <head>
-    <link rel="stylesheet" href="~/assets/css/sidebar.css" />
-    <link rel="stylesheet" href="~/assets/css/headerAd.css" />
-    <link rel="stylesheet" href="~/assets/css/dentistpatients.css" />
-    <link rel="stylesheet" href="~/assets/css/specialtydash.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/assets/css/schedule.css" />
-    <link rel="stylesheet" href="~/assets/css/mobiscroll.javascript.min.css" />
-    <style>
-        a{
-            text-decoration: none;
-        }
-    </style>
+	<link rel="stylesheet" href="~/assets/css/sidebar.css" />
+	<link rel="stylesheet" href="~/assets/css/headerAd.css" />
+	<link rel="stylesheet" href="~/assets/css/dentistpatients.css" />
+	<link rel="stylesheet" href="~/assets/css/specialtydash.css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/assets/css/schedule.css" />
+	<link rel="stylesheet" href="~/assets/css/mobiscroll.javascript.min.css" />
+	<style>
+		a {
+			text-decoration: none;
+		}
+		sup{
+			font-size: 18px;
+			color: red;
+		}
+	</style>
 </head>
 
-    <div class="patients__management" style="padding: 40px">
-        <h1 style="text-align:center;"><strong>Quản Lý Đơn Khám Bệnh Nhân</strong></h1>
-        <div class="text-center"><img style="vertical-align: middle;" src="/assets/images/separate-01.png" alt="Sepherate image"></div>
-    <div class="search__bar" style="text-align:end;">
-        <input style="font-size:15px;" type="search" placeholder="Tìm kiếm ..." name="keyword">
-        <button style="background-color: transparent; border:none;" type="submit"><i style="font-size:20px;" class="fas fa-search"></i></button>
-    </div>
-    <table class="table table-striped mt-5" style="font-size: 2rem;">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Bệnh nhân</th>
-                    <th>Chuyên Khoa</th>
-                    <th>Ngày hẹn</th>
-                    <th>Giờ hẹn</th>
-                    <th>Trạng thái</th>
-                    <th>Ngày tạo</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody id="myTableBody">
-                @foreach (var appointment in Model)
-                {
-                    <tr>
-                        <td>@appointment.ID</td>
-                        <td>@appointment.PatientRecords.FullName</td>
-                        <td>@appointment.Specialty.Name</td>
-                        <td>@appointment.Schedule.Date.ToString("dd/MM/yyyy")</td>
-                        <td>@appointment.Schedule.TimeSlot.StartTime.ToString("HH:mm") - @appointment.Schedule.TimeSlot.EndTime.ToString("HH:mm")</td>
-                        @switch (@appointment.AppointmentStatus)
-                        {
-                            @case "Đã Chấp Nhận": statusColorClass = "status approved"; break;
-                            @case "Chờ Xác Nhận": statusColorClass = "status pending"; break;
-                            @case "Đã Khám": statusColorClass = "status complete"; break;
-                            @case "Đã Hủy": statusColorClass = "status deny"; break;
-                        }
-                        <td><p class="@statusColorClass">@appointment.AppointmentStatus</p></td>
-                        <td>@DateOnly.FromDateTime(appointment.CreatedDate ?? new DateTime()).ToString("dd/MM/yyyy")</td>
-                        <td>
-                         @if (appointment.AppointmentStatus == "Chờ Xác Nhận")
-                        {
-                            <a class="confirm-link" style="color:blue; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="1">Xác Nhận</a>
-                            <span> | </span>
-                            <a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
-                        }
-                        else if (appointment.AppointmentStatus == "Đã Chấp Nhận")
-                        {
-                            <a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="2">Đã Khám</a>
-                            <span> | </span>
-                            <a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
-                        } 
-                        else if (appointment.AppointmentStatus == "Đã Khám")
-                        {
-                            <button type="button" class="btn show-popup" data-appointment-id="@appointment.ID"
-                                    data-specialty="@appointment.Specialty.Name"
-                                    data-patient-name="@appointment.PatientRecords.FullName"
-                                    data-patient-gender="@appointment.PatientRecords.Gender"
-                                    data-patient-dob="@appointment.PatientRecords.DateOfBirth.ToString("dd/MM/yyyy")"
-                                    data-patient-phone="@appointment.PatientRecords.PhoneNumber"
-                                    data-patient-email="@appointment.PatientRecords.EmailReceiver"
-                                    data-patient-province="@await LocalAPIReverseString.GetProvinceNameById(appointment.PatientRecords.Province)"
-                                    data-patient-district="@await LocalAPIReverseString.GetDistrictNameById(appointment.PatientRecords.Province, appointment.PatientRecords.District)"
-                                    data-patient-ward="@await LocalAPIReverseString.GetWardNameById(appointment.PatientRecords.District, appointment.PatientRecords.Ward)"
-                                    data-patient-address="@appointment.PatientRecords.Address"
-                                    data-booking-date="@appointment.Schedule.Date.ToString("dd/MM/yyyy")"
-                                    data-created-datetime="@appointment.CreatedDate?.ToString("dd/MM/yyyy HH:mm")"
-                                    data-appointment-price="@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ" , appointment.TotalPrice)"
-                                    data-appointment-status="@appointment.AppointmentStatus">
-                                <p style="font-size:20px; color:chocolate; text-decoration:underline;">Chi Tiết Đơn</p>
-                            </button>
-                        }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    @if (Model.Count() == 0)
-    {
-        <br>
-        <br>
-        <br>
-        <h2 style="color:red; text-align:center;">**Tạm thời chưa có đơn khám cho mục này!</h2>
-        <br>
-        <br>
-        <br>
-    }
-        <ul class="pagination" id="pagination"></ul>
-    </div>
+<div class="patients__management" style="padding: 40px">
+	<h1 style="text-align:center;"><strong>Quản Lý Đơn Khám Bệnh Nhân</strong></h1>
+	<div class="text-center"><img style="vertical-align: middle;" src="/assets/images/separate-01.png" alt="Sepherate image"></div>
+	<div class="search__bar" style="text-align:end;">
+		<input style="font-size:15px;" type="search" placeholder="Tìm kiếm ..." name="keyword">
+		<button style="background-color: transparent; border:none;" type="submit"><i style="font-size:20px;" class="fas fa-search"></i></button>
+	</div>
+	<table class="table table-striped mt-5" style="font-size: 2rem;">
+		<thead>
+			<tr>
+				<th>STT</th>
+				<th>Bệnh nhân</th>
+				<th>Chuyên Khoa</th>
+				<th>Ngày hẹn</th>
+				<th>Giờ hẹn</th>
+				<th>Trạng thái</th>
+				<th>Ngày tạo</th>
+				<th>Hành động</th>
+			</tr>
+		</thead>
+		<tbody id="myTableBody">
+			@foreach (var appointment in Model)
+			{
+				<tr>
+					<td>@appointment.ID</td>
+					<td>@appointment.PatientRecords.FullName</td>
+					<td>@appointment.Specialty.Name</td>
+					<td>@appointment.Schedule.Date.ToString("dd/MM/yyyy")</td>
+					<td>@appointment.Schedule.TimeSlot.StartTime.ToString("HH:mm") - @appointment.Schedule.TimeSlot.EndTime.ToString("HH:mm")</td>
+					@switch (@appointment.AppointmentStatus)
+					{
+						@case "Đã Chấp Nhận": statusColorClass = "status approved"; break;
+						@case "Chờ Xác Nhận": statusColorClass = "status pending"; break;
+						@case "Đã Khám":	statusColorClass = "status complete"; break;
+						@case "Đã Hủy": statusColorClass = "status deny"; break;
+					}
+					<td><p class="@statusColorClass">@appointment.AppointmentStatus</p></td>
+					<td>@DateOnly.FromDateTime(appointment.CreatedDate ?? new DateTime()).ToString("dd/MM/yyyy")</td>
+					<td>
+						@if (appointment.AppointmentStatus == "Chờ Xác Nhận")
+						{
+							<a class="confirm-link" style="color:blue; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="1">Xác Nhận</a>
+							<span> | </span>
+							<a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
+						}
+						else if (appointment.AppointmentStatus == "Đã Chấp Nhận")
+						{
+							<a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="2">Đã Khám</a>
+							<span> | </span>
+							<a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
+						}
+						else if (appointment.AppointmentStatus == "Đã Khám")
+						{
+							<button type="button" class="btn show-popup" data-appointment-id="@appointment.ID"
+									data-specialty="@appointment.Specialty.Name"
+									data-patient-name="@appointment.PatientRecords.FullName"
+									data-patient-gender="@appointment.PatientRecords.Gender"
+									data-patient-dob="@appointment.PatientRecords.DateOfBirth.ToString("dd/MM/yyyy")"
+									data-patient-phone="@appointment.PatientRecords.PhoneNumber"
+									data-patient-email="@appointment.PatientRecords.EmailReceiver"
+									data-patient-province="@await LocalAPIReverseString.GetProvinceNameById(appointment.PatientRecords.Province)"
+									data-patient-district="@await LocalAPIReverseString.GetDistrictNameById(appointment.PatientRecords.Province, appointment.PatientRecords.District)"
+									data-patient-ward="@await LocalAPIReverseString.GetWardNameById(appointment.PatientRecords.District, appointment.PatientRecords.Ward)"
+									data-patient-address="@appointment.PatientRecords.Address"
+									data-booking-date="@appointment.Schedule.Date.ToString("dd/MM/yyyy")"
+									data-created-datetime="@appointment.CreatedDate?.ToString("dd/MM/yyyy HH:mm")"
+									data-appointment-price="@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.TotalPrice)"
+									data-appointment-status="@appointment.AppointmentStatus">
+								<p style="font-size:20px; color:chocolate; text-decoration:underline;">Chi Tiết Đơn</p>
+							</button>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	@if (Model.Count() == 0)
+	{
+		<br>
+		<br>
+		<br>
+		<h2 style="color:red; text-align:center;">**Tạm thời chưa có đơn khám cho mục này!</h2>
+		<br>
+		<br>
+		<br>
+	}
+	<ul class="pagination" id="pagination"></ul>
+</div>
 
-    <!-- Modal xác nhận -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-            <div class="modal-content" style="width:100%;">
-                <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel" style="font-size:20px;">Xác Nhận Hành Động</h5>
-                <button type="button" class="btn-close" style="font-size:20px;" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-            <div class="modal-body" style="font-size:20px;">
-                    Bạn có chắc chắn muốn thực hiện hành động này?
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size:20px;">Hủy</button>
-                <button type="button" class="btn btn-primary" id="confirmAction" style="font-size:20px;">Xác Nhận</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Modal xác nhận -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" style="width:100%;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="confirmModalLabel" style="font-size:20px;">Xác Nhận Hành Động</h5>
+				<button type="button" class="btn-close" style="font-size:20px;" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" style="font-size:20px;">
+				Bạn có chắc chắn muốn thực hiện hành động này?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size:20px;">Hủy</button>
+				<button type="button" class="btn btn-primary" id="confirmAction" style="font-size:20px;">Xác Nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Modal cho button Hủy -->
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" style="width:100%;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cancelModalLabel" style="font-size:20px;">Xác Nhận Hủy?</h5>
-                <button type="button" class="btn-close" style="font-size:20px;" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="font-size:20px;">
-                <input style="line-height:2; font-size:20px;" type="text" class="form-control" id="cancelDescription" placeholder="Vui lòng nhập lý do hủy ở đây" required>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size:20px;">Hủy</button>
-                <button type="button" class="btn btn-danger" id="confirmCancelAction" style="font-size:20px;">Xác Nhận</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content" style="width:100%;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="cancelModalLabel" style="font-size:20px;">Xác Nhận Hủy?</h5>
+				<button type="button" class="btn-close" style="font-size:20px;" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" style="font-size:20px;">
+				<input style="line-height:2; font-size:20px;" type="text" class="form-control" id="cancelDescription" placeholder="Vui lòng nhập lý do hủy ở đây" required>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size:20px;">Hủy</button>
+				<button type="button" class="btn btn-danger" id="confirmCancelAction" style="font-size:20px;">Xác Nhận</button>
+			</div>
+		</div>
+	</div>
 </div>
 
-    <!-- Dark overlay -->
+<!-- Dark overlay -->
 <div class="modal-overlay" id="modalOverlay"></div>
 
-    <!-- Hidden block to display as a popup -->
+<!-- Hidden block to display as a popup -->
 <div class="modal-content-appointment" id="popupBlock">
-        <form id="pdfForm" asp-controller="AppointmentPdf" asp-action="GeneratePdf" method="post" target="_blank">
-            <input type="hidden" id="appointmentID" name="appointmentID" />
-            <!--Phần Hiển thị thông tin đơn khám mini-->
-            <div style='display: flex; justify-content: space-between;'>
-            <p><strong>Mã Số Phiếu: </strong> <span style='font-size: 16px;' id="appointmentIDTextContent"></span> </p>
-            </div>
+	<form id="pdfForm" asp-controller="AppointmentPdf" asp-action="GeneratePdf" method="post" target="_blank">
+		<input type="hidden" id="appointmentID" name="appointmentID" />
+		<!--Phần Hiển thị thông tin đơn khám mini-->
+		<div style='display: flex; justify-content: space-between;'>
+			<p><strong>Mã Số Phiếu: </strong> <span style='font-size: 16px;' id="appointmentIDTextContent"></span> </p>
+		</div>
 
-            <h2 style='text-align:center;'>Phiếu Khám Nha Khoa</h2>
+		<h2 style='text-align:center;'>Phiếu Khám Nha Khoa</h2>
 
-            <div style='display: flex; justify-content: space-between;'>
-                <div style='width: 50%;'>
-                    <p><strong>Họ và Tên: </strong> <span style='font-size: 16px;' id="patientName"></span> </p>
-                <p><strong>Ngày/ Tháng/ Năm Sinh: </strong> <span style='font-size: 16px;' id="patientDOB"></span> </p>
-                    <p><strong>Điện Thoại: </strong> <span style='font-size: 16px;' id="patientPhone"></span> </p>
-                </div>
-                <div>
-                <p><strong>Giới Tính: </strong> <span style='font-size: 16px;' id="patientGender"></span> </p>
-                <p><strong>Email: </strong> <span style='font-size: 16px;' id="patientEmail"></span> </p>
-                </div>
-            </div>
-        <p><strong>Địa Chỉ: </strong><span style='font-size: 16px;' id="patientAddress"></span>, <span style='font-size: 16px;' id="patientWard"></span>, <span style='font-size: 16px;' id="patientDistrict"></span>, <span style='font-size: 16px;' id="patientProvince"></span></p>
-        <table style='border-collapse:collapse; width:100%; border:1px solid black; text-align: end;'>
-                <tr>
-                    <th style='border:1px solid black; text-align: end;'>STT</th>
-                    <th style='border:1px solid black; text-align: end;'>Tên Chuyên Khoa</th>
-                    <th style='border:1px solid black; text-align: end;'>Ngày Đặt</th>
-                    <th style='border:1px solid black; text-align: end;'>Ngày Khám</th>
-                    <th style='border:1px solid black; text-align: end;'>Giá Khám</th>
-                </tr>
-                <tr>
-                    <td style='text-align:end; border:1px solid black; text-align: end;'>1</td>
-                    <td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="specialty"></span></td>
-                    <td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="createdDatetime"></span></td>
-                    <td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="bookingDate"></span></td>
-                    <td class="appointmentPrice" style='text-align:end; border:1px solid black; text-align: end;'></td>
-                </tr>
-            </table>
+		<div style='display: flex; justify-content: space-between;'>
+			<div style='width: 50%;'>
+				<p><strong>Họ và Tên: </strong> <span style='font-size: 16px;' id="patientName"></span> </p>
+				<p><strong>Ngày/ Tháng/ Năm Sinh: </strong> <span style='font-size: 16px;' id="patientDOB"></span> </p>
+				<p><strong>Điện Thoại: </strong> <span style='font-size: 16px;' id="patientPhone"></span> </p>
+			</div>
+			<div>
+				<p><strong>Giới Tính: </strong> <span style='font-size: 16px;' id="patientGender"></span> </p>
+				<p><strong>Email: </strong> <span style='font-size: 16px;' id="patientEmail"></span> </p>
+			</div>
+		</div>
+		<p><strong>Địa Chỉ: </strong><span style='font-size: 16px;' id="patientAddress"></span>, <span style='font-size: 16px;' id="patientWard"></span>, <span style='font-size: 16px;' id="patientDistrict"></span>, <span style='font-size: 16px;' id="patientProvince"></span></p>
+		<table style='border-collapse:collapse; width:100%; border:1px solid black; text-align: end;'>
+			<tr>
+				<th style='border:1px solid black; text-align: end;'>STT</th>
+				<th style='border:1px solid black; text-align: end;'>Tên Chuyên Khoa</th>
+				<th style='border:1px solid black; text-align: end;'>Ngày Đặt</th>
+				<th style='border:1px solid black; text-align: end;'>Ngày Khám</th>
+				<th style='border:1px solid black; text-align: end;'>Giá Khám</th>
+			</tr>
+			<tr>
+				<td style='text-align:end; border:1px solid black; text-align: end;'>1</td>
+				<td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="specialty"></span></td>
+				<td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="createdDatetime"></span></td>
+				<td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="bookingDate"></span></td>
+				<td class="appointmentPrice" style='text-align:end; border:1px solid black; text-align: end;'></td>
+			</tr>
+		</table>
 
-        <p><strong>Tổng chi phí: </strong><span style='font-size: 16px;' class="appointmentPrice"></span></p>
-            <div style="display:flex; justify-content:space-between;">
-                <div>
-                    <p><strong>Kết Quả Khám: </strong></p>
-                    <p><strong>Dặn dò (nếu có): </strong></p>
-                    <p><strong>HẸN TÁI KHÁM / ĐIỀU TRỊ (nếu có): </strong></p>
-                </div>
-                <div style="width:60%;">
-                <input name="ketquakham" type="text" style="width:100%; margin-bottom:2px;"><br>
-                <input type="hidden" name="hentaikham" id="hentaikham">
-                <input name="dando" type="text" style="width:100%; margin-bottom:2px;">
-                <div id="period-booking"></div>
-                </div>
-            </div>
+		<p><strong>Tổng chi phí: </strong><span style='font-size: 16px;' class="appointmentPrice"></span></p>
+		<div style="display:flex; justify-content:space-between;">
+			<div>
+				<p><strong>Kết Quả Khám: </strong></p>
+				<p><strong>Dặn dò (nếu có): </strong></p>
+				<p><strong>HẸN TÁI KHÁM / ĐIỀU TRỊ (nếu có): </strong></p> <br><br><br><br>
+				<sup>**Bên phải lần lượt là: <br><br> Chọn ngày khám định kỳ<br>Chọn giờ bắt đầu<br />Chọn giờ kết thúc</sup>
+			</div>
+			<div style="width:60%;">
+				<input name="ketquakham" type="text" style="width:100%; margin-bottom:2px;"><br>
+				<input type="hidden" name="ngayhentaikham" id="ngayhentaikham">
+				<input type="hidden" name="giobatdau" id="giobatdau">
+				<input type="hidden" name="gioketthuc" id="gioketthuc">
+				<input name="dando" type="text" style="width:100%; margin-bottom:2px;">
+				@* Phần hiển thị lịch *@
+				<div style="display:flex;">
+					<div id="period-booking-date" style="width:60%; border-right: solid 1px grey;"></div>
+					<div id="period-booking-time-start" style="width:20%; border-right: solid 1px grey; height: unset;"></div>
+					<div id="period-booking-time-end" style="width:20%; height: unset;"></div>
+				</div>
+			</div>
+		</div>
 
-            <div style="justify-content:space-between; margin-top:2px; font-size:15px;">
-            <button type="submit" class="btn btn-warning" style="font-size:15px;">Xuất PDF</button>
-            <button type="button" class="btn btn-secondary" id="closePopup" style="font-size:15px;">Đóng</button>
-            </div>
-        </form>
-    </div>
+		<div style="justify-content:space-between; margin-top:2px; font-size:15px;">
+			<button type="submit" class="btn btn-warning" style="font-size:15px;">Xuất PDF</button>
+			<button type="button" class="btn btn-secondary" id="closePopup" style="font-size:15px;">Đóng</button>
+		</div>
+	</form>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://kit.fontawesome.com/53f42380b0.js" crossorigin="anonymous"></script>
-    <script src="~/assets/js/pagination.js"></script>
-    <script src="~/assets/js/mobiscroll.javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://kit.fontawesome.com/53f42380b0.js" crossorigin="anonymous"></script>
+<script src="~/assets/js/pagination.js"></script>
+<script src="~/assets/js/mobiscroll.javascript.min.js"></script>
 
-    <script>
-        //Phần load cho trạng thái của các nút bấm
-        document.addEventListener('DOMContentLoaded', () => {
-        const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        const cancelModal = new bootstrap.Modal(document.getElementById('cancelModal'));
-        let confirmedLink = '';
+<script>
+	//Phần load cho trạng thái của các nút bấm
+	document.addEventListener('DOMContentLoaded', () => {
+		const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+		const cancelModal = new bootstrap.Modal(document.getElementById('cancelModal'));
+		let confirmedLink = '';
 
-        document.querySelectorAll('td a.confirm-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                confirmedLink = link.href;
-                confirmModal.show();
-            });
-        });
+		document.querySelectorAll('td a.confirm-link').forEach(link => {
+			link.addEventListener('click', (e) => {
+				e.preventDefault();
+				confirmedLink = link.href;
+				confirmModal.show();
+			});
+		});
 
-        document.querySelectorAll('td a.cancel-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                confirmedLink = link.href;
-                cancelModal.show();
-            });
-        });
+		document.querySelectorAll('td a.cancel-link').forEach(link => {
+			link.addEventListener('click', (e) => {
+				e.preventDefault();
+				confirmedLink = link.href;
+				cancelModal.show();
+			});
+		});
 
-        document.getElementById('confirmAction').addEventListener('click', () => {
-            window.location.href = confirmedLink;
-        });
+		document.getElementById('confirmAction').addEventListener('click', () => {
+			window.location.href = confirmedLink;
+		});
 
-        document.getElementById('confirmCancelAction').addEventListener('click', () => {
-            const description = document.getElementById('cancelDescription').value;
-            if (description) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = confirmedLink;
+		document.getElementById('confirmCancelAction').addEventListener('click', () => {
+			const description = document.getElementById('cancelDescription').value;
+			if (description) {
+				const form = document.createElement('form');
+				form.method = 'POST';
+				form.action = confirmedLink;
 
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'description';
-                input.value = description;
+				const input = document.createElement('input');
+				input.type = 'hidden';
+				input.name = 'description';
+				input.value = description;
 
-                form.appendChild(input);
-                document.body.appendChild(form);
-                form.submit();
-            } else {
-                alert("Vui lòng nhập lý do hủy.");
-            }
-        });
-
-
-        });
-
-        //Phần load cho modal show ra của chi tiết đơn khám
-        document.querySelectorAll('.show-popup').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const appointmentID = e.currentTarget.getAttribute('data-appointment-id');
-                const specialtyName = e.currentTarget.getAttribute('data-specialty');
-                const patientName = e.currentTarget.getAttribute('data-patient-name');
-                const patientGender = e.currentTarget.getAttribute('data-patient-gender');
-                const patientPhone = e.currentTarget.getAttribute('data-patient-phone');
-                const patientEmail = e.currentTarget.getAttribute('data-patient-email');
-                const patientProvince = e.currentTarget.getAttribute('data-patient-province');
-                const patientDistrict = e.currentTarget.getAttribute('data-patient-district');
-                const patientWard = e.currentTarget.getAttribute('data-patient-ward');
-                const patientAddress = e.currentTarget.getAttribute('data-patient-address');
-                const appointmentPrice = e.currentTarget.getAttribute('data-appointment-price');
-                const patientDOB = e.currentTarget.getAttribute('data-patient-dob');
-                const bookingDate = e.currentTarget.getAttribute('data-booking-date');
-                const createdDatetime = e.currentTarget.getAttribute('data-created-datetime');
+				form.appendChild(input);
+				document.body.appendChild(form);
+				form.submit();
+			} else {
+				alert("Vui lòng nhập lý do hủy.");
+			}
+		});
 
 
-                document.getElementById('appointmentID').value = appointmentID;
-                document.getElementById('appointmentIDTextContent').textContent = appointmentID;
-                document.getElementById('specialty').textContent = specialtyName;
-                document.getElementById('patientName').textContent = patientName;
-                document.getElementById('patientGender').textContent = patientGender;
-                document.getElementById('patientPhone').textContent = patientPhone;
-                document.getElementById('patientEmail').textContent = patientEmail;
-                document.getElementById('patientProvince').textContent = patientProvince;
-                document.getElementById('patientDistrict').textContent = patientDistrict;
-                document.getElementById('patientWard').textContent = patientWard;
-                document.getElementById('patientAddress').textContent = patientAddress;
-                document.querySelectorAll('.appointmentPrice').forEach(element => {
-                    element.textContent = appointmentPrice;
-                });
-                document.getElementById('patientDOB').textContent = patientDOB;
-                document.getElementById('bookingDate').textContent = bookingDate;
-                document.getElementById('createdDatetime').textContent = createdDatetime;
-                document.getElementById('popupBlock').style.display = 'block';
-                document.getElementById('modalOverlay').style.display = 'block';
+	});
 
-                
-            });
-        });
-
-        document.getElementById('closePopup').addEventListener('click', () => {
-            document.getElementById('popupBlock').style.display = 'none';
-            document.getElementById('modalOverlay').style.display = 'none';
-        });
-
-        document.getElementById('modalOverlay').addEventListener('click', () => {
-            document.getElementById('popupBlock').style.display = 'none';
-            document.getElementById('modalOverlay').style.display = 'none';
-        });
+	//Phần load cho modal show ra của chi tiết đơn khám
+	document.querySelectorAll('.show-popup').forEach(button => {
+		button.addEventListener('click', (e) => {
+			const appointmentID = e.currentTarget.getAttribute('data-appointment-id');
+			const specialtyName = e.currentTarget.getAttribute('data-specialty');
+			const patientName = e.currentTarget.getAttribute('data-patient-name');
+			const patientGender = e.currentTarget.getAttribute('data-patient-gender');
+			const patientPhone = e.currentTarget.getAttribute('data-patient-phone');
+			const patientEmail = e.currentTarget.getAttribute('data-patient-email');
+			const patientProvince = e.currentTarget.getAttribute('data-patient-province');
+			const patientDistrict = e.currentTarget.getAttribute('data-patient-district');
+			const patientWard = e.currentTarget.getAttribute('data-patient-ward');
+			const patientAddress = e.currentTarget.getAttribute('data-patient-address');
+			const appointmentPrice = e.currentTarget.getAttribute('data-appointment-price');
+			const patientDOB = e.currentTarget.getAttribute('data-patient-dob');
+			const bookingDate = e.currentTarget.getAttribute('data-booking-date');
+			const createdDatetime = e.currentTarget.getAttribute('data-created-datetime');
 
 
-        //Phần load cho lịch đặt tái khám của phía nha sĩ
-        document.addEventListener("DOMContentLoaded", function (event) {
-            const current = new Date();
-        current.setHours(current.getHours() + 24);
-        mobiscroll.setOptions({
-            stepMinute: 30,
-            theme: "ios",
-            themeVariant: "light"
-        });
-        mobiscroll.datepicker('#period-booking', {
-                controls: ['datetime'],
-                display: "inline",
-                touchUI: true,
-                min: current,
-                selectMultiple: false,
-                locale: mobiscroll.localeVi,
-                //=====================================================================
-                    //CHO NHỮNG NGÀY INVALID VÀO ĐÂY (LẤY TỪ APPOINTMENT VÀ FUTURE APPOINTMENT)
-                //=====================================================================
-                // invalid: [
-                //     {
-                //         start: '2022-04-28T09:00',
-                //         end: '2022-04-28T09:00'
-                //     },
-                //     {
-                //         start: '2022-04-30T11:30',
-                //         end: '2022-04-30T11:30'
-                //     },
-                //     {
-                //         start: '2022-04-01T09:00',
-                //         end: '2022-04-01T18:30'
-                //     },
-                //     {
-                //         start: '2022-04-02T15:00',
-                //         end: '2022-04-02T19:00'
-                //     }
-                // ]
-                onChange : function (event, inst) {
-                    //Truyền value vào input hentaikham với NGÀY, GIỜ BẮT ĐẦU
-                    //Giờ kết thúc lấy giờ bắt đầu cộng thêm 30' (XỬ LÝ TRONG CONTROLLER PDF SAU KHI NHẤN XUẤT PDF)
-					document.getElementById("hentaikham").value = formatDate(event.value);
-				}
-            });
+			document.getElementById('appointmentID').value = appointmentID;
+			document.getElementById('appointmentIDTextContent').textContent = appointmentID;
+			document.getElementById('specialty').textContent = specialtyName;
+			document.getElementById('patientName').textContent = patientName;
+			document.getElementById('patientGender').textContent = patientGender;
+			document.getElementById('patientPhone').textContent = patientPhone;
+			document.getElementById('patientEmail').textContent = patientEmail;
+			document.getElementById('patientProvince').textContent = patientProvince;
+			document.getElementById('patientDistrict').textContent = patientDistrict;
+			document.getElementById('patientWard').textContent = patientWard;
+			document.getElementById('patientAddress').textContent = patientAddress;
+			document.querySelectorAll('.appointmentPrice').forEach(element => {
+				element.textContent = appointmentPrice;
+			});
+			document.getElementById('patientDOB').textContent = patientDOB;
+			document.getElementById('bookingDate').textContent = bookingDate;
+			document.getElementById('createdDatetime').textContent = createdDatetime;
+			document.getElementById('popupBlock').style.display = 'block';
+			document.getElementById('modalOverlay').style.display = 'block';
 
-        });
 
-    //Hàm định dạng lại ngày tháng
-    function formatDate(date) {
-        const pad = (number) => (number < 10 ? '0' : '') + number;
-        const day = pad(date.getDate());
-        const month = pad(date.getMonth() + 1); // Months are zero-based
-        const year = date.getFullYear();
-        const hours = pad(date.getHours());
-        const minutes = pad(date.getMinutes());
-        return `${month}/${day}/${year}T${hours}:${minutes}`;
-    }
-    </script>
+		});
+	});
+
+	document.getElementById('closePopup').addEventListener('click', () => {
+		document.getElementById('popupBlock').style.display = 'none';
+		document.getElementById('modalOverlay').style.display = 'none';
+	});
+
+	document.getElementById('modalOverlay').addEventListener('click', () => {
+		document.getElementById('popupBlock').style.display = 'none';
+		document.getElementById('modalOverlay').style.display = 'none';
+	});
+
+
+	//Phần load cho lịch đặt tái khám của phía nha sĩ
+	document.addEventListener("DOMContentLoaded", function (event) {
+		//phần khai báo những biến về time sẽ dùng
+		const current = new Date();
+		current.setHours(current.getHours() + 24);
+		mobiscroll.setOptions({
+			stepMinute: 30,
+			theme: "ios",
+			themeVariant: "light"
+		});
+
+		fetch('/dentist/dentistdetail/getscheduledates?dentistID=' + @ViewBag.dentistID)
+			.then(response => response.json())
+			.then(data => {
+				//Lấy danh sách giờ làm việc lý tưởng của nha sĩ trong phòng khám đó (cả sáng + chiều)
+				var workingTimeSlots = data.timeSlot.map(function (item) {
+					return {
+						startTime: item.start,
+						endTime: item.end,
+						recurring: {
+							repeat: 'none'
+						}
+					};
+				});
+				console.log(workingTimeSlots);
+
+				//Lấy CÁC ngày mà nha sĩ chọn
+				mobiscroll.datepicker('#period-booking-date', {
+					controls: ['calendar'],
+					//select: 'range',
+					display: "inline",
+					touchUI: true,
+					min: current,
+					selectMultiple: true,
+					locale: mobiscroll.localeVi,
+					onChange: function (event, inst) {
+						//Truyền value vào input hentaikham với NGÀY, GIỜ BẮT ĐẦU
+						//Giờ kết thúc lấy giờ bắt đầu cộng thêm 30' (XỬ LÝ TRONG CONTROLLER PDF SAU KHI NHẤN XUẤT PDF)
+						var selectedDates = event.value.map(function (date) {
+							return formatDateTime(date, true);
+						});
+
+						var selectedDatesJson = JSON.stringify(selectedDates);
+						console.log(selectedDatesJson);
+
+						document.getElementById("ngayhentaikham").value = selectedDatesJson;
+					}
+
+				});
+
+				//Lịch show ra lấy giờ bắt đầu
+				mobiscroll.datepicker('#period-booking-time-start', {
+					controls: ['time'],
+					display: "inline",
+					touchUI: true,
+					locale: mobiscroll.localeVi,
+					valid: workingTimeSlots.map(item => ({
+						start: item.startTime,
+						end: item.startTime,
+						recurring: {
+							repeat: 'daily'
+						}
+					})),
+
+					onChange: function (event, inst) {
+						document.getElementById("giobatdau").value = formatDateTime(event.value, false);
+					}
+				});
+
+				//Lịch show ra lấy giờ kết thúc
+				mobiscroll.datepicker('#period-booking-time-end', {
+					controls: ['time'],
+					display: "inline",
+					touchUI: true,
+					locale: mobiscroll.localeVi,
+					valid: workingTimeSlots.map(item => ({
+						start: item.endTime,
+						end: item.endTime,
+						recurring: {
+							repeat: 'daily'
+						}
+					})),
+
+					onChange: function (event, inst) {
+						document.getElementById("gioketthuc").value = formatDateTime(event.value, false);
+
+					}
+				});
+			});
+	});
+
+
+	//Hàm định dạng lại ngày tháng
+	function formatDateTime(date, isDate) {
+		const pad = (number) => (number < 10 ? '0' : '') + number;
+		const day = pad(date.getDate());
+		const month = pad(date.getMonth() + 1); // Months are zero-based
+		const year = date.getFullYear();
+		const hours = pad(date.getHours());
+		const minutes = pad(date.getMinutes());
+		if (isDate === true) {
+			return `${month}/${day}/${year}`;
+		}
+		else if (isDate === false) {
+			return `${hours}:${minutes}`;
+		}
+	}
+</script>
 
 
