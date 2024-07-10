@@ -19,10 +19,6 @@
 
 name: Build and deploy ASP.Net Core app to an Azure Web App
 
-defaults:
-    run:
-        working-directory: ./Dental_Clinic_System/Dental_Clinic_System
-
 env:
     AZURE_WEBAPP_NAME: DentalCarePlatform # set this to the name of your Azure Web App
     AZURE_WEBAPP_PACKAGE_PATH: "../../Dental_Clinic_System/Dental_Clinic_System" # set this to the path to your web app project, defaults to the repository root
@@ -39,6 +35,9 @@ permissions:
 jobs:
     build:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./Dental_Clinic_System/Dental_Clinic_System
 
         steps:
             - uses: actions/checkout@v4
