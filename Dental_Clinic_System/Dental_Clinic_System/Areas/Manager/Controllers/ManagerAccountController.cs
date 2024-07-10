@@ -71,7 +71,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                 {
                     ViewBag.ToastMessageSuccess = "Đăng nhập thành công!";
                     TempData["ToastMessageSuccessTempData"] = "Đăng nhập thành công!";
-                    return RedirectToAction("Index", "Dentists", new { area = "Manager" });
+                    return RedirectToAction("Profile", "ManagerAccount", new { area = "Manager" });
                 }
             }
 

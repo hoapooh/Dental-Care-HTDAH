@@ -7,6 +7,14 @@
 
 @section Styles {
     <style>
+        .sidebar .nav-item a.Quan_ly_tai_khoan {
+			color: #fff;
+			background: #4880ff;
+		}
+
+        .manager__management__header {
+            justify-content: space-around;
+        }
         form p {
             font-family: "Baloo Paaji 2" !important;
             font-size: 2rem;
@@ -34,24 +42,35 @@
             font-size: 2rem;
             font-weight: 600;
         }
+
+        .modal-content {
+            --mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
+            border: 0;
+            box-shadow: var(--mdb-modal-box-shadow);
+            padding: 24px 40px !important; /* Reduced padding for top/bottom and left/right */
+            border-radius: 10px; /* Adjust this value to change the roundness of the corners */
+        }
     </style>
 }
 
-<!--header -->
-<div class="manager__management__header">
-    <div class="title">Quản lý tài khoản</div>
-</div>
 
-<form asp-area="Manager" asp-controller="ManagerAccount" asp-action="EditProfile" method="post" style="max-width: 50%; padding: 0 20px;">
+<!--Form create -->
+<div class="modal-dialog modal-dialog-centered form-modal-styles" style="width: 90%;">
+    @* enctype: để thêm hình ảnh *@
+    <form asp-area="Manager" asp-controller="ManagerAccount" asp-action="EditProfile" method="post"  class="modal-content">
+    <!--header -->
+    <div class="manager__management__header">
+        <div class="title">Quản lý tài khoản</div>
+    </div>
     <div class="row">
         <div class="form-group col-md-6">
             <p class="control-label">Họ</p>
-            <input asp-for="FirstName" class="form-control" placeholder="Họ">
+            <input asp-for="LastName" class="form-control" placeholder="Họ">
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
             <p class="control-label">Tên</p>
-            <input asp-for="LastName" class="form-control" placeholder="Tên">
+            <input asp-for="FirstName" class="form-control" placeholder="Tên">
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
     </div>
@@ -123,6 +142,8 @@
         <button type="submit" class="btn btn-primary">Lưu</button>
     </div>
 </form>
+</div>
+<br />
 
 @section Scripts {
     @* Đưa ảnh lên firebase *@
