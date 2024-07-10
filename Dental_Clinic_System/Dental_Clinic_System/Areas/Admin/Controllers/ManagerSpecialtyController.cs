@@ -75,7 +75,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         #region Chỉnh sửa (Edit)
         //===================CHỈNH SỬA===================
         [HttpGet]
-        //[Route("EditSpecialty/{id}")]
         public async Task<IActionResult> EditSpecialty(int id)
         {
             var specialty = await _context.Specialties.FindAsync(id);
@@ -97,7 +96,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[Route("EditSpecialty")]
         public async Task<IActionResult> EditSpecialty(ManagerSpecialtyVM model)
         {
             if (ModelState.IsValid)
@@ -130,13 +128,13 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction(nameof(ListSpecialty));
             }
 
-            return View("EditSpecialty", model);
+			TempData["ToastMessageFailTempData"] = "Chỉnh sửa chuyên khoa thất bại";
+			return View("EditSpecialty", model);
         }
         #endregion
 
         #region Xóa tạm thời (Delete)
         //===================XÓA CHUYÊN KHOA TẠM THỜI===================
-        //[Route("DeleteSpecialty/{id}")]
         public IActionResult DeleteSpecialty(int id)
         {
             _hiddenSpecialty.HiddenSpecialty(id);
@@ -175,10 +173,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             }
 
             //Check Deposis không được âm
-            if (deposit <= 0)
+            if (deposit <= 0 || deposit > 1000000000)
             {
                 //Thấy Tiền cọc âm, thông báo lỗi
-                ModelState.AddModelError("Deposit", "Tiền cọc phải lớn hơn 0!!!");
+                ModelState.AddModelError("Deposit", "Tiền đặt cọc phải lớn hơn 0 vả nhỏ hơn 1 tỷ!!!");
 
                 //Lấy lại list specialty để hiển thị
                 var specialties = await _context.Specialties.ToListAsync();

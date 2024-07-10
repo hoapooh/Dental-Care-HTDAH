@@ -19,7 +19,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Login(string returnUrl = "/Admin/Dashboard/Index")
+		public IActionResult Login(string returnUrl = "/Admin/Dashboard/GetAppointmentStatus")
 		{
 			ViewBag.ReturnUrl = returnUrl;
 			return View();
@@ -28,31 +28,31 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login(string username, string password)
 		{
-			var user = _context.Accounts.FirstOrDefault(d => username == d.Username && password == d.Password);
+			var user = _context.Accounts.FirstOrDefault(d => username == d.Username && DataEncryptionExtensions.ToMd5Hash(password) == d.Password);
 			if (user == null)
 			{
-				ViewBag.ErrorMessage = "Tài khoản đăng nhập hoặc mật khẩu không hợp lệ!!";
-				return BadRequest("Sai Tên đăng nhập hoặc Mật khẩu");
+				ViewBag.ErrorMessage = "Tài khoản đăng nhập hoặc mật khẩu không hợp lệ. Vui lòng nhập lại";
+				return View();
 			}
 
 			if (user.Role == "Admin")
 			{
 				var claims = new List<Claim>
-				{
-					new Claim(ClaimTypes.Name, user.Username),
-					new Claim(ClaimTypes.Role, user.Role)
-				};
+		{
+			new Claim(ClaimTypes.Name, user.Username),
+			new Claim(ClaimTypes.Role, user.Role)
+		};
 
 				var claimsIdentity = new ClaimsIdentity(claims, "GetAppointmentStatus");
 				var authProperties = new AuthenticationProperties { IsPersistent = true };
 
 				await HttpContext.SignInAsync("GetAppointmentStatus", new ClaimsPrincipal(claimsIdentity), authProperties);
 				HttpContext.Session.SetInt32("adminAccountID", user.ID);
-				return RedirectToAction("index", "dashboard", new { area = "admin" });
+				return RedirectToAction("GetAppointmentStatus", "dashboard", new { area = "admin" });
 			}
 
-			ViewBag.ErrorMessage = "Invalid role";
-			return NotFound("Account của bạn không hợp lệ, vui lòng thử lại!");
+			ViewBag.ErrorMessage = "Tài khoản này không có quyền truy cập trang tiếp theo, vui lòng thử lại!";
+			return View();
 		}
 
 		public async Task<IActionResult> Logout()

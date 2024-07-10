@@ -55,13 +55,30 @@
         </div>
         <div class="col-md-3">
             <label for="dateofbirth">Ngày sinh</label>
-            <input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" required />
+            <input type="date" name="DateOfBirth" id="dateofbirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" />
         </div>
         <div class="col-md-3">
             <label for="gender">Giới tính</label>
-            <select name="Gender" class="form-control" id="gender" value="@Model.Gender">
-                <option value="Nam">Nam</option>
-                <option value="Nữ">Nữ</option>
+            <select name="Gender" class="form-control" id="gender" asp-for="@Model.Gender">
+                @* Tạo các thẻ option động bằng Razor *@
+                @if (Model.Gender == "Nam")
+                {
+                    <option value=null disabled>-- Chọn giới tính --</option>
+                    <option value="Nam" selected>Nam</option>
+                    <option value="Nữ">Nữ</option>
+                }
+                else if (Model.Gender == "Nữ")
+                {
+                    <option value=null disabled>Chọn giới tính ...</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ" selected>Nữ</option>
+                }
+                else
+                {
+                    <option value=null disabled selected>Chọn giới tính ...</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                }
             </select>
         </div>
         <div class="col-md-6">

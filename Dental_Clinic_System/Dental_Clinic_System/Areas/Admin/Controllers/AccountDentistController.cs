@@ -370,11 +370,13 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction(nameof(ListAccountDentist));
             }
 
-            ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
+			//Load lại dữ liệu khi ModelState không hợp lệ
+			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", model.DegreeID);
             ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", model.ClinicID);
-            return View(model);
+			TempData["ToastMessageFailTempData"] = "Chỉnh sửa tài khoản nha sĩ thất bại";
+			return View(model);
         }
-
+        
         //Đặt lại ViewData
         private void SetViewData(EditAccountDentistVM model)
         {

@@ -13,7 +13,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
-	//[Route("Admin/[controller]")]
 	public class AccountManagerController : Controller
 	{
 		private readonly DentalClinicDbContext _context;
@@ -83,7 +82,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 		#region Thêm tài khoản (Add Account)
 		//===================THÊM TÀI KHOẢN===================
-		//[Route("AddAccount")]
 		[HttpPost]
 		public async Task<IActionResult> AddAccountManager(string username, string password, string phoneNumber, string email, string? address, string lastname, string firstname)
 		{
@@ -155,8 +153,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 		#region Chỉnh sửa (Edit Account)
 		//===================CHỈNH SỬA TÀI KHOẢN===================
-
-		//[Route("EditAccount/{id}")]
 		public async Task<IActionResult> EditAccountManager(int id)
 		{
 			var account = await _context.Accounts.FindAsync(id);
@@ -186,7 +182,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		//[Route("EditAccount")]
 		public async Task<IActionResult> EditAccountManager(EditAccountVM model)
 		{
 			if (ModelState.IsValid)

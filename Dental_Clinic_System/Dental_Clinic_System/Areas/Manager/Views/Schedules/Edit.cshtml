@@ -24,7 +24,7 @@
 			font-size: 2rem
 		}
 
-		
+
 
 		.manager__management__add__schedule {
 			--mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
@@ -55,7 +55,7 @@
 			color: white;
 		}
 
-		.manager__management .Nghi-btn:hover {
+			.manager__management .Nghi-btn:hover {
 				background: #f81f1f;
 			}
 
@@ -68,6 +68,7 @@
 			.manager__management .ConTrong-btn:hover {
 				background: #3b6cd9;
 			}
+
 		.inline {
 			display: inline-block;
 		}
@@ -125,39 +126,87 @@
 								slotIDs_AmPm.Add(item.TimeSlotID); //xem có id 23 24 ko -> có làm sáng chiều ko
 						}
 						//----------------
-						foreach (var slot in @ViewBag.AmTimeSlots)
+						// foreach (var slot in @ViewBag.AmTimeSlots)
+						// {
+						// 	var time = $"{slot.StartTime.ToString("HH:mm")} - {slot.EndTime.ToString("HH:mm")}";
+						// 	if (slotIDs_DaDat.Contains(slot.ID))
+						// 	{
+						// 		list.Add(slot.ID, ("Đã Đặt", time) );
+						// 	}
+						// 	else if (slotIDs_Nghi.Contains(slot.ID))
+						// 	{
+						// 		list.Add(slot.ID, ("Nghỉ", time));
+						// 	}
+						// 	else if (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID))
+						// 	{
+						// 		list.Add(slot.ID, ("Còn Trống", time));
+						// 	}
+						// }
+						// foreach (var slot in @ViewBag.PmTimeSlots)
+						// {
+						// 	var time = $"{slot.StartTime.ToString("HH:mm")} - {slot.EndTime.ToString("HH:mm")}";
+						// 	if (slotIDs_DaDat.Contains(slot.ID))
+						// 	{
+						// 		list.Add(slot.ID, ("Đã Đặt", time));
+						// 	}
+						// 	else if (slotIDs_Nghi.Contains(slot.ID))
+						// 	{
+						// 		list.Add(slot.ID, ("Nghỉ", time));
+						// 	}
+						// 	else if (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID))
+						// 	{
+						// 		list.Add(slot.ID, ("Còn Trống", time));
+						// 	}
+						// }
+						foreach (var slot in @ViewBag.TimeSlots)
 						{
 							var time = $"{slot.StartTime.ToString("HH:mm")} - {slot.EndTime.ToString("HH:mm")}";
-							if (slotIDs_DaDat.Contains(slot.ID))
+							if (@ViewBag.AmTimeSlots.Contains(slot))
 							{
-								list.Add(slot.ID, ("Đã Đặt", time) );
+								if (slotIDs_DaDat.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Đã Đặt", time));
+								}
+								else if (slotIDs_Nghi.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Nghỉ", time));
+								}
+								else if (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Còn Trống", time));
+								}
 							}
-							else if (slotIDs_Nghi.Contains(slot.ID))
+							else if (@ViewBag.PmTimeSlots.Contains(slot))
 							{
-								list.Add(slot.ID, ("Nghỉ", time));
+								if (slotIDs_DaDat.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Đã Đặt", time));
+								}
+								else if (slotIDs_Nghi.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Nghỉ", time));
+								}
+								else if (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Còn Trống", time));
+								}
 							}
-							else if (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID))
+							else
 							{
-								list.Add(slot.ID, ("Còn Trống", time));
+								if (slotIDs_DaDat.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Đã Đặt", time));
+								}
+								else if (slotIDs_Nghi.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Nghỉ", time));
+								}
+								else if (slotIDs_ConTrong.Contains(slot.ID))
+								{
+									list.Add(slot.ID, ("Còn Trống", time));
+								}
 							}
 						}
-						foreach (var slot in @ViewBag.PmTimeSlots)
-						{
-							var time = $"{slot.StartTime.ToString("HH:mm")} - {slot.EndTime.ToString("HH:mm")}";
-							if (slotIDs_DaDat.Contains(slot.ID))
-							{
-								list.Add(slot.ID, ("Đã Đặt", time));
-							}
-							else if (slotIDs_Nghi.Contains(slot.ID))
-							{
-								list.Add(slot.ID, ("Nghỉ", time));
-							}
-							else if (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID))
-							{
-								list.Add(slot.ID, ("Còn Trống", time));
-							}
-						}
-
 					}
 					@foreach (var item in list)
 					{
@@ -168,7 +217,7 @@
 								@start_end_time
 							</td>
 							<td>@status</td>
-							<td >
+							<td>
 								@if (status == "Còn Trống")
 								{
 									<form asp-action="EditStatusTo_Nghi" asp-route-dentistId="@ViewBag.DentistID" asp-route-date="@ViewBag.Date" asp-route-timeSlotId="@timeSlotId" class="inline" title="Chuyển thành Nghỉ">

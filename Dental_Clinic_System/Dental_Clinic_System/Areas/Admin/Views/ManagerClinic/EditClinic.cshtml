@@ -57,7 +57,7 @@
 	}
 </style>
 
-<!--SHOW THÔNG TIN CHI TIẾT PHÒNG KHÁM VÀ CHỈNH SỬA-->
+<!--SCHỈNH SỬA-->
 <div class="modal-header">
 	<h1 class="modal-title fs-10 text-New-Clinic" id="mainTitle">
 		Chỉnh sửa phòng khám
@@ -97,13 +97,13 @@
 				<label>Thời gian làm việc buổi Sáng:</label>
 				<div class="row">
 					<div class="col-5">
-						<select asp-for="AmStartTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.AmTimes))" class="form-control"></select>
+						<select asp-for="AmStartTime" asp-items="ViewBag.AmTimes" class="form-control"></select>
 					</div>
 					<div class="col-2 text-center align-self-center">
 						<h3>đến</h3>
 					</div>
 					<div class="col-5">
-						<select asp-for="AmEndTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.AmTimes))" class="form-control"></select>
+						<select asp-for="AmEndTime" asp-items="ViewBag.AmTimes" class="form-control"></select>
 					</div>
 				</div>
 			</div>
@@ -116,13 +116,13 @@
 				<label>Thời gian làm việc buổi Chiều:</label>
 				<div class="row">
 					<div class="col-5">
-						<select asp-for="PmStartTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.PmTimes))" class="form-control"></select>
+						<select asp-for="PmStartTime" asp-items="ViewBag.PmTimes" class="form-control"></select>
 					</div>
 					<div class="col-2 text-center align-self-center">
 						<h3>đến</h3>
 					</div>
 					<div class="col-5">
-						<select asp-for="PmEndTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.PmTimes))" class="form-control"></select>
+						<select asp-for="PmEndTime" asp-items="ViewBag.PmTimes" class="form-control"></select>
 					</div>
 				</div>
 			</div>
@@ -159,7 +159,6 @@
 					<input asp-for="Image" type="hidden" id="imageUrl" class="form-control" />
 				</div>
 
-				<br />
 
 				<div class="container__image__preview">
 					<div class="style__image__preview row">
@@ -177,6 +176,7 @@
 					</div>
 				</div>
 			</div>
+			<br />
 
 			<div class="clinic-desc col-md-12">
 				<label>Mô tả phòng khám</label>

@@ -1,0 +1,268 @@
+﻿@model Dental_Clinic_System.Areas.Manager.ViewModels.ManagerVM
+
+@{
+    ViewData["Title"] = "Hồ sơ";
+    Layout = "_LayoutManager";
+}
+
+@section Styles {
+    <style>
+        .sidebar .nav-item a.Quan_ly_tai_khoan {
+			color: #fff;
+			background: #4880ff;
+		}
+
+        .manager__management__header {
+            justify-content: space-around;
+        }
+        form p {
+            font-family: "Baloo Paaji 2" !important;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        .form-group button {
+            font-family: "Baloo Paaji 2" !important;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            font-family: "Baloo Paaji 2" !important;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-family: "Baloo Paaji 2" !important;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .modal-content {
+            --mdb-modal-box-shadow: 0 6px 45px -9px rgba(var(--mdb-box-shadow-color-rgb), 0.21), 0 30px 60px -6px rgba(var(--mdb-box-shadow-color-rgb), 0.12);
+            border: 0;
+            box-shadow: var(--mdb-modal-box-shadow);
+            padding: 24px 40px !important; /* Reduced padding for top/bottom and left/right */
+            border-radius: 10px; /* Adjust this value to change the roundness of the corners */
+        }
+    </style>
+}
+
+
+<!--Form create -->
+<div class="modal-dialog modal-dialog-centered form-modal-styles" style="width: 90%;">
+    @* enctype: để thêm hình ảnh *@
+    <form asp-area="Manager" asp-controller="ManagerAccount" asp-action="EditProfile" method="post"  class="modal-content">
+    <!--header -->
+    <div class="manager__management__header">
+        <div class="title">Quản lý tài khoản</div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <p class="control-label">Họ</p>
+            <input asp-for="LastName" class="form-control" placeholder="Họ">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <p class="control-label">Tên</p>
+            <input asp-for="FirstName" class="form-control" placeholder="Tên">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <p class="control-label">Số điện thoại <sup style="color:red;">*</sup></p>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="Số điện thoại">
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <p class="control-label">Email <sup style="color:red;">*</sup></p>
+            <input asp-for="Email" class="form-control" placeholder="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <p class="control-label">Giới tính</p>
+            <select asp-for="Gender" class="form-control">
+                <option value="">Chọn giới tính ...</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <p class="control-label">Ngày sinh</p>
+            <input asp-for="DateOfBirth" type="date" class="form-control">
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <p for="province">Tỉnh / Thành phố </p>
+            <select id="tinh" title="Chọn Tỉnh Thành" asp-for="Province" class="form-control">
+                <option value="0">Tỉnh Thành</option>
+            </select>
+            <span asp-validation-for="Province" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <p for="district">Quận / Huyện </p>
+            <select id="quan" title="Chọn Quận Huyện" asp-for="District" class="form-control">
+                <option value="0">Quận Huyện</option>
+            </select>
+            <span asp-validation-for="District" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <p for="ward">Phường / Xã </p>
+            <select id="phuong" title="Chọn Phường Xã" asp-for="Ward" class="form-control">
+                <option value="0">Phường Xã</option>
+            </select>
+            <span asp-validation-for="Ward" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-12">
+            <p class="control-label">Địa chỉ</p>
+            <input asp-for="Address" class="form-control" placeholder="Nhập địa chỉ">
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group" style="display: flex; gap: 1rem; align-items: center; justify-content: flex-end;">
+        <button type="reset" class="btn btn-warning">Nhập lại</button>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </div>
+</form>
+</div>
+<br />
+
+@section Scripts {
+    @* Đưa ảnh lên firebase *@
+    <script src="~/assets/js/upload-image-firebase-general.js" type="module"></script>
+
+    @* Call API from https://esgoo.net to get data*@
+    <script src="https://esgoo.net/scripts/jquery.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var savedProvince = '@Model.Province';
+            var savedDistrict = '@Model.District';
+            var savedWard = '@Model.Ward';
+
+            // Function to format ID with leading zeros based on the length requirement
+            function formatId(id, length) {
+                return id.toString().padStart(length, '0');
+            }
+
+            var savedProvinceId = savedProvince ? formatId(parseInt(savedProvince, 10), 2) : null;
+            var savedDistrictId = savedDistrict ? formatId(parseInt(savedDistrict, 10), 3) : null;
+            var savedWardId = savedWard ? formatId(parseInt(savedWard, 10), 5) : null;
+
+            function loadWards(idquan, callback) {
+                var formattedId = formatId(idquan, 3);
+                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + formattedId + '.htm', function (data_phuong) {
+                    if (data_phuong.error == 0) {
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                            var selected = (val_phuong.id == savedWardId) ? ' selected' : '';
+                            $("#phuong").append('<option value="' + val_phuong.id + '" data-fullname="' + val_phuong.full_name + '"' + selected + '>' + val_phuong.full_name + '</option>');
+                        });
+
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function loadDistricts(idtinh, callback) {
+                var formattedId = formatId(idtinh, 2);
+                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + formattedId + '.htm', function (data_quan) {
+                    if (data_quan.error == 0) {
+                        $("#quan").html('<option value="0">Quận Huyện</option>');
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_quan.data, function (key_quan, val_quan) {
+                            var selected = (val_quan.id == savedDistrictId) ? ' selected' : '';
+                            $("#quan").append('<option value="' + val_quan.id + '" data-fullname="' + val_quan.full_name + '"' + selected + '>' + val_quan.full_name + '</option>');
+                        });
+
+                        if (savedDistrictId) {
+                            loadWards(savedDistrictId, callback);
+                        } else if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function loadProvinces(callback) {
+                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+                    if (data_tinh.error == 0) {
+                        $("#tinh").html('<option value="0">Tỉnh Thành</option>');
+                        $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                            var selected = (val_tinh.id == savedProvinceId) ? ' selected' : '';
+                            $("#tinh").append('<option value="' + val_tinh.id + '" data-fullname="' + val_tinh.full_name + '"' + selected + '>' + val_tinh.full_name + '</option>');
+                        });
+
+                        if (savedProvinceId) {
+                            loadDistricts(savedProvinceId, callback);
+                        } else if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            function setInitialValues() {
+                if (savedProvinceId) {
+                    $("#tinh").val(savedProvinceId);
+                    $("#tinh").trigger('change');
+                }
+                if (savedDistrictId) {
+                    $("#quan").val(savedDistrictId);
+                    $("#quan").trigger('change');
+                }
+                if (savedWardId) {
+                    $("#phuong").val(savedWardId);
+                }
+            }
+
+            loadProvinces(setInitialValues);
+
+            $("#tinh").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var idtinh = selectedOption.val();
+                var fullnameTinh = selectedOption.data('fullname');
+                $('#Province').val(fullnameTinh);
+
+                // Load districts based on selected province
+                loadDistricts(idtinh);
+            });
+
+            $("#quan").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var idquan = selectedOption.val();
+                var fullnameQuan = selectedOption.data('fullname');
+                $('#District').val(fullnameQuan);
+
+                // Load wards based on selected district
+                loadWards(idquan);
+            });
+
+            $("#phuong").change(function (e) {
+                var selectedOption = $(this).find('option:selected');
+                var fullnamePhuong = selectedOption.data('fullname');
+                $('#Ward').val(fullnamePhuong);
+            });
+        });
+    </script>
+}

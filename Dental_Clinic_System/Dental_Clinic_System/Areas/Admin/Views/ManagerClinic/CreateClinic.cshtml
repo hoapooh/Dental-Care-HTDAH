@@ -65,13 +65,13 @@
 				<label>Thời gian làm việc buổi Sáng:</label>
 				<div class="row">
 					<div class="col-5">
-						<select asp-for="AmStartTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.AmTimes))"></select>
+						<select asp-for="AmStartTime" asp-items="ViewBag.AmTimes"></select>
 					</div>
 					<div class="col-2 text-center align-self-center">
 						<h3>đến</h3>
 					</div>
 					<div class="col-5">
-						<select asp-for="AmEndTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.AmTimes))"></select>
+						<select asp-for="AmEndTime" asp-items="ViewBag.AmTimes"></select>
 					</div>
 				</div>
 			</div> </br>
@@ -84,13 +84,13 @@
 				<label>Thời gian làm việc buổi Chiều:</label>
 				<div class="row">
 					<div class="col-5">
-						<select asp-for="PmStartTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.PmTimes))"></select>
+						<select asp-for="PmStartTime" asp-items="ViewBag.PmTimes"></select>
 					</div>
 					<div class="col-2 text-center align-self-center">
 						<h3>đến</h3>
 					</div>
 					<div class="col-5">
-						<select asp-for="PmEndTime" asp-items="@(new SelectList((IEnumerable<TimeOnly>)ViewBag.PmTimes))"></select>
+						<select asp-for="PmEndTime" asp-items="ViewBag.PmTimes"></select>
 					</div>
 				</div>
 			</div>

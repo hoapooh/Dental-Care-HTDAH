@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
     var managerName = Context.Session.GetString("name");
+    var image = Context.Session.GetString("name");
     var managerID = Context.Session.GetInt32("managerAccountID");
     var clinicID = Context.Session.GetInt32("clinicId");
 }
@@ -64,6 +65,12 @@
             font-weight: 600;
         }
 
+        .modal-body select {
+            font-family: "Baloo Paaji 2" !important;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
         .modal-footer button {
         }
     </style>
@@ -120,43 +127,54 @@
             <!-- ===========  MENU =========== -->
             <ul class="nav">
                 <li class="nav-item">
+                    <a asp-controller="ManagerAccount" asp-action="Profile" class="Quan_ly_tai_khoan">
+                        <span class="menu-icon"><i class="bx bxs-user"></i></span>Tài khoản
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a asp-controller="Dentists" asp-action="Index" class="Quan_ly_nha_si">
                         <span class="menu-icon"><i class="bx bxs-user"></i></span>Nha sĩ
                     </a>
                 </li>
                 <!-- ====================== -->
                 <li class="nav-item menu-items">
-                    <a class="nav-link collapsed"
+                    <a class="nav-link collapsed Lich_trinh"
                        data-bs-toggle="collapse"
                        href="#manage-account"
                        aria-expanded="false"
                        aria-controls="manage-account">
                         <span class="menu-icon"><i class="fa-solid fa-calendar-days"></i></span>
-                        <span class="menu-title Quan_ly_tai_khoan">Lịch trình</span>
+                        <span class="menu-title">Lịch trình</span>
                         <span class="menu-down" style="margin-left: auto">
                             <i aria-hidden="true"></i>
                         </span>
                     </a>
                     <div class="collapse" id="manage-account">
                         <ul class="nav flex-column sub-menu">
+                            
+
                             <li class="nav-item">
-                                <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec1" asp-controller="Schedules" asp-action="GetWorkingSchedule">
-                                    <i class="fa-solid fa-stethoscope"></i> Lịch làm việc -> Tạo
+                                <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec4" asp-controller="Schedules" asp-action="GetTodaySchedule">
+                                    <i class="fa-solid fa-stethoscope"></i> Hôm nay
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec2" asp-controller="Schedules" asp-action="Index">
-                                    <i class="fa-solid fa-stethoscope"></i> Khung giờ làm việc
+                                    <i class="fa-solid fa-stethoscope"></i> Tương lai
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec3" asp-controller="Schedules" asp-action="ViewHistory">
-                                    <i class="fa-solid fa-stethoscope"></i> Xem lịch sử
+                                    <i class="fa-solid fa-stethoscope"></i> Quá khứ
                                 </a>
                             </li>
-
+                            <li class="nav-item">
+                                <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec1" asp-controller="Schedules" asp-action="GetWorkingSchedule">
+                                    <i class="fa-solid fa-stethoscope"></i> Lịch làm việc -> Tạo
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -180,10 +198,14 @@
             @* Icon account + Dropdown here *@
             <nav class="nav__header d-flex flex-row justify-content-end">
                 <div>
+                    
                     <div class="d-flex align-items-center nav__header__profile">
-                        <img src="~/assets/images/avatar.jpg" alt="" />
+
+                        <img src="@image" alt="" />
+
                         <p>
-                            <span>@managerName</span> <br />
+                            <span>@managerName</span>
+                            <br />
                             Quản lý phòng khám
                         </p>
                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#myWallet">
@@ -223,7 +245,7 @@
                             <div style="display: flex; margin-bottom: 20px;">
                                 <div id="today" style="display: flex; background-color: aquamarine; border-radius: 10px; padding: 10px; width: 30%; cursor: pointer;">
                                     <div class="col-md-12" style="margin-bottom: 5px;">
-                                        
+
                                         <div class="row">
                                             <p><i class="fa-solid fa-calendar-day"></i> Hôm nay</p>
                                         </div>
@@ -284,9 +306,6 @@
                                         <option value="pie">Pie</option>
                                         <option value="doughnut">Doughnut</option>
                                     </select>
-                                </div>
-                                <div>
-                                    <input id="showGraph" value="Hiển thị" type="button" />
                                 </div>
                             </div>
 
@@ -399,11 +418,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#showGraph").click(function () {
-                var chartType = $("#chartType").val();
-                updateChart(chartType, null, null);
-            });
-
             $("#today").click(function () {
                 var chartType = $("#chartType").val();
                 var hanoiTime = getHanoiTime();

@@ -10,7 +10,7 @@
 			gap: 5px; /* Khoảng cách giữa các form */
 		}
 
-		.sidebar .nav-item a.Lich_lam_viec2 {
+		.sidebar .nav-item a.Lich_trinh {
 			color: #fff;
 			background: #4880ff;
 		}
@@ -154,6 +154,7 @@
 	
 	<div style="height:15px"></div>
 	<!-- ========== CHỌN KHUNG GIỜ ========== -->
+	<input type="hidden" asp-for="TimeSlots" value="@Json.Serialize(Model.TimeSlots)" />
 	<div class="col-md-12">
 		<label for="timeInterval" class="sub-title">Chọn khoảng thời gian:</label>
 		<select id="timeInterval" style="visibility:hidden">
@@ -163,7 +164,7 @@
 			<option value="30" selected>30 Minutes</option>
 			<option value="60">1 Hour</option>
 		</select>
-		<input type="hidden" asp-for="TimeSlots" />
+		
 		<div id="checkboxContainer"></div>  @* List<int> TimeSlots đc lưu trong checkbox.name=TimeSlots *@
 	</div>
 	<div class="col-md-12 text-end">

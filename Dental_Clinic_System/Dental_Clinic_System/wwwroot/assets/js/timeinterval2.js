@@ -1,4 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
+    
     function updateSlots() {
         var interval = document.getElementById("timeInterval").value;
         var startHour = 7;
@@ -37,6 +38,12 @@
             var columnIndex = index % 5;
             columns[columnIndex].push(slot);
         });
+        
+        //------------------------
+        // Đọc giá trị từ input hidden và chuyển đổi từ JSON string thành mảng số nguyên
+        var timeSlotsString = document.querySelector('input[name="TimeSlots"]').value;
+        var timeSlotsArray = JSON.parse(timeSlotsString);
+        console.log(timeSlotsArray); 
 
         columns.forEach((column, colIndex) => {
             var columnDiv = document.createElement("div");
@@ -50,6 +57,7 @@
                 checkbox.name = "TimeSlots"; // Use the name TimeSlots for all checkboxes
                 checkbox.id = "time-" + prefix + "-" + pad(count);
                 checkbox.value = slot.value;
+                checkbox.checked = (timeSlotsArray.includes(slot.value)) ? true : false;
 
                 var label = document.createElement("label");
                 label.htmlFor = checkbox.id;

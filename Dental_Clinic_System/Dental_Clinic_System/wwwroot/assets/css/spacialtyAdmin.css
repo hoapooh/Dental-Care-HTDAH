@@ -55,6 +55,10 @@
     color: white;
 }
 
+.nav__header__profile i {
+    font-size: 3rem;
+}
+
 .modal-sm {
     max-width: 500px;
 }

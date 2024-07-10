@@ -863,22 +863,22 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Profile", "Account");
             }
 
-            // Lấy thời gian hiện tại tại Hà Nội
-            var currentTime = Util.GetUtcPlus7Time();
+            //// Lấy thời gian hiện tại tại Hà Nội
+            //var currentTime = Util.GetUtcPlus7Time();
 
-            // Lấy thời gian bắt đầu của cuộc hẹn
-            var appointmentDate = appointment.Schedule.Date; // Ngày hẹn
-            var appointmentStartTime = appointment.Schedule.TimeSlot.StartTime; // Thời gian bắt đầu hẹn
-            var appointmentDateTime = new DateTime(appointmentDate.Year, appointmentDate.Month, appointmentDate.Day, appointmentStartTime.Hour, appointmentStartTime.Minute, 0);
+            //// Lấy thời gian bắt đầu của cuộc hẹn
+            //var appointmentDate = appointment.Schedule.Date; // Ngày hẹn
+            //var appointmentStartTime = appointment.Schedule.TimeSlot.StartTime; // Thời gian bắt đầu hẹn
+            //var appointmentDateTime = new DateTime(appointmentDate.Year, appointmentDate.Month, appointmentDate.Day, appointmentStartTime.Hour, appointmentStartTime.Minute, 0);
 
-            // Tính toán sự khác biệt thời gian giữa thời gian hiện tại và thời gian bắt đầu cuộc hẹn
-            var timeDifference = appointmentDateTime - currentTime;
+            //// Tính toán sự khác biệt thời gian giữa thời gian hiện tại và thời gian bắt đầu cuộc hẹn
+            //var timeDifference = appointmentDateTime - currentTime;
 
-            if (timeDifference.TotalHours >= 7)
-            {
-                TempData["ToastMessageFailTempData"] = "Đã quá giờ đổi lịch hẹn";
-                return RedirectToAction("Profile", "Account");
-            }
+            //if (timeDifference.TotalHours >= 7)
+            //{
+            //    TempData["ToastMessageFailTempData"] = "Đã quá giờ đổi lịch hẹn";
+            //    return RedirectToAction("Profile", "Account");
+            //}
 
             string[] newSchedule = bookingDateTime.Split(' ');
             var formatedDate = DateOnly.ParseExact(newSchedule[0], "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy");
@@ -1139,13 +1139,15 @@ namespace Dental_Clinic_System.Controllers
             }
 
             var patientRefund = (transaction.TotalPrice * decimal.Parse(refundPercentage.ToString())) ?? 0;
-            var managerRefund = (transaction.TotalPrice - patientRefund) ?? 0;
+            var remainMoney = (transaction.TotalPrice - patientRefund) ?? 0;
 
-            var managerClinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ID == appointment.Schedule.Dentist.ClinicID);
+            //await Console.Out.WriteLineAsync("======================================");
+            //await Console.Out.WriteLineAsync($"Patient Refund = {patientRefund} | Manager Refund = {remainMoney}");
+            //await Console.Out.WriteLineAsync("======================================");
 
-            var manager = await _context.Accounts.Include(a => a.Clinics).Include(a => a.Wallet).FirstAsync(a => a.Clinics == managerClinic);
+            var manager = await _context.Accounts.Include(a => a.Clinics).Include(a => a.Wallet).FirstAsync(a => a.Clinics.ID == appointment.Schedule.Dentist.ClinicID);
 
-            manager.Wallet.Money = (decimal)managerRefund;
+            manager.Wallet.Money = (decimal)remainMoney;
             _context.SaveChanges();
             // Tạo hóa đơn cho doanh nghiệp thì để sau đi
 

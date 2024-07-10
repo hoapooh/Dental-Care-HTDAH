@@ -9,11 +9,13 @@
 	.title-Name-Clinic {
 		font-size: 2.8rem;
 		font-weight: 700;
-		color: #202224;
+		/* color: #202224; */
+		color: #4880ff;
 	}
 
 	.title-Address {
 		font-size: 2.3rem;
+		font-weight: normal;
 	}
 
 	.img, svg {
@@ -40,6 +42,10 @@
 		font-size: 1.5rem;
 	}
 
+	.clinic-wrap-item__style .info-content .name, .clinic-wrap-item__style .info-content .address {
+		font-size: 2.6rem;
+		font-weight: bold;
+	}
 	/* .sidebar .nav-item a.Quan_ly_phong_kham {
 		color: #fff;
 		background: #4880ff;
@@ -78,7 +84,8 @@
 				<div class="info-content col-md-6">
 					<h2 class="title-Name-Clinic">@clinic.ClinicName</h2>
 					<div class="name">Quản lý: <span class="title-Address">@clinic.ManagerName</span></div>
-					<div class="address"> Địa chỉ: <span class="tittle-Province">@clinic.ProvinceName</span>
+					<div class="address">
+						Địa chỉ: <span class="tittle-Province title-Address">@clinic.ProvinceName</span>
 						@* <span class="title-Province title-Address" data-id="@clinic.Province"></span> *@
 					</div>
 					<div class="action">

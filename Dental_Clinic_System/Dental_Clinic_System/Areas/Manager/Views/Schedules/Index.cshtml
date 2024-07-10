@@ -20,7 +20,7 @@
 			align-content: start;
 		}
 
-		a.button-link {
+		a.button-link, button {
 			display: inline-block;
 			padding: 5px 10px;
 			background-color: transparent;
@@ -31,21 +31,35 @@
 			border-radius: 6px;
 		}
 
-		.manager__management table a.button-link i {
+		.manager__management table a.button-link i,
+		.manager__management table button i {
 			vertical-align: middle;
 		}
 
-		.manager__management table a.button-link:first-child,
+		.manager__management table a.button-link,
 		.manager__management .submit-btn {
 			background: #4880ff;
 			color: white;
 		}
 
-			.manager__management table a.button-link:first-child:hover,
+			.manager__management table a.button-link:hover,
 			.manager__management .submit-btn:hover {
 				background: #3b6cd9;
 			}
 
+		.manager__management .close-btn {
+			margin-left: 5px;
+			background: rgb(255, 66, 66);
+			color: white;
+		}
+
+			.manager__management .close-btn:hover {
+				background: #f81f1f;
+			}
+
+		.inline {
+			display: inline-block;
+		}
 		.manager__management .work__schedule .time_ChuaDat, .time_ChuaDat {
 			width: 101px;
 			background: #668bde;
@@ -104,7 +118,7 @@
 }
 <!-- account management header -->
 <div class="manager__management__header">
-	<div class="title">Khung giờ làm việc</div>
+	<div class="title">Lịch trình - Tương lai</div>
 	<div class="action-btn">
 		<a asp-controller="Schedules" asp-action="Create" class="add__new">+ Thêm</a>
 	</div>
@@ -180,7 +194,7 @@
 
 	</form>
 </div>
-
+<!-- Chú thích -->
 <div class="manager__management__header">
 	<div class="title"></div>
 	<div class="action-btn">
@@ -357,9 +371,18 @@
 							</div>
 						</td>
 						<td>
-							<a asp-action="Edit" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
+							<a asp-action="Edit" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link inline">
 								<i class="bx bxs-edit"></i>
 							</a>
+							@* <a asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link">
+								<i class="bx bxs-trash"></i>
+							</a> *@
+
+							<form asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link inline">
+								<button type="submit" class="close-btn">
+									<i class="bx bxs-trash"></i>
+								</button>
+							</form>
 						</td>
 					</tr>
 				}

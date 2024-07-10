@@ -30,6 +30,57 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		}
 		#region Bảng lịch khám vs các Column: Nha sĩ - Ngày - Các timeslot - Edit
 		// GET: Manager/Schedules
+		public async Task<IActionResult> GetTodaySchedule(int? dentistId, string status)
+		{
+			// Set ViewBag values to retain search criteria
+			ViewBag.SelectedDentistId = dentistId;
+			ViewBag.SelectedStatus = status;
+			//--------------------------------------------
+			var clinicId = HttpContext.Session.GetInt32("clinicId");
+			if (clinicId == null)
+			{   // Check if session has expired, log out
+				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+			}
+			//---------------------------------------------------
+			//Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
+			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == clinicId);
+			var amID = clinic.AmWorkTimeID;
+			var pmID = clinic.PmWorkTimeID;
+			List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
+			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
+			ViewBag.AmTimeSlots = amTimeSlots;
+			ViewBag.PmTimeSlots = pmTimeSlots;
+
+			List<TimeSlot> timeSlots = GenerateTimeSlots(new TimeOnly(7, 0), new TimeOnly(21, 0));
+			ViewBag.TimeSlots = timeSlots;
+			//--------------------------------------------------
+			ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).Where(d => d.ClinicID == clinicId).ToListAsync();
+			ViewBag.Status = null;
+
+			//--------------------------------------------------
+			// Filter schedules from today onwards
+			var today = DateOnly.FromDateTime(DateTime.Today);
+			var schedulesQuery = _context.Schedules
+					.Include(s => s.Dentist)
+					.ThenInclude(d => d.Account)
+					.Include(s => s.TimeSlot)
+					.Where(s => s.Dentist.ClinicID == clinicId && s.Date == today);
+			if (dentistId.HasValue)
+			{
+				schedulesQuery = schedulesQuery.Where(s => s.DentistID == dentistId.Value);
+			}
+
+			if (!string.IsNullOrEmpty(status))
+			{
+				if (status != "Còn Trống")
+					schedulesQuery = schedulesQuery.Where(s => s.ScheduleStatus == status);
+				ViewBag.Status = status;
+			}
+
+			var dentalClinicDbContext = await schedulesQuery.OrderBy(s => s.Date).ToListAsync();
+
+			return View("GetTodaySchedule", dentalClinicDbContext);
+		}
 		public async Task<IActionResult> Index(int? dentistId, DateTime? date, string status)
 		{
 			// Set ViewBag values to retain search criteria
@@ -65,7 +116,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 					.Include(s => s.Dentist)
 					.ThenInclude(d => d.Account)
 					.Include(s => s.TimeSlot)
-					.Where(s => s.Dentist.ClinicID == clinicId && s.Date >= today);
+					.Where(s => s.Dentist.ClinicID == clinicId && s.Date > today);
 			if (dentistId.HasValue)
 			{
 				schedulesQuery = schedulesQuery.Where(s => s.DentistID == dentistId.Value);
@@ -89,6 +140,10 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		}
 		public async Task<IActionResult> ViewHistory(int? dentistId, DateTime? date)
 		{
+			// Set ViewBag values to retain search criteria
+			ViewBag.SelectedDentistId = dentistId;
+			ViewBag.SelectedDate = date?.ToString("yyyy-MM-dd"); // Format the date for the input
+			//--------------------------------------------
 			var clinicId = HttpContext.Session.GetInt32("clinicId");
 			if (clinicId == null)
 			{   // Check if session has expired, log out
@@ -338,28 +393,6 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 		#endregion
 
-		#region Xóa lịch khám theo ID - autoCreate
-		// GET: Manager/Schedules/Details/5
-		public async Task<IActionResult> Details(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var schedule = await _context.Schedules
-				.Include(s => s.Dentist)
-				.Include(s => s.TimeSlot)
-				.FirstOrDefaultAsync(m => m.ID == id);
-			if (schedule == null)
-			{
-				return NotFound();
-			}
-
-			return View(schedule);
-		}
-		#endregion
-
 		#region Tạo lịch khám => Chọn nhiều nha sĩ, chọn nhiều ngày, chọn nhiều timeslot => Nhiều lịch khám
 		// GET: Manager/Schedules/Create
 		public IActionResult Create()
@@ -461,7 +494,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		}
 		#endregion
 
-		#region Sửa lịch khám - Vô bảng riêng của "Nha Sĩ - Ngày" cụ thể -> Xóa lịch chưa được đặt 
+		#region Sửa lịch khám - Vô bảng riêng của "Nha Sĩ - Ngày" cụ thể 
 		// GET: Manager/Schedules/Edit/5
 		public async Task<IActionResult> Edit(int? dentistId, DateTime? date)
 		{
@@ -487,6 +520,9 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
 			ViewBag.AmTimeSlots = amTimeSlots;
 			ViewBag.PmTimeSlots = pmTimeSlots;
+
+			List<TimeSlot> timeSlots = GenerateTimeSlots(new TimeOnly(7, 0), new TimeOnly(21, 0));
+			ViewBag.TimeSlots = timeSlots;
 			//--------------------------------------------------
 			return View(await scheduleSubList.ToListAsync());
 
@@ -494,42 +530,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 		}
 
-		// POST: Manager/Schedules/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("ID,DentistID,TimeSlotID,Date,ScheduleStatus")] Schedule schedule)
-		{
-			if (id != schedule.ID)
-			{
-				return NotFound();
-			}
-
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(schedule);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!ScheduleExists(schedule.ID))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			ViewData["DentistID"] = new SelectList(_context.Dentists, "ID", "ID", schedule.DentistID);
-			ViewData["TimeSlotID"] = new SelectList(_context.TimeSlots, "ID", "ID", schedule.TimeSlotID);
-			return View(schedule);
-		}
+		
 		#endregion
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -570,45 +571,22 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			}
 			return RedirectToAction("Edit", new { dentistId = dentistId, date = date });
 		}
-		#region Xóa lịch khám theo ID - autoCreate
-		// GET: Manager/Schedules/Delete/5
-		public async Task<IActionResult> Delete(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var schedule = await _context.Schedules
-				.Include(s => s.Dentist).ThenInclude(d => d.Account)
-				.Include(s => s.TimeSlot)
-				.FirstOrDefaultAsync(m => m.ID == id);
-			if (schedule == null)
-			{
-				return NotFound();
-			}
-
-			return View(schedule);
-		}
-
-		// POST: Manager/Schedules/Delete/5
-		[HttpPost, ActionName("Delete")]
+		#region Xóa lịch khám - xóa tất cả trừ Lịch "Đã Đặt"
+		// POST
+		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
+		public async Task<IActionResult> Delete(int? dentistId, DateTime? date) 
 		{
-			var schedule = await _context.Schedules
-				.Include(s => s.Dentist).ThenInclude(d => d.Account)
-				.Include(s => s.TimeSlot)
-				.FirstOrDefaultAsync(m => m.ID == id);
-			var denId = schedule.Dentist.ID;
-			var date = schedule.Date;
-			if (schedule != null)
+			var scheduleSubList = _context.Schedules.Where(p =>
+				p.DentistID == dentistId && p.Date == DateOnly.FromDateTime(date.Value) && p.ScheduleStatus != "Đã Đặt");
+			if (scheduleSubList.Any())
 			{
-				_context.Schedules.Remove(schedule);
+				_context.Schedules.RemoveRange(scheduleSubList);
+				await _context.SaveChangesAsync();
 			}
+			return RedirectToAction("Index");
+		
 
-			await _context.SaveChangesAsync();
-			return RedirectToAction("Edit", new { dentistId = denId, date = date });
 		}
 		#endregion
 

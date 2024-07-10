@@ -7,7 +7,7 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng tên phòng khám.")]
+        [Required(ErrorMessage = "Vui lòng nhập tên phòng khám.")]
         public string Name { get; set; }
 
         public string? Description { get; set; }
@@ -26,11 +26,7 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
         [MinLength(3, ErrorMessage = "Email phải có ít nhất 3 ký tự.")]
         public string Email { get; set; }
 
-        public string Basis { get; set; }
-
         public string? ClinicStatus { get; set; }
-
-        //public string MapLinker { get; set; }
 
         public int ManagerID { get; set; }
 

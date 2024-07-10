@@ -477,6 +477,10 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Dentist_ID");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("Description");
+
                     b.Property<DateOnly>("DesiredDate")
                         .HasColumnType("date")
                         .HasColumnName("DesiredDate");
@@ -504,7 +508,10 @@ namespace Dental_Clinic_System.Migrations
 
                     b.HasIndex("PatientRecord_ID");
 
-                    b.ToTable("FutureAppointments");
+                    b.ToTable("FutureAppointments", t =>
+                        {
+                            t.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "FutureAppointmentStatus = N'Chưa Khám' OR FutureAppointmentStatus = N'Đã Khám' OR FutureAppointmentStatus = N'Đã Hủy'");
+                        });
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
@@ -1339,7 +1346,8 @@ namespace Dental_Clinic_System.Migrations
 
                     b.Navigation("Reviews");
 
-                    b.Navigation("Wallet");
+                    b.Navigation("Wallet")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Appointment", b =>

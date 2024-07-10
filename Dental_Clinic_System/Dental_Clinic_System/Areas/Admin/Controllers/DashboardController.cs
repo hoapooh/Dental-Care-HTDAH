@@ -83,20 +83,27 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 newsData[item.Month - 1] = item.Count;
             }
 
+            //Xếp hạng Phòng khám theo Rating
+            var clinics = await _context.Clinics
+                .Where(c => c.Rating.HasValue)
+                .Select(c => new { c.Name, c.Rating})
+                .ToListAsync();
+
+            var clinicName = clinics.Select(c => c.Name).ToList();
+            var clinicRating = clinics.Select(c => c.Rating.Value).ToList();
+
             //Thêm mới vào DashboardVM
             var model = new DashboardVM
             {
                 SelectedYear = currentYear,
-                SuccessfulAppointments = successfulAppointmentsPerMonth.Sum(x => x.Count),
-                FailedAppointments = failedAppointmentsPerMonth.Sum(x => x.Count),
                 MonthlySuccessfulAppointments = successfulData.ToList(),
                 MonthlyFailedAppointments = failedData.ToList(),
                 AcceptedOrdersToday = acceptOrderToday,
                 RejectedOrdersToday = rejectOrderToday,
-                MonthlyNewPost = newsData.ToList()
+                MonthlyNewPost = newsData.ToList(),
+                ClinicNames = clinicName,
+                ClinicRatings = clinicRating
             };
-            
-
 
             return View(model);
         }
@@ -104,3 +111,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
     }
 
 }
+
+//SuccessfulAppointments = successfulAppointmentsPerMonth.Sum(x => x.Count),
+//FailedAppointments = failedAppointmentsPerMonth.Sum(x => x.Count),

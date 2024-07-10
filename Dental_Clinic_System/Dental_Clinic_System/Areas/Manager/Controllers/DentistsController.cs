@@ -289,7 +289,7 @@ namespace Dental_Clinic_System.Controllers
 				return NotFound();
 			}
 
-			if (ModelState.IsValid)
+			if (ModelState.IsValid )
 			{
 				try
 				{
@@ -353,7 +353,8 @@ namespace Dental_Clinic_System.Controllers
 				return RedirectToAction(nameof(Details), new { id = id });
 			}
 
-			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentistForm.DegreeID);
+			//ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentistForm.DegreeID);
+			//ViewData["Specialty"] = new SelectList(_context.Specialties, "ID", "Name");
 			//List<string> errors = new List<string>();
 			//foreach (var value in ModelState.Values)
 			//{

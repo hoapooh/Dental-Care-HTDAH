@@ -148,8 +148,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
         #region Chỉnh sửa (Edit Account)
         //===================CHỈNH SỬA TÀI KHOẢN===================
-
-        //[Route("EditAccount/{id}")]
         public async Task<IActionResult> EditAccount(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -179,7 +177,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[Route("EditAccount")]
         public async Task<IActionResult> EditAccount(EditAccountVM model)
         {
             if (ModelState.IsValid)
@@ -243,7 +240,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 account.Address = model.Address;
                 account.Role = model.Role;
 
-
 				_context.Update(account);
                 await _context.SaveChangesAsync();
 
@@ -252,7 +248,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction(nameof(ListAccountPatient));
             }
 
-            return View(model);
+			TempData["ToastMessageFailTempData"] = "Chỉnh sửa tài khoản bệnh nhân thất bại";
+			return View(model);
         }
         #endregion
 

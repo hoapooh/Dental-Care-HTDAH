@@ -1,6 +1,8 @@
-﻿using AutoMapper.Internal;
+﻿using AutoMapper.Execution;
+using AutoMapper.Internal;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
+using Google.Apis.PeopleService.v1.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -230,6 +232,8 @@ namespace Dental_Clinic_System.Controllers
 
         //         return Json(groupData);
         //     }
+
+
         public async Task<IActionResult> GetSchedules(int? dentistID)
         {
             // Lấy thông tin phòng khám từ nha sĩ
@@ -255,17 +259,21 @@ namespace Dental_Clinic_System.Controllers
                 .Include(s => s.Dentist)
                 .Include(s => s.TimeSlot)
                 .Where(s => s.DentistID == dentistID) // && s.ScheduleStatus == "Còn Trống"
-                                                       //(s.Date > todayDate || (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime)) &&
+                                                      //(s.Date > todayDate || (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime)) &&
                 .ToListAsync();
 
             // lấy tất cả các ngày có trong schedules
-            var allDates = schedules.Select(s => s.Date).Distinct().ToList();
+            var allSchedules = schedules.Select(s => new
+            {
+                timeSlotId = s.TimeSlot.ID,
+                date = s.Date
+            }).Distinct().ToList();
 
             // tạo danh sách các time slot với thời gian 30 phút cho từng ngày
             var timeSlots = new List<object>();
             // load tất cả các cuộc hẹn của nha sĩ trước
             var appointments = _context.Appointments
-                .Where(a => a.Schedule.DentistID == dentistID)
+                .Where(a => a.Schedule.DentistID == dentistID && a.AppointmentStatus != "Đã Hủy")
                 .ToList();
 
             // chuyển đổi danh sách các cuộc hẹn thành dictionary để dễ tra cứu
@@ -273,44 +281,57 @@ namespace Dental_Clinic_System.Controllers
                 .GroupBy(a => new { a.Schedule.Date, a.Schedule.TimeSlot.StartTime })
                 .ToDictionary(g => g.Key, g => g.Count());
 
-            foreach (var date in allDates)
+            foreach (var schedule in allSchedules)
             {
                 var dailyTimeSlots = new List<object>();
-
-                foreach (var slot in amTimeSlots.Concat(pmTimeSlots))
+                List<TimeSlot> availableTimeSlot = new();
+                if (schedule.timeSlotId == 1)
                 {
-                    var startTime = slot.StartTime;
-                    var endTime = slot.EndTime;
-                    while (startTime < endTime)
-                    {
-                        var nextTime = startTime.AddMinutes(30);
-                        if (nextTime > endTime) nextTime = endTime;
-
-                        // Kiểm tra xem có cuộc hẹn nào trong khung thời gian này không
-                        var key = new { Date = date, StartTime = startTime };
-                        appointmentDict.TryGetValue(key, out var appointmentCount);
-
-                        if (date.ToDateTime(startTime) >= utc7Now && (appointmentCount < 2 || !appointmentDict.ContainsKey(key)))
-                        {
-                            Console.WriteLine(utc7Now);
-                            Console.WriteLine(date.ToDateTime(startTime));
-                            dailyTimeSlots.Add(new
-                            {
-                                Date = date.ToString("yyyy-MM-dd"),
-                                StartTime = startTime.ToString("HH:mm"),
-                                EndTime = nextTime.ToString("HH:mm"),
-                                ScheduleID = (int?)null
-                            });
-                        }
-
-                        startTime = nextTime;
-                    }
+                    availableTimeSlot = amTimeSlots;
                 }
+                else if (schedule.timeSlotId == 2)
+                {
+                    availableTimeSlot = pmTimeSlots;
+                }
+                else
+                {
+                    continue;
+                }
+
+                foreach (var slot in availableTimeSlot)
+                    {
+                        var startTime = slot.StartTime;
+                        var endTime = slot.EndTime;
+                        while (startTime < endTime)
+                        {
+                            var nextTime = startTime.AddMinutes(30);
+                            if (nextTime > endTime) nextTime = endTime;
+
+                            // Kiểm tra xem có cuộc hẹn nào trong khung thời gian này không
+                            var key = new { Date = schedule.date, StartTime = startTime };
+                            appointmentDict.TryGetValue(key, out var appointmentCount);
+
+                            if (schedule.date.ToDateTime(startTime) >= utc7Now && (appointmentCount < 2 || !appointmentDict.ContainsKey(key)))
+                            {
+                                Console.WriteLine(utc7Now);
+                                Console.WriteLine(schedule.date.ToDateTime(startTime));
+                                dailyTimeSlots.Add(new
+                                {
+                                    Date = schedule.date.ToString("yyyy-MM-dd"),
+                                    StartTime = startTime.ToString("HH:mm"),
+                                    EndTime = nextTime.ToString("HH:mm"),
+                                    ScheduleID = (int?)null
+                                });
+                            }
+
+                            startTime = nextTime;
+                        }
+                    }
 
                 // Add dailyTimeSlots vào timeSlots chung
                 timeSlots.AddRange(dailyTimeSlots);
-            }
 
+            }
             return Json(timeSlots);
         }
 
@@ -318,7 +339,7 @@ namespace Dental_Clinic_System.Controllers
 
 
 
-        #region helper method. Author: Ngoc Anh
+        #region Helper method to generate timeslot. Author: Ngoc Anh
         private List<TimeSlot> GenerateTimeSlots(int workTimeId)
         {
 
@@ -338,6 +359,14 @@ namespace Dental_Clinic_System.Controllers
             // Retrieve the matching TimeSlots
             return _context.TimeSlots
                           .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime).ToList();
+
+        }
+
+        private List<TimeSlot> GenerateTimeSlots(TimeOnly startTime, TimeOnly endTime)
+        {
+            // Retrieve the matching TimeSlots
+            return _context.TimeSlots
+                          .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime && ts.ID != 1 && ts.ID != 2).ToList();
 
         }
         #endregion

@@ -23,7 +23,10 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("DesiredDate", TypeName = "date")]
 		public DateOnly DesiredDate { get; set; }
 
-		[Column("FutureAppointmentStatus", TypeName = "nvarchar(30)")]
+        [Column("Description", TypeName = "nvarchar(1000)")]
+        public string? Description { get; set; }
+
+        [Column("FutureAppointmentStatus", TypeName = "nvarchar(30)")]
 		public string? FutureAppointmentStatus { get; set; }
 
 		#region Foreign Key
