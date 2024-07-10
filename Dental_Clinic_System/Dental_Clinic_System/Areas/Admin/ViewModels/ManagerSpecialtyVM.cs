@@ -14,8 +14,8 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 
 		public string? Description { get; set; }
 
-		[Required(ErrorMessage = "Vui lòng nhập tiền cọc.")]
-		[Range(0, double.MaxValue, ErrorMessage = "Tiền cọc phải lớn hơn 0!!")]
+		[Required(ErrorMessage = "Vui lòng nhập tiền đặt cọc.")]
+		[Range(0, 1000000000, ErrorMessage = "Tiền đặt cọc phải lớn hơn 0 và không được quá 1 tỷ!!")]
 		public decimal Deposit {  get; set; }
 
     }

@@ -243,7 +243,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 account.Address = model.Address;
                 account.Role = model.Role;
 
-
 				_context.Update(account);
                 await _context.SaveChangesAsync();
 
@@ -252,7 +251,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction(nameof(ListAccountPatient));
             }
 
-            return View(model);
+			TempData["ToastMessageFailTempData"] = "Chỉnh sửa tài khoản bệnh nhân thất bại";
+			return View(model);
         }
         #endregion
 

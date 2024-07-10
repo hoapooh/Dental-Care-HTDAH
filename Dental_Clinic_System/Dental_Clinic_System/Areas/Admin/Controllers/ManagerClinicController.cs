@@ -99,7 +99,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         #region Thêm phòng khám (ADD)
         //===================THÊM PHÒNG KHÁM===================
         [HttpGet]
-        //[Route("CreateClinic")]
         public async Task<IActionResult> CreateClinic()
         {
             var unassignedManagers = await _context.Accounts
@@ -302,7 +301,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = new AddClincVM
+			var model = new AddClincVM
 			{
 				ID = clinic.ID,
 				Name = clinic.Name,
@@ -331,22 +330,36 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				AmStartTime = clinic.AmWorkTimes?.StartTime.ToString("HH:mm") ?? "07:00",
 				AmEndTime = clinic.AmWorkTimes?.EndTime.ToString("HH:mm") ?? "11:00",
 				PmStartTime = clinic.PmWorkTimes?.StartTime.ToString("HH:mm") ?? "13:00",
-				PmEndTime = clinic.PmWorkTimes?.EndTime.ToString("HH:mm") ?? "21:00",
+				PmEndTime = clinic.PmWorkTimes?.EndTime.ToString("HH:mm") ?? "21:00"
 			};
 
-			ViewBag.AmTimes = new List<TimeOnly>() {
-		        new TimeOnly(7, 0),  new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
-		        new TimeOnly(9, 0),  new TimeOnly(9, 30), new TimeOnly(10, 0), new TimeOnly(10, 30),
-		        new TimeOnly(11, 0),  new TimeOnly(11, 30), new TimeOnly(12, 0)
-	        };
+			var amTimes = new List<TimeOnly> {
+				new TimeOnly(7, 0), new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
+				new TimeOnly(9, 0), new TimeOnly(9, 30), new TimeOnly(10, 0), new TimeOnly(10, 30),
+				new TimeOnly(11, 0), new TimeOnly(11, 30), new TimeOnly(12, 0)
+			};
 
-			ViewBag.PmTimes = new List<TimeOnly>() {
-		        new TimeOnly(12, 0), new TimeOnly(12, 30), new TimeOnly(13, 0),  new TimeOnly(13, 30),
-		        new TimeOnly(14, 0), new TimeOnly(14, 30),
-		        new TimeOnly(15, 0),  new TimeOnly(15, 30), new TimeOnly(16, 0), new TimeOnly(16, 30),
-		        new TimeOnly(17, 0),  new TimeOnly(17, 30), new TimeOnly(18, 0), new TimeOnly(18, 30),
-		        new TimeOnly(19, 0),  new TimeOnly(19, 30), new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
-	        };
+			var pmTimes = new List<TimeOnly> {
+				new TimeOnly(12, 0), new TimeOnly(12, 30), new TimeOnly(13, 0), new TimeOnly(13, 30),
+				new TimeOnly(14, 0), new TimeOnly(14, 30), new TimeOnly(15, 0), new TimeOnly(15, 30),
+				new TimeOnly(16, 0), new TimeOnly(16, 30), new TimeOnly(17, 0), new TimeOnly(17, 30),
+				new TimeOnly(18, 0), new TimeOnly(18, 30), new TimeOnly(19, 0), new TimeOnly(19, 30),
+				new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
+			};
+
+			ViewBag.AmTimes = amTimes.Select(t => new SelectListItem
+			{
+				Value = t.ToString("HH:mm"),
+				Text = t.ToString("HH:mm"),
+				Selected = t.ToString("HH:mm") == model.AmStartTime || t.ToString("HH:mm") == model.AmEndTime
+			}).ToList();
+
+			ViewBag.PmTimes = pmTimes.Select(t => new SelectListItem
+			{
+				Value = t.ToString("HH:mm"),
+				Text = t.ToString("HH:mm"),
+				Selected = t.ToString("HH:mm") == model.PmStartTime || t.ToString("HH:mm") == model.PmEndTime
+			}).ToList();
 
 			return View(model);
         }
@@ -413,8 +426,9 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction(nameof(ListClinic));
 			}
 
-            //Ghi lại List Manager chưa được chỉ định phòng khám nào
-            model.UnassignedManagers = new SelectList(await _context.Accounts
+			//Load lại dữ liệu khi ModelState không hợp lệ
+			//Ghi lại List Manager chưa được chỉ định phòng khám nào
+			model.UnassignedManagers = new SelectList(await _context.Accounts
                 .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
                 .Select(a => new
                 {
@@ -422,19 +436,33 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     FullName = a.LastName + " " + a.FirstName
                 }).ToListAsync(), "ID", "FullName");
 
-			ViewBag.AmTimes = new List<TimeOnly>() {
-		        new TimeOnly(7, 0),  new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
-		        new TimeOnly(9, 0),  new TimeOnly(9, 30), new TimeOnly(10, 0), new TimeOnly(10, 30),
-		        new TimeOnly(11, 0),  new TimeOnly(11, 30), new TimeOnly(12, 0)
-	        };
+			var amTimes = new List<TimeOnly> {
+				new TimeOnly(7, 0), new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
+				new TimeOnly(9, 0), new TimeOnly(9, 30), new TimeOnly(10, 0), new TimeOnly(10, 30),
+				new TimeOnly(11, 0), new TimeOnly(11, 30), new TimeOnly(12, 0)
+			};
 
-			ViewBag.PmTimes = new List<TimeOnly>() {
-		        new TimeOnly(12, 0), new TimeOnly(12, 30), new TimeOnly(13, 0),  new TimeOnly(13, 30),
-		        new TimeOnly(14, 0), new TimeOnly(14, 30),
-		        new TimeOnly(15, 0),  new TimeOnly(15, 30), new TimeOnly(16, 0), new TimeOnly(16, 30),
-		        new TimeOnly(17, 0),  new TimeOnly(17, 30), new TimeOnly(18, 0), new TimeOnly(18, 30),
-		        new TimeOnly(19, 0),  new TimeOnly(19, 30), new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
-	        };
+			var pmTimes = new List<TimeOnly> {
+				new TimeOnly(12, 0), new TimeOnly(12, 30), new TimeOnly(13, 0), new TimeOnly(13, 30),
+				new TimeOnly(14, 0), new TimeOnly(14, 30), new TimeOnly(15, 0), new TimeOnly(15, 30),
+				new TimeOnly(16, 0), new TimeOnly(16, 30), new TimeOnly(17, 0), new TimeOnly(17, 30),
+				new TimeOnly(18, 0), new TimeOnly(18, 30), new TimeOnly(19, 0), new TimeOnly(19, 30),
+				new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
+			};
+
+			ViewBag.AmTimes = amTimes.Select(t => new SelectListItem
+			{
+				Value = t.ToString("HH:mm"),
+				Text = t.ToString("HH:mm"),
+				Selected = t.ToString("HH:mm") == model.AmStartTime || t.ToString("HH:mm") == model.AmEndTime
+			}).ToList();
+
+			ViewBag.PmTimes = pmTimes.Select(t => new SelectListItem
+			{
+				Value = t.ToString("HH:mm"),
+				Text = t.ToString("HH:mm"),
+				Selected = t.ToString("HH:mm") == model.PmStartTime || t.ToString("HH:mm") == model.PmEndTime
+			}).ToList();
 
 			return View(model);
         }
