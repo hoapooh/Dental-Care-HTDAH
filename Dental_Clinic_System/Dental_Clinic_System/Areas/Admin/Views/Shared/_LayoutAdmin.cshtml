@@ -107,7 +107,30 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/assets/js/toastmessage.js"></script>
 
+    <!-- Change Password -->
+    <script>
+        $(document).ready(function () {
+            $('#changePasswordForm').on('submit', function (e) {
+                e.preventDefault();
 
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ChangePassword", "AdminAccount", "Admin")',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            // alert(response.message);
+                            $('#changePasswordModal').modal('hide');
+                            location.reload();  // Reload the page
+                        } else {
+                            // alert(response.message);
+                            location.reload();  // Reload the page
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 
 </body>

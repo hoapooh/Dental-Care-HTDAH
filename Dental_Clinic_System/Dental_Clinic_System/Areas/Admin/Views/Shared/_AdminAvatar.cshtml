@@ -70,26 +70,3 @@
     </div>
 </div>
 
-<!-- Change Password -->
-<script>
-    $(document).ready(function () {
-        $('#changePasswordForm').on('submit', function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("ChangePassword", "ManagerAccount")',
-                data: $(this).serialize(),
-                success: function (response) {
-                    if (response.success) {
-                        // alert(response.message);
-                        $('#changePasswordModal').modal('hide');
-                        location.reload();  // Reload the page
-                    } else {
-                        location.reload();  // Reload the page
-                    }
-                }
-            });
-        });
-    });
-</script>
