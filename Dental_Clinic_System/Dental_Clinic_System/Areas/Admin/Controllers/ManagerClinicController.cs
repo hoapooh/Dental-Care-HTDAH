@@ -768,13 +768,16 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
             if (orderStatus == "Đồng Ý")
             {
+                string[] nameParts = order.RepresentativeName.Trim().Split(' ');
+
                 var encryptedPassword = Util.GenerateRandomKey(order.CompanyEmail, 20);
                 var user = new Account
                 {
-                    Username = order.CompanyEmail,
+                    Username = order.CompanyEmail.Trim(),
                     Password = DataEncryptionExtensions.ToMd5Hash(encryptedPassword),
                     Role = "Quản Lý",
-                    FirstName = order.RepresentativeName,
+                    FirstName = nameParts.Take(nameParts.Length - 1).ToString(),
+                    LastName = nameParts.Last(),
                     Email = order.ManagerEmail,
                     PhoneNumber = order.ManagerPhonenumber,
                     AccountStatus = "Hoạt Động"

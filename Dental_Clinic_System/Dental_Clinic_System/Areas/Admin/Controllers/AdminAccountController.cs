@@ -17,18 +17,18 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		{
 			_context = context;
 		}
-
+		
 		[HttpGet]
 		public IActionResult Login(string returnUrl = "/Admin/Dashboard/Index")
 		{
 			ViewBag.ReturnUrl = returnUrl;
 			return View();
 		}
-
+		
 		[HttpPost]
 		public async Task<IActionResult> Login(string username, string password)
 		{
-			var user = _context.Accounts.FirstOrDefault(d => username == d.Username && password == d.Password);
+			var user = _context.Accounts.FirstOrDefault(d => username == d.Username && DataEncryptionExtensions.ToMd5Hash(password) == d.Password);
 			if (user == null)
 			{
 				ViewBag.ErrorMessage = "Tài khoản đăng nhập hoặc mật khẩu không hợp lệ!!";
