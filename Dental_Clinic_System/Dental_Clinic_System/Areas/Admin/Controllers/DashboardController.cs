@@ -104,8 +104,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 ClinicNames = clinicName,
                 ClinicRatings = clinicRating
             };
-            
-
 
             return View(model);
         }

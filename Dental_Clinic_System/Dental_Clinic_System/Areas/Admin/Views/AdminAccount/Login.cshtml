@@ -3,145 +3,6 @@
 	Layout = null;
 }
 
-@* <title>Login</title>
-<style>
-	*,
-	*:before,
-	*:after {
-		padding: 0;
-		margin: 0;
-		box-sizing: border-box;
-	}
-
-	html {
-		font-size: 62.5%;
-	}
-
-	body {
-		background-color: #e6f6fe;
-		font-family: "Baloo Paaji 2", sans-serif;
-		font-size: 1.6rem;
-	}
-
-	.background {
-		width: 430px;
-		height: 520px;
-		position: absolute;
-		transform: translate(-50%, -50%);
-		left: 50%;
-		top: 50%;
-	}
-
-		.background .shape {
-			height: 200px;
-			width: 200px;
-			position: absolute;
-			border-radius: 50%;
-		}
-
-	.shape:first-child {
-		background: linear-gradient(#1845ad, #23a2f6);
-		left: -80px;
-		top: -80px;
-	}
-
-	.shape:last-child {
-		background: linear-gradient(to right, #ff512f, #f09819);
-		right: -30px;
-		bottom: -80px;
-	}
-
-	form {
-		height: 520px;
-		width: 400px;
-		background-color: rgba(255, 255, 255, 0.13);
-		position: absolute;
-		transform: translate(-50%, -50%);
-		top: 50%;
-		left: 50%;
-		border-radius: 10px;
-		backdrop-filter: blur(3px);
-		border: 2px solid rgba(255, 255, 255, 0.1);
-		box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-		padding: 50px 35px;
-	}
-
-		form * {
-			letter-spacing: 0.5px;
-			outline: none;
-			border: none;
-		}
-
-		form h1 {
-			color: #1376f8;
-			font-size: 4rem;
-			font-weight: bold;
-			line-height: 42px;
-			text-align: center;
-		}
-
-	label {
-		display: block;
-		margin-top: 30px;
-		font-size: 2.4rem;
-		font-weight: bold;
-		color: #1376f8;
-	}
-
-	input {
-		display: block;
-		height: 50px;
-		width: 100%;
-		border-radius: 3px;
-		padding: 0 10px;
-		margin-top: 8px;
-		color: #1376f8;
-		font-size: 1.8rem;
-		font-weight: 400;
-	}
-
-	::placeholder {
-		color: #1376f8;
-	}
-
-	button {
-		margin-top: 50px;
-		width: 100%;
-		background-color: #1376f8;
-		color: #fff;
-		padding: 15px 0;
-		font-size: 18px;
-		font-weight: 600;
-		border-radius: 5px;
-		cursor: pointer;
-	}
-
-		button:hover {
-			background-color: #0d5cb6;
-		}
-</style>
-
-<div class="background">
-	<div class="shape"></div>
-	<div class="shape"></div>
-</div>
-
-<form id="loginForm" asp-controller="AdminAccount" asp-action="Login" method="post">
-	<h1>Login</h1>
-	@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-	{
-		<p class="error-message">@ViewBag.ErrorMessage</p>
-	}
-	<label for="username">Tên đăng nhập</label>
-	<input type="text" id="username" name="username" placeholder="Tên đăng nhập" required />
-	<label for="password">Mật khẩu</label>
-	<input type="password" id="password" name="password" placeholder="Mật khẩu" required />
-	<input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-	<button type="submit">Đăng nhập</button>
-
-	<p class="error-message" id="error-message"></p>
-</form> *@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,10 +11,24 @@
 	<link rel="shortcut icon" type="image/x-icon" href="~/assets/images/dentalClinicLogoOfficial.png" />
 	<script src="~/assets/js/toastmessage.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+	<style>
+		.error-message {
+			color: red;
+			font-weight: bold;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		.rightside {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+	</style>
 </head>
 
 <body>
-	@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+	@* @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 	{
 		var message = TempData["SuccessMessage"] as string;
 		<script>
@@ -170,7 +45,7 @@
 				showErrorToasts('@message');
 			});
 		</script>
-	}
+	} *@
 	<div class="form">
 		<div class="leftside">
 			<img src="/assets/images/login-dentist-illus.png" alt="Hình minh họa" style="position:relative; right: 90%;">
@@ -191,7 +66,14 @@
 					</div>
 					<input type="submit" class="login" value="Đăng Nhập">
 				</div>
-			</form>
+			</form> </br>
+			@* Thông báo lỗi *@
+			@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage as string))
+			{
+				<div class="error-message">
+					@ViewBag.ErrorMessage
+				</div>
+			}
 		</div>
 	</div>
 	<div id="toasts"></div>

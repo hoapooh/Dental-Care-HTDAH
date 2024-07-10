@@ -148,8 +148,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
         #region Chỉnh sửa (Edit Account)
         //===================CHỈNH SỬA TÀI KHOẢN===================
-
-        //[Route("EditAccount/{id}")]
         public async Task<IActionResult> EditAccount(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -179,7 +177,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[Route("EditAccount")]
         public async Task<IActionResult> EditAccount(EditAccountVM model)
         {
             if (ModelState.IsValid)
