@@ -15,6 +15,6 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 		public List<int> DentistIDs { get; set; } = new List<int>();
 		public string Dates { get; set; } = null!;
 
-		public List<int> TimeSlots { get; set; } = null!;
+		public List<int> TimeSlots { get; set; } = new List<int>();
 	}
 }

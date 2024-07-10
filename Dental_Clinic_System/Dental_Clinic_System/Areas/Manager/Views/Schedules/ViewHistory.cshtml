@@ -108,27 +108,35 @@
 
 <!-- Filters Section -->
 <div style="padding: 0 ">
-	<form method="get" asp-action="ViewHistory" class="manager__management__clinic row">
+	<form method="get" asp-action="ViewHistory" class="manager__management__clinic row" id="filterForm">
 		<div class="form-group col-md-3" style="padding: 0; padding-right: 20px">
 			<label for="dentist">Nha sĩ</label>
 			<select id="dentist" name="dentistId" class="form-control">
-				<option value=""></option>
+				<option value="">Tất cả</option>
 				@foreach (var dentist in ViewBag.Dentists)
 				{
-					<option value="@dentist.ID">@dentist.Account.LastName @dentist.Account.FirstName</option>
+					if (ViewBag.SelectedDentistId != null && dentist.ID == ViewBag.SelectedDentistId)
+					{
+						<option value="@dentist.ID" selected>@dentist.Account.LastName @dentist.Account.FirstName</option>
+					}
+					else
+					{
+						<option value="@dentist.ID">@dentist.Account.LastName @dentist.Account.FirstName</option>
+					}
+
 				}
 			</select>
 		</div>
 		<div class="form-group col-md-2" style="padding: 0; padding-right: 20px">
 			<label for="date">Ngày</label>
-			<input type="date" id="date" name="date" class="form-control" />
+			<input type="date" id="date" name="date" class="form-control" value="@ViewBag.SelectedDate" />
 		</div>
-		<div class="col-md-1" style="margin-top: 33px; padding: 0">
+		@* <div class="col-md-1" style="margin-top: 33px; padding: 0">
 			<button type="submit" class="btn btn-primary" style="
 				min-width: 84px; background: #ccc;">
 				Tìm
 			</button>
-		</div>
+		</div> *@
 
 	</form>
 </div>
@@ -197,3 +205,23 @@
 <ul id="pagination" class="pagination">
 </ul>
 
+@section Scripts {
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var form = document.getElementById('filterForm');
+
+			var dentistSelect = document.getElementById('dentist');
+			var dateInput = document.getElementById('date');
+
+			dentistSelect.addEventListener('change', function () {
+				form.submit();
+			});
+
+			dateInput.addEventListener('change', function () {
+				form.submit();
+			});
+
+		});
+	</script>
+
+}
