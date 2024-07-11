@@ -45,6 +45,10 @@
 			padding: 24px 48px !important; /* Reduced padding for top/bottom and left/right */
 			border-radius: 10px; /* Adjust this value to change the roundness of the corners */
 		}
+
+		.form-modal-styles .modal-body input, .form-modal-styles .modal-body select {
+			font-weight: normal;
+		}
 	</style>
 }
 
@@ -61,20 +65,24 @@
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<div class="modal-body ">
 			<div class="modal-body-card">
-				<label for="username">Tên đăng nhập</label>
+				<label for="Username">Tên đăng nhập</label>
 				<input asp-for="Username" type="text" required class="form-control" />
+				<span asp-validation-for="Username" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card">
 				<label for="Password">Mật khẩu</label>
 				<input asp-for="Password" type="password" required class="form-control" />
+				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card">
 				<label for="LastName">Họ (Tên đệm)</label>
 				<input asp-for="LastName" type="text" required class="form-control" />
+				<span asp-validation-for="LastName" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card2">
 				<label for="FirstName">Tên</label>
 				<input asp-for="FirstName" type="text" required class="form-control" />
+				<span asp-validation-for="FirstName" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card3">
 				<label for="Gender">Giới tính</label>
@@ -88,13 +96,15 @@
 			<div class="modal-body-card">
 				<label for="Email">Email</label>
 				<input type="email" asp-for="Email" required class="form-control" />
+				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card">
 				<label for="PhoneNumber">Số điện thoại</label>
 				<input type="tel" asp-for="PhoneNumber" required class="form-control" />
+				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 			</div>
 			<div class="user-address modal-body-card">
-				<label for="DegreeID">Bằng cấp</label>
+				<label for="DegreeID">Học vị</label>
 				<select asp-items="ViewBag.DegreeID" asp-for="DegreeID" required class="form-control"></select>
 			</div>
 			<div class="user-address modal-body-card">
@@ -126,7 +136,7 @@
 
 		<div class="modal-footer">
 			<div>
-				<a asp-action="Index">Back to List</a>
+				<a asp-action="Index">Về danh sách</a>
 			</div>
 			|
 			<button type="submit" class="submit-btn btn">
