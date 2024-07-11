@@ -42,31 +42,31 @@
 			<div class="collapse" id="manage-appointment"> 
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" class="nav-link appointment0">
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="patientappointment" asp-action="patientappointments" class="nav-link appointment0">
 							<i class='bx bx-folder-open'></i>  Tất cả đơn khám
 						</a>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Chờ Xác Nhận" class="nav-link appointment1">
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="patientappointment" asp-action="patientappointments" asp-route-status="Chờ Xác Nhận" class="nav-link appointment1">
 							<i class='bx bx-copy-alt bx-flashing bx-flip-horizontal'></i> Đơn chờ xác nhận
 						</a>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Đã Chấp Nhận" class="nav-link appointment2">
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="patientappointment" asp-action="patientappointments" asp-route-status="Đã Chấp Nhận" class="nav-link appointment2">
 							<i class='bx bx-check'></i> Đơn đã chấp nhận
 						</a>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Đã Khám" class="nav-link appointment3">
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="patientappointment" asp-action="patientappointments" asp-route-status="Đã Khám" class="nav-link appointment3">
 							<i class='bx bx-select-multiple'></i> Đơn đã khám
 						</a>
 					</li>
 
 					<li class="nav-item">
-						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="dentistdetail" asp-action="patientappointments" asp-route-status="Đã Hủy" class="nav-link appointment4">
+						<a style="padding-left: 40px; font-size: 1.5rem" asp-area="dentist" asp-controller="patientappointment" asp-action="patientappointments" asp-route-status="Đã Hủy" class="nav-link appointment4">
 							<i class='bx bx-x bx-spin'></i> Đơn đã hủy
 						</a>
 					</li>
@@ -77,7 +77,7 @@
 
 		<li class="nav-item">
 			<a asp-area="dentist" asp-controller="dentistdetail" asp-action="showperiodicappointment" class="@(currentAction == "ShowPeriodicAppointment" ? "active" : "")">
-				<span class="menu-icon"><i class='bx bx-file'></i></span>Lịch diều trị
+				<span class="menu-icon"><i class='bx bx-file'></i></span>Quản lý đơn định kỳ
 			</a>
 		</li>
 

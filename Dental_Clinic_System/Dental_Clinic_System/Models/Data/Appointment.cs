@@ -35,8 +35,8 @@ namespace Dental_Clinic_System.Models.Data
         [Column("CreatedDate", TypeName = "datetime")]
         public DateTime? CreatedDate { get; set; }
 
-        [Column("Future_Appointment_ID", TypeName = "int")]
-        public int? Future_Appointment_ID { get; set; }
+        [Column("IsExport", TypeName = "bit")]
+        public bool IsExport { get; set; } = false;
 
         [Column("IsRated")]
         public string? IsRated { get; set; } = null;

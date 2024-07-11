@@ -63,8 +63,6 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                     ClinicPhone = a.Schedule.Dentist.Clinic.Manager.PhoneNumber,
                     DentistName = a.Schedule.Dentist.Account.LastName + " " + a.Schedule.Dentist.Account.FirstName,
                     DentistPhoneNumber = a.Schedule.Dentist.Account.PhoneNumber
-
-
                 })
                 .FirstOrDefault();
             #endregion
@@ -74,6 +72,10 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             {
                 return NotFound();
             }
+			//if(appointment != null)
+			//{
+			//	_context.FutureAppointments.RemoveRange(_context.FutureAppointments.Where(f => f.AppointmentID == appointment.a.ID));
+			//}
 
 			if (ngayhentaikham == null)
 			{
@@ -195,12 +197,13 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             System.IO.File.WriteAllBytes(filePath, pdf);
 
 			//Thêm appointment với giờ tạo vào FutureAppointments =====================
-			if (appointment.a.Future_Appointment_ID == null)
+			if (appointment.a.IsExport == false)
 			{
 				if (!string.IsNullOrEmpty(ngayhentaikham))
 				{
 					appointment.a.Note = $"Dặn dò: {dando}";
 					appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
+					appointment.a.IsExport = true;
 
 					// Iterate through desiredDate to create and save FutureAppointment records
 					foreach (var date in desiredDate)
@@ -213,7 +216,8 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 							StartTime = startTime, // Define your startTime and endTime
 							EndTime = endTime,
 							DesiredDate = date,
-							FutureAppointmentStatus = "Chưa Khám" // Set the default status
+							FutureAppointmentStatus = "Chưa Khám", // Set the default status
+							AppointmentID = appointment.a.ID
 						};
 
 						// Add the current futureAppointment to the context for saving
@@ -222,38 +226,30 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 					// Save all changes to the database
 					_context.SaveChanges();
-
-					// Assuming appointment.a has a property for Future_Appointment_ID, set it to the ID of the last saved futureAppointment
-					appointment.a.Future_Appointment_ID = _context.FutureAppointments
-					.OrderByDescending(f => f.ID)  // Order by ID or another suitable property that defines the order
-					.FirstOrDefault()?.ID;
-
-					// Save changes again to update appointment.a with the Future_Appointment_ID
-					_context.SaveChanges();
 				}
 			}
-			else // appointment.a.Future_Appointment_ID != null
-			{
-				if (!string.IsNullOrEmpty(ngayhentaikham))
-				{
-					appointment.a.Note = $"Dặn dò: {dando}";
-					appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
+			//else // appointment.a.Future_Appointment_ID != null
+			//{
+			//	if (!string.IsNullOrEmpty(ngayhentaikham))
+			//	{
+			//		appointment.a.Note = $"Dặn dò: {dando}";
+			//		appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
 
-					//Lấy FutureAppointment để cập nhật lại thời gian tái khám
-					var futureAppointment = _context.FutureAppointments.Find(appointment.a.Future_Appointment_ID);
-					if (futureAppointment == null)
-					{
-						return NotFound("Không tìm thấy lịch định kỳ");
-					}
+			//		//Lấy FutureAppointment để cập nhật lại thời gian tái khám
+			//		var futureAppointment = _context.FutureAppointments.Find(appointment.a.Future_Appointment_ID);
+			//		if (futureAppointment == null)
+			//		{
+			//			return NotFound("Không tìm thấy lịch định kỳ");
+			//		}
 
-					// Update the existing futureAppointment with new details
-					futureAppointment.DesiredDate = desiredDate.FirstOrDefault(); // Assuming you want to update only the first date
-					futureAppointment.StartTime = startTime;
-					futureAppointment.EndTime = endTime;
+			//		// Update the existing futureAppointment with new details
+			//		futureAppointment.DesiredDate = desiredDate.FirstOrDefault(); // Assuming you want to update only the first date
+			//		futureAppointment.StartTime = startTime;
+			//		futureAppointment.EndTime = endTime;
 
-					_context.SaveChanges();
-				}
-			}
+			//		_context.SaveChanges();
+			//	}
+			//}
 
 			//=========================================================================
 

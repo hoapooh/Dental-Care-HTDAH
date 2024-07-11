@@ -4,7 +4,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Helper
 {
 	public class DateOnlyConverter : JsonConverter<DateOnly>
 	{
-		private readonly string _format = "MM/dd/yyyy"; // This should match the format of your dates
+		private readonly string _format = "MM/dd/yyyy"; // match the format with date
 
 		public override void WriteJson(JsonWriter writer, DateOnly value, JsonSerializer serializer)
 		{
