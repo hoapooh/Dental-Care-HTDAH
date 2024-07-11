@@ -34,12 +34,21 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual DbSet<Session> Sessions { get; set; }
 
 		public virtual DbSet<WorkTime> WorkTimes { get; set; }
-		//================================================================================================================================
-		#endregion
+        //================================================================================================================================
+        #endregion
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Name=DBConnection");
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Name=DBConnection");
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Only configure SQL Server if no other provider has been configured
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Name=DBConnection");
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Account>(entity =>
 			{

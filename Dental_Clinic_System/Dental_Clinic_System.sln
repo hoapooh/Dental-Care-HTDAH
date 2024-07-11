@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dental_Clinic_System", "Dental_Clinic_System\Dental_Clinic_System.csproj", "{405A9A75-3E45-40FC-8B8B-9D932116970B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dental_Clinic_System", "Dental_Clinic_System\Dental_Clinic_System.csproj", "{405A9A75-3E45-40FC-8B8B-9D932116970B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentalCareUnitTest", "DentalCareUnitTest\DentalCareUnitTest.csproj", "{3FB634A2-6497-4424-B3F0-DC4D7B880B37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{405A9A75-3E45-40FC-8B8B-9D932116970B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{405A9A75-3E45-40FC-8B8B-9D932116970B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{405A9A75-3E45-40FC-8B8B-9D932116970B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB634A2-6497-4424-B3F0-DC4D7B880B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB634A2-6497-4424-B3F0-DC4D7B880B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB634A2-6497-4424-B3F0-DC4D7B880B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB634A2-6497-4424-B3F0-DC4D7B880B37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

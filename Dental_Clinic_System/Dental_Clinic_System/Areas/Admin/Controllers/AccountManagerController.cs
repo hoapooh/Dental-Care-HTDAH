@@ -146,6 +146,16 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 			_context.Accounts.Add(account);
 			await _context.SaveChangesAsync();
+
+            var managerBalance = new Wallet
+            {
+                Account_ID = account.ID,
+                Money = 0
+            };
+
+			_context.Add(managerBalance);
+			await _context.SaveChangesAsync();
+
             TempData["ToastMessageSuccessTempData"] = "Đăng ký tài khoản quản lý thành công";
             return RedirectToAction(nameof(ListAccountManager));
 		}
