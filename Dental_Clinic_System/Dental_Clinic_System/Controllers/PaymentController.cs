@@ -293,20 +293,20 @@ namespace Dental_Clinic_System.Controllers
                 return View("PaymentFail");
             }
 
-            await Console.Out.WriteLineAsync("==================");
-            await Console.Out.WriteLineAsync($"Code = {resultCode} | Message = {message}");
-            await Console.Out.WriteLineAsync("==================");
+            //await Console.Out.WriteLineAsync("==================");
+            //await Console.Out.WriteLineAsync($"Code = {resultCode} | Message = {message}");
+            //await Console.Out.WriteLineAsync("==================");
 
             message = message.Trim();
-            if(message == "Thành công")
+            if(message == "Thành công.")
             {
-                await Console.Out.WriteLineAsync("==================");
-                await Console.Out.WriteLineAsync($"Code 2 = {resultCode.GetType().Name} | Message 2 = {message}");
-                await Console.Out.WriteLineAsync("==================");
+                //await Console.Out.WriteLineAsync("==================");
+                //await Console.Out.WriteLineAsync($"Code 2 = {resultCode.GetType().Name} | Message 2 = {message}");
+                //await Console.Out.WriteLineAsync("==================");
                 message = "Success";
             }
 
-            if (resultCode == 0)
+            if (resultCode == 0 && message == "Success")
             {
                 // Thanh toán thành công
                 // Lưu vào database
