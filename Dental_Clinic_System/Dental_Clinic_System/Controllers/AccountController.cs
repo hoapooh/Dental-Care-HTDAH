@@ -389,7 +389,7 @@ namespace Dental_Clinic_System.Controllers
                             Email = email,
                             AccountStatus = "Hoạt Động",
                             Role = "Bệnh Nhân",
-                            Username = DataEncryptionExtensions.ToSHA256Hash(email, randomKey),
+                            Username = DataEncryptionExtensions.ToSHA256Hash(email, randomKey, 20),
                             Password = DataEncryptionExtensions.ToMd5Hash(randomKey, randomKey),
                             // Get other information from claim
                             FirstName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value,

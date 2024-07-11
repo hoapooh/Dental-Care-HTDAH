@@ -306,7 +306,7 @@ namespace Dental_Clinic_System.Controllers
                 message = "Success";
             }
 
-            if (resultCode == 0 && message == "Success")
+            if (resultCode == 0)
             {
                 // Thanh toán thành công
                 // Lưu vào database

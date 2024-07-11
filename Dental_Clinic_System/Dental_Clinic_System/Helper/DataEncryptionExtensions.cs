@@ -13,16 +13,16 @@ namespace Dental_Clinic_System.Helper
 	public static class DataEncryptionExtensions
 	{
 		#region [Hashing Extension]
-		public static string ToSHA256Hash(this string password, string? saltKey)
+		public static string ToSHA256Hash(this string password, string? saltKey, int length = 30)
 		{
 			var sha256 = SHA256.Create();
 			byte[] encryptedSHA256 = sha256.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(password, saltKey)));
 			sha256.Clear();
 
-			return Convert.ToBase64String(encryptedSHA256).Substring(0, 30);
+			return Convert.ToBase64String(encryptedSHA256).Substring(0, length);
 		}
 
-		public static string ToSHA256Hash(this string password)
+        public static string ToSHA256Hash(this string password)
 		{
 			string? saltKey = "DONOTTOUCHOURPASSWORD!!!";
 			var sha256 = SHA256.Create();
