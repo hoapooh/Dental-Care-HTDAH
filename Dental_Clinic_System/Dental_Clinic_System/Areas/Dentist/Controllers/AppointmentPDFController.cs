@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis;
 using System.Globalization;
+using Newtonsoft.Json;
+using Dental_Clinic_System.Areas.Manager.ViewModels;
+using Dental_Clinic_System.Areas.Dentist.Helper;
 
 namespace Dental_Clinic_System.Areas.Dentist.Controllers
 {
@@ -26,8 +29,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         }
 
         [HttpPost]
-        public IActionResult GeneratePdf(int appointmentID, string? ketquakham, string? hentaikham, string? dando)
+        public IActionResult GeneratePdf(int dentistID, int appointmentID, string? ketquakham, string? ngayhentaikham, string? giobatdau, string? gioketthuc, string? dando)
         {
+            #region Lấy thông tin appointment từ DB
             var appointment = _context.Appointments
                 .Include(a => a.Schedule)
                     .ThenInclude(s => s.Dentist)
@@ -59,25 +63,68 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                     ClinicPhone = a.Schedule.Dentist.Clinic.Manager.PhoneNumber,
                     DentistName = a.Schedule.Dentist.Account.LastName + " " + a.Schedule.Dentist.Account.FirstName,
                     DentistPhoneNumber = a.Schedule.Dentist.Account.PhoneNumber
-
-
                 })
                 .FirstOrDefault();
+            #endregion
+
 
             if (appointment == null)
             {
                 return NotFound();
             }
+			//if(appointment != null)
+			//{
+			//	_context.FutureAppointments.RemoveRange(_context.FutureAppointments.Where(f => f.AppointmentID == appointment.a.ID));
+			//}
 
-            string logoPath = Path.Combine(_webHostEnvironment.WebRootPath, "assets", "images", "avatar.jpg").Replace("\\", "/");
+			if (ngayhentaikham == null)
+			{
+				TempData["ErrorMessage"] = "Ngày hẹn tái khám không được để trống";
+				return View();
+			}
+
+			var settings = new JsonSerializerSettings();
+			settings.Converters.Add(new DateOnlyConverter());
+
+			List<DateOnly> selectedDates;
+			try
+			{
+				selectedDates = JsonConvert.DeserializeObject<List<DateOnly>>(ngayhentaikham, settings);
+			}
+			catch (JsonSerializationException ex)
+			{
+				TempData["ErrorMessage"] = $"Lỗi khi phân tích ngày hẹn tái khám: {ex.Message}";
+				return View();
+			}
+
+			TimeOnly startTimeinCalendar;
+			try
+			{
+				startTimeinCalendar = TimeOnly.ParseExact(giobatdau, "HH:mm");
+			}
+			catch (FormatException ex)
+			{
+				TempData["ErrorMessage"] = $"Lỗi khi phân tích giờ bắt đầu: {ex.Message}";
+				return View();
+			}
+
+			if (!IsHaveSelectedDate(selectedDates, startTimeinCalendar, dentistID))
+			{
+				TempData["ErrorMessage"] = "Ngày hẹn tái khám đã được chọn trùng với ngày đã đặt trước đó";
+				return View();
+			}
+
+
+			string logoPath = Path.Combine(_webHostEnvironment.WebRootPath, "assets", "images", "avatar.jpg").Replace("\\", "/");
 
             string formattedDate = DateTime.Now.ToString("dd 'tháng' MM 'năm' yyyy", new System.Globalization.CultureInfo("vi-VN"));
 
             //Lấy ngày và giờ riêng ra của hentaikham
-            FormatDateTime(hentaikham, out DateOnly desiredDate, out TimeOnly startTime, out TimeOnly endTime);
+            FormatDateTime(selectedDates, giobatdau, gioketthuc ,out List<DateOnly> desiredDate, out TimeOnly startTime, out TimeOnly endTime);
 
-            //PHẦN TẠO NÔI DUNG HTML CHO PDF
-            string htmlContent = $@"
+
+			#region PHẦN TẠO NÔI DUNG HTML CHO PDF
+			string htmlContent = $@"
 <!DOCTYPE html>
 <html lang='vi'>
 <head>
@@ -132,7 +179,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
     <p><strong>Tổng chi phí: </strong> {string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.a.TotalPrice)}</p>
     <p><strong>Tình Trạng: </strong>{appointment.a.AppointmentStatus}</p>
     <p><strong>Kết Quả Khám: </strong>{ketquakham}</p>
-    <p><strong>HẸN TÁI KHÁM (nếu có): </strong>{startTime.ToString("HH:mm")}-{endTime.ToString("HH:mm")} {desiredDate.ToString("dd/MM/yyyy")}</p>
+    <p><strong>HẸN TÁI KHÁM (nếu có): </strong>{startTime.ToString("HH:mm")}-{endTime.ToString("HH:mm")} {desiredDate}</p>
     <p><strong>Dặn dò (nếu có): </strong>{dando}</p> <br><br><br><br><br><br>
     <div class=""footer__signature"">
         <p style=""margin-left:10%; margin-right: 50%;""><strong>Bệnh Nhân</strong> <br>(Ký và ghi rõ họ tên)</p>
@@ -141,63 +188,132 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 </body>
 </html>
 ";
+			#endregion
 
-
-            byte[] pdf = _pdfService.GeneratePdf(htmlContent);
+			byte[] pdf = _pdfService.GeneratePdf(htmlContent);
             string fileName = $"donkham_{appointmentID}.pdf";
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pdf", fileName);
 
             System.IO.File.WriteAllBytes(filePath, pdf);
 
-            //Thêm appointment với giờ tạo vào FutureAppointments =====================
-            if (appointment.a.Future_Appointment_ID == null) { 
-                if (!string.IsNullOrEmpty(hentaikham))
-                {
-                    appointment.a.Note = $"Dặn dò: {dando}";
-                    appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
-                    FutureAppointment futureAppointment = new()
-                    {
-                        PatientRecord_ID = appointment.a.PatientRecordID,
-                        Dentist_ID = appointment.DentistID,
-                        StartTime = startTime,
-                        EndTime = endTime,
-                        DesiredDate = desiredDate,
-                        FutureAppointmentStatus = "Chưa Khám"
-                    };
-                    _context.FutureAppointments.Add(futureAppointment);
-                    _context.SaveChanges();
-                    appointment.a.Future_Appointment_ID = futureAppointment.ID;
-                    _context.SaveChanges();
-                }
-            }
-            else if(appointment.a.Future_Appointment_ID != null)
-            {
-                if (!string.IsNullOrEmpty(hentaikham))
-                {
-                    appointment.a.Note = $"Dặn dò: {dando}";
-                    appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
-                    //Lấy FutureAppointment để cập nhật lại thời gian tái khám
-                    var futureAppointment = _context.FutureAppointments.Find(appointment.a.Future_Appointment_ID);
-                    if (futureAppointment == null) return NotFound("Không tìm thấy lịch định kỳ");
+			//Thêm appointment với giờ tạo vào FutureAppointments =====================
+			if (appointment.a.IsExport == false)
+			{
+				if (!string.IsNullOrEmpty(ngayhentaikham))
+				{
+					appointment.a.Note = $"Dặn dò: {dando}";
+					appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
+					appointment.a.IsExport = true;
 
-                    futureAppointment.DesiredDate = desiredDate;
-                    futureAppointment.StartTime = startTime;
-                    futureAppointment.EndTime = endTime;
-                    _context.SaveChanges();
-                }
-            }
-            //=========================================================================
+					// Iterate through desiredDate to create and save FutureAppointment records
+					foreach (var date in desiredDate)
+					{
+						// Create a new FutureAppointment instance for each date
+						var futureAppointment = new FutureAppointment
+						{
+							PatientRecord_ID = appointment.a.PatientRecordID,
+							Dentist_ID = appointment.DentistID,
+							StartTime = startTime, // Define your startTime and endTime
+							EndTime = endTime,
+							DesiredDate = date,
+							FutureAppointmentStatus = "Chưa Khám", // Set the default status
+							AppointmentID = appointment.a.ID
+						};
 
-            //return File(pdf, "application/pdf", "appointment.pdf");
-            return Redirect($"/pdf/{fileName}");
+						// Add the current futureAppointment to the context for saving
+						_context.FutureAppointments.Add(futureAppointment);
+					}
+
+					// Save all changes to the database
+					_context.SaveChanges();
+				}
+			}
+			//else // appointment.a.Future_Appointment_ID != null
+			//{
+			//	if (!string.IsNullOrEmpty(ngayhentaikham))
+			//	{
+			//		appointment.a.Note = $"Dặn dò: {dando}";
+			//		appointment.a.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
+
+			//		//Lấy FutureAppointment để cập nhật lại thời gian tái khám
+			//		var futureAppointment = _context.FutureAppointments.Find(appointment.a.Future_Appointment_ID);
+			//		if (futureAppointment == null)
+			//		{
+			//			return NotFound("Không tìm thấy lịch định kỳ");
+			//		}
+
+			//		// Update the existing futureAppointment with new details
+			//		futureAppointment.DesiredDate = desiredDate.FirstOrDefault(); // Assuming you want to update only the first date
+			//		futureAppointment.StartTime = startTime;
+			//		futureAppointment.EndTime = endTime;
+
+			//		_context.SaveChanges();
+			//	}
+			//}
+
+			//=========================================================================
+
+			//return File(pdf, "application/pdf", "appointment.pdf");
+			return Redirect($"/pdf/{fileName}");
         }
 
-        private void FormatDateTime(string dateTime, out DateOnly desiredDate ,out TimeOnly startTime, out TimeOnly endTime)
+        //định dạng lại thời gian cho phù hợp vs DB
+        private void FormatDateTime(List<DateOnly> date, string start, string end, out List<DateOnly> desiredDate, out TimeOnly startTime, out TimeOnly endTime)
         {
-            string[] periodicDateTime = dateTime.Split("T");
-            desiredDate = DateOnly.ParseExact(periodicDateTime[0], "MM/dd/yyyy", CultureInfo.InvariantCulture);
-            startTime = TimeOnly.ParseExact(periodicDateTime[1], "HH:mm");
-            endTime = startTime.AddMinutes(30);
+            desiredDate = date;
+            startTime = TimeOnly.ParseExact(start, "HH:mm");
+            endTime = TimeOnly.ParseExact(end, "HH:mm");
+		}
+
+        //Lấy danh sách ngày đã được đặt của nha sĩ
+        private bool IsHaveSelectedDate(List<DateOnly> chosenDate, TimeOnly startTime,int dentistID)
+        {
+			var schedules = _context.Schedules
+				.Include(s => s.TimeSlot)
+				.Where(s => s.DentistID == dentistID)
+				.ToList();
+
+			var appointments = _context.Appointments
+				.Include(a => a.Schedule)
+					.ThenInclude(s => s.TimeSlot)
+				.Where(a => a.Schedule.DentistID == dentistID)
+				.ToList();
+
+			var futureAppointments = _context.FutureAppointments
+				.Include(f => f.Dentist)
+				.Where(f => f.Dentist_ID == dentistID)
+				.ToList();
+
+			var dates = new List<DateTime>();
+
+			foreach (var schedule in schedules)
+			{
+				if (schedule.TimeSlotID != 1 && schedule.TimeSlotID != 2)
+				{
+					dates.Add(schedule.Date.ToDateTime(schedule.TimeSlot.StartTime));
+				}
+			}
+			foreach (var appointment in appointments)
+			{
+				dates.Add(appointment.Schedule.Date.ToDateTime(appointment.Schedule.TimeSlot.StartTime));
+			}
+			foreach (var futureAppointment in futureAppointments)
+			{
+				dates.Add(futureAppointment.DesiredDate.ToDateTime(futureAppointment.StartTime));
+			}
+
+            foreach (var date in chosenDate)
+			{
+                foreach (var dateInList in dates)
+                {
+
+                if (dateInList == date.ToDateTime(startTime))
+					{
+						return false;
+					}
+				}
+			}
+			return true;
         }
     }
 }

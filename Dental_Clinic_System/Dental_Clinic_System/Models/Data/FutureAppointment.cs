@@ -29,6 +29,9 @@ namespace Dental_Clinic_System.Models.Data
         [Column("FutureAppointmentStatus", TypeName = "nvarchar(30)")]
 		public string? FutureAppointmentStatus { get; set; }
 
+		[Column("AppointmentID", TypeName = "int")]
+		public int AppointmentID { get; set; }
+
 		#region Foreign Key
 		[ForeignKey("PatientRecord_ID")]
 		[InverseProperty("FutureAppointments")]

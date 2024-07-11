@@ -62,9 +62,9 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.HasCheckConstraint("CK_Valid_Role", "[Role] = 'Admin' OR [Role] = 'PatientRecord' OR [Role] = 'Dentist' OR [Role] = 'Manager' OR [Role] = N'Bệnh Nhân' OR [Role] = N'Nha Sĩ' OR [Role] = N'Quản Lý'");
 
-				entity.HasCheckConstraint("CK_Valid_Gender", "[Gender] = 'Male' OR [Gender] = 'Female' OR [Gender] = N'Nam' OR [Gender] = N'Nữ'");
+				entity.HasCheckConstraint("CK_Valid_Gender", "[Gender] = N'Nam' OR [Gender] = N'Nữ'");
 
-				entity.HasCheckConstraint("CK_Valid_Status_Account", "[AccountStatus] = 'Active' OR [AccountStatus] = 'Banned' OR [AccountStatus] = N'Not Active' OR [AccountStatus] = N'Hoạt Động' OR [AccountStatus] = N'Bị Khóa' OR [AccountStatus] = N'Chưa Kích Hoạt'");
+				entity.HasCheckConstraint("CK_Valid_Status_Account", "[AccountStatus] = N'Hoạt Động' OR [AccountStatus] = N'Bị Khóa' OR [AccountStatus] = N'Chưa Kích Hoạt'");
 			});
 
 			modelBuilder.Entity<Appointment>(entity =>
@@ -73,7 +73,7 @@ namespace Dental_Clinic_System.Models.Data
 
 				entity.Property(e => e.ID).ValueGeneratedOnAdd();
 
-				entity.HasCheckConstraint("CK_Valid_Status_Appointment", "[AppointmentStatus] = 'Pending' OR [AppointmentStatus] = 'Canceled' OR [AppointmentStatus] = 'Approved' OR [AppointmentStatus] = 'Completed' OR [AppointmentStatus] = N'Chờ Xác Nhận' OR [AppointmentStatus] = N'Đã Hủy' OR [AppointmentStatus] = N'Đã Chấp Nhận' OR [AppointmentStatus] = N'Đã Khám'");
+				entity.HasCheckConstraint("CK_Valid_Status_Appointment", "[AppointmentStatus] = N'Chờ Xác Nhận' OR [AppointmentStatus] = N'Đã Hủy' OR [AppointmentStatus] = N'Đã Chấp Nhận' OR [AppointmentStatus] = N'Đã Khám'");
 
 				entity.HasOne(d => d.PatientRecords).WithMany(p => p.Appointments).IsRequired(false).HasConstraintName("FK__Appointment__PatientRecord").OnDelete(DeleteBehavior.NoAction);
 
@@ -173,7 +173,7 @@ namespace Dental_Clinic_System.Models.Data
                     .HasConstraintName("FK__Schedule__Appointments")
                     .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasCheckConstraint("CK_Valid_Schedule_Status", "ScheduleStatus = 'Booked' OR ScheduleStatus = 'Available' OR ScheduleStatus = N'Đã Đặt' OR ScheduleStatus = N'Còn Trống' OR ScheduleStatus = N'Lịch khám' OR ScheduleStatus = N'Lịch điều trị' OR ScheduleStatus = N'Lịch Sáng' OR ScheduleStatus = N'Lịch Chiều' OR ScheduleStatus = N'Nghỉ' OR ScheduleStatus = N'Đã Hủy'");
+                entity.HasCheckConstraint("CK_Valid_Schedule_Status", "ScheduleStatus = N'Đã Đặt' OR ScheduleStatus = N'Còn Trống' OR ScheduleStatus = N'Lịch khám' OR ScheduleStatus = N'Lịch điều trị' OR ScheduleStatus = N'Lịch Sáng' OR ScheduleStatus = N'Lịch Chiều' OR ScheduleStatus = N'Nghỉ' OR ScheduleStatus = N'Đã Hủy'");
 			});
 
 			modelBuilder.Entity<Service>(entity =>
