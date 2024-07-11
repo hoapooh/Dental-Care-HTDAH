@@ -1,6 +1,7 @@
 ﻿using Dental_Clinic_System.Areas.Admin.Models;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.Services.BacklogAPI;
 using Dental_Clinic_System.Services.EmailSender;
 using Dental_Clinic_System.Services.EmailVerification;
 using Dental_Clinic_System.Services.GoogleSecurity;
@@ -105,7 +106,8 @@ builder.Services.AddHttpClient();
 // Register EmailVerification (ZeroBounce) Service for Verificating Email  
 builder.Services.AddSingleton<IEmailVerification, EmailVerification>();
 
-
+// Register BacklogAPI Service
+builder.Services.AddSingleton<IBacklogAPI, BacklogAPI>();
 
 // Register Redis Caching Service
 //builder.Services.AddStackExchangeRedisCache(options =>

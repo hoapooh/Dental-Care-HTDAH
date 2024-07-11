@@ -3,6 +3,7 @@ using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services;
+using Dental_Clinic_System.Services.BacklogAPI;
 using Dental_Clinic_System.Services.EmailSender;
 using Dental_Clinic_System.Services.GoogleSecurity;
 using Dental_Clinic_System.Services.MOMO;
@@ -25,6 +26,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using Newtonsoft.Json;
 using NuGet.Common;
 using System.Globalization;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using ZXing.QrCode.Internal;
@@ -39,14 +41,16 @@ namespace Dental_Clinic_System.Controllers
         private readonly IEmailSenderCustom _emailSender;
         private readonly GoogleSecurity _googleSecurity;
         private readonly IMOMOPayment _momoPayment;
+        private readonly IBacklogAPI _backlogApi;
 
-        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSenderCustom emailSender, GoogleSecurity googleSecurity, IMOMOPayment momoPayment)
+        public AccountController(DentalClinicDbContext context, IMapper mapper, IEmailSenderCustom emailSender, GoogleSecurity googleSecurity, IMOMOPayment momoPayment, IBacklogAPI backlogApi)
         {
             _context = context;
             _mapper = mapper;
             _emailSender = emailSender;
             _googleSecurity = googleSecurity;
             _momoPayment = momoPayment;
+            _backlogApi = backlogApi;
         }
 
         [HttpGet]
@@ -332,6 +336,7 @@ namespace Dental_Clinic_System.Controllers
                 if (errorMessages.Any())
                 {
                     ViewBag.ToastMessage = string.Join(". ", errorMessages); // Combine all error messages
+                    await _backlogApi.SendErrorToWebhookAsync($"Account Controller || {MethodBase.GetCurrentMethod().Name} Method", string.Join(". ", errorMessages), "153744");
                 }
             }
             return View();
@@ -497,6 +502,8 @@ namespace Dental_Clinic_System.Controllers
                 // Log the exception details (optional)
                 await Console.Out.WriteLineAsync(ex + "Google authentication failed.");
 
+                await _backlogApi.SendErrorToWebhookAsync($"Account Controller || {MethodBase.GetCurrentMethod().Name} Method", string.Join(". ", ex), "153744");
+
                 // Redirect to the home page with an error message
                 return RedirectToAction("Login", "Account");
             }
@@ -520,6 +527,7 @@ namespace Dental_Clinic_System.Controllers
 
             if (user == null)
             {
+                await _backlogApi.SendErrorToWebhookAsync($"Account Controller || {MethodBase.GetCurrentMethod().Name} Method", "Không tìm thấy người dùng", "153744");
                 return NotFound();
             }
 
@@ -608,66 +616,75 @@ namespace Dental_Clinic_System.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-
-            var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            if (_context.Accounts.FirstOrDefault(u => u.Email == claimsValue) == null)
+            try
             {
-                await HttpContext.SignOutAsync();
-                return RedirectToAction("Index", "Home");
-            }
 
-            // Extract the Date of Birth claim value
-            var dateOfBirthClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth)?.Value;
 
-            // Parse the Date of Birth claim value
-            DateOnly? dateOfBirth = null;
-            if (DateOnly.TryParse(dateOfBirthClaim, out var parsedDateOfBirth))
-            {
-                dateOfBirth = parsedDateOfBirth;
-            }
+                var claimsValue = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                if (_context.Accounts.FirstOrDefault(u => u.Email == claimsValue) == null)
+                {
+                    await HttpContext.SignOutAsync();
+                    return RedirectToAction("Index", "Home");
+                }
 
-            // Prefill the model with data from claims or other sources
-            var model = new PatientVM
-            {
-                FirstName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value,
-                LastName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value,
-                PhoneNumber = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone)?.Value,
-                Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-                Gender = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value,
-                Address = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value,
-                DateOfBirth = dateOfBirth
-            };
+                // Extract the Date of Birth claim value
+                var dateOfBirthClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth)?.Value;
 
-            //var appointment = new Dictionary<string, object>
-            //{
-            //             { "Appointment", await _context.Accounts.Include(p => p.PatientRecords).ThenInclude(a => a.Appointments).ThenInclude(s => s.Schedule).ThenInclude(t => t.TimeSlot).FirstOrDefaultAsync(u => u.Email == model.Email) }
-            //};
+                // Parse the Date of Birth claim value
+                DateOnly? dateOfBirth = null;
+                if (DateOnly.TryParse(dateOfBirthClaim, out var parsedDateOfBirth))
+                {
+                    dateOfBirth = parsedDateOfBirth;
+                }
 
-            var account = await _context.Accounts
-    .Include(p => p.PatientRecords)
-        .ThenInclude(pr => pr.Appointments)
-            .ThenInclude(a => a.Schedule)
-                .ThenInclude(s => s.TimeSlot)
-    .Include(p => p.PatientRecords)
-        .ThenInclude(pr => pr.Appointments)
-            .ThenInclude(a => a.Specialty)
-    .Include(p => p.PatientRecords)
-        .ThenInclude(pr => pr.Appointments)
-        .ThenInclude(s => s.Schedule)
-            .ThenInclude(a => a.Dentist)
-            .ThenInclude(d => d.Account)// Include Dentist information
-            .Include(p => p.PatientRecords)
+                // Prefill the model with data from claims or other sources
+                var model = new PatientVM
+                {
+                    FirstName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value,
+                    LastName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value,
+                    PhoneNumber = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone)?.Value,
+                    Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+                    Gender = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value,
+                    Address = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.StreetAddress)?.Value,
+                    DateOfBirth = dateOfBirth
+                };
+
+                //var appointment = new Dictionary<string, object>
+                //{
+                //             { "Appointment", await _context.Accounts.Include(p => p.PatientRecords).ThenInclude(a => a.Appointments).ThenInclude(s => s.Schedule).ThenInclude(t => t.TimeSlot).FirstOrDefaultAsync(u => u.Email == model.Email) }
+                //};
+
+                var account = await _context.Accounts
+        .Include(p => p.PatientRecords)
             .ThenInclude(pr => pr.Appointments)
-        .ThenInclude(s => s.Schedule)
-            .ThenInclude(a => a.Dentist)
-            .ThenInclude(c => c.Clinic)
-    .FirstOrDefaultAsync(u => u.Email == model.Email);
+                .ThenInclude(a => a.Schedule)
+                    .ThenInclude(s => s.TimeSlot)
+        .Include(p => p.PatientRecords)
+            .ThenInclude(pr => pr.Appointments)
+                .ThenInclude(a => a.Specialty)
+        .Include(p => p.PatientRecords)
+            .ThenInclude(pr => pr.Appointments)
+            .ThenInclude(s => s.Schedule)
+                .ThenInclude(a => a.Dentist)
+                .ThenInclude(d => d.Account)// Include Dentist information
+                .Include(p => p.PatientRecords)
+                .ThenInclude(pr => pr.Appointments)
+            .ThenInclude(s => s.Schedule)
+                .ThenInclude(a => a.Dentist)
+                .ThenInclude(c => c.Clinic)
+        .FirstOrDefaultAsync(u => u.Email == model.Email);
 
-            var appointments = account?.PatientRecords.SelectMany(pr => pr.Appointments).Reverse().ToList();
+                var appointments = account?.PatientRecords.SelectMany(pr => pr.Appointments).Reverse().ToList();
 
-            ViewBag.Appointment = appointments;
-
-            return View(model);
+                ViewBag.Appointment = appointments;
+                return View(model);
+            } 
+            catch(Exception ex)
+            {
+                await _backlogApi.SendErrorToWebhookAsync($"Account Controller || {MethodBase.GetCurrentMethod().Name} Method", string.Join(". ", ex), "153853");
+                return NotFound();
+            }
+            
         }
 
 
@@ -829,7 +846,7 @@ namespace Dental_Clinic_System.Controllers
             {
                 Rating = rating,
                 Comment = comment,
-                Date = DateOnly.FromDateTime(DateTime.UtcNow),
+                Date = DateOnly.FromDateTime(Util.GetUtcPlus7Time()),
                 DentistID = dentistID,
                 PatientID = patientID
             };
@@ -1173,6 +1190,7 @@ namespace Dental_Clinic_System.Controllers
                 }
                 else
                 {
+                    await _backlogApi.SendErrorToWebhookAsync($"Account Controller || {HttpContext.GetRouteData().Values["action"]} Method", string.Join(". ", "Không tìm thấy response từ MOMO API"), "153854");
                     TempData["ToastMessageFailTempData"] = "Đã có lỗi xảy ra trong quá trình hủy khám";
                     return RedirectToAction("Profile", "Account");
                 }

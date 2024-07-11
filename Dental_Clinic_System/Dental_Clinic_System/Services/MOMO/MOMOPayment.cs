@@ -150,7 +150,9 @@ namespace Dental_Clinic_System.Services.MOMO
                 }
                 else
                 {
+                    Console.WriteLine("====================================================");
                     Console.WriteLine("Fail from MOMO Payment");
+                    Console.WriteLine("====================================================");
                     // Xử lý lỗi
                     return responseObject;
                 }
