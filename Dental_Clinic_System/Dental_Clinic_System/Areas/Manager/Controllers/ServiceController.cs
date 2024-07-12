@@ -93,7 +93,6 @@ namespace Dental_Clinic_System.Controllers
                 return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
             }
             ViewBag.ClinicID = clinicId;
-           // ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name");
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name");
             return View();
         }
@@ -119,22 +118,8 @@ namespace Dental_Clinic_System.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            // Debugging
-            //Console.WriteLine($"ClinicID: {service.ClinicID}");
-            //Console.WriteLine($"SpecialtyID: {service.SpecialtyID}");
-            ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
+            ViewBag.ClinicID = service.ClinicID;
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
-
-            //List<string> errors = new List<string>();
-            //foreach(var value in ModelState.Values)
-            //{
-            //    foreach(var error in value.Errors)
-            //    {
-            //        errors.Add(error.ErrorMessage);
-            //    }
-            //}
-            //string errorMessage = string.Join("\n", errors);
-            //return BadRequest(errorMessage);
             return View(service);
         }
 
@@ -157,7 +142,17 @@ namespace Dental_Clinic_System.Controllers
             }
             ViewBag.ClinicID = clinicId;
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
-            return View(service);
+
+            var serviceVM = new ServiceVM()
+            {
+                ID = service.ID,
+                ClinicID = service.ClinicID,
+                SpecialtyID = service.SpecialtyID,
+                Name = service.Name,
+                Description = service.Description,
+                Price = service.Price
+            };
+            return View(serviceVM);
         }
 
         // POST: Service/Edit/5
@@ -200,7 +195,7 @@ namespace Dental_Clinic_System.Controllers
                 }
                 return RedirectToAction(nameof(Details), new { id = id });
             }
-           // ViewData["ClinicID"] = new SelectList(_context.Clinics, "ID", "Name", service.ClinicID);
+            ViewBag.ClinicID = service.ClinicID;
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
             return View(service);
         }

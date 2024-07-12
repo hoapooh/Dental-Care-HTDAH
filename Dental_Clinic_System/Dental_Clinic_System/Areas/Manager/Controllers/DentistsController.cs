@@ -364,7 +364,7 @@ namespace Dental_Clinic_System.Controllers
 					}
 				}
 
-				TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công!";
+				TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công.";
 				return RedirectToAction(nameof(Details), new { id = id });
 			}
 			

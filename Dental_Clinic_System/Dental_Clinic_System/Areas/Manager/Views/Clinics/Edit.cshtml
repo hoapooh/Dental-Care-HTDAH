@@ -1,4 +1,4 @@
-﻿@model Dental_Clinic_System.Models.Data.Clinic
+﻿@model Dental_Clinic_System.Areas.Manager.ViewModels.ClinicVM
 
 @{
     ViewData["Title"] = "Phòng khám";
@@ -32,7 +32,7 @@
     </style>
 }
 
-<form asp-action="Edit" class="manager__management__clinic row" id="uploadForm">
+<form asp-action="Edit" class="manager__management__clinic row" id="uploadForm" style="font-size: 2em;">
     <!--header -->
     <div class="manager__management__header">
         <div class="title">Thông tin phòng khám</div>
@@ -42,9 +42,11 @@
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="ID" id="fileName" />
+    <input asp-for="ManagerID" type="hidden" />
     <input type="hidden" value="Clinic" id="folderName" />
+
     <div class="col-md-6">
-        <label>Tên phòng khám</label>
+        <label for="Name">Tên phòng khám</label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
@@ -61,57 +63,80 @@
                 <option value="Đóng cửa">Đóng Cửa</option>
                 <option value="Hoạt Động">Hoạt Động</option>
             }
-
         </select>
     </div>
 
     <div class="form-group col-md-6">
-        <label style="margin-top: 5px;">Thời gian làm việc Sáng:</label>
+        <label style="margin-top: 5px;" for="AmStartTime">Thời gian làm việc Sáng:</label>
         <div class="row">
             <div class="col">
-                <select id="am_start" name="amStartTime" class="form-control">
-                    <option value="@ViewBag.AmStartTime">@ViewBag.AmStartTime.ToString("HH:mm")</option>
+                <select asp-for="AmStartTime" class="form-control">
                     @foreach (var time in ViewBag.AmTimes)
                     {
-                        <option value="@time">@time.ToString("HH:mm")</option>
+                        if (time != Model.AmStartTime)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
+                        else
+                        {
+                            <option value="@time" selected>@time.ToString("HH:mm")</option>
+                        }
                     }
                 </select>
             </div>
             <div class="col-auto">
-                <label for="am_end" style="margin-top: 5px;">đến</label>
+                <label for="AmEndTime" style="margin-top: 5px;">đến</label>
             </div>
             <div class="col">
-                <select id="am_end" name="amEndTime" class="form-control">
-                    <option value="@ViewBag.AmEndTime">@ViewBag.AmEndTime.ToString("HH:mm")</option>
+                <select asp-for="AmEndTime" class="form-control">
                     @foreach (var time in ViewBag.AmTimes)
                     {
-                        <option value="@time">@time.ToString("HH:mm")</option>
+                        if (time != Model.AmEndTime)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
+                        else
+                        {
+                            <option value="@time" selected>@time.ToString("HH:mm")</option>
+                        }
                     }
                 </select>
             </div>
         </div>
     </div>
     <div class="form-group col-md-6">
-        <label style="margin-top: 5px;">Thời gian làm việc Chiều:</label>
+        <label style="margin-top: 5px;" for="PmStartTime">Thời gian làm việc Chiều:</label>
         <div class="row">
             <div class="col">
-                <select id="pm_start" name="pmStartTime" class="form-control">
-                    <option value="@ViewBag.PmStartTime">@ViewBag.PmStartTime.ToString("HH:mm")</option>
+                <select asp-for="PmStartTime" class="form-control">
                     @foreach (var time in ViewBag.PmTimes)
                     {
-                        <option value="@time">@time.ToString("HH:mm")</option>
+                        if (time != Model.PmStartTime)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
+                        else
+                        {
+                            <option value="@time" selected>@time.ToString("HH:mm")</option>
+                        }
                     }
                 </select>
             </div>
             <div class="col-auto">
-                <label for="pm_end" style="margin-top: 5px;">đến</label>
+                <label for="PmEndTime" style="margin-top: 5px;">đến</label>
             </div>
             <div class="col">
-                <select id="pm_end" name="pmEndTime" class="form-control">
-                    <option value="@ViewBag.PmEndTime">@ViewBag.PmEndTime.ToString("HH:mm")</option>
+                <select asp-for="PmEndTime" class="form-control">
                     @foreach (var time in ViewBag.PmTimes)
                     {
-                        <option value="@time">@time.ToString("HH:mm")</option>
+                        if (time != Model.PmEndTime)
+                        {
+                            <option value="@time">@time.ToString("HH:mm")</option>
+                        }
+                        else
+                        {
+                            <option value="@time" selected>@time.ToString("HH:mm")</option>
+                        }
                     }
                 </select>
             </div>
@@ -166,19 +191,19 @@
 
     </div>
     <div class="col-md-6">
-        <label for="province">Tỉnh / Thành phố </label>
+        <label for="tinh">Tỉnh / Thành phố </label>
         <select id="tinh" title="Chọn Tỉnh Thành" asp-for="Province" class="form-control">
             <option value="0">Tỉnh Thành</option>
         </select>
     </div>
     <div class="col-md-3">
-        <label for="district">Quận / Huyện </label>
+        <label for="quan">Quận / Huyện </label>
         <select id="quan" title="Chọn Quận Huyện" asp-for="District" class="form-control">
             <option value="0">Quận Huyện</option>
         </select>
     </div>
     <div class="col-md-3">
-        <label for="ward">Phường / Xã </label>
+        <label for="phuong">Phường / Xã </label>
         <select id="phuong" title="Chọn Phường Xã" asp-for="Ward" class="form-control">
             <option value="0">Phường Xã</option>
         </select>
@@ -187,7 +212,6 @@
     <div class="col-md-12">
         <label>Địa chỉ</label>
         <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-danger"></span>
     </div>
 
     <div class="col-md-12">
@@ -216,9 +240,7 @@
         </div>
     </div>
     
-    <div class="col-md-6">
-        <input asp-for="ManagerID" class="form-control" type="hidden" />
-    </div>
+    
     <div class="modal-footer">
         <button type="submit" class="btn">Lưu</button>
         <button type="reset" class="btn">Đặt lại</button>

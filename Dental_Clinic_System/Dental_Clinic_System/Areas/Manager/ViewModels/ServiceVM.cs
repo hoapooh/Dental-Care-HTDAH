@@ -11,8 +11,10 @@ namespace Dental_Clinic_System.Areas.Manager.ViewModels
 
         public int SpecialtyID { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng nhập tên dịch vụ!")]
         public string Name { get; set; } = null!;
 
+        [Required(ErrorMessage = "Vui lòng nhập đơn giá!")]
         public string Price { get; set; } = null!;
         public string? Description { get; set; }
     }

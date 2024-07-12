@@ -66,46 +66,44 @@
 		<div class="modal-body ">
 			<div class="modal-body-card">
 				<label for="Username">Tên đăng nhập</label>
-				<input asp-for="Username" type="text" required class="form-control" />
+				<input asp-for="Username" type="text"  class="form-control" />
 				<span asp-validation-for="Username" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card">
 				<label for="Password">Mật khẩu</label>
-				<input asp-for="Password" type="password" required class="form-control" />
+				<input asp-for="Password" type="password"  class="form-control" />
 				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card">
 				<label for="LastName">Họ (Tên đệm)</label>
-				<input asp-for="LastName" type="text" required class="form-control" />
+				<input asp-for="LastName" type="text"  class="form-control" />
 				<span asp-validation-for="LastName" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card2">
 				<label for="FirstName">Tên</label>
-				<input asp-for="FirstName" type="text" required class="form-control" />
+				<input asp-for="FirstName" type="text"  class="form-control" />
 				<span asp-validation-for="FirstName" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card3">
 				<label for="Gender">Giới tính</label>
-				@* <input type="text" name="Gender" id="gender" required /> *@
-
-				<select asp-for="Gender" required class="form-control">
+				<select asp-for="Gender"  class="form-control">
 					<option value="Nam">Nam</option>
 					<option value="Nữ">Nữ</option>
 				</select>
 			</div>
 			<div class="modal-body-card">
 				<label for="Email">Email</label>
-				<input type="email" asp-for="Email" required class="form-control" />
+				<input type="email" asp-for="Email"  class="form-control" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="modal-body-card">
 				<label for="PhoneNumber">Số điện thoại</label>
-				<input type="tel" asp-for="PhoneNumber" required class="form-control" />
+				<input type="tel" asp-for="PhoneNumber"  class="form-control" />
 				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 			</div>
 			<div class="user-address modal-body-card">
 				<label for="DegreeID">Học vị</label>
-				<select asp-items="ViewBag.DegreeID" asp-for="DegreeID" required class="form-control"></select>
+				<select asp-items="ViewBag.DegreeID" asp-for="DegreeID"  class="form-control"></select>
 			</div>
 			<div class="user-address modal-body-card">
 				<label>Chuyên khoa</label>

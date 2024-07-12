@@ -1,4 +1,4 @@
-﻿@model Dental_Clinic_System.Models.Data.Service
+﻿@model Dental_Clinic_System.Areas.Manager.ViewModels.ServiceVM
 
 @{
     ViewData["Title"] = "Dịch vụ";
@@ -30,6 +30,10 @@
             box-shadow: var(--mdb-modal-box-shadow);
             padding: 24px 48px !important; /* Reduced padding for top/bottom and left/right */
             border-radius: 10px; /* Adjust this value to change the roundness of the corners */
+        }
+
+        .form-modal-styles .modal-body input, .form-modal-styles .modal-body select {
+            font-weight: normal;
         }
     </style>
 }
@@ -65,22 +69,18 @@
             <div class="user-address modal-body-card">
                 <label>Chuyên khoa</label>
                 <select asp-for="SpecialtyID" class="form-control" asp-items="ViewBag.SpecialtyID">
-                    <option>--Chọn chuyên khoa--</option>
-                   
                 </select>
-                @* <span asp-validation-for="SpecialtyID" class="text-danger"></span> *@
             </div>
             <div class="user-address modal-body-card">
                 <label>Mô tả dịch vụ</label>
                 <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span> @* Kiểm tra Validate cho trường Name trong ServiceVM *@
             </div>
         </div>
         <h1></h1>
         <h1></h1>
         <div class="modal-footer">
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index">Về danh sách</a>
             </div>
             |
             <button type="submit" class="submit-btn btn">
