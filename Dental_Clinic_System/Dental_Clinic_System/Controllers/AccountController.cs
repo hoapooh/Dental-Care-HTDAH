@@ -228,6 +228,9 @@ namespace Dental_Clinic_System.Controllers
                 if (patient == null || patient.Role != "Bệnh Nhân")
                 {
                     //ModelState.AddModelError("errorLogin", "Sai thông tin đăng nhập");
+
+                    await _backlogApi.SendErrorToWebhookAsync($"Account Controller || {MethodBase.GetCurrentMethod().Name} Method", string.Join(". ", "Sai thông tin đăng nhập"), "153744");
+
                     ViewBag.ToastMessage = "Sai thông tin đăng nhập";
                 }
                 else

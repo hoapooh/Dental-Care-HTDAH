@@ -44,6 +44,7 @@ namespace Dental_Clinic_System.Services.BacklogAPI
             // APIKey = 153753
             // Profile = 153853
             // Cancel Appointment = 153854
+            // Chatting = 153898
 
             string backlogApiUrl = "https://rivinger.backlog.com/api/v2/issues?apiKey=a4sf65GwuS7fqvUhebSZOt0ZgLUH8ZrCt8DmIpwddcx90iHQkvsRC5ekAgjGw7lm";
 
