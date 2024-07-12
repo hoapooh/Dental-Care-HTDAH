@@ -41,12 +41,12 @@
 	.specialties-container {
 		display: flex;
 		flex-wrap: wrap;
+		gap: 10px;
 	}
 
 	.form-check {
-		flex: 1 1 200px;
-		margin-right: 10px;
-
+		width: calc(50% - 10px);
+		align-items: center;
 	}
 
 	.form-check-label {
@@ -55,6 +55,16 @@
 
 	.account__management .table tbody span {
 		font-weight: 200;
+	}
+
+	#specialties .form-check-input {
+		margin-right: 10px;
+		width: auto;
+	}
+
+	#specialties .form-check-label {
+		margin-left: 3px;
+		font-size: 1.7rem;
 	}
 </style>
 
@@ -149,7 +159,7 @@
 				<div class="row mb-3">
 					<div class="col">
 						<label for="specialties">Các chuyên khoa gồm có:<sup style="color:red">*</sup></label>
-						<div id="specialties" class="form-check-inline specialties-container"></div>
+						<div id="specialties" class="specialties-container"></div>
 					</div>
 				</div>
 

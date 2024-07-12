@@ -4,11 +4,12 @@
 	ViewData["Title"] = "Dashboard";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
-	var yearOptions = new System.Text.StringBuilder();
-	for (int year = DateTime.Now.Year; year >= DateTime.Now.Year - 10; year--)
+	var monthOptions = new System.Text.StringBuilder();
+	var now = DateTime.Now;
+	for (int m = 1; m <= 12; m++)
 	{
-		var selected = year == Model.SelectedYear ? "selected=\"selected\"" : "";
-		yearOptions.AppendFormat("<option value=\"{0}\" {1}>{0}</option>", year, selected);
+		var selected = (m == Model.SelectedMonth) ? "selected=\"selected\"" : "";
+		monthOptions.AppendFormat("<option value=\"{0}\" {1}>{0}/{2}</option>", m, selected, now.Year);
 	}
 }
 
@@ -57,7 +58,7 @@
 		font-weight: bold;
 	}
 
-	.year-select-label {
+	.month-select-label {
 		font-weight: bold;
 	}
 </style>
@@ -68,13 +69,13 @@
 
 	<!-- ============ CHART ============ -->
 	<div class="charts-container">
-		@* Biểu đồ đường *@
+		@* Biểu đồ cột *@
 		<div class="dashboard__info__chartDai">
-			<h2 class="chart-title">Tổng Đặt Lịch Khám Theo Tháng</h2>
+			<h2 class="chart-title">Tổng Đặt Lịch Khám Thành Công/Thất Bại So Với Cùng Kỳ Năm Trước</h2>
 			<div class="chart-header">
-				<label for="yearSelect" class="year-select-label">Năm:</label>
-				<select id="yearSelect" onchange="location = this.value;">
-					@Html.Raw(yearOptions.ToString())
+				<label for="monthSelect" class="month-select-label">Tháng/Năm:</label>
+				<select id="monthSelect" onchange="location.href=this.value;">
+					@Html.Raw(monthOptions.ToString())
 				</select>
 			</div>
 			<canvas id="myChart" style="width: 100%; height: 400px"></canvas>
@@ -82,9 +83,9 @@
 
 		@* Biểu đồ tròn *@
 		<div class="dashboard__info__chartTron">
-			<h2 class="chart-title">Tổng Số Hợp Tác/ Từ Chối Yêu Cầu Của Phòng Khám Trong Ngày</h2> </br>
+			<h2 class="chart-title">Tổng Số Hợp Tác/ Từ Chối Yêu Cầu Của Phòng Khám Trong Ngày</h2>
+			</br>
 			<canvas id="orderChart" style="width: 100%; height: 300px"></canvas>
-
 		</div>
 
 		@* Biểu đồ cột *@
@@ -95,98 +96,68 @@
 
 		@* Biểu đồ tròn cho Rating của mỗi phòng khám *@
 		<div class="dashboard__info__chartTron">
-			<h2 class="chart-title">Đánh Giá Của Mỗi Phòng Khám</h2> </br>
+			<h2 class="chart-title">Đánh Giá Của Mỗi Phòng Khám</h2>
+			</br>
 			<canvas id="clinicRatingChart" style="width: 100%; height: 300px"></canvas>
 		</div>
 	</div>
 </div>
 
 @section Scripts {
-	@* <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> *@
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-			var yearSelect = document.getElementById('yearSelect');
-			yearSelect.addEventListener('change', function () {
-				var selectedYear = this.value;
-				var url = '@Url.Action("GetAppointmentStatus", "Dashboard", new { area = "Admin", year = "__year__" })';
-				window.location.href = url.replace("__year__", selectedYear);
+			var monthSelect = document.getElementById('monthSelect');
+			monthSelect.addEventListener('change', function () {
+				var selectedMonth = this.value;
+				var url = '@Url.Action("GetAppointmentStatus", "Dashboard", new { area = "Admin", month = "__month__" })';
+				window.location.href = url.replace("__month__", selectedMonth);
 			});
 
 			var ctx = document.getElementById('myChart').getContext('2d');
-			var successfulData = @Html.Raw(Json.Serialize(Model.MonthlySuccessfulAppointments));
-			var failedData = @Html.Raw(Json.Serialize(Model.MonthlyFailedAppointments));
+			var successfulCurrent = @Model.SuccessfulAppointmentsCurrentYear;
+			var successfulPrevious = @Model.SuccessfulAppointmentsPreviousYear;
+			var failedCurrent = @Model.FailedAppointmentsCurrentYear;
+			var failedPrevious = @Model.FailedAppointmentsPreviousYear;
 
-			var currentYear = new Date().getFullYear();
-			var currentMonth = new Date().getMonth() + 1;
-			var monthLabels = [];
+			var selectedMonth = @Model.SelectedMonth;
+			var selectedYear = @Model.SelectedYear;
 
-			if (@Model.SelectedYear == currentYear) {
-				monthLabels = Array.from({ length: currentMonth }, (v, i) => `Tháng ${i + 1}`);
-				successfulData = successfulData.slice(0, currentMonth);
-				failedData = failedData.slice(0, currentMonth);
-			} else {
-				monthLabels = Array.from({ length: 12 }, (v, i) => `Tháng ${i + 1}`);
-			}
+			var labels = [
+				'Thành công (' + selectedMonth + '/' + selectedYear + ')',
+				'Thành công (' + selectedMonth + '/' + (selectedYear - 1) + ')',
+				'Thất bại (' + selectedMonth + '/' + selectedYear + ')',
+				'Thất bại (' + selectedMonth + '/' + (selectedYear - 1) + ')'
+			];
 
-			//Biểu đồ đường
 			var myChart = new Chart(ctx, {
-				type: 'line',
+				type: 'bar',
 				data: {
-					labels: monthLabels,
+					labels: labels,
 					datasets: [{
-						label: 'Đặt Khám Thành Công',
-						data: successfulData,
-						borderColor: 'rgba(75, 192, 192, 1)',
-						backgroundColor: 'rgba(75, 192, 192, 0.2)',
-						borderWidth: 2,
-						fill: false,
-						pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-						pointBorderColor: '#fff',
-						pointHoverBackgroundColor: '#fff',
-						pointHoverBorderColor: 'rgba(75, 192, 192, 1)'
-					}, {
-						label: 'Đặt Khám Thất Bại',
-						data: failedData,
-						borderColor: 'rgba(255, 99, 132, 1)',
-						backgroundColor: 'rgba(255, 99, 132, 0.2)',
-						borderWidth: 2,
-						fill: false,
-						pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-						pointBorderColor: '#fff',
-						pointHoverBackgroundColor: '#fff',
-						pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
+						label: 'Đặt Lịch',
+						data: [successfulCurrent, successfulPrevious, failedCurrent, failedPrevious],
+						backgroundColor: [
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(75, 192, 192, 0.5)',
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(255, 99, 132, 0.5)'
+						],
+						borderColor: [
+							'rgba(75, 192, 192, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(255, 99, 132, 1)',
+							'rgba(255, 99, 132, 1)'
+						],
+						borderWidth: 1
 					}]
 				},
 				options: {
-					plugins: {
-						legend: {
-							display: true,
-							position: 'top',
-							labels: {
-								color: 'rgba(75, 192, 192, 1)'
-							}
-						}
-					},
 					scales: {
-						x: {
-							ticks: {
-								color: 'rgba(75, 192, 192, 1)'
-							},
-							grid: {
-								color: 'rgba(75, 192, 192, 0.2)'
-							}
-						},
 						y: {
 							beginAtZero: true,
 							ticks: {
-								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 5,
-								callback: function (value, index, values) {
-									return value;
-								}
-							},
-							grid: {
-								color: 'rgba(75, 192, 192, 0.2)'
+								stepSize: 1
 							}
 						}
 					}

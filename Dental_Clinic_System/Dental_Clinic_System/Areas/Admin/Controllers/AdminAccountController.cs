@@ -19,7 +19,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Login(string returnUrl = "/Admin/Dashboard/GetAppointmentStatus")
+		public IActionResult Login(string returnUrl = "/Admin/Dashboard/Index")
 		{
 			ViewBag.ReturnUrl = returnUrl;
 			return View();
@@ -48,7 +48,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 				await HttpContext.SignInAsync("GetAppointmentStatus", new ClaimsPrincipal(claimsIdentity), authProperties);
 				HttpContext.Session.SetInt32("adminAccountID", user.ID);
-				return RedirectToAction("GetAppointmentStatus", "dashboard", new { area = "admin" });
+				return RedirectToAction("index", "dashboard", new { area = "admin" });
 			}
 
 			ViewBag.ErrorMessage = "Tài khoản này không có quyền truy cập trang tiếp theo, vui lòng thử lại!";
