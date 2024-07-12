@@ -360,7 +360,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 			}
 
 			Schedule lastSchedule = schedules.Find(ls => ls.Date == maxDate);
-			Console.WriteLine(lastSchedule.Date);
+			//Console.WriteLine(lastSchedule.Date);
 			foreach (var futureAppoint in futureAppointments)
 			{
 

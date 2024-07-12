@@ -109,6 +109,9 @@ builder.Services.AddSingleton<IEmailVerification, EmailVerification>();
 // Register BacklogAPI Service
 builder.Services.AddSingleton<IBacklogAPI, BacklogAPI>();
 
+// Register SignalR Service
+builder.Services.AddSignalR();
+
 // Register Redis Caching Service
 //builder.Services.AddStackExchangeRedisCache(options =>
 //{
@@ -196,9 +199,26 @@ app.UseEndpoints(endpoints =>
 });
 //===========================================
 
-app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapControllerRoute(
+        name: "chat",
+        pattern: "chat",
+        defaults: new { controller = "Chat", action = "Index" });
+    endpoints.MapHub<ChatHub>("/chathub");
+});
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Home}/{action=Index}/{id?}");
+//    endpoints.MapHub<ChatHub>("/chathub");
+//});
+
 
 app.Run();
 

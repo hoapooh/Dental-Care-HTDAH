@@ -189,6 +189,39 @@ namespace Dental_Clinic_System.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.ChatHubMessage", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Content");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime")
+                        .HasColumnName("Timestamp");
+
+                    b.HasKey("ID")
+                        .HasName("PK_ChatHubMessage");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("ChatHubMessage");
+                });
+
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Clinic", b =>
                 {
                     b.Property<int>("ID")
@@ -1100,6 +1133,25 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("Specialty");
                 });
 
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.ChatHubMessage", b =>
+                {
+                    b.HasOne("Dental_Clinic_System.Models.Data.Account", "Receiver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ChatHubMessage_Receiver");
+
+                    b.HasOne("Dental_Clinic_System.Models.Data.Account", "Sender")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ChatHubMessage_Sender");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Clinic", b =>
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.WorkTime", "AmWorkTimes")
@@ -1348,7 +1400,11 @@ namespace Dental_Clinic_System.Migrations
 
                     b.Navigation("PatientRecords");
 
+                    b.Navigation("ReceivedMessages");
+
                     b.Navigation("Reviews");
+
+                    b.Navigation("SentMessages");
 
                     b.Navigation("Wallet")
                         .IsRequired();

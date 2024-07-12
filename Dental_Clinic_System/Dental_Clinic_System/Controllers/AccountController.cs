@@ -314,6 +314,8 @@ namespace Dental_Clinic_System.Controllers
                         //    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
                         //}
 
+                        HttpContext.Session.SetInt32("userID", patient.ID);
+
                         if (Url.IsLocalUrl(ReturnUrl))
                         {
                             return Redirect(ReturnUrl);
@@ -493,6 +495,8 @@ namespace Dental_Clinic_System.Controllers
                     }
                     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                     await HttpContext.SignInAsync(claimsPrincipal);
+
+                    HttpContext.Session.SetInt32("userID", user.ID);
                 }
 
                 return RedirectToAction("Index", "Home");
@@ -609,6 +613,9 @@ namespace Dental_Clinic_System.Controllers
 
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
+            HttpContext.Session.SetInt32("userID", user.ID);
+
             return RedirectToAction("Index", "Home");
         }
 

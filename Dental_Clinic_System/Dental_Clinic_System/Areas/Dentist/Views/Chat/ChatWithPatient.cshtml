@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Chat with Patients";
+    var userID = Context.Session.GetInt32("dentistID");
+}
+
+<h2>Chat with Patients</h2>
+
+<div id="chatContainer">
+    <div id="messagesList"></div>
+    <input type="text" id="receiverInput" placeholder="ID của Bệnh Nhân" />
+    <input type="text" id="messageInput" placeholder="Nhập tin nhắn..." />
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
+<script>
+    const userID = '@userID';
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chathub?userID=" + encodeURIComponent(userID))
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    connection.on("ReceiveMessage", (user, message) => {
+        console.log(`Message received from ${user}: ${message}`);
+        const msg = document.createElement("div");
+        msg.textContent = `${user}: ${message}`;
+        document.getElementById("messagesList").appendChild(msg);
+    });
+
+    connection.start()
+        .then(() => console.log("Connection established."))
+        .catch(err => console.error("Connection failed: ", err.toString()));
+
+    function sendMessage() {
+        const receiver = document.getElementById("receiverInput").value;
+        const message = document.getElementById("messageInput").value;
+        console.log(`Sending message to ${receiver}: ${message}`);
+        connection.invoke("SendMessageToUser", receiver, message)
+            .then(() => console.log("Message sent successfully."))
+            .catch(err => console.error("Send message failed: ", err.toString()));
+    }
+</script>
+
+<style>
+    #chatContainer {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        margin: auto;
+    }
+
+    #messagesList {
+        border: 1px solid #ccc;
+        height: 200px;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+
+    #receiverInput, #messageInput {
+        margin-bottom: 10px;
+        padding: 5px;
+        width: 100%;
+    }
+
+    button {
+        padding: 5px;
+        width: 100%;
+    }
+</style>

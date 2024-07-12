@@ -35,6 +35,11 @@ namespace Dental_Clinic_System.Models.Data
 
 		public virtual DbSet<WorkTime> WorkTimes { get; set; }
         //================================================================================================================================
+
+        //================================================================================================================================
+        public DbSet<ChatHubMessage> ChatHubMessages { get; set; }
+        //================================================================================================================================
+
         #endregion
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Name=DBConnection");
@@ -281,7 +286,7 @@ namespace Dental_Clinic_System.Models.Data
 				entity.Property(e => e.ID).ValueGeneratedOnAdd();
 			});
 
-			modelBuilder.Entity<WorkTime>(entity =>
+            modelBuilder.Entity<WorkTime>(entity =>
 			{
 				entity.HasKey(e => e.ID).HasName("PK_WorkTime");
 
@@ -305,7 +310,34 @@ namespace Dental_Clinic_System.Models.Data
 				entity.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "FutureAppointmentStatus = N'Chưa Khám' OR FutureAppointmentStatus = N'Đã Khám' OR FutureAppointmentStatus = N'Đã Hủy'");
 			});
 
-			OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<ChatHubMessage>(entity =>
+            {
+                entity.HasKey(e => e.ID).HasName("PK_ChatHubMessage");
+
+                entity.Property(e => e.ID).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Content)
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
+
+                entity.Property(e => e.Timestamp)
+                      .IsRequired()
+                      .HasColumnType("datetime");
+
+                entity.HasOne(d => d.Sender)
+                      .WithMany(p => p.SentMessages)
+                      .HasForeignKey(d => d.SenderId)
+                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("FK_ChatHubMessage_Sender");
+
+                entity.HasOne(d => d.Receiver)
+                      .WithMany(p => p.ReceivedMessages)
+                      .HasForeignKey(d => d.ReceiverId)
+                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("FK_ChatHubMessage_Receiver");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
 		}
 
 		partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

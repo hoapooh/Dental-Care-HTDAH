@@ -7,7 +7,13 @@ namespace Dental_Clinic_System.Models.Data
 	[Table("Account")]
 	public partial class Account
 	{
-		[Key]
+        public Account()
+        {
+            SentMessages = new HashSet<ChatHubMessage>();
+            ReceivedMessages = new HashSet<ChatHubMessage>();
+        }
+
+        [Key]
 		[Column("ID")]
 		public int ID { get; set; }
 
@@ -62,9 +68,11 @@ namespace Dental_Clinic_System.Models.Data
 		[Column("AccountStatus", TypeName = "nvarchar(30)")]
 		public string AccountStatus { get; set; } = null!;
 
+        public virtual ICollection<ChatHubMessage> SentMessages { get; set; }
+        public virtual ICollection<ChatHubMessage> ReceivedMessages { get; set; }
 
-		#region Entity Mapping
-		[InverseProperty("Manager")]
+        #region Entity Mapping
+        [InverseProperty("Manager")]
 		public virtual Clinic? Clinics { get; set; }
 
 		[InverseProperty("Account")]
