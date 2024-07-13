@@ -6,6 +6,8 @@
         public string CompanyName { get; set; } = null!;
         public string CompanyPhonenumber { get; set; } = null!;
         public string CompanyEmail { get; set; } = null!;
+        public string ManagerPhonenumber { get; set; } = null!;
+        public string ManagerEmail { get; set; } = null!;
         public string RepresentativeName { get; set; } = null!;
         public string ClinicName { get; set; } = null!;
         public string ClinicAddress { get; set; } = null!;

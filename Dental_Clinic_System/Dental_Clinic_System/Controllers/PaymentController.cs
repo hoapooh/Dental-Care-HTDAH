@@ -331,6 +331,16 @@ namespace Dental_Clinic_System.Controllers
 
                 int timeSlotID = _context.TimeSlots.Where(t => t.StartTime == bookingStartTime && t.EndTime == bookingEndTime).Select(ts => ts.ID).First();
 
+                var bookedAppointments = _context.Schedules.Where(s => s.DentistID == dentistID && s.TimeSlotID == timeSlotID && s.Date == DateOnly.Parse(bookingDate) && s.ScheduleStatus == "Đã Đặt").Count();
+
+                if (bookedAppointments >= 2)
+                {
+                    await _momoPayment.RefundPayment(long.Parse(amount), long.Parse(transId), message);
+                    ViewBag.ResultCode = 999;
+                    ViewBag.Message = "Slot này đã có người đặt".ToUpper();
+                    return View("PaymentResult");
+                }
+
                 Schedule schedule = new() {
                     DentistID = dentistID,
                     Date = DateOnly.Parse(bookingDate),
@@ -344,13 +354,7 @@ namespace Dental_Clinic_System.Controllers
 
                 //======================================================================================
 
-                if (_context.Schedules.FirstOrDefault(s => s.ID == scheduleID).ScheduleStatus == "Đã Đặt")
-                {
-                    await _momoPayment.RefundPayment(long.Parse(amount), long.Parse(transId), message);
-                    ViewBag.ResultCode = 999;
-                    ViewBag.Message = "Slot này đã có người đặt".ToUpper();
-                    return View("PaymentResult");
-                }
+                
 
                 var response = new MOMOPaymentResponseModel
                 {

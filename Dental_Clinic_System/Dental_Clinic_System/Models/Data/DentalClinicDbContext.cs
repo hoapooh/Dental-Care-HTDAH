@@ -74,7 +74,7 @@ namespace Dental_Clinic_System.Models.Data
 				entity.Property(e => e.AccountStatus).IsRequired();
 
 
-				entity.HasCheckConstraint("CK_Valid_Role", "[Role] = 'Admin' OR [Role] = 'PatientRecord' OR [Role] = 'Dentist' OR [Role] = 'Manager' OR [Role] = N'Bệnh Nhân' OR [Role] = N'Nha Sĩ' OR [Role] = N'Quản Lý'");
+				entity.HasCheckConstraint("CK_Valid_Role", "[Role] = 'Admin' OR [Role] = 'PatientRecord' OR [Role] = 'Dentist' OR [Role] = 'Manager' OR [Role] = N'Bệnh Nhân' OR [Role] = N'Nha Sĩ' OR [Role] = N'Quản Lý' OR [Role] = N'Mini Admin'");
 
 				entity.HasCheckConstraint("CK_Valid_Gender", "[Gender] = N'Nam' OR [Gender] = N'Nữ'");
 
