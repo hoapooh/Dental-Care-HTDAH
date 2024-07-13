@@ -84,6 +84,20 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("ID,ManagerID,Name,Province,Ward,District,Address,PhoneNumber,Email,Description,MapLinker,Image,ClinicStatus,AmStartTime,AmEndTime,PmStartTime,PmEndTime")] ClinicVM clinic)
         {
+            //--------------------------------------
+            ViewBag.AmTimes = new List<TimeOnly>() {  // 7:00, 7:30, 8:00...
+                new TimeOnly(7, 0),  new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
+                new TimeOnly(9, 0),  new TimeOnly(9, 30), new TimeOnly(10, 0), new TimeOnly(10, 30),
+                new TimeOnly(11, 0),  new TimeOnly(11, 30), new TimeOnly(12, 0)
+            };
+            ViewBag.PmTimes = new List<TimeOnly>() {  // 7:00, 7:30, 8:00...
+                new TimeOnly(12, 0), new TimeOnly(12, 30), new TimeOnly(13, 0),  new TimeOnly(13, 30),
+                new TimeOnly(14, 0), new TimeOnly(14, 30),
+                new TimeOnly(15, 0),  new TimeOnly(15, 30), new TimeOnly(16, 0), new TimeOnly(16, 30),
+                new TimeOnly(17, 0),  new TimeOnly(17, 30), new TimeOnly(18, 0), new TimeOnly(18, 30),
+                new TimeOnly(19, 0),  new TimeOnly(19, 30), new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
+            };
+            //-----------------------------------------
             if (ModelState.IsValid)
             {
                 try
@@ -95,6 +109,12 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                         TimeOnly amE = clinic.AmEndTime;
                         TimeOnly pmS = clinic.PmStartTime;
                         TimeOnly pmE = clinic.PmEndTime;
+                        //--------------------------------------KIỂM TRA GIỜ HỢP LỆ KHÔNG?
+                        if (amS >= amE || pmS >= pmE)
+                        {
+                            TempData["ToastMessageFailTempData"] = "Thời gian làm việc không hợp lệ.";
+                            return View(clinic);
+                        }
                         //--------------
                         var checkExistAm = await _context.WorkTimes.AnyAsync(t => t.Session == "Sáng" && t.StartTime == amS && t.EndTime == amE);
                         if (checkExistAm == false)
@@ -153,20 +173,6 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                 TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công.";
                 return RedirectToAction(nameof(Edit));
             }
-            //--------------------------------------
-            ViewBag.AmTimes = new List<TimeOnly>() {  // 7:00, 7:30, 8:00...
-                new TimeOnly(7, 0),  new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
-                new TimeOnly(9, 0),  new TimeOnly(9, 30), new TimeOnly(10, 0), new TimeOnly(10, 30),
-                new TimeOnly(11, 0),  new TimeOnly(11, 30), new TimeOnly(12, 0)
-            };
-            ViewBag.PmTimes = new List<TimeOnly>() {  // 7:00, 7:30, 8:00...
-                new TimeOnly(12, 0), new TimeOnly(12, 30), new TimeOnly(13, 0),  new TimeOnly(13, 30),
-                new TimeOnly(14, 0), new TimeOnly(14, 30),
-                new TimeOnly(15, 0),  new TimeOnly(15, 30), new TimeOnly(16, 0), new TimeOnly(16, 30),
-                new TimeOnly(17, 0),  new TimeOnly(17, 30), new TimeOnly(18, 0), new TimeOnly(18, 30),
-                new TimeOnly(19, 0),  new TimeOnly(19, 30), new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
-            };
-
             return View(clinic);
             //List<string> errors = new List<string>();
             //foreach (var value in ModelState.Values)

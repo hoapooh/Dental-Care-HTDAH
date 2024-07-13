@@ -177,7 +177,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
             await _context.SaveChangesAsync();
 
-            HttpContext.Session.SetString("name", manager.FirstName + " " + manager.LastName);
+            HttpContext.Session.SetString("name", manager.LastName + " " + manager.FirstName);
 
             TempData["ToastMessageSuccessTempData"] = "Lưu thay đổi thành công.";
             return RedirectToAction("Profile", "ManagerAccount", new { area = "Manager" });
