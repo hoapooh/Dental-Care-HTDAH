@@ -170,6 +170,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                         throw;
                     }
                 }
+                HttpContext.Session.SetString("image", clinic?.Image ?? "");
                 TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công.";
                 return RedirectToAction(nameof(Edit));
             }
