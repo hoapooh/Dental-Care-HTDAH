@@ -19,7 +19,6 @@
     <None Include="Areas\Dentist\Views\DentistAccount\Login.cshtml" />
     <None Include="Areas\Dentist\Views\DentistDetail\DentistDescription.cshtml" />
     <None Include="Areas\Dentist\Views\DentistDetail\DentistSchedule.cshtml" />
-    <None Include="Areas\Dentist\Views\DentistDetail\PatientAppointments.cshtml" />
     <None Include="Areas\Dentist\Views\Shared\_DentistAvatar.cshtml" />
     <None Include="Areas\Dentist\Views\Shared\_DentistSidebar.cshtml" />
     <None Include="Areas\Dentist\Views\Shared\_Layout.cshtml" />
@@ -93,7 +92,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="ZeroBounce.SDK" Version="1.3.2" />

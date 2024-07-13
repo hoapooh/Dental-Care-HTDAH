@@ -18,8 +18,14 @@
 			text-decoration: none;
 		}
 		sup{
-			font-size: 18px;
+			font-size: 15px;
 			color: red;
+			top: 0;
+			margin-top: 5px;
+		}
+
+		.mbsc-ios.mbsc-picker-header{
+			padding: 0 !important;
 		}
 	</style>
 </head>
@@ -28,13 +34,15 @@
 	<h1 style="text-align:center;"><strong>Quản Lý Đơn Khám Bệnh Nhân</strong></h1>
 	<div class="text-center"><img style="vertical-align: middle;" src="/assets/images/separate-01.png" alt="Sepherate image"></div>
 	<div class="search__bar" style="text-align:end;">
+		<form asp-controller="appointment" asp-action="patientappointment" method="get">
 		<input style="font-size:15px;" type="search" placeholder="Tìm kiếm ..." name="keyword">
-		<button style="background-color: transparent; border:none;" type="submit"><i style="font-size:20px;" class="fas fa-search"></i></button>
+		<button title="Tìm" style="background-color: transparent; border:none;" type="submit"><i style="font-size:20px;" class="fas fa-search"></i></button>
+		</form>
 	</div>
 	<table class="table table-striped mt-5" style="font-size: 2rem;">
 		<thead>
 			<tr>
-				<th>STT</th>
+				<th>Mã Số Phiếu</th>
 				<th>Bệnh nhân</th>
 				<th>Chuyên Khoa</th>
 				<th>Ngày hẹn</th>
@@ -48,7 +56,7 @@
 			@foreach (var appointment in Model)
 			{
 				<tr>
-					<td>@appointment.ID</td>
+					<td>@appointment.Transactions.Where(t => t.AppointmentID == appointment.ID).First().MedicalReportID</td>
 					<td>@appointment.PatientRecords.FullName</td>
 					<td>@appointment.Specialty.Name</td>
 					<td>@appointment.Schedule.Date.ToString("dd/MM/yyyy")</td>
@@ -65,25 +73,26 @@
 					<td>
 						@if (appointment.AppointmentStatus == "Chờ Xác Nhận")
 						{
-							<a class="confirm-link" style="color:blue; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="1">Xác Nhận</a>
+							<a class="confirm-link" style="color:blue; text-decoration:none;" asp-controller="appointment" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="1">Xác Nhận</a>
 							<span> | </span>
-							<a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
+							<a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="appointment" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
 						}
 						else if (appointment.AppointmentStatus == "Đã Chấp Nhận")
 						{
-							<a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="2">Đã Khám</a>
+							<a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="appointment" asp-action="changestatusappointment" asp-route-appointmentID="@appointment.ID" asp-route-statusNumber="2">Đã Khám</a>
 							<span> | </span>
-							<a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
+							<a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="appointment" asp-action="cancelappointment" asp-route-appointmentID="@appointment.ID">Hủy</a>
 						}
 						else if (appointment.AppointmentStatus == "Đã Khám")
 						{
 							<button type="button" class="btn show-popup" data-appointment-id="@appointment.ID"
+									data-medical-report-id="@appointment.Transactions.Where(t => t.AppointmentID == appointment.ID).First().MedicalReportID"
 									data-specialty="@appointment.Specialty.Name"
 									data-patient-name="@appointment.PatientRecords.FullName"
 									data-patient-gender="@appointment.PatientRecords.Gender"
 									data-patient-dob="@appointment.PatientRecords.DateOfBirth.ToString("dd/MM/yyyy")"
-									data-patient-phone="@appointment.PatientRecords.PhoneNumber"
-									data-patient-email="@appointment.PatientRecords.EmailReceiver"
+									data-patient-phone="@(appointment.PatientRecords.PhoneNumber??appointment.PatientRecords.FMPhoneNumber)"
+									data-patient-email="@(appointment.PatientRecords.EmailReceiver??appointment.PatientRecords.FMEmail)"
 									data-patient-province="@await LocalAPIReverseString.GetProvinceNameById(appointment.PatientRecords.Province)"
 									data-patient-district="@await LocalAPIReverseString.GetDistrictNameById(appointment.PatientRecords.Province, appointment.PatientRecords.District)"
 									data-patient-ward="@await LocalAPIReverseString.GetWardNameById(appointment.PatientRecords.District, appointment.PatientRecords.Ward)"
@@ -91,7 +100,10 @@
 									data-booking-date="@appointment.Schedule.Date.ToString("dd/MM/yyyy")"
 									data-created-datetime="@appointment.CreatedDate?.ToString("dd/MM/yyyy HH:mm")"
 									data-appointment-price="@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.TotalPrice)"
-									data-appointment-status="@appointment.AppointmentStatus">
+									data-appointment-status="@appointment.AppointmentStatus"
+									data-input-description="@appointment.Description"
+									data-input-note="@appointment.Note"
+									>
 								<p style="font-size:20px; color:chocolate; text-decoration:underline;">Chi Tiết Đơn</p>
 							</button>
 						}
@@ -102,13 +114,7 @@
 	</table>
 	@if (Model.Count() == 0)
 	{
-		<br>
-		<br>
-		<br>
-		<h2 style="color:red; text-align:center;">**Tạm thời chưa có đơn khám cho mục này!</h2>
-		<br>
-		<br>
-		<br>
+		<br><br><br><h2 style="color:red; text-align:center;">*Tạm thời chưa có đơn khám cho mục này!</h2><br><br><br>
 	}
 	<ul class="pagination" id="pagination"></ul>
 </div>
@@ -156,11 +162,11 @@
 
 <!-- Hidden block to display as a popup -->
 <div class="modal-content-appointment" id="popupBlock">
-	<form id="pdfForm" asp-controller="AppointmentPdf" asp-action="GeneratePdf" method="post" target="_blank">
+	<form id="pdfForm" asp-controller="Appointment" asp-action="ValidAppointmentForFutureAppointment" method="post" target="_blank">
 		<input type="hidden" id="appointmentID" name="appointmentID" />
 		<!--Phần Hiển thị thông tin đơn khám mini-->
 		<div style='display: flex; justify-content: space-between;'>
-			<p><strong>Mã Số Phiếu: </strong> <span style='font-size: 16px;' id="appointmentIDTextContent"></span> </p>
+			<p><strong>Mã Số Phiếu: </strong> <span style='font-size: 16px;' class="medicalReportId"></span> </p>
 		</div>
 
 		<h2 style='text-align:center;'>Phiếu Khám Nha Khoa</h2>
@@ -179,14 +185,14 @@
 		<p><strong>Địa Chỉ: </strong><span style='font-size: 16px;' id="patientAddress"></span>, <span style='font-size: 16px;' id="patientWard"></span>, <span style='font-size: 16px;' id="patientDistrict"></span>, <span style='font-size: 16px;' id="patientProvince"></span></p>
 		<table style='border-collapse:collapse; width:100%; border:1px solid black; text-align: end;'>
 			<tr>
-				<th style='border:1px solid black; text-align: end;'>STT</th>
+				<th style='border:1px solid black; text-align: end;'>Mã Số Phiếu</th>
 				<th style='border:1px solid black; text-align: end;'>Tên Chuyên Khoa</th>
 				<th style='border:1px solid black; text-align: end;'>Ngày Đặt</th>
 				<th style='border:1px solid black; text-align: end;'>Ngày Khám</th>
 				<th style='border:1px solid black; text-align: end;'>Giá Khám</th>
 			</tr>
 			<tr>
-				<td style='text-align:end; border:1px solid black; text-align: end;'>1</td>
+				<td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' class="medicalReportId"></span></td>
 				<td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="specialty"></span></td>
 				<td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="createdDatetime"></span></td>
 				<td style='text-align:end; border:1px solid black; text-align: end;'><span style='font-size: 16px;' id="bookingDate"></span></td>
@@ -199,25 +205,26 @@
 			<div>
 				<p><strong>Kết Quả Khám: </strong></p>
 				<p><strong>Dặn dò (nếu có): </strong></p>
-				<p><strong>HẸN TÁI KHÁM / ĐIỀU TRỊ (nếu có): </strong></p> <br><br><br><br>
-				<sup>**Bên phải lần lượt là: <br><br> Chọn ngày khám định kỳ<br>Chọn giờ bắt đầu<br />Chọn giờ kết thúc</sup>
+				<p><strong>HẸN TÁI KHÁM / ĐIỀU TRỊ (nếu có): </strong></p>
 			</div>
-			<div style="width:60%;">
-				<input name="ketquakham" type="text" style="width:100%; margin-bottom:2px;"><br>
+			<div style="width:80%;">
+				<input name="ketquakham" type="text" style="width:100%; margin-bottom:2px;" id="description"><br>
 				<input type="hidden" name="ngayhentaikham" id="ngayhentaikham">
 				<input type="hidden" name="giobatdau" id="giobatdau">
 				<input type="hidden" name="gioketthuc" id="gioketthuc">
-				<input name="dando" type="text" style="width:100%; margin-bottom:2px;">
+				<input name="dando" type="text" style="width:100%; margin-bottom:2px;" id="note">
 				@* Phần hiển thị lịch *@
 				<div style="display:flex;">
-					<div id="period-booking-date" style="width:60%; border-right: solid 1px grey;"></div>
-					<div id="period-booking-time-start" style="width:20%; border-right: solid 1px grey; height: unset;"></div>
-					<div id="period-booking-time-end" style="width:20%; height: unset;"></div>
+					<div id="period-booking-date" style="width:80%; border-right: solid 1px grey;"></div>
+					<div id="period-booking-time-start" style="width:20%; border-right: solid 1px grey; height: unset; padding:0;"></div>
+					<div id="period-booking-time-end" style="width:20%; height: unset; padding:0;"></div>
 				</div>
 			</div>
 		</div>
-
-		<div style="justify-content:space-between; margin-top:2px; font-size:15px;">
+		<sup>
+			**Nếu không chọn ngày khám thì sẽ không tạo lịch định kỳ</br> 
+		</sup>
+		<div style="margin-top:30px;font-size:15px;text-align: end;">
 			<button type="submit" class="btn btn-warning" style="font-size:15px;">Xuất PDF</button>
 			<button type="button" class="btn btn-secondary" id="closePopup" style="font-size:15px;">Đóng</button>
 		</div>
@@ -299,10 +306,12 @@
 			const patientDOB = e.currentTarget.getAttribute('data-patient-dob');
 			const bookingDate = e.currentTarget.getAttribute('data-booking-date');
 			const createdDatetime = e.currentTarget.getAttribute('data-created-datetime');
+			const medicalReportId = e.currentTarget.getAttribute('data-medical-report-id');
+			const description = e.currentTarget.getAttribute('data-input-description');
+			const note = e.currentTarget.getAttribute('data-input-note');
 
 
 			document.getElementById('appointmentID').value = appointmentID;
-			document.getElementById('appointmentIDTextContent').textContent = appointmentID;
 			document.getElementById('specialty').textContent = specialtyName;
 			document.getElementById('patientName').textContent = patientName;
 			document.getElementById('patientGender').textContent = patientGender;
@@ -318,9 +327,14 @@
 			document.getElementById('patientDOB').textContent = patientDOB;
 			document.getElementById('bookingDate').textContent = bookingDate;
 			document.getElementById('createdDatetime').textContent = createdDatetime;
+			document.querySelectorAll('.medicalReportId').forEach(element => {
+				element.textContent = medicalReportId;
+			});
+			document.getElementById('description').value = description;
+			document.getElementById('note').value = note;
+
 			document.getElementById('popupBlock').style.display = 'block';
 			document.getElementById('modalOverlay').style.display = 'block';
-
 
 		});
 	});
@@ -340,12 +354,14 @@
 	document.addEventListener("DOMContentLoaded", function (event) {
 		//phần khai báo những biến về time sẽ dùng
 		const current = new Date();
+		var endTimeAvailable = "";
 		current.setHours(current.getHours() + 24);
 		mobiscroll.setOptions({
 			stepMinute: 30,
 			theme: "ios",
 			themeVariant: "light"
 		});
+
 
 		fetch('/dentist/dentistdetail/getscheduledates?dentistID=' + @ViewBag.dentistID)
 			.then(response => response.json())
@@ -360,6 +376,8 @@
 						}
 					};
 				});
+
+
 				console.log(workingTimeSlots);
 
 				//Lấy CÁC ngày mà nha sĩ chọn
@@ -368,6 +386,12 @@
 					//select: 'range',
 					display: "inline",
 					touchUI: true,
+					headerText: 'Chọn ngày khám (có thể chọn nhiều)',
+					labels: [{
+						date: '2024-07-14',
+						color: '#52a064',
+						text: 'Đã đặt định kỳ'
+					}],
 					min: current,
 					selectMultiple: true,
 					locale: mobiscroll.localeVi,
@@ -390,6 +414,7 @@
 				mobiscroll.datepicker('#period-booking-time-start', {
 					controls: ['time'],
 					display: "inline",
+					headerText: 'Giờ bắt đầu',
 					touchUI: true,
 					locale: mobiscroll.localeVi,
 					valid: workingTimeSlots.map(item => ({
@@ -402,6 +427,7 @@
 
 					onChange: function (event, inst) {
 						document.getElementById("giobatdau").value = formatDateTime(event.value, false);
+						endTimeAvailable = event.value; // ít nhất 30' sau giờ bắt đầu
 					}
 				});
 
@@ -409,6 +435,8 @@
 				mobiscroll.datepicker('#period-booking-time-end', {
 					controls: ['time'],
 					display: "inline",
+					headerText: 'Giờ kết thúc',
+					min: endTimeAvailable,
 					touchUI: true,
 					locale: mobiscroll.localeVi,
 					valid: workingTimeSlots.map(item => ({

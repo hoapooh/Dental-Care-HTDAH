@@ -250,13 +250,13 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 				);
 
 			// Lấy danh sách các lịch đièu trị (future appoint...)
-			var futureAppointments = _context.FutureAppointments
+			var periodicAppointments = _context.FutureAppointments
 				.Include(f => f.PatientRecord)
 				.Where(f => f.Dentist_ID == dentist.ID && f.FutureAppointmentStatus != "Đã Hủy")
 				.ToList();
 
 			// chuyển đổi danh sách lịch điều trị thành dictionary
-			var futureAppointmentDict = futureAppointments
+			var periodicAppointmentDict = periodicAppointments
 				.GroupBy(f => new { Date = f.DesiredDate, StartTime = f.StartTime })
 				.ToDictionary(g => g.Key
 				);
@@ -297,7 +297,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 						if (nextTime > endTime) nextTime = endTime;
 
 						// Kiểm tra xem có cuộc hẹn nào trong khung thời gian này không
-						var key = new { Date = schedule.Date, StartTime = startTime };
+						var key = new {schedule.Date, StartTime = startTime };
 
 
 						if (appointmentDict.ContainsKey(key) && appointmentDict.TryGetValue(key, out var values))
@@ -309,7 +309,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 									Title = $"#{value.ID} {value.PatientRecords.FullName}",
 									Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
 									End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
-									Url = "/dentist/dentistdetail/patientappointments?appointmentID=" + value.ID,
+									Url = "/dentist/appointment/patientappointment?appointmentID=" + value.ID,
 									StatusColor = value.AppointmentStatus switch
 									{
 										"Chờ Xác Nhận" => "#d5c700", // Yellow
@@ -323,17 +323,22 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 						}
 
-						else if (futureAppointmentDict.ContainsKey(key) && futureAppointmentDict.TryGetValue(key, out var futureAppointmentValues))
+						else if (periodicAppointmentDict.ContainsKey(key) && periodicAppointmentDict.TryGetValue(key, out var periodicAppointmentValues))
 						{
-							foreach (var futureAppointment in futureAppointmentValues)
+							foreach (var periodicAppointment in periodicAppointmentValues)
 							{
 								dailyTimeSlots.Add(new EventVM
 								{
-									Title = $"ĐIỀU TRỊ - {futureAppointment.PatientRecord.FullName}",
+									Title = $"ĐỊNH KỲ - {periodicAppointment.PatientRecord.FullName}",
 									Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
 									End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
-									Url = "/dentist/dentistdetail/showperiodicappointment?periodicappointmentID=" + futureAppointment.ID,
-									StatusColor = "aqua"
+									Url = "/dentist/appointment/periodicappointment?periodicappointmentID=" + periodicAppointment.ID,
+									StatusColor = periodicAppointment.FutureAppointmentStatus switch
+									{
+										"Đã Hủy" => "#d53700",
+										"Đã Khám" => "aqua",
+										_ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
+									}
 								});
 							}
 						}
@@ -345,7 +350,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 								Title = "Trống",
 								Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
 								End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
-								Url = "/dentist/dentistdetail/patientappointments?appointmentID=0",
+								Url = "/dentist/appointment/patientappointment?appointmentID=0",
 								StatusColor = "#c2c2c2"
 							});
 						}
@@ -356,23 +361,19 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 				// Add dailyTimeSlots vào timeSlots chung
 				timeSlots.AddRange(dailyTimeSlots);
-
 			}
 
-			Schedule lastSchedule = schedules.Find(ls => ls.Date == maxDate);
-			//Console.WriteLine(lastSchedule.Date);
-			foreach (var futureAppoint in futureAppointments)
+			//Lấy những future appointment nằm ngoài phạm vi lịch ảo
+			foreach (var periodicAppoint in periodicAppointments)
 			{
-
-
-				if (futureAppoint.DesiredDate > lastSchedule.Date)
+				if (periodicAppoint.DesiredDate > maxDate)
 				{
 					timeSlots.Add(new EventVM
 					{
-						Title = $"ĐIỀU TRỊ - {futureAppoint.PatientRecord.FullName}",
-						Start = $"{futureAppoint.DesiredDate:yyyy-MM-dd}T{futureAppoint.StartTime:HH:mm:ss}",
-						End = $"{futureAppoint.DesiredDate:yyyy-MM-dd}T{futureAppoint.EndTime:HH:mm:ss}",
-						Url = "/dentist/dentistdetail/showperiodicappointment?periodicappointmentID=" + futureAppoint.ID,
+						Title = $"ĐIỀU TRỊ - {periodicAppoint.PatientRecord.FullName}",
+						Start = $"{periodicAppoint.DesiredDate:yyyy-MM-dd}T{periodicAppoint.StartTime:HH:mm:ss}",
+						End = $"{periodicAppoint.DesiredDate:yyyy-MM-dd}T{periodicAppoint.EndTime:HH:mm:ss}",
+						Url = "/dentist/appointment/periodicappointment?periodicappointmentID=" + periodicAppoint.ID,
 						StatusColor = "aqua"
 					});
 				}

@@ -2,7 +2,7 @@
 @using Dental_Clinic_System.Helper
 @using System.Globalization
 @{
-    ViewData["Title"] = "Đơn Tái Khám";
+    ViewData["Title"] = "Đơn Khám Định Kỳ";
     string statusColorClass = "status";
 }
 <head>
@@ -25,13 +25,15 @@
     <h1 style="text-align:center;"><strong>Quản Lý Đơn Khám Định Kỳ</strong></h1>
     <div class="text-center"><img style="vertical-align: middle;" src="/assets/images/separate-01.png" alt="Sepherate image"></div>
     <div class="search__bar" style="text-align:end;">
+        <form asp-controller="appointment" asp-action="periodicappointment" method="get">
         <input style="font-size:15px;" type="search" placeholder="Tìm kiếm ..." name="keyword">
         <button style="background-color: transparent; border:none;" type="submit"><i style="font-size:20px;" class="fas fa-search"></i></button>
+        </form>
     </div>
     <table class="table table-striped mt-5" style="font-size: 2rem;">
         <thead>
             <tr>
-                <th>STT</th>
+                <th>Mã Số Phiếu</th>
                 <th>Họ tên bệnh nhân</th>
                 <th>Ngày khám</th>
                 <th>GIờ hẹn</th>
@@ -58,15 +60,25 @@
                     <td>
                         @if (futureAppointment.FutureAppointmentStatus == "Chưa Khám")
                         {
-                            <a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="dentistdetail" asp-action="changestatusfutureappointment" asp-route-futureappointmentID="@futureAppointment.ID">Đã Khám</a>
+                            <a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="appointment" asp-action="changestatusfutureappointment" asp-route-futureappointmentID="@futureAppointment.ID">Đã Khám</a>
                             <span> | </span>
-                            <a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="dentistdetail" asp-action="cancelfutureappointment" asp-route-futureappointmentID="@futureAppointment.ID">Hủy</a>
+                            <a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="appointment" asp-action="cancelfutureappointment" asp-route-futureappointmentID="@futureAppointment.ID">Hủy</a>
                         }
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    @if (Model.Count() == 0)
+    {
+        <br>
+        <br>
+        <br>
+        <h2 style="color:red; text-align:center;">**Tạm thời chưa có đơn khám cho mục này!</h2>
+        <br>
+        <br>
+        <br>
+    }
     <ul class="pagination" id="pagination"></ul>
 </div>
 
