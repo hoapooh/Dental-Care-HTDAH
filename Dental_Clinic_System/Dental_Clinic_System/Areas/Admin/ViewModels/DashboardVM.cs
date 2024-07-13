@@ -5,13 +5,19 @@
         //public DateTime Date { get; set; }
         public int SelectedYear { get; set; }
 
+        public int SelectedMonth { get; set; }
+
         //public int SuccessfulAppointments { get; set; }
 
         //public int FailedAppointments { get; set; }
 
-        public List<int> MonthlySuccessfulAppointments { get; set; }
+        public int SuccessfulAppointmentsCurrentYear { get; set; }
 
-        public List<int> MonthlyFailedAppointments { get; set; }
+        public int SuccessfulAppointmentsPreviousYear { get; set; }
+
+        public int FailedAppointmentsCurrentYear { get; set; }
+
+        public int FailedAppointmentsPreviousYear { get; set; }
 
         public int AcceptedOrdersToday { get; set; }
 

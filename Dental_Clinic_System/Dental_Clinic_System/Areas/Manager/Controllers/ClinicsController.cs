@@ -39,32 +39,27 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             {
                 return NotFound();
             }
-            ViewBag.AmStartTime = clinic.AmWorkTimes.StartTime;
-            ViewBag.AmEndTime = clinic.AmWorkTimes.EndTime;
-            ViewBag.PmStartTime = clinic.PmWorkTimes.StartTime;
-            ViewBag.PmEndTime = clinic.PmWorkTimes.EndTime;
-
-            #region Worktime List
-            var amWorkTimes = await _context.WorkTimes
-                                .Where(w => w.Session == "Sáng")
-                                .Select(w => new WorkTimeVM
-                                {
-                                    ID = w.ID,
-                                    DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-                                }).ToListAsync();
-
-            var pmWorkTimes = await _context.WorkTimes
-                .Where(w => w.Session == "Chiều")
-                .Select(w => new WorkTimeVM
-                {
-                    ID = w.ID,
-                    DisplayText = $"{w.Session}: {w.StartTime.ToString("HH:mm")} - {w.EndTime.ToString("HH:mm")}"
-                })
-                .ToListAsync();
-
-            ViewBag.AmWorkTimes = new SelectList(amWorkTimes, "ID", "DisplayText");
-            ViewBag.PmWorkTimes = new SelectList(pmWorkTimes, "ID", "DisplayText");
-            #endregion
+            //-----------------------------------------------
+            var clinicVM = new ClinicVM
+            { 
+                ID = clinicId,
+                ManagerID = clinic.ManagerID,
+                Name = clinic.Name,
+                Province = clinic.Province,
+                Ward = clinic.Ward,
+                District = clinic.District,
+                Address = clinic.Address,
+                PhoneNumber = clinic.PhoneNumber,
+                Email = clinic.Email,
+                Description = clinic.Description,
+                Image = clinic.Image,
+                ClinicStatus = clinic.ClinicStatus,
+                MapLinker = clinic.MapLinker,
+                AmStartTime = clinic.AmWorkTimes.StartTime,
+                AmEndTime = clinic.AmWorkTimes.EndTime,
+                PmStartTime = clinic.PmWorkTimes.StartTime,
+                PmEndTime = clinic.PmWorkTimes.EndTime
+            };
 
             ViewBag.AmTimes = new List<TimeOnly>() {  // 7:00, 7:30, 8:00...
                 new TimeOnly(7, 0),  new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
@@ -79,7 +74,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                 new TimeOnly(19, 0),  new TimeOnly(19, 30), new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
             };
             
-            return View(clinic);
+            return View(clinicVM);
         }
 
         // POST: Manager/Clinics/Edit/5
@@ -87,8 +82,22 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("ID,ManagerID,Name,Province,Ward,District,Address,Basis,PhoneNumber,Email,Description,MapLinker,Image,ClinicStatus")] ClinicVM clinic, string amStartTime, string amEndTime, string pmStartTime, string pmEndTime)
+        public async Task<IActionResult> Edit([Bind("ID,ManagerID,Name,Province,Ward,District,Address,PhoneNumber,Email,Description,MapLinker,Image,ClinicStatus,AmStartTime,AmEndTime,PmStartTime,PmEndTime")] ClinicVM clinic)
         {
+            //--------------------------------------
+            ViewBag.AmTimes = new List<TimeOnly>() {  // 7:00, 7:30, 8:00...
+                new TimeOnly(7, 0),  new TimeOnly(7, 30), new TimeOnly(8, 0), new TimeOnly(8, 30),
+                new TimeOnly(9, 0),  new TimeOnly(9, 30), new TimeOnly(10, 0), new TimeOnly(10, 30),
+                new TimeOnly(11, 0),  new TimeOnly(11, 30), new TimeOnly(12, 0)
+            };
+            ViewBag.PmTimes = new List<TimeOnly>() {  // 7:00, 7:30, 8:00...
+                new TimeOnly(12, 0), new TimeOnly(12, 30), new TimeOnly(13, 0),  new TimeOnly(13, 30),
+                new TimeOnly(14, 0), new TimeOnly(14, 30),
+                new TimeOnly(15, 0),  new TimeOnly(15, 30), new TimeOnly(16, 0), new TimeOnly(16, 30),
+                new TimeOnly(17, 0),  new TimeOnly(17, 30), new TimeOnly(18, 0), new TimeOnly(18, 30),
+                new TimeOnly(19, 0),  new TimeOnly(19, 30), new TimeOnly(20, 0), new TimeOnly(20, 30), new TimeOnly(21, 0)
+            };
+            //-----------------------------------------
             if (ModelState.IsValid)
             {
                 try
@@ -96,10 +105,16 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                     var upClinic = await _context.Clinics.FindAsync(clinic.ID);
                     if (upClinic != null)
                     {
-                        TimeOnly amS = TimeOnly.Parse(amStartTime);
-                        TimeOnly amE = TimeOnly.Parse(amEndTime);
-                        TimeOnly pmS = TimeOnly.Parse(pmStartTime);
-                        TimeOnly pmE = TimeOnly.Parse(pmEndTime);
+                        TimeOnly amS = clinic.AmStartTime;
+                        TimeOnly amE = clinic.AmEndTime;
+                        TimeOnly pmS = clinic.PmStartTime;
+                        TimeOnly pmE = clinic.PmEndTime;
+                        //--------------------------------------KIỂM TRA GIỜ HỢP LỆ KHÔNG?
+                        if (amS >= amE || pmS >= pmE)
+                        {
+                            TempData["ToastMessageFailTempData"] = "Thời gian làm việc không hợp lệ.";
+                            return View(clinic);
+                        }
                         //--------------
                         var checkExistAm = await _context.WorkTimes.AnyAsync(t => t.Session == "Sáng" && t.StartTime == amS && t.EndTime == amE);
                         if (checkExistAm == false)
@@ -134,7 +149,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                         upClinic.Province = clinic.Province;
                         upClinic.Ward = clinic.Ward;
                         upClinic.District = clinic.District;
-                        upClinic.Address = clinic.Address;
+                        upClinic.Address = clinic.Address ?? "";
                         upClinic.Email = clinic.Email;
                         upClinic.PhoneNumber = clinic.PhoneNumber;
                         upClinic.Description = clinic.Description;
@@ -155,20 +170,21 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                         throw;
                     }
                 }
+                HttpContext.Session.SetString("image", clinic?.Image ?? "");
+                TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công.";
                 return RedirectToAction(nameof(Edit));
             }
-            //ViewData["ManagerID"] = new SelectList(_context.Accounts, "ID", "AccountStatus", clinic.ManagerID);
-            //return View(clinic);
-            List<string> errors = new List<string>();
-            foreach (var value in ModelState.Values)
-            {
-                foreach (var error in value.Errors)
-                {
-                    errors.Add(error.ErrorMessage);
-                }
-            }
-            string errorMessage = string.Join("\n", errors);
-            return BadRequest(errorMessage);
+            return View(clinic);
+            //List<string> errors = new List<string>();
+            //foreach (var value in ModelState.Values)
+            //{
+            //    foreach (var error in value.Errors)
+            //    {
+            //        errors.Add(error.ErrorMessage);
+            //    }
+            //}
+            //string errorMessage = string.Join("\n", errors);
+            //return BadRequest(errorMessage);
         }
 
 

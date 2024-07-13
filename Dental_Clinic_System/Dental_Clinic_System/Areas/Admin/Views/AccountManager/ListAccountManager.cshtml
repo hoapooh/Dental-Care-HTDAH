@@ -146,6 +146,7 @@
 		<tr>
 			<th class="text-center">STT</th>
 			<th>Tên đăng nhập</th>
+			<th>Họ tên</th>
 			<th>Tên phòng khám</th>
 			<th>Email</th>
 			<th>Số điện thoại</th>
@@ -164,6 +165,7 @@
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
+					<td>@account.LastName @account.FirstName</td>
 					<td>@account.ClinicName</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>

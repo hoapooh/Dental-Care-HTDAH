@@ -1,0 +1,214 @@
+﻿@{
+    ViewData["Title"] = "Page Not Found";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .error-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .error-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .error-text {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .error-text h1 {
+                font-size: 96px;
+                color: #5a5af2;
+                margin: 0;
+                font-weight: 700; /* Bold */
+            }
+
+            .error-text h2 {
+                font-size: 48px;
+                color: #5a5af2;
+                margin: 0;
+                font-weight: 600; /* Semi-bold */
+            }
+
+            .error-text h3 {
+                font-size: 36px;
+                color: #5a5af2;
+                margin: 20px 0;
+                font-weight: 600; /* Semi-bold */
+            }
+
+            .error-text p {
+                font-size: 18px;
+                color: #5a5af2;
+                margin-bottom: 20px;
+                font-weight: 400; /* Regular */
+            }
+
+        .back-home {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #5a5af2;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600; /* Semi-bold */
+        }
+
+        .error-image {
+            flex: 1;
+            text-align: center;
+        }
+
+            .error-image img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+
+        /* footer.css */
+
+        .footer {
+            background-color: #e0f7fa;
+            padding: 20px 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .footer__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer__navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer__navigation__list {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+            .footer__navigation__list li a {
+                text-decoration: none;
+                color: #000;
+                font-weight: 600;
+            }
+
+        .footer__separate {
+            border-bottom: 1px solid #000;
+            margin: 20px 0;
+        }
+
+        .footer__terms {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer__terms__address__contact {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer__terms__list {
+            margin-bottom: 10px;
+        }
+
+        .footer__terms__title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .footer__terms__links {
+            text-decoration: none;
+            color: #000;
+            font-weight: 400;
+        }
+
+        .footer__condition__social {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer__condition__social--copyright {
+            font-size: 14px;
+            color: #000;
+            margin: 10px 0;
+        }
+
+        .footer__condition__social--media {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .footer__condition__social--media img {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+            }
+
+
+
+    </style>
+</head>
+
+<body>
+    <main class="error-container">
+        <div class="error-content">
+            <div class="error-text">
+                <h1>404</h1>
+                <h2>Ooops!</h2>
+                <h3>Không tìm thấy trang</h3>
+                <p>Xin lỗi, trang bạn đang tìm kiếm không có sẵn. Chúng tôi khuyên bạn nên quay lại Trang chủ</p>
+                <a href="/" class="back-home">← Quay lại Trang chủ</a>
+            </div>
+
+            <div class="error-image">
+                <img src="https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/profile_pictures%2Ferror.png?alt=media&token=0fd8498f-41b6-4972-a0c8-44902ace1907" alt="404 Error">
+            </div>
+        </div>
+    </main>
+</body>
+</html>

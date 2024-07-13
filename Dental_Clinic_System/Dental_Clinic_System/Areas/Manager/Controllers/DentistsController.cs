@@ -282,13 +282,28 @@ namespace Dental_Clinic_System.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("SpecialtyIDs, DentistId, AccountId, LastName, FirstName, Gender, Province, Ward, District, Address, DateOfBirth, PhoneNumber, Email, DegreeID, Description, Status, Image")] EditDentistVM dentistForm, string? newPass)
+		public async Task<IActionResult> Edit(int id, [Bind("SpecialtyIDs, DentistId, AccountId, LastName, FirstName, Gender, Province, Ward, District, Address, DateOfBirth, PhoneNumber, Email, DegreeID, Description, Status, Image, NewPassWord")] EditDentistVM dentistForm)
 		{
 			if (id != dentistForm.DentistId)
 			{
 				return NotFound();
 			}
+			//nếu các ô nhập ko hợp lệ => đổ data để check
+			ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentistForm.DegreeID);
+			ViewData["Specialty"] = new SelectList(_context.Specialties, "ID", "Name");
+			ViewBag.SpeIDs = dentistForm.SpecialtyIDs;
+			//---------------------------------------------------------------------------------------
+			//Check thông tin trùng lặp
+			var existingAccount = await _context.Accounts
+				.FirstOrDefaultAsync(a => a.ID != dentistForm.AccountId && (a.Email == dentistForm.Email || a.PhoneNumber == dentistForm.PhoneNumber));
 
+			if (existingAccount != null)
+			{
+				//Thấy thông tin bị trùng, thông báo lỗi
+				ModelState.AddModelError(string.Empty, "Fail: Email / Số điện thoại - đã tồn tại trên tài khoản khác!");
+
+				return View(dentistForm);
+			}
 			if (ModelState.IsValid )
 			{
 				try
@@ -297,9 +312,9 @@ namespace Dental_Clinic_System.Controllers
 					var account = _context.Accounts.Find(dentistForm.AccountId);
 					if (account != null)
 					{
-						if(!string.IsNullOrEmpty(newPass))
+						if(!string.IsNullOrEmpty(dentistForm.NewPassWord))
 						{
-							account.Password = DataEncryptionExtensions.ToMd5Hash(newPass);
+							account.Password = DataEncryptionExtensions.ToMd5Hash(dentistForm.NewPassWord);
 						}
 						account.LastName = dentistForm.LastName;
 						account.FirstName = dentistForm.FirstName;
@@ -349,12 +364,10 @@ namespace Dental_Clinic_System.Controllers
 					}
 				}
 
-				TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công!";
+				TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công.";
 				return RedirectToAction(nameof(Details), new { id = id });
 			}
-
-			//ViewData["DegreeID"] = new SelectList(_context.Degrees, "ID", "Name", dentistForm.DegreeID);
-			//ViewData["Specialty"] = new SelectList(_context.Specialties, "ID", "Name");
+			
 			//List<string> errors = new List<string>();
 			//foreach (var value in ModelState.Values)
 			//{

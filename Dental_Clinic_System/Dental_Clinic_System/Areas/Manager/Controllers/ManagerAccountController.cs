@@ -46,7 +46,6 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             if (user.Role == "Quản Lý")
             {
                 var clinic = _context.Clinics.Include(c => c.Manager).AsQueryable().FirstOrDefault(s => s.ManagerID == user.ID);
-                string clinicID = clinic?.ID.ToString() ?? "";
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.Username),
@@ -59,7 +58,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                 await HttpContext.SignInAsync("ManagerScheme", new ClaimsPrincipal(claimsIdentity), authProperties);
                 HttpContext.Session.SetInt32("managerAccountID", user.ID);
 				HttpContext.Session.SetString("name",user.LastName + " " + user.FirstName);
-				HttpContext.Session.SetString("image", user.Image ?? "");
+				HttpContext.Session.SetString("image", clinic?.Image ?? "");
 				HttpContext.Session.SetInt32("clinicId", clinic?.ID ?? 0);
 
                 if (!string.IsNullOrEmpty(returnUrl))
@@ -177,7 +176,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
             await _context.SaveChangesAsync();
 
-            HttpContext.Session.SetString("name", manager.FirstName + " " + manager.LastName);
+            HttpContext.Session.SetString("name", manager.LastName + " " + manager.FirstName);
 
             TempData["ToastMessageSuccessTempData"] = "Lưu thay đổi thành công.";
             return RedirectToAction("Profile", "ManagerAccount", new { area = "Manager" });

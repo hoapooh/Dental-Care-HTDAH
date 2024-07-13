@@ -29,6 +29,10 @@
             padding: 24px 48px !important; /* Reduced padding for top/bottom and left/right */
             border-radius: 10px; /* Adjust this value to change the roundness of the corners */
         }
+
+        .form-modal-styles .modal-body input, .form-modal-styles .modal-body select {
+            font-weight: normal;
+        }
     </style>
 }
 
@@ -52,17 +56,16 @@
             </div>
             <div class="user-address modal-body-card">
                 <label>Đơn giá</label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control"  />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="user-address modal-body-card">
                 @* <label>Phòng khám</label> *@
-                <input asp-for="ClinicID" class="form-control" value="@ViewBag.ClinicID" type="hidden"/>
+                <input asp-for="ClinicID" class="form-control" value="@ViewBag.ClinicID" type="hidden" />
             </div>
             <div class="user-address modal-body-card">
                 <label>Chuyên khoa</label>
                 <select asp-for="SpecialtyID" class="form-control" asp-items="ViewBag.SpecialtyID">
-                    <option>--Chọn chuyên khoa--</option>
                 </select>
             </div>
             <div class="user-address modal-body-card">
@@ -75,7 +78,7 @@
         <h1></h1>
         <div class="modal-footer">
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index">Về danh sách</a>
             </div>
             |
             <button type="submit" class="submit-btn btn">
@@ -86,8 +89,5 @@
 </div>
 <br />
 
-@section Scripts {
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-}
+
 

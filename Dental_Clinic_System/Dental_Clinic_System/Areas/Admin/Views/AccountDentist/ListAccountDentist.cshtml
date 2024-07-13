@@ -41,12 +41,12 @@
 	.specialties-container {
 		display: flex;
 		flex-wrap: wrap;
+		gap: 10px;
 	}
 
 	.form-check {
-		flex: 1 1 200px;
-		margin-right: 10px;
-
+		width: calc(50% - 10px);
+		align-items: center;
 	}
 
 	.form-check-label {
@@ -55,6 +55,16 @@
 
 	.account__management .table tbody span {
 		font-weight: 200;
+	}
+
+	#specialties .form-check-input {
+		margin-right: 10px;
+		width: auto;
+	}
+
+	#specialties .form-check-label {
+		margin-left: 3px;
+		font-size: 1.7rem;
 	}
 </style>
 
@@ -149,7 +159,7 @@
 				<div class="row mb-3">
 					<div class="col">
 						<label for="specialties">Các chuyên khoa gồm có:<sup style="color:red">*</sup></label>
-						<div id="specialties" class="form-check-inline specialties-container"></div>
+						<div id="specialties" class="specialties-container"></div>
 					</div>
 				</div>
 
@@ -187,6 +197,7 @@
 		<tr>
 			<th class="text-center">STT</th>
 			<th>Tên đăng nhập</th>
+			<th>Họ tên</th>
 			<th>Giới tính</th>
 			<th>Phòng khám</th>
 			<th>Chuyên khoa</th>
@@ -207,6 +218,7 @@
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
+					<td>@account.LastName @account.FirstName</td>
 					<td>@account.Gender</td>
 					<td>@account.ClinicName</td>
 					<td>
