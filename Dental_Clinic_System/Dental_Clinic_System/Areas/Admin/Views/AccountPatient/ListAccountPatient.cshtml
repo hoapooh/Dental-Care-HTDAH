@@ -48,7 +48,11 @@
 	}
 
 	.table th.username, .table td.username {
-		width: 10%;
+		width: 8%;
+	}
+
+	.table th.last_firstname, .table td.last_firstname{
+		width: 15%;
 	}
 
 	.table th.gender, .table td.gender {
@@ -56,7 +60,7 @@
 	}
 
 	.table th.email, .table td.email {
-		width: 21%;
+		width: 20%;
 	}
 
 	.table th.phone, .table td.phone {
@@ -64,7 +68,7 @@
 	}
 
 	.table th.address, .table td.address {
-		width: 21%;
+		width: 20%;
 	}
 
 	.table th.actions, .table td.actions {
@@ -183,6 +187,7 @@
 		<tr>
 			<th class="text-center stt">STT</th>
 			<th class="username">Tên đăng nhập</th>
+			<th class="last_firstname">Họ tên</th>
 			<th class="gender text-center">Giới tính</th>
 			<th class="email">Email</th>
 			<th class="phone">Số điện thoại</th>
@@ -202,6 +207,7 @@
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
+					<td>@account.LastName @account.FirstName</td>
 					<td style="text-align: center">@account.Gender</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>

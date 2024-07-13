@@ -32,6 +32,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             {
                 Id = a.ID,
                 Username = a.Username,
+                FirstName = a.FirstName,
+                LastName = a.LastName,
                 Email = a.Email,
                 PhoneNumber = a.PhoneNumber,
                 Gender = a.Gender,
@@ -68,6 +70,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             {
                 Id = a.ID,
                 Username = a.Username,
+                FirstName= a.FirstName,
+                LastName= a.LastName,
                 Email = a.Email,
                 PhoneNumber = a.PhoneNumber,
                 Gender = a.Gender,

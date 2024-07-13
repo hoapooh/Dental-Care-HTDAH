@@ -197,6 +197,7 @@
 		<tr>
 			<th class="text-center">STT</th>
 			<th>Tên đăng nhập</th>
+			<th>Họ tên</th>
 			<th>Giới tính</th>
 			<th>Phòng khám</th>
 			<th>Chuyên khoa</th>
@@ -217,6 +218,7 @@
 						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
+					<td>@account.LastName @account.FirstName</td>
 					<td>@account.Gender</td>
 					<td>@account.ClinicName</td>
 					<td>
