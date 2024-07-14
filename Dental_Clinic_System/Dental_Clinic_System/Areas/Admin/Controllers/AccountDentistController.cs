@@ -12,7 +12,7 @@ using System.Data;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
 
     public class AccountDentistController : Controller
     {
@@ -43,7 +43,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 PhoneNumber = a.PhoneNumber,
                 Address = a.Address,
                 Gender = a.Gender,
-                Role = a.Role,
+                //Role = a.Role,
 
                 ClinicName = _context.Dentists
                     .Where(d => d.AccountID == a.ID)
@@ -87,7 +87,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 PhoneNumber = a.PhoneNumber,
                 Address = a.Address,
                 Gender = a.Gender,
-                Role = a.Role,
+                //Role = a.Role,
 
                 ClinicName = _context.Dentists
                     .Where(d => d.AccountID == a.ID)
@@ -165,14 +165,26 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
                 var accountList = account1.Select(a => new ManagerAccountVM
                 {
-                    Id = a.ID,
-                    FirstName = a.FirstName,
-                    LastName = a.LastName,
-                    Username = a.Username,
-                    Email = a.Email,
-                    Gender = a.Gender,
-                    PhoneNumber = a.PhoneNumber
-                }).ToList();
+					Id = a.ID,
+					FirstName = a.FirstName,
+					LastName = a.LastName,
+					Username = a.Username,
+					Email = a.Email,
+					PhoneNumber = a.PhoneNumber,
+					Address = a.Address,
+					Gender = a.Gender,
+					//Role = a.Role,
+
+					ClinicName = _context.Dentists
+					.Where(d => d.AccountID == a.ID)
+					.Select(d => d.Clinic.Name)
+					.FirstOrDefault(),
+
+					Specialties = _context.DentistSpecialties
+					.Where(ds => ds.Dentist.AccountID == a.ID && ds.Check == true)
+					.Select(ds => ds.Specialty.Name)
+					.ToList()
+				}).ToList();
 
                 return View("ListAccountDentist", accountList);
             }

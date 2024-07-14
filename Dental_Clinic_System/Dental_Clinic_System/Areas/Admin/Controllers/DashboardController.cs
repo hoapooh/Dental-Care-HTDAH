@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
-    public class DashboardController : Controller
+	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
+	public class DashboardController : Controller
     {
         private readonly DentalClinicDbContext _context;
 

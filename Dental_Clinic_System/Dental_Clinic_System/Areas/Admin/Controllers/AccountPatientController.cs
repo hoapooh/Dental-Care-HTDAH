@@ -10,8 +10,8 @@ using System.Data;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
-    public class AccountPatientController : Controller
+	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
+	public class AccountPatientController : Controller
     {
         private readonly DentalClinicDbContext _context;
 
@@ -117,13 +117,19 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
                 var accountList = accounts.Select(a => new ManagerAccountVM
                 {
-                    Id = a.ID,
-                    Username = a.Username,
-                    Email = a.Email,
-                    PhoneNumber = a.PhoneNumber,
-                    Address = a.Address ?? "",
-                    Role = a.Role
-                }).ToList();
+					Id = a.ID,
+					Username = a.Username,
+					FirstName = a.FirstName,
+					LastName = a.LastName,
+					Email = a.Email,
+					PhoneNumber = a.PhoneNumber,
+					Gender = a.Gender,
+					Address = a.Address ?? "",
+					ProvinceId = a.Province,
+					WardId = a.Ward,
+					DistrictId = a.District,
+					Role = a.Role
+				}).ToList();
 
                 return View("ListAccountPatient", accountList);
             }
