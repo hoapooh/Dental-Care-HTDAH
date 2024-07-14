@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.ManagerAccountVM>
 
 @{
-	ViewData["Title"] = "Danh sách tài khoản bệnh nhân";
+	ViewData["Title"] = "Danh sách tài khoản Admin phụ";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -42,47 +42,15 @@
 		font-weight: 200;
 	}
 
-	/* Chiều rộng các cột cụ thể */
-	.table th.stt, .table td.stt {
-		width: 5%;
-	}
-
-	.table th.username, .table td.username {
-		width: 9%;
-	}
-
-	.table th.last_firstname, .table td.last_firstname{
-		width: 15%;
-	}
-
-	.table th.gender, .table td.gender {
-		width: 8%;
-	}
-
-	.table th.email, .table td.email {
-		width: 20%;
-	}
-
-	.table th.phone, .table td.phone {
-		width: 10%;
-	}
-
-	.table th.address, .table td.address {
-		width: 20%;
-	}
-
-	.table th.actions, .table td.actions {
-		width: 7%;
-	}
 </style>
 
 
 <!-- TÌM KIẾM (SEARCH)-->
 <!-- account management header -->
 <div class="account__management__header">
-	<div class="title">Tài khoản bệnh nhân</div>
+	<div class="title">Tài khoản Admin phụ</div>
 	<div class="action-btn">
-		<form action="~/Admin/AccountPatient/SearchAccount" method="get">
+		<form action="~/Admin/AccountSecondAdmin/SearchAccount" method="get">
 			<div class="search__bar">
 				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
 			</div>
@@ -102,10 +70,10 @@
 <!-- THÊM MỚI NGƯỜI DÙNG (ADD)-->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="mainTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered form-modal-styles">
-		<form action="~/Admin/AccountPatient/AddAccount" method="POST" class="modal-content" onsubmit="return validateForm()">
+		<form action="~/Admin/AccountSecondAdmin/AddAccountSecondAdmin" method="POST" class="modal-content" onsubmit="return validateForm()">
 			<div class="modal-header">
 				<h1 class="modal-title fs-10" id="mainTitle">
-					Thêm mới tài khoản bệnh nhân
+					Thêm mới tài khoản Admin phụ
 				</h1>
 				<button type="button"
 						class="btn-close"
@@ -126,13 +94,20 @@
 					</div>
 				</div>
 				<div class="row mb-3">
-					<div class="col">
-						<label for="lastname">Họ<sup style="color: red">*</sup></label>
-						<input type="text" name="Lastname" id="lastname" required/>
+					<div class="col-12 col-md-6">
+						<label for="lastname">Họ<sup style="color:red">*</sup></label>
+						<input type="text" id="lastame" name="LastName" required />
 					</div>
-					<div class="col">
+					<div class="col-12 col-md-4">
 						<label for="firstname">Tên<sup style="color:red">*</sup></label>
-						<input type="text" name="Firstname" id="firstname" required />
+						<input type="text" id="firstname" name="FirstName" required />
+					</div>
+					<div class="col-12 col-md-2">
+						<label for="gender">Giới tính</label>
+						<select id="gender" name="Gender" class="form-control">
+							<option value="Nam">Nam</option>
+							<option value="Nữ">Nữ</option>
+						</select>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -147,11 +122,6 @@
 						<span id="phoneNumberError" for="PhoneNumber" class="text-danger"></span>
 					</div>
 				</div>
-				<div class="user-address">
-					<label for="address">Địa chỉ</label>
-					<input type="text" name="Address" id="address" />
-				</div>
-				<input type="hidden" name="Role" id="role" value="@ViewBag.role" />
 			</div>
 
 			<div class="modal-footer">
@@ -186,12 +156,11 @@
 	<thead>
 		<tr>
 			<th class="text-center stt">STT</th>
-			<th class="username">Tên đăng nhập</th>
-			<th class="last_firstname">Họ tên</th>
-			<th class="gender text-center">Giới tính</th>
-			<th class="email">Email</th>
-			<th class="phone">Số điện thoại</th>
-			<th class="address">Địa chỉ</th>
+			<th>Tên đăng nhập</th>
+			<th>Họ tên</th>
+			<th>Giới tính</th>
+			<th>Email</th>
+			<th>Số điện thoại</th>
 			<th class="actions">Hành động</th>
 		</tr>
 	</thead>
@@ -204,26 +173,22 @@
 				<tr style="vertical-align: middle">
 					<td style="text-align: center">@stt</td>
 					<td>
-						@* <img src="~/assets/images/avatar.jpg" alt="" /> *@
 						@account.Username
 					</td>
 					<td>@account.LastName @account.FirstName</td>
-					<td style="text-align: center">@account.Gender</td>
+					<td>@account.Gender</td>
 					<td>@account.Email</td>
 					<td>@account.PhoneNumber</td>
-					<td class="address-cell">
-						@account.Address, <span class="title-Ward" data-id="@account.WardId">N/A</span>, <span class="title-District" data-id="@account.DistrictId">N/A</span>, <span class="title-Province" data-id="@account.ProvinceId">N/A</span>
-					</td>
 					<td>
 						<!--EDIT-->
-						<a href="@Url.Action("EditAccount", "AccountPatient", new {id = account.Id})" class="inline-block">
+						<a href="@Url.Action("EditAccountSecondAdmin", "AccountSecondAdmin", new {id = account.Id})" class="inline-block">
 							<button type="button">
 								<i class="bx bxs-edit"></i>
 							</button>
 						</a>
 
 						<!--DELETE-->
-						<form action="~/Admin/AccountPatient/HiddenAccountStatus" method="post" class="form-inline" onsubmit="return confirm('Bạn có chắc chắn muốn khóa tài khoản này không?');">
+						<form action="~/Admin/AccountSecondAdmin/HiddenAccountSecondAdmin" method="post" class="form-inline" onsubmit="return confirm('Bạn có chắc chắn muốn khóa tài khoản này không?');">
 							<input type="hidden" name="username" value="@account.Username" />
 							<input type="hidden" name="status" value="Bị Khóa" />
 							<a href="#!" class="color-trash">
@@ -298,67 +263,4 @@
 		}
 	</script>
 
-
-	<!--Hiển thị các Tỉnh/Thành phố, Quận/Huyện, Phường/Xã-->
-	<script src="https://esgoo.net/scripts/jquery.js"></script>
-	<script>
-		$(document).ready(function () {
-			function loadNames() {
-				$(".title-Province").each(function () {
-					var provinceId = $(this).data("id");
-					var element = $(this);
-					console.log(`Loading Province for ID: ${provinceId}`); // Debug log
-					$.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data) {
-						console.log(`Province API response for ID ${provinceId}:`, data); // Debug log
-						if (data.error == 0) {
-							$.each(data.data, function (key, val) {
-								if (val.id == provinceId) {
-									element.text(val.full_name);
-									return false;
-								}
-							});
-						}
-					});
-				});
-
-				$(".title-District").each(function () {
-					var districtId = $(this).data("id");
-					var provinceId = $(this).closest('tr').find('.title-Province').data("id");
-					var element = $(this);
-					console.log(`Loading District for ID: ${districtId} in Province: ${provinceId}`); // Debug log
-					$.getJSON(`https://esgoo.net/api-tinhthanh/2/${provinceId}.htm`, function (data) {
-						console.log(`District API response for ID ${districtId} in Province ${provinceId}:`, data); // Debug log
-						if (data.error == 0) {
-							$.each(data.data, function (key, val) {
-								if (val.id == districtId) {
-									element.text(val.full_name);
-									return false;
-								}
-							});
-						}
-					});
-				});
-
-				$(".title-Ward").each(function () {
-					var wardId = $(this).data("id");
-					var districtId = $(this).closest('tr').find('.title-District').data("id");
-					var element = $(this);
-					console.log(`Loading Ward for ID: ${wardId} in District: ${districtId}`); // Debug log
-					$.getJSON(`https://esgoo.net/api-tinhthanh/3/${districtId}.htm`, function (data) {
-						console.log(`Ward API response for ID ${wardId} in District ${districtId}:`, data); // Debug log
-						if (data.error == 0) {
-							$.each(data.data, function (key, val) {
-								if (val.id == wardId) {
-									element.text(val.full_name);
-									return false;
-								}
-							});
-						}
-					});
-				});
-			}
-
-			loadNames();
-		});
-	</script>
 }

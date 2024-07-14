@@ -12,7 +12,7 @@ using System.Data;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
 	public class AccountManagerController : Controller
 	{
 		private readonly DentalClinicDbContext _context;
@@ -124,9 +124,10 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 										 {
 											 Id = accounts.ID,
 											 Username = accounts.Username,
+											 FirstName = accounts.FirstName,
+											 LastName = accounts.LastName,
 											 Email = accounts.Email,
 											 PhoneNumber = accounts.PhoneNumber,
-											 Address = accounts.Address,
 											 Role = accounts.Role,
 											 ClinicName = clinic != null ? clinic.Name : "N/A"
 										 }).ToListAsync();

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
     public class TransactionController : Controller
     {
         private readonly DentalClinicDbContext _context;

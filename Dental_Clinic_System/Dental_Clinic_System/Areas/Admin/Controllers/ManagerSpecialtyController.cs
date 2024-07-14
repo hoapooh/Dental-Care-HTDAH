@@ -10,7 +10,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
     //[Route("Admin/[controller]")]
-    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
     public class ManagerSpecialtyController : Controller
     {
         private readonly DentalClinicDbContext _context;

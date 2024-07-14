@@ -10,7 +10,7 @@ using System.Data;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
     //[Route("Admin/[controller]")]
     public class AccountLockedController : Controller
     {
@@ -33,6 +33,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             {
                 Id = a.ID,
                 Username = a.Username,
+                LastName = a.LastName,
+                FirstName = a.FirstName,
                 Email = a.Email,
                 PhoneNumber = a.PhoneNumber,
                 Address = a.Address,
@@ -60,13 +62,15 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
             var accountLockedList = accountLocked.Select(a => new ManagerAccountVM
             {
-                Id = a.ID,
-                Username = a.Username,
-                Email = a.Email,
-                PhoneNumber = a.PhoneNumber,
-                Address = a.Address,
-                Role = a.Role
-            }).ToList();
+				Id = a.ID,
+				Username = a.Username,
+				LastName = a.LastName,
+				FirstName = a.FirstName,
+				Email = a.Email,
+				PhoneNumber = a.PhoneNumber,
+				Address = a.Address,
+				Role = a.Role
+			}).ToList();
 
             return View(nameof(ListLockedAccount), accountLockedList);
         }
