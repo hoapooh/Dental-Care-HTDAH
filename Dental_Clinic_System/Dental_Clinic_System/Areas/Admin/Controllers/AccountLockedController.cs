@@ -10,7 +10,7 @@ using System.Data;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin,Mini Admin")]
+    [Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin, Mini Admin")]
     //[Route("Admin/[controller]")]
     public class AccountLockedController : Controller
     {
