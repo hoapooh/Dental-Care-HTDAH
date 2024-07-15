@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Areas.Manager.ViewModels.BookedScheduleVM>
 
 @{
-	ViewData["Title"] = "Lịch sử đặt lịch";
+	ViewData["Title"] = "Quản lý đặt lịch";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -11,7 +11,7 @@
 			gap: 5px; /* Khoảng cách giữa các form */
 		}
 
-		.sidebar .nav-item a.Xem_lich_su_dat_lich {
+		.sidebar .nav-item a.Quan_ly_dat_lich {
 			color: #fff;
 			background: #4880ff;
 		}
@@ -118,7 +118,7 @@
 				/* padding: 5px 10px; */
 				/* border-radius: 5px; */
 				/* border: 1px solid #4880ff;
-														color: #4880ff; */
+												color: #4880ff; */
 			}
 
 		.row {
@@ -135,14 +135,14 @@
 }
 <!-- account management header -->
 <div class="manager__management__header">
-	<div class="title">Lịch sử Khám / Điều trị</div>
-	@* 	<div class="action-btn">
-	<a asp-controller="Schedules" asp-action="Create" class="add__new">+ Thêm</a>
+	<div class="title">Lịch Khám / Điều trị</div>
+@* 	<div class="action-btn">
+		<a asp-controller="Schedules" asp-action="Create" class="add__new">+ Thêm</a>
 	</div> *@
 </div>
 <!-- Filters Section -->
 <div style="padding: 0 ">
-	<form method="get" asp-action="ViewHistory" class="manager__management__clinic row" id="filterForm">
+	<form method="get" asp-action="GetBookedSchedule" class="manager__management__clinic row" id="filterForm">
 		<div class="form-group col-md-2" style="padding: 0; padding-right: 15px">
 			<label for="type">Loại lịch</label>
 			<select id="type" name="type" class="form-control">
@@ -163,7 +163,7 @@
 					else
 					{
 						<option value="">Tất cả</option>
-						<option value="Khám">Khám</option>
+						<option value="Khám" >Khám</option>
 						<option value="Tái Khám / Điều Trị" selected>Tái Khám / Điều Trị</option>
 					}
 				}
@@ -210,18 +210,6 @@
 		</div>
 	</form>
 </div>
-<!-- Chú thích -->
-@* <div class="manager__management__header">
-	<div class="title"></div>
-	<div class="action-btn">
-		<p style="color: #0d6efd"> Chú thích: </p>
-		<p class="time_ChuaDuyet">Chờ Xác Nhận</p>
-		<p class="time_ChuaDat">Đã Chấp Nhận</p>
-		<p class="time_Dat">Đã Khám</p>
-		<p class="time_Nghi">Đã Hủy</p>
-		<p class="time_ChuaDat">Chưa Khám</p>
-	</div>
-</div> *@
 
 <!-- Nội dung -->
 <div class="table-responsive">
@@ -252,7 +240,7 @@
 					</td>
 					<td title="ngày/tháng/năm">
 						@item.Date.ToString("dd/MM/yyyy")
-					</td>
+						</td>
 					<td>
 						@item.Start_EndTime
 					</td>
@@ -276,16 +264,12 @@
 						{
 							<p class="time_Nghi">@item.Status</p>
 						}
-						else if (@item.Status == "Chưa Khám")
-						{
-							<p class="time_ChuaDat">@item.Status</p>
-						}
 					</td>
 					<td>
 						@item.Description
 					</td>
 
-
+					
 
 				</tr>
 			}

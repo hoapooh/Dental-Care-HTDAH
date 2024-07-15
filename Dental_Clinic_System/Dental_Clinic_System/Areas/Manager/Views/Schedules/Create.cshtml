@@ -1,6 +1,6 @@
 ﻿@model Dental_Clinic_System.Areas.Manager.ViewModels.ScheduleVM
 @{
-	ViewData["Title"] = "Lịch trình";
+	ViewData["Title"] = "Quản lý tạo lịch";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -104,7 +104,22 @@
 	<div class="manager__management__header">
 		<div class="title">Thêm mới lịch khám</div>
 	</div>
-
+	<!-- ========== LƯU Ý ========== -->
+	<div class="col-md-12">
+		<label class="sub-title">Lưu ý:</label>
+		<h3 style="padding-left: 45px; color: red;">
+			- Một hoặc nhiều lịch khám được tạo dựa trên 3 yếu tố bạn chọn
+		</h3>
+		<h3 style="padding-left: 45px; color: red;">
+			- Một số trường hợp bạn KHÔNG THẤY lịch khám mới: 
+		</h3>
+		<h3 style="padding-left: 45px; color: red;">
+			&nbsp;&nbsp;&nbsp;&nbsp; 1. ĐÃ TỒN TẠI lịch khám trước đó trên khung giờ bạn chọn -> KHÔNG TẠO LỊCH MỚI
+		</h3>
+		<h3 style="padding-left: 45px; color: red;">
+			&nbsp;&nbsp;&nbsp;&nbsp; 2. ĐÃ ĐẶT LỊCH tái khám hoặc điều trị trên khung giờ bạn chọn -> KHÔNG TẠO LỊCH MỚI
+		</h3>
+	</div>
 	<!-- ========== CHỌN NHA SĨ ========== -->
 	<div class="col-md-12">
 		<label class="sub-title">Chọn nha sĩ:</label>

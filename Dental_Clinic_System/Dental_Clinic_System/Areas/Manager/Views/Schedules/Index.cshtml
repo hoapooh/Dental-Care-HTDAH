@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Schedule>
 
 @{
-	ViewData["Title"] = "Lịch trình";
+	ViewData["Title"] = "Quản lý tạo lịch";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -123,7 +123,7 @@
 }
 <!-- account management header -->
 <div class="manager__management__header">
-	<div class="title">Lịch trình - Tương lai</div>
+	<div class="title">Lịch trình</div>
 	<div class="action-btn">
 		<a asp-controller="Schedules" asp-action="Create" class="add__new">+ Thêm</a>
 	</div>
@@ -226,24 +226,37 @@
 		<tbody id="myTableBody">
 			@{
 				var groupedData = Model.GroupBy(s => new { s.Date, s.DentistID });
-			}
-			@{
-				int index = 0;
+				int index = 0; //đếm STT của table
 			}
 			@foreach (var group in groupedData)
 			{
-				List<int> slotIDs_DaDat = new();
-				List<int> slotIDs_Nghi = new();
-				List<int> slotIDs_ConTrong = new();
-				List<int> slotIDs_AmPm = new();
+				var account = group.FirstOrDefault()?.Dentist?.Account;
+				var date = group.Key.Date;
+				var denID = group.Key.DentistID;
+				List<int> slotIDs_FutureAppts = new();
+				foreach (var futureSch in ViewBag.FutureList)
+				{
+					if (futureSch.DentistID == denID && futureSch.Date == date)
+					{
+						slotIDs_FutureAppts.AddRange(futureSch.Slots);
+					}
+				} 
+
 				var checkAm = group.Any(g => g.TimeSlotID == 1);
 				var checkPm = group.Any(g => g.TimeSlotID == 2);
 				var checkConTrongLe = group.Any(g => g.ScheduleStatus == "Còn Trống");
-				if (ViewBag.Status != "Còn Trống" || checkAm == true || checkPm == true || checkConTrongLe == true)
+				var checkFuture = slotIDs_FutureAppts.Count > 0;
+
+				
+				if (ViewBag.Status != "Còn Trống" || checkAm == true || checkPm == true || checkConTrongLe == true || checkFuture == true)
 				{
-					var dentist = group.FirstOrDefault()?.Dentist;
-					var account = dentist?.Account;
+					List<int> slotIDs_DaDat = new();
+					List<int> slotIDs_Nghi = new();
+					List<int> slotIDs_ConTrong = new();
+					List<int> slotIDs_AmPm = new();
 					int count = 0; //để phân cách sáng, chiều
+
+
 					<tr style="vertical-align: middle">
 						<td class="text-center">@(++index)</td>
 						@if (account.AccountStatus == "Bị Khóa")
@@ -259,7 +272,7 @@
 							</td>
 						}
 
-						<td title="ngày/tháng/năm">@group.Key.Date.ToString("dd/MM/yyyy")</td>
+						<td title="ngày/tháng/năm">@date.ToString("dd/MM/yyyy")</td>
 						<td class="ws__style">
 							<div class="work__schedule">
 								@if (ViewBag.Status == null || ViewBag.Status == "Còn Trống")
@@ -287,8 +300,13 @@
 												{
 													<div class="newline"></div>
 												}
+											} //để phân cách sáng chiều
+
+											if (slotIDs_FutureAppts.Contains(slot.ID))
+											{
+												<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 											}
-											if (@ViewBag.AmTimeSlots.Contains(slot))
+											else if (@ViewBag.AmTimeSlots.Contains(slot))
 											{
 												if (slotIDs_DaDat.Contains(slot.ID))
 												{
