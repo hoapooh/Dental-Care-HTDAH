@@ -31,8 +31,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
             var appointments = await _context.Appointments
-                                    .Include(a => a.Schedule).ThenInclude(s => s.TimeSlot)
-                                    .Include(a => a.PatientRecords)
+                                    .Include(a => a.Schedule)
+                                        .ThenInclude(s => s.TimeSlot)
+									.Include(a => a.PatientRecords)
                                     .Include(a => a.Specialty)
                                     .Include(a => a.Transactions)
                                     .Where(a => a.Schedule.DentistID == dentist.ID)
@@ -47,79 +48,25 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                appointments = appointments.Where(a => a.AppointmentStatus == status).ToList();
+                keyword.Trim().ToLower();
+                keyword = Util.ConvertVnString(keyword);
+                appointments = appointments.Where(a =>  ( a.Transactions.Where(t => t.AppointmentID == a.ID).First().MedicalReportID != null && Util.ConvertVnString(a.Transactions.Where(t                                             => t.AppointmentID == a.ID).First().MedicalReportID).Contains(keyword)) ||
+														( a.PatientRecords.FullName != null && Util.ConvertVnString(a.PatientRecords.FullName).Contains(keyword)) ||
+														( a.Specialty.Name != null && Util.ConvertVnString(a.Specialty.Name).Contains(keyword)) ||
+														( a.Schedule.Date.ToString("dd/MM/yyyy") != null && Util.ConvertVnString(a.Schedule.Date.ToString("dd/MM/yyyy")).Contains(keyword)) ||
+                                                        ( (a.Schedule.TimeSlot.StartTime.ToString("HH:mm") != null && a.Schedule.TimeSlot.EndTime.ToString("HH:mm") != null) && Util.ConvertVnString(a.Schedule.TimeSlot.StartTime.ToString("HH:mm") + " - " + a.Schedule.TimeSlot.EndTime.ToString("HH:mm")).Contains(keyword)) ||
+														(a.CreatedDate != null && Util.ConvertVnString(DateOnly.FromDateTime(a.CreatedDate ?? new DateTime()).ToString("dd/MM/yyyy")).Contains(keyword))
+
+														  ).ToList();
             }
             ViewBag.DentistID = dentist.ID;
             ViewBag.DentistAvatar = dentist?.Account.Image;
             ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
+            ViewBag.Status = status;
             TempData["ErrorMessage"] = TempData["ErrorMessage"] as string;
             TempData["SuccessMessage"] = TempData["SuccessMessage"] as string;
             return View(appointments);
         }
-
-
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> ChangePatientAppointment(int appointmentID, string appointmentStatus)
-        //{
-        //    var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
-        //    if (dentistAccountID == null)
-        //    {
-        //        return RedirectToAction("login", "dentistaccount", new { area = "dentist" });
-        //    }
-        //    var appointment = await _context.Appointments.Include(a => a.Transactions).Where(a => a.ID == appointmentID).FirstOrDefaultAsync();
-        //    appointment.AppointmentStatus = appointmentStatus;
-
-        //    _context.Update(appointment);
-        //    await _context.SaveChangesAsync();
-
-        //    var schedule = await _context.Appointments.Include(s => s.Schedule).FirstOrDefaultAsync(a => a.ID == appointmentID);
-        //    if (appointment.AppointmentStatus == "Đã Khám" || appointment.AppointmentStatus == "Đã Hủy")
-        //    {
-        //        schedule.Schedule.ScheduleStatus = "Còn Trống";
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //    // HERE
-        //    #region Refund MOMO API
-        //    /*if (appointment.AppointmentStatus == "Đã Khám")
-        //    {
-        //        // Invoke the refund method from payment controller
-        //        // Hoàn tiền thành công
-        //        //return View("RefundSuccess", responseObject);
-        //        var transactionCode = appointment.Transactions.FirstOrDefault()?.TransactionCode;
-        //        var amount = appointment.Transactions.FirstOrDefault()?.TotalPrice;
-        //        var bankName = appointment.Transactions.FirstOrDefault()?.BankName;
-        //        var fullName = appointment.Transactions.FirstOrDefault()?.FullName;
-        //        if (_momoPayment.RefundPayment((long)decimal.Parse(amount.ToString()), long.Parse(transactionCode.ToString()), "") != null)
-        //        {
-        //            TempData["RefundMessage"] = "Hoàn tiền thành công";
-
-        //            var transaction = new Transaction
-        //            {
-        //                AppointmentID = appointment.ID,
-        //                Date = DateTime.Now,
-        //                BankName = bankName,
-        //                TransactionCode = transactionCode,
-        //                PaymentMethod = "MOMO",
-        //                TotalPrice = amount,
-        //                BankAccountNumber = "9704198526191432198",
-        //                FullName = fullName,
-        //                Message = "Hoàn tiền thành công",
-        //                Status = "Thành Công"
-        //            };
-
-        //            _context.Transactions.Add(transaction);
-        //            _context.SaveChanges();
-        //        }
-
-        //    }*/
-        //    #endregion
-
-        //    TempData["message"] = "success";
-        //    return RedirectToAction("PatientAppointments");
-        //}
         #endregion
 
         #region Hàm xử lý nút bấm thay đổi trạng thái đơn khám của bệnh nhân với dentist tương ứng
@@ -163,7 +110,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             {
                 if (dateTimeStart > now) // để được bấm Đã Khám thì thời gian hiện tại phải lớn hơn thời gian bắt đầu khams 5 phút
 				{
-                    TempData["ErrorMessage"] = "Chưa tới thời gian cho phép thay đổi trạng thái này!";
+                    TempData["ErrorMessage"] = "Chưa tới thời gian hẹn khám, không cho phép thay đổi trạng thái này!";
                     return RedirectToAction("patientappointment");
                 }
                 appointment.AppointmentStatus = "Đã Khám";
@@ -173,10 +120,10 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             TempData["SuccessMessage"] = "Thay đổi trạng thái thành công!";
             return RedirectToAction("patientappointment");
         }
-		#endregion
+        #endregion
 
-		#region Hàm handle những data truyền vào có thể xuất ra future appointment hay không
-		[HttpPost]
+        #region Hàm handle những data truyền vào có thể xuất ra future appointment (PDF) hay không
+        [HttpPost]
 		public async Task<IActionResult> ValidAppointmentForFutureAppointment(int appointmentID, string? ngayhentaikham, string? giobatdau, string? gioketthuc, string ketquakham, string?dando)
 			{
 			var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
@@ -230,7 +177,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 			if (!AppointmentServices.IsHaveSelectedDate(selectedDates, startTimeInCalendar, dentistID, _context))
 			{
-				TempData["ErrorMessage"] = "Bạn đã có ca làm việc tương ứng với thời gian này, vui lòng chọn lại!";
+				TempData["ErrorMessage"] = "Bạn đã có ca làm việc tương ứng trong thời gian này, vui lòng chọn lại!";
 				return RedirectToAction("patientappointment");
 			}
 
@@ -256,7 +203,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 							StartTime = startTime,
 							EndTime = endTime,
 							DesiredDate = date,
-							PeriodicAppointmentStatus = "Chưa Khám",
+							PeriodicAppointmentStatus = "Đã Chấp Nhận",
 							AppointmentID = appointmentID
 						};
 						_context.PeriodicAppointments.Add(futureAppointment);
@@ -268,21 +215,21 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             else // Case: đã tạo future appointment trước đó
             {
-				appointment.Note = $"Dặn dò: {dando}";
-				appointment.Description = $"Đã Khám. Kết quả Khám: {ketquakham}";
+				appointment.Note = $"{dando}";
+				appointment.Description = $"{ketquakham}";
 				if (!string.IsNullOrEmpty(ngayhentaikham))
                 {
 
                     //Lấy FutureAppointment để cập nhật lại thời gian tái khám
-                    var futureAppointments = _context.PeriodicAppointments.Where(fa => fa.AppointmentID == appointmentID && fa.PeriodicAppointmentStatus == "Chưa Khám").ToList();
-                    if (futureAppointments == null)
+                    var periodicAppointments = _context.PeriodicAppointments.Where(fa => fa.AppointmentID == appointmentID && fa.PeriodicAppointmentStatus == "Đã Chấp Nhận").ToList();
+                    if (periodicAppointments == null)
                     {
                         return NotFound("Không tìm thấy đơn!");
                     }
                     // Xóa các futureAppointment cũ
-					foreach (var futureAppointment in futureAppointments)
+					foreach (var periodicAppointment in periodicAppointments)
 					{
-						_context.PeriodicAppointments.Remove(futureAppointment);
+						_context.PeriodicAppointments.Remove(periodicAppointment);
 					}
 					// Thêm các futureAppointment mới
 					foreach (var date in desiredDate)
@@ -295,7 +242,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 							StartTime = startTime, 
 							EndTime = endTime,
 							DesiredDate = date,
-							PeriodicAppointmentStatus = "Chưa Khám",
+							PeriodicAppointmentStatus = "Đã Chấp Nhận",
 							AppointmentID = appointmentID
 						};
 
@@ -340,10 +287,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 keyword = Util.ConvertVnString(keyword);
                 periodicAppointment = periodicAppointment.Where(p =>
                     Util.ConvertVnString(p.PatientRecord.FullName).Contains(keyword) ||
-                    Util.ConvertVnString(p.StartTime.ToString("HH:mm")).Contains(keyword) ||
-                    Util.ConvertVnString(p.EndTime.ToString("HH:mm")).Contains(keyword) ||
-                    Util.ConvertVnString(p.DesiredDate.ToString("dd/MM/yyyy")).Contains(keyword))
-                    .ToList();
+                    Util.ConvertVnString(p.DesiredDate.ToString("dd/MM/yyyy")).Contains(keyword) ||
+                    Util.ConvertVnString(p.StartTime.ToString("HH:mm") + " - " + p.EndTime.ToString("HH:mm")).Contains(keyword)
+                    ).ToList();
                 TempData["ErrorMessage"] = "Không tìm thấy kết quả tương ứng!";
             }
 
@@ -354,42 +300,42 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         #endregion
 
         #region Hàm xử lý nút bấm thay đổi trạng thái của lịch khám định kì - FUTURE APPOINTMENT
-        public async Task<IActionResult> CancelFutureAppointment(int futureappointmentID, string? description)
+        public async Task<IActionResult> CancelPeriodicAppointment(int periodicappointmentID, string? description)
         {
-            var futureAppointment = _context.PeriodicAppointments.FirstOrDefault(a => a.ID == futureappointmentID && a.PeriodicAppointmentStatus == "Chưa Khám");
-            if (futureAppointment == null)
+            var periodicAppointment = _context.PeriodicAppointments.FirstOrDefault(p => p.ID == periodicappointmentID && p.PeriodicAppointmentStatus == "Đã Chấp Nhận");
+            if (periodicAppointment == null)
             {
                 TempData["ErrorMessage"] = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
                 return RedirectToAction("periodicappointment");
             }
-            futureAppointment.PeriodicAppointmentStatus = "Đã Hủy";
+			periodicAppointment.PeriodicAppointmentStatus = "Đã Hủy";
             //futureAppointment.Description = "Đã hủy từ Nha sĩ. Lý do hủy: " + description;
-            _context.Update(futureAppointment);
+            _context.Update(periodicAppointment);
             await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "Thay đổi trạng thái thành công!";
             return RedirectToAction("periodicappointment");
         }
 
         //Hàm thay đổi trạng thái của đơn đặt
-        public async Task<IActionResult> ChangeStatusFutureAppointment(int futureappointmentID)
+        public async Task<IActionResult> ChangeStatusPeriodicAppointment(int periodicappointmentID)
         {
-            var futureAppointment = _context.PeriodicAppointments.FirstOrDefault(a => a.ID == futureappointmentID && a.PeriodicAppointmentStatus == "Chưa Khám");
-            if (futureAppointment == null)
+            var periodicAppointment = _context.PeriodicAppointments.FirstOrDefault(a => a.ID == periodicappointmentID && a.PeriodicAppointmentStatus == "Đã Chấp Nhận");
+            if (periodicAppointment == null)
             {
                 TempData["ErrorMessage"] = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
                 return RedirectToAction("periodicappointment");
             }
 			DateTime now = Util.GetUtcPlus7Time();
-			var dateTimeStart = futureAppointment.DesiredDate.ToDateTime(futureAppointment.StartTime).AddMinutes(5);
+			var dateTimeStart = periodicAppointment.DesiredDate.ToDateTime(periodicAppointment.StartTime).AddMinutes(5);
 			if (dateTimeStart > now) // để được bấm Đã Khám thì thời gian hiện tại phải lớn hơn thời gian bắt đầu khams 5 phút
 			{
-				TempData["ErrorMessage"] = "Chưa tới thời gian cho phép thay đổi trạng thái này!";
+				TempData["ErrorMessage"] = "Chưa tới thời gian hẹn khám, không cho phép thay đổi trạng thái này!";
 				return RedirectToAction("periodicappointment");
 			}
 
-			futureAppointment.PeriodicAppointmentStatus = "Đã Khám";
+			periodicAppointment.PeriodicAppointmentStatus = "Đã Khám";
 
-            _context.Update(futureAppointment);
+            _context.Update(periodicAppointment);
             await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "Thay đổi trạng thái thành công!";
             return RedirectToAction("periodicappointment");

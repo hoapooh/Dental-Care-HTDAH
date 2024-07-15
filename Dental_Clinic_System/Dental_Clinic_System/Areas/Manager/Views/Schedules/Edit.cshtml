@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Schedule>
 
 @{
-	ViewData["Title"] = "Lịch trình";
+	ViewData["Title"] = "Quản lý tạo lịch";
 	Layout = "_LayoutManager";
 }
 @section Styles {
@@ -72,6 +72,39 @@
 		.inline {
 			display: inline-block;
 		}
+
+		.manager__management .work__schedule .time_ChuaDat, .time_ChuaDat {
+			width: 85px;
+			background: #668bde;
+			color: #fff;
+			padding: 0.4rem 0.4rem;
+			border-radius: 5px;
+			font-weight: 500;
+			text-align: center;
+			margin-bottom: 0;
+		}
+
+		.manager__management .work__schedule .time_Dat, .time_Dat {
+			width: 85px;
+			background: #86e49d;
+			color: #006b21;
+			padding: 0.4rem 0.4rem;
+			border-radius: 5px;
+			font-weight: 500;
+			text-align: center;
+			margin-bottom: 0;
+		}
+
+		.manager__management .work__schedule .time_Nghi, .time_Nghi {
+			width: 85px;
+			background: #f84242c4;
+			color: #fff;
+			padding: 0.4rem 0.4rem;
+			border-radius: 5px;
+			font-weight: 500;
+			text-align: center;
+			margin-bottom: 0;
+		}
 	</style>
 }
 
@@ -108,12 +141,13 @@
 				<tbody>
 					@{
 						int index = 0;
+						List<int> slotIDs_FutureAppts = ViewBag.SlotIDs_FutureAppts;
+
 						Dictionary<int, (string, string)> list = new();
 						List<int> slotIDs_DaDat = new();
 						List<int> slotIDs_Nghi = new();
 						List<int> slotIDs_ConTrong = new();
 						List<int> slotIDs_AmPm = new();
-
 						@foreach (var item in Model)
 						{
 							if (item.ScheduleStatus == "Đã Đặt")
@@ -125,45 +159,13 @@
 							else
 								slotIDs_AmPm.Add(item.TimeSlotID); //xem có id 23 24 ko -> có làm sáng chiều ko
 						}
-						//----------------
-						// foreach (var slot in @ViewBag.AmTimeSlots)
-						// {
-						// 	var time = $"{slot.StartTime.ToString("HH:mm")} - {slot.EndTime.ToString("HH:mm")}";
-						// 	if (slotIDs_DaDat.Contains(slot.ID))
-						// 	{
-						// 		list.Add(slot.ID, ("Đã Đặt", time) );
-						// 	}
-						// 	else if (slotIDs_Nghi.Contains(slot.ID))
-						// 	{
-						// 		list.Add(slot.ID, ("Nghỉ", time));
-						// 	}
-						// 	else if (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID))
-						// 	{
-						// 		list.Add(slot.ID, ("Còn Trống", time));
-						// 	}
-						// }
-						// foreach (var slot in @ViewBag.PmTimeSlots)
-						// {
-						// 	var time = $"{slot.StartTime.ToString("HH:mm")} - {slot.EndTime.ToString("HH:mm")}";
-						// 	if (slotIDs_DaDat.Contains(slot.ID))
-						// 	{
-						// 		list.Add(slot.ID, ("Đã Đặt", time));
-						// 	}
-						// 	else if (slotIDs_Nghi.Contains(slot.ID))
-						// 	{
-						// 		list.Add(slot.ID, ("Nghỉ", time));
-						// 	}
-						// 	else if (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID))
-						// 	{
-						// 		list.Add(slot.ID, ("Còn Trống", time));
-						// 	}
-						// }
+						
 						foreach (var slot in @ViewBag.TimeSlots)
 						{
 							var time = $"{slot.StartTime.ToString("HH:mm")} - {slot.EndTime.ToString("HH:mm")}";
 							if (@ViewBag.AmTimeSlots.Contains(slot))
 							{
-								if (slotIDs_DaDat.Contains(slot.ID))
+								if (slotIDs_DaDat.Contains(slot.ID) || slotIDs_FutureAppts.Contains(slot.ID))
 								{
 									list.Add(slot.ID, ("Đã Đặt", time));
 								}
@@ -178,7 +180,7 @@
 							}
 							else if (@ViewBag.PmTimeSlots.Contains(slot))
 							{
-								if (slotIDs_DaDat.Contains(slot.ID))
+								if (slotIDs_DaDat.Contains(slot.ID) || slotIDs_FutureAppts.Contains(slot.ID))
 								{
 									list.Add(slot.ID, ("Đã Đặt", time));
 								}
@@ -193,7 +195,7 @@
 							}
 							else
 							{
-								if (slotIDs_DaDat.Contains(slot.ID))
+								if (slotIDs_DaDat.Contains(slot.ID) || slotIDs_FutureAppts.Contains(slot.ID))
 								{
 									list.Add(slot.ID, ("Đã Đặt", time));
 								}
@@ -216,7 +218,21 @@
 							<td>
 								@start_end_time
 							</td>
-							<td>@status</td>
+							<td>
+								@if (@status == "Còn Trống")
+								{
+									<p class="time_ChuaDat">@status</p>
+								}
+								else if (@status == "Đã Đặt")
+								{
+									<p class="time_Dat">@status</p>
+								}
+								else if (@status == "Nghỉ")
+								{
+									<p class="time_Nghi">@status</p>
+								}
+							
+							</td>
 							<td>
 								@if (status == "Còn Trống")
 								{
@@ -243,7 +259,7 @@
 		</div>
 	</div>
 	<div class="col-md-12 text-end" style="font-size: 2rem">
-		<a asp-action="Index">Back to List</a>
+		<a asp-action="Index">Về danh sách</a>
 	</div>
 </div>
 <br />

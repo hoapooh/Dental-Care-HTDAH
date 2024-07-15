@@ -32,10 +32,10 @@ p {
 	background: #d3d3d3;
 	color: #fff;
 	font-weight: bold;
-	text-shadow: -1px -1px 0 #000, /* Viền đen phía trên trái */
-	1px -1px 0 #000, /* Viền đen phía trên phải */
-	-1px 1px 0 #000, /* Viền đen phía dưới trái */
-	1px 1px 0 #000; /* Viền đen phía dưới phải */
+	/*text-shadow: -1px -1px 0 #000,*/ /* Viền đen phía trên trái */
+	/*1px -1px 0 #000,*/ /* Viền đen phía trên phải */
+	/*-1px 1px 0 #000,*/ /* Viền đen phía dưới trái */
+	/*1px 1px 0 #000;*/ /* Viền đen phía dưới phải */
 }
 
 	.patients__management .status.complete {

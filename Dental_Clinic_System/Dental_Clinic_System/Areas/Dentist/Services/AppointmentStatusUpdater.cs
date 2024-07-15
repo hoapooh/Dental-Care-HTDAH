@@ -41,6 +41,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 							.Include(a => a.Transactions)
 							.Where(a => a.AppointmentStatus == "Chờ Xác Nhận") // Nếu không xác nhận thì sẽ thực hiện cái dưới
 							.ToList();
+
+						var periodicAppointment = context.PeriodicAppointments
+												.Where(pa => pa.PeriodicAppointmentStatus == "Đã Chấp Nhận").ToList();
 						
 						foreach (var appointment in appointments)
 						{
@@ -74,7 +77,15 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 								}
 								// Cập nhật trạng thái
 								appointment.AppointmentStatus = "Đã Hủy";
-								context.Appointments.Update(appointment);
+							}
+						}
+
+						foreach (var periodic in periodicAppointment)
+						{
+							if (periodic.DesiredDate.ToDateTime(periodic.EndTime).AddHours(2) <= now) //Nếu như thời gian kết thúc khám định kỳ mà đã quá 2 tiếng thì cho hủy đơn, ko có hoàn tiền
+							{
+								periodic.PeriodicAppointmentStatus = "Đã Hủy";
+
 							}
 						}
 
