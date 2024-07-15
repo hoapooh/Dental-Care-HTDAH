@@ -28,13 +28,15 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		{
 			_context = context;
 		}
-		#region Bảng lịch khám vs các Column: Nha sĩ - Ngày - Các timeslot - Edit
+		#region Bảng lịch đã đặt -> xem trạng thái đơn khám
 		// GET: Manager/Schedules
-		public async Task<IActionResult> GetTodaySchedule(int? dentistId, string status)
+		public async Task<IActionResult> GetBookedSchedule(string type, int? dentistId, DateTime? date, string status)
 		{
 			// Set ViewBag values to retain search criteria
+			ViewBag.SelectedType = type;
 			ViewBag.SelectedDentistId = dentistId;
-			ViewBag.SelectedStatus = status;
+            ViewBag.SelectedDate = date?.ToString("yyyy-MM-dd"); // Format the date for the input
+            ViewBag.SelectedStatus = status;
 			//--------------------------------------------
 			var clinicId = HttpContext.Session.GetInt32("clinicId");
 			if (clinicId == null)
@@ -42,44 +44,71 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
 			}
 			//---------------------------------------------------
-			//Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
-			var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == clinicId);
-			var amID = clinic.AmWorkTimeID;
-			var pmID = clinic.PmWorkTimeID;
-			List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
-			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
-			ViewBag.AmTimeSlots = amTimeSlots;
-			ViewBag.PmTimeSlots = pmTimeSlots;
-
-			List<TimeSlot> timeSlots = GenerateTimeSlots(new TimeOnly(7, 0), new TimeOnly(21, 0));
-			ViewBag.TimeSlots = timeSlots;
-			//--------------------------------------------------
-			ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).Where(d => d.ClinicID == clinicId).ToListAsync();
-			ViewBag.Status = null;
-
-			//--------------------------------------------------
+			//Lấy các lịch trong Appointment Table
 			// Filter schedules from today onwards
 			var today = DateOnly.FromDateTime(DateTime.Today);
-			var schedulesQuery = _context.Schedules
-					.Include(s => s.Dentist)
-					.ThenInclude(d => d.Account)
-					.Include(s => s.TimeSlot)
-					.Where(s => s.Dentist.ClinicID == clinicId && s.Date == today);
-			if (dentistId.HasValue)
+			var sche_Appointment = _context.Appointments.Include(a => a.Schedule).ThenInclude(s => s.Dentist).ThenInclude(d => d.Account).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Where(a => a.Schedule.Dentist.ClinicID == clinicId && a.Schedule.Date >= today);
+			var sche_FutureAppts = _context.FutureAppointments.Include(f => f.Dentist).Where(f => f.Dentist.ClinicID == clinicId && f.DesiredDate >= today);
+            //--------------------------------------------------
+            ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).Where(d => d.ClinicID == clinicId).ToListAsync();
+			if (type == "Tái Khám / Điều Trị")
 			{
-				schedulesQuery = schedulesQuery.Where(s => s.DentistID == dentistId.Value);
-			}
-
-			if (!string.IsNullOrEmpty(status))
+				ViewBag.Status = new List<string>() { "Đã Chấp Nhận", "Đã Khám", "Đã Hủy", "Chưa Khám" };
+			} 
+			else
 			{
-				if (status != "Còn Trống")
-					schedulesQuery = schedulesQuery.Where(s => s.ScheduleStatus == status);
-				ViewBag.Status = status;
+				ViewBag.Status = new List<string>() { "Chờ Xác Nhận", "Đã Chấp Nhận", "Đã Khám", "Đã Hủy", "Chưa Khám" };
 			}
-
-			var dentalClinicDbContext = await schedulesQuery.OrderBy(s => s.Date).ToListAsync();
-
-			return View("GetTodaySchedule", dentalClinicDbContext);
+			//--------------------------------------------------
+			
+            if (dentistId.HasValue)
+            {
+				sche_Appointment = sche_Appointment.Where(s => s.Schedule.DentistID == dentistId);
+				sche_FutureAppts = sche_FutureAppts.Where(s => s.Dentist_ID == dentistId);
+            }
+            if (date.HasValue)
+            {
+                sche_Appointment = sche_Appointment.Where(s => s.Schedule.Date == DateOnly.FromDateTime(date.Value));
+                sche_FutureAppts = sche_FutureAppts.Where(s => s.DesiredDate == DateOnly.FromDateTime(date.Value));
+            }
+            if (!string.IsNullOrEmpty(status))
+            {
+                sche_Appointment = sche_Appointment.Where(s => s.AppointmentStatus == status);
+                sche_FutureAppts = sche_FutureAppts.Where(s => s.FutureAppointmentStatus == status);
+            }
+			//------------------------------------------------------
+            var bookedSchedules = new List<BookedScheduleVM>();
+			if (type == null || type == "Khám")
+			{
+				foreach (var sche in sche_Appointment.ToList())
+				{
+					bookedSchedules.Add(new()
+					{
+						DentistName = sche.Schedule.Dentist.Account.LastName + " " + sche.Schedule.Dentist.Account.FirstName,
+						Date = sche.Schedule.Date,
+						Start_EndTime = sche.Schedule.TimeSlot.StartTime.ToString("HH:mm") + " - " + sche.Schedule.TimeSlot.EndTime.ToString("HH:mm"),
+						Type = "Khám",
+						Status = sche.AppointmentStatus,
+						Description = sche.Description
+					});
+				}
+			}
+			if (type == null || type == "Tái Khám / Điều Trị")
+			{
+				foreach (var sche in sche_FutureAppts.ToList())
+				{
+					bookedSchedules.Add(new()
+					{
+						DentistName = sche.Dentist.Account.LastName + " " + sche.Dentist.Account.FirstName,
+						Date = sche.DesiredDate,
+						Start_EndTime = sche.StartTime.ToString("HH:mm") + " - " + sche.EndTime.ToString("HH:mm"),
+						Type = "Tái Khám / Điều Trị",
+						Status = sche.FutureAppointmentStatus,
+						Description = sche.Description
+					});
+				}
+			}
+			return View("GetBookedSchedule", bookedSchedules.OrderBy(b => b.Date).ToList());
 		}
 		public async Task<IActionResult> Index(int? dentistId, DateTime? date, string status)
 		{
@@ -116,7 +145,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 					.Include(s => s.Dentist)
 					.ThenInclude(d => d.Account)
 					.Include(s => s.TimeSlot)
-					.Where(s => s.Dentist.ClinicID == clinicId && s.Date > today);
+					.Where(s => s.Dentist.ClinicID == clinicId && s.Date >= today);
 			if (dentistId.HasValue)
 			{
 				schedulesQuery = schedulesQuery.Where(s => s.DentistID == dentistId.Value);
@@ -135,14 +164,30 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			}
 
 			var dentalClinicDbContext = await schedulesQuery.OrderBy(s => s.Date).ToListAsync();
+			//--------------------------
+			//Lấy các lịch điều trị/ Lịch tái khám - BẢNG FUTUREAPPOINTMENT
+			var futureListDb = await _context.FutureAppointments.Include(f => f.Dentist).ThenInclude(d => d.Account).Where(f => f.FutureAppointmentStatus != "Đã Hủy").OrderBy(f => f.DesiredDate).ToListAsync();
+			List<FutureAppointmentVM> futureList = new();
+            foreach (var sche in futureListDb)
+            {
+				futureList.Add(new()
+				{
+					DentistID = sche.Dentist_ID,
+					Date = sche.DesiredDate,
+					Slots = GenerateTimeSlotIDs(sche.StartTime, sche.EndTime)
+				});
 
+			}
+			ViewBag.FutureList = futureList;
 			return View("Index", dentalClinicDbContext);
 		}
-		public async Task<IActionResult> ViewHistory(int? dentistId, DateTime? date)
+		public async Task<IActionResult> ViewHistory(string type, int? dentistId, DateTime? date, string status)
 		{
 			// Set ViewBag values to retain search criteria
+			ViewBag.SelectedType = type;
 			ViewBag.SelectedDentistId = dentistId;
 			ViewBag.SelectedDate = date?.ToString("yyyy-MM-dd"); // Format the date for the input
+			ViewBag.SelectedStatus = status;
 			//--------------------------------------------
 			var clinicId = HttpContext.Session.GetInt32("clinicId");
 			if (clinicId == null)
@@ -150,27 +195,79 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
 			}
 			//---------------------------------------------------
-			ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).Where(d => d.ClinicID == clinicId).ToListAsync();
-			
+			//Lấy các lịch trong Appointment Table
+			// Filter schedules from today view history
 			var today = DateOnly.FromDateTime(DateTime.Today);
-			var schedulesQuery = _context.Schedules
-					.Include(s => s.Dentist)
-					.ThenInclude(d => d.Account)
-					.Include(s => s.TimeSlot)
-					.Where(s => s.Dentist.ClinicID == clinicId && s.Date < today && s.ScheduleStatus == "Đã Đặt");
+			var sche_Appointment = _context.Appointments.Include(a => a.Schedule).ThenInclude(s => s.Dentist).ThenInclude(d => d.Account).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Where(a => a.Schedule.Dentist.ClinicID == clinicId && a.Schedule.Date < today);
+			var sche_FutureAppts = _context.FutureAppointments.Include(f => f.Dentist).Where(f => f.Dentist.ClinicID == clinicId && f.DesiredDate < today);
+			//--------------------------------------------------
+			ViewBag.Dentists = await _context.Dentists.Include(d => d.Account).Where(d => d.ClinicID == clinicId).ToListAsync();
+			if (type == "Tái Khám / Điều Trị")
+			{
+				ViewBag.Status = new List<string>() { "Đã Chấp Nhận", "Đã Khám", "Đã Hủy", "Chưa Khám" };
+			}
+			else
+			{
+				ViewBag.Status = new List<string>() { "Chờ Xác Nhận", "Đã Chấp Nhận", "Đã Khám", "Đã Hủy", "Chưa Khám" };
+			}
+			//--------------------------------------------------
+			
 			if (dentistId.HasValue)
 			{
-				schedulesQuery = schedulesQuery.Where(s => s.DentistID == dentistId.Value);
+				sche_Appointment = sche_Appointment.Where(s => s.Schedule.DentistID == dentistId);
+				sche_FutureAppts = sche_FutureAppts.Where(s => s.Dentist_ID == dentistId);
 			}
-
 			if (date.HasValue)
 			{
-				schedulesQuery = schedulesQuery.Where(s => s.Date == DateOnly.FromDateTime(date.Value));
+				sche_Appointment = sche_Appointment.Where(s => s.Schedule.Date == DateOnly.FromDateTime(date.Value));
+				sche_FutureAppts = sche_FutureAppts.Where(s => s.DesiredDate == DateOnly.FromDateTime(date.Value));
 			}
-			var dentalClinicDbContext = await schedulesQuery.OrderBy(s => s.Date).ToListAsync();
-
-			return View("ViewHistory", dentalClinicDbContext);
+			if (!string.IsNullOrEmpty(status))
+			{
+				sche_Appointment = sche_Appointment.Where(s => s.AppointmentStatus == status);
+				sche_FutureAppts = sche_FutureAppts.Where(s => s.FutureAppointmentStatus == status);
+			}
+			//------------------------------------------------------
+			var bookedSchedules = new List<BookedScheduleVM>();
+			if (type == null || type == "Khám")
+			{
+				foreach (var sche in sche_Appointment.ToList())
+				{
+					bookedSchedules.Add(new()
+					{
+						DentistName = sche.Schedule.Dentist.Account.LastName + " " + sche.Schedule.Dentist.Account.FirstName,
+						Date = sche.Schedule.Date,
+						Start_EndTime = sche.Schedule.TimeSlot.StartTime.ToString("HH:mm") + " - " + sche.Schedule.TimeSlot.EndTime.ToString("HH:mm"),
+						Type = "Khám",
+						Status = sche.AppointmentStatus,
+						Description = sche.Description
+					});
+				}
+			}
+			if (type == null || type == "Tái Khám / Điều Trị")
+			{
+				foreach (var sche in sche_FutureAppts.ToList())
+				{
+					bookedSchedules.Add(new()
+					{
+						DentistName = sche.Dentist.Account.LastName + " " + sche.Dentist.Account.FirstName,
+						Date = sche.DesiredDate,
+						Start_EndTime = sche.StartTime.ToString("HH:mm") + " - " + sche.EndTime.ToString("HH:mm"),
+						Type = "Tái Khám / Điều Trị",
+						Status = sche.FutureAppointmentStatus,
+						Description = sche.Description
+					});
+				}
+			}
+			return View("ViewHistory", bookedSchedules.OrderBy(b => b.Date).ToList());
 		}
+		private List<int> GenerateTimeSlotIDs(TimeOnly startTime, TimeOnly endTime)
+        {
+            // Retrieve the matching TimeSlots
+            return _context.TimeSlots
+                          .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime && ts.ID != 1 && ts.ID != 2).Select(ts => ts.ID).ToList();
+
+        }
         private List<TimeSlot> GenerateTimeSlots(TimeOnly startTime, TimeOnly endTime)
         {
             // Retrieve the matching TimeSlots
@@ -312,7 +409,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				await _context.SaveChangesAsync();
 			}
 
-			return RedirectToAction("Index");
+			return RedirectToAction("GetWorkingSchedule");
 		}
 
 
@@ -584,8 +681,16 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				_context.Schedules.RemoveRange(scheduleSubList);
 				await _context.SaveChangesAsync();
 			}
-			return RedirectToAction("Index");
-		
+			string referer = Request.Headers["Referer"].ToString();
+			if (!string.IsNullOrEmpty(referer))
+			{
+				return Redirect(referer);
+			}
+			else
+			{
+				return RedirectToAction("Index");
+			}
+
 
 		}
 		#endregion
