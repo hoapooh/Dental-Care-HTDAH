@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Dental Care | login</title>
+		<title>Hướng dẫn đặt khám</title>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
@@ -22,7 +22,7 @@
 		/>
 		<link rel="stylesheet" href="./assets/css/header.css" />
 		<link rel="stylesheet" href="./assets/css/footer.css" />
-		<link rel="stylesheet" href="./assets/css/dentistry.css" />
+		<link rel="stylesheet" href="./assets/css/support.css" />
 	</head>
 	<body>
 		<header class="header">
@@ -48,143 +48,131 @@
 						<a href="./speciality.html">Chuyên khoa</a>
 					</li>
 					<li>
-						<a href="#!">Blogs</a>
+						<a href="./news.html">Tin tức</a>
 					</li>
 					<li>
 						<a href="./contact.html">Liên hệ</a>
 					</li>
 				</ul>
+				<!-- ============== ACCESS PROFILE HERE ============== -->
 				<div class="navbar__auth">
-					<!-- <a href="/" class="navbar__auth__avatar">
-                    <img src="images/avatar.jpg" alt="" />
-                </a>
-                <a href="/" class="navbar__auth__booking"> Đặt lịch khám </a> -->
-					<a href="./login.html" class="navbar__auth__login">
-						Đăng nhập
-					</a>
-					<a href="./register.html" class="navbar__auth__register">
-						Đăng ký
-					</a>
+					<ul class="navbar__auth__dropdown">
+						<li class="outer">
+							<div class="name">
+								<i class="fa-solid fa-user"></i> Phúc Hoà
+							</div>
+							<ul class="sub-menu">
+								<li>
+									<a href="./profile.html" class="account"
+										>Tài khoản</a
+									>
+								</li>
+								<li>
+									<a
+										href="./patientrecord.html"
+										class="record"
+										>Hồ sơ bệnh nhân</a
+									>
+								</li>
+								<div class="divider"></div>
+								<li>
+									<a href="" class="logout-btn"
+										><i
+											class="fa-solid fa-right-from-bracket"
+										></i>
+										Đăng xuất</a
+									>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<!-- <a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
+					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a> -->
 				</div>
 			</nav>
 		</header>
 
-		<div class="dentistry">
-			<h1 class="dentistry__title text-center fw-bold">
-				Nha Khoa tổng quát
-			</h1>
-			<div class="text-center">
-				<img src="./assets/images/separate.png" alt="" />
-			</div>
-			<h2 class="dentistry__subtitle text-center">Mô tả</h2>
-			<div class="text-center">
-				<img src="./assets/images/separate-02.png" alt="" />
-			</div>
-			<p class="dentistry__desc">
-				Nha khoa tổng quát là phân ngành trong lĩnh vực nha khoa tập
-				trung vào chăm sóc và điều trị các vấn đề răng miệng phổ biến
-				như kiểm tra định kỳ, làm sạch răng, điều trị các vấn đề về sâu
-				răng và viêm nướu. Các dịch vụ của nha khoa tổng quát giúp duy
-				trì sức khỏe toàn diện cho răng miệng và hỗ trợ trong việc phòng
-				ngừa các vấn đề nha khoa phức tạp hơn.
-			</p>
-			<div class="dentistry__wrapper">
-				<div class="d-flex justify-content-between">
-					<h2 class="dentistry__dentist">Nha Sĩ uy tín</h2>
-					<div class="dentistry__sort">
-						<span>Sort by: </span>
-						<select name="location">
-							<option value="all">Toàn quốc</option>
-							<option value="Hồ Chí Minh">Hồ Chí Minh</option>
-							<option value="Hà Nội">Hà Nội</option>
-							<option value="Hải Phòng">Hải Phòng</option>
-							<option value="Nam Định">Nam Định</option>
-							<option value="Bà Rịa - Vũng Tàu">
-								Bà Rịa - Vũng Tàu
-							</option>
-						</select>
-					</div>
-				</div>
-				<img src="./assets/images/separate-01.png" alt="" />
-				<div class="dentistry__info row">
-					<!-- ====== DENTIST ITEM CARD INFO ====== -->
-					<div class="col-md-6">
-						<div class="dentistry__info__card">
-							<!-- ========== PERSONAL INFORMATION ========== -->
-							<div class="dentistInfo__personal">
-								<div class="dentistInfo__image">
-									<img
-										src="./assets/images/avatar1.jpg"
-										alt=""
-									/>
-								</div>
-								<div class="dentistInfo__groupInfo">
-									<h3 class="name">PGS TS An Phúc Hoà</h3>
-									<p class="specialty">
-										<strong>Chuyên khoa: </strong> Nha khoa
-										tổng quát
-									</p>
-									<p class="gender">
-										<strong>Giới tính: </strong>Nam
-									</p>
-									<p class="degree">
-										<strong>Bằng cấp: </strong> Tiến Sĩ Răng
-										Hàm Mặt
-									</p>
-								</div>
-							</div>
-
-							<!-- ========== CLINIC INFORMATION ========== -->
-							<div class="dentistInfo__clinic">
-								<div class="dentistInfo__clinic__address">
-									<svg
-										stroke="currentColor"
-										fill="none"
-										stroke-width="0"
-										viewBox="0 0 24 24"
-										class="styles_linear-location__X__vZ"
-										height="1em"
-										width="1em"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-										></path>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-										></path>
-									</svg>
-									<div>
-										<p>
-											<strong
-												>Phòng khám nha khoa Đại
-												Dương</strong
-											>
-										</p>
-										<p class="address">
-											Ở đâu đó trong Trái Đất này
-										</p>
-									</div>
-								</div>
-								<div class="dentistInfo__booking">
-									<a href="#!"
-										><button type="button">
-											Đặt ngay
-										</button></a
-									>
-								</div>
-							</div>
-						</div>
+		<main>
+			<div class="booking__guide">
+				<h1 class="title">Hướng dẫn đặt khám</h1>
+				<p class="desc">
+					Trải nghiệm dịch vụ chăm sóc sức khỏe tối ưu và đặt lịch
+					khám một cách dễ dàng, nhanh chóng với DentalCare
+				</p>
+				<hr style="border-top: 2px solid" />
+				<div class="booking__guide__container">
+					<div class="booking__guide__container__style">
+						<h3>CHỌN THÔNG TIN ĐẶT KHÁM</h3>
+						<ul>
+							<li>Tạo hoặc đăng nhập tài khoản trên website</li>
+							<li>
+								Chọn Đặt khám tại cơ sở hoặc Đặt khám theo
+								chuyên khoa
+							</li>
+							<li>Chọn cơ sở khám bệnh</li>
+							<li>
+								Chọn thông tin khám: Chuyên khoa, bác sĩ, ngày
+								khám, giờ khám
+							</li>
+							<li>
+								Nhập thông tin bệnh nhân: Tạo mới hồ sơ mới hoặc
+								chọn hồ sơ sẵn có
+							</li>
+						</ul>
+						<h3>
+							CHỌN/ TẠO MỚI HỒ SƠ BỆNH NHÂN (Bạn được phép tạo tối
+							đa 10 hồ sơ)
+						</h3>
+						<ul>
+							<li>
+								Khi tạo mới hồ sơ bệnh nhân, vui lòng nhập đầy
+								đủ các thông tin cần thiết: Họ và tên; Ngày
+								sinh; Giới tính; CMND; Nghề nghiệp; Số điện
+								thoại; Email; Địa chỉ
+							</li>
+							<li>
+								Nếu các bậc phụ huynh đăng ký hồ sơ cho con em
+								mình (dưới 14 tuổi), vui lòng nhập đầy đủ thông
+								tin nhân thân
+							</li>
+						</ul>
+						<h3>THANH TOÁN PHÍ KHÁM</h3>
+						<ul>
+							<li>
+								Chọn phương thức thanh toán: Thanh toán bằng ví
+								MOMO, thanh toán bằng thẻ VNPAY.
+							</li>
+							<li>
+								Kiểm tra thông tin thanh toán (phí khám bệnh,
+								phí tiện ích và tổng tiền) và xác nhận thanh
+								toán.
+							</li>
+							<li>
+								Thực hiện thanh toán trên Ví điện tử hoặc Ứng
+								dụng Ngân hàng hoặc Cổng thanh toán.
+							</li>
+						</ul>
+						<h3>NHẬN PHIẾU KHÁM ĐIỆN TỬ</h3>
+						<ul>
+							<li>
+								Sau khi thanh toán thành công, bạn sẽ nhận được
+								ngay phiếu khám bệnh điện tử trên ứng dụng (và
+								qua email).
+							</li>
+						</ul>
+						<h3>Khám trực tiếp</h3>
+						<ul>
+							<li>
+								Đến ngày khám, người bệnh vui lòng đến trực tiếp
+								phòng khám hoặc quầy tiếp nhận theo như hướng
+								dẫn trên phiếu khám.
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
-		</div>
+		</main>
 
 		<footer class="footer">
 			<div class="footer__container">

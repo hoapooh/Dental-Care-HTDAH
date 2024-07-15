@@ -83,9 +83,21 @@
 				</div>
 				<div class="clinic__container">
 					<h2 class="clinic__container__title">
-						<img src="./assets/images/clinic-icon.svg" alt="" /><span
-							>Chọn Phòng Khám</span
-						>
+						<span style="display: flex; align-items: center; gap: 20px">
+							<img src="./assets/images/clinic-icon.svg" alt="" />
+							<span>Chọn Phòng Khám</span>
+						</span>
+
+						<div class="clinic__filter">
+							Sắp xếp theo:
+							<select name="clinic" id="clinic" class="clinic__filter__select">
+								<option value="all">Tất cả</option>
+								<option value="Hồ Chí Minh">Hồ Chí Minh</option>
+								<option value="Hải Phòng">Hải Phòng</option>
+								<option value="Hà Nội">Hà Nội</option>
+							</select>
+							<i class="fa-solid fa-chevron-down clinic__filter__icon"></i>
+						</div>
 					</h2>
 					<div class="clinic__container__card">
 						<div class="row">
@@ -96,6 +108,129 @@
 								<p class="location">
 									<i class="fa-solid fa-location-dot"></i>Tầng 1, M Plaza -39 Lê
 									Duẩn, Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh
+								</p>
+								<p class="time">
+									<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
+								</p>
+								<div class="notification">
+									Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
+								</div>
+								<br />
+								<div class="buttons">
+									<a href="./clinicspecialty.html" class="button-book"
+										>Đặt khám</a
+									>
+									<a href="./clinicdetail.html" class="button-more"
+										>Xem chi tiết</a
+									>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="clinic__gallery">
+									<div class="gallery-item">
+										<img
+											src="./assets/images/clinic-test.png"
+											alt=""
+											class="gallery-image"
+											style="height: 200px"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="clinic__container__card">
+						<div class="row">
+							<div class="col-md-8">
+								<h3 class="clinic__container__card__title">
+									M Plaza Smart Clinic
+								</h3>
+								<p class="location">
+									<i class="fa-solid fa-location-dot"></i>Tầng 1, M Plaza -39 Lê
+									Duẩn, Bến Nghé, Quận 1, Thành Phố Hải Phòng
+								</p>
+								<p class="time">
+									<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
+								</p>
+								<div class="notification">
+									Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
+								</div>
+								<br />
+								<div class="buttons">
+									<a href="./clinicspecialty.html" class="button-book"
+										>Đặt khám</a
+									>
+									<a href="./clinicdetail.html" class="button-more"
+										>Xem chi tiết</a
+									>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="clinic__gallery">
+									<div class="gallery-item">
+										<img
+											src="./assets/images/clinic-test.png"
+											alt=""
+											class="gallery-image"
+											style="height: 200px"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="clinic__container__card">
+						<div class="row">
+							<div class="col-md-8">
+								<h3 class="clinic__container__card__title">
+									M Plaza Smart Clinic
+								</h3>
+								<p class="location">
+									<i class="fa-solid fa-location-dot"></i>Tầng 1, M Plaza -39 Lê
+									Duẩn, Bến Nghé, Quận 1, Thành Phố Hà Nội
+								</p>
+								<p class="time">
+									<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
+								</p>
+								<div class="notification">
+									Giờ đặt tiếp theo <span>Hôm nay vào lúc 08:15</span>
+								</div>
+								<br />
+								<div class="buttons">
+									<a href="./clinicspecialty.html" class="button-book"
+										>Đặt khám</a
+									>
+									<a href="./clinicdetail.html" class="button-more"
+										>Xem chi tiết</a
+									>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="clinic__gallery">
+									<div class="gallery-item">
+										<img
+											src="./assets/images/clinic-test.png"
+											alt=""
+											class="gallery-image"
+											style="height: 200px"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="clinic__container__card">
+						<div class="row">
+							<div class="col-md-8">
+								<h3 class="clinic__container__card__title">
+									M Plaza Smart Clinic
+								</h3>
+								<p class="location">
+									<i class="fa-solid fa-location-dot"></i>Tầng 1, M Plaza -39 Lê
+									Duẩn, Bến Nghé, Quận 1, Thành Phố Hà Nội
 								</p>
 								<p class="time">
 									<i class="fa-solid fa-clock"></i>07:00 - 20:00 hằng ngày
@@ -189,5 +324,35 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script>
+			// Lắng nghe sự kiện thay đổi trên phần tử filter
+			document
+				.querySelector(".clinic__filter__select")
+				.addEventListener("change", function () {
+					// Lấy giá trị được chọn
+					var selectedValue = this.value.toLowerCase();
+
+					// Duyệt qua tất cả các phần tử có class "clinic__container__card"
+					var cards = document.querySelectorAll(".clinic__container__card");
+					cards.forEach(function (card) {
+						// Nếu giá trị được chọn là "all", hiển thị tất cả các card
+						if (selectedValue === "all") {
+							card.style.display = "";
+						} else {
+							// Lấy giá trị trong thẻ <p> với class "location"
+							var location = card
+								.querySelector(".location")
+								.textContent.toLowerCase();
+
+							// Kiểm tra nếu giá trị chứa trong "location" khớp với giá trị được chọn
+							if (location.includes(selectedValue)) {
+								card.style.display = ""; // Hiển thị nếu khớp
+							} else {
+								card.style.display = "none"; // Ẩn nếu không khớp
+							}
+						}
+					});
+				});
+		</script>
 	</body>
 </html>

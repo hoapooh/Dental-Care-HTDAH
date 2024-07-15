@@ -14,12 +14,20 @@ body {
 
 ul {
 	list-style-type: none;
+	padding-left: 0;
+	margin-bottom: 0;
 }
 
 a {
 	text-decoration: none;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
 	margin-bottom: 0;
 }
@@ -91,158 +99,95 @@ body::-webkit-scrollbar {
 }
 
 .dentistry__info__card {
-	position: relative;
-	padding: 20px 54px;
-	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 12px;
+	border: 1px solid #d7dbe0;
 	background: #fff;
 	box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.08);
 }
 
-.dentistry__info__card--dentist {
-	width: 50%;
+.dentistInfo__personal {
+	display: flex;
+	gap: 12px;
+	padding: 14px;
 }
 
-.dentistry__info__card--schedule {
-	width: 49%;
-	margin-left: 10%;
-}
-
-.dentistry__info__card--detist__profile {
-	gap: 14px;
-}
-
-.dentistry__info__card--detist__profile img {
-	width: 120px;
-	height: 120px;
+.dentistInfo__image img {
+	width: 140px;
+	height: 140px;
 	border-radius: 50%;
+	object-fit: cover;
 }
 
-.dentistry__info__card--schedule select {
-	font-size: 2rem;
+.dentistInfo__groupInfo .name {
+	color: #1376f8;
+	font-size: 2.4rem;
+	font-weight: bold;
+	margin-bottom: 8px;
 }
 
-.dentistry__info__card--detist__profile .view__more__profile {
-	display: block;
-	margin-top: 10px;
-	text-align: center;
+.dentistInfo__groupInfo p {
 	color: #3c4959;
 	font-size: 1.8rem;
-	font-weight: bold;
+	font-weight: 500;
+	line-height: 155%; /* 2.79rem */
+	letter-spacing: 0.027rem;
 }
 
-.dentistry__info__card--detist__profile .view__more__profile:hover {
-	color: #1376f8;
+.dentistInfo__clinic {
+	display: flex;
+	align-items: center;
+	background-color: #e6f6fe;
+	justify-content: space-between;
+	padding: 12px 14px;
+	border-radius: 0 0 12px 12px;
 }
 
-.dentistry__info__card--detist__profile p {
+.dentistInfo__clinic__address {
+	display: flex;
+	align-items: flex-start;
+	flex: 0 0 auto;
+	gap: 4px;
+	font-size: 1.6rem;
+	width: 70%;
+}
+
+.dentistInfo__clinic__address strong {
+	font-size: 1.8rem;
+}
+
+.dentistInfo__clinic__address svg {
+	height: 21px !important;
+	width: 21px !important;
+}
+
+.dentistInfo__clinic__address .address {
+	color: #858585;
+	word-wrap: break-word !important;
+	font-weight: 500;
 	margin-bottom: 0;
 }
 
-.dentistry__info__card--detist__profile .name {
-	color: #011632;
-	font-size: 2.2rem;
-	font-weight: bold;
-	line-height: 155%; /* 3.41rem */
-	letter-spacing: 0.044rem;
-}
-
-.dentistry__info__card--detist__profile .desc {
-	color: #3c4959;
-	font-size: 1.6rem;
-	font-weight: 400;
-	line-height: 155%; /* 2.48rem */
-	letter-spacing: 0.024rem;
-}
-
-.dentistry__info__card--detist__profile .location {
+.dentistInfo__booking button {
+	width: 150px !important;
 	display: flex;
+	padding: 10px 30px;
+	justify-content: center;
 	align-items: center;
-	gap: 10px;
-	color: #3c4959;
+	height: 36px;
+	align-self: stretch;
 	font-size: 1.6rem;
-	font-weight: 400;
-	line-height: 155%; /* 2.48rem */
-	letter-spacing: 0.024rem;
+	font-weight: 500;
+	border-radius: 30px;
+	background: #1376f8;
+	background: linear-gradient(83.63deg, #0078f1 33.34%, #0099ff 113.91%);
+	border: 1px solid transparent;
+	color: #fff;
 }
 
-.dentistry__info__card .separate {
-	position: absolute;
-	left: 50%;
-	top: 5%;
-	width: 0;
-	border: 1px solid #0005;
-	height: 90%;
-	transform: translateX(-50%);
-}
-
-.dentistry__info__card + .dentistry__info__card {
-	margin-top: 40px;
-}
-
-.dentistry__info__card--schedule .sub-title {
-	margin-top: 10px;
-	display: flex;
-	gap: 5px;
-	color: #000;
-	font-size: 1.6rem;
-	font-weight: 400;
-	line-height: 155%; /* 2.48rem */
-	letter-spacing: 0.024rem;
-}
-
-.card--schedule__wrapper {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 14px;
-}
-
-.card--schedule__wrapper a {
-	display: inline-block;
-	text-align: center;
-	width: 116px;
-	padding: 9px 11px;
-	border-radius: 1px;
-	border: 1px solid #eee;
-	background: #eee;
-	color: #202224;
-	font-size: 1.5rem;
-	font-weight: 700;
-	letter-spacing: -0.0064rem;
-}
-
-.card--schedule__wrapper a:hover {
-	background: #ddd;
-}
-
-.dentistry__info__card--schedule .note {
-	margin-top: 5px;
-	color: #3c4959;
-	font-size: 1.6rem;
-	font-weight: 400;
-	line-height: 155%; /* 2.015rem */
-	letter-spacing: 0.0195rem;
-}
-
-.clinic__address {
-	color: #666;
-	font-size: 2rem;
-	font-weight: 400;
-	line-height: 155%; /* 2.48rem */
-	letter-spacing: 0.008rem;
-}
-
-.clinic__name {
-	color: #011632;
-	font-size: 1.6rem;
-	font-weight: 700;
-	line-height: 155%; /* 2.17rem */
-	letter-spacing: 0.021rem;
-}
-
-.clinic__address__detail {
-	color: #3c4959;
-	font-size: 1.5rem;
-	font-weight: 400;
-	line-height: 155%; /* 2.015rem */
-	letter-spacing: 0.0195rem;
+.dentistInfo__booking button:hover {
+	box-shadow: 0 4px 30px 0 rgba(116, 157, 206, 0.2);
+	background: #1376f8;
+	background: linear-gradient(83.63deg, #0064c7 33.34%, #017aca 113.91%);
 }

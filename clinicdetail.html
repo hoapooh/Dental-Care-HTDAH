@@ -25,7 +25,11 @@
 		<header class="header">
 			<nav class="header__navbar">
 				<a href="#!">
-					<img src="./assets/images/logo.png" class="navbar__logo" alt="logo" />
+					<img
+						src="./assets/images/logo.png"
+						class="navbar__logo"
+						alt="logo"
+					/>
 				</a>
 				<ul class="navbar__list">
 					<li>
@@ -51,20 +55,29 @@
 				<div class="navbar__auth">
 					<ul class="navbar__auth__dropdown">
 						<li class="outer">
-							<div class="name"><i class="fa-solid fa-user"></i> Phúc Hoà</div>
+							<div class="name">
+								<i class="fa-solid fa-user"></i> Phúc Hoà
+							</div>
 							<ul class="sub-menu">
 								<li>
-									<a href="./profile.html" class="account">Tài khoản</a>
+									<a href="./profile.html" class="account"
+										>Tài khoản</a
+									>
 								</li>
 								<li>
-									<a href="./patientrecord.html" class="record"
+									<a
+										href="./patientrecord.html"
+										class="record"
 										>Hồ sơ bệnh nhân</a
 									>
 								</li>
 								<div class="divider"></div>
 								<li>
 									<a href="" class="logout-btn"
-										><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a
+										><i
+											class="fa-solid fa-right-from-bracket"
+										></i>
+										Đăng xuất</a
 									>
 								</li>
 							</ul>
@@ -80,8 +93,8 @@
 		<main class="clinic__detail__style">
 			<div class="clinic__detail">
 				<!-- ========= MAIN CONTENT ========= -->
-				<div class="row">
-					<div class="clinic__detail__info__map col-md-4">
+				<div class="clinic__detail__info__slide row">
+					<div class="col-md-4">
 						<div class="info">
 							<div class="info-title">
 								<img
@@ -96,8 +109,8 @@
 									<div class="style__item">
 										<i class="fa-solid fa-location-dot"></i>
 										<span
-											>abcd abcd abcd abcd abcd abcd abcd abcd abcd abcd abcd
-											abcd</span
+											>abcd abcd abcd abcd abcd abcd abcd
+											abcd abcd abcd abcd abcd</span
 										>
 									</div>
 								</div>
@@ -105,14 +118,17 @@
 									<div class="style__item">
 										<i class="fa-solid fa-clock"></i>
 										<span>
-											Thứ 2 - Thứ 6 (08:30 - 19:00), Thứ 7 - CN (08:30 - 20:00)
+											Thứ 2 - Thứ 6 (08:30 - 19:00), Thứ 7
+											- CN (08:30 - 20:00)
 										</span>
 									</div>
 								</div>
 								<div class="phone">
 									<div class="style__item">
 										<i class="fa-solid fa-phone"></i>
-										<span>Hỗ trợ đặt khám: 0963 333 844</span>
+										<span
+											>Hỗ trợ đặt khám: 0963 333 844</span
+										>
 									</div>
 								</div>
 								<div class="book">
@@ -125,26 +141,19 @@
 								</div>
 							</div>
 						</div>
-						<div class="map">
-							<iframe
-								src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14899.433547295605!2d105.799865!3d20.998313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135acbc82896c2b%3A0xc36a3966949f5e0a!2zTmhhIEtob2EgVHLhurs!5e0!3m2!1svi!2sus!4v1718035809868!5m2!1svi!2sus"
-								width="100%"
-								height="100%"
-								style="border: 0"
-								allowfullscreen=""
-								loading="lazy"
-								referrerpolicy="no-referrer-when-downgrade"
-							></iframe>
-						</div>
 					</div>
-					<div class="clinic__detail__slide__desc col-md-8">
+
+					<div class="col-md-8">
 						<div
 							id="carouselRide"
-							class="images carousel slide"
+							class="images carousel slide clinicCarousel"
 							data-bs-ride="carousel"
 						>
 							<div class="carousel-inner" style="height: 100%">
-								<div class="carousel-item active" style="height: 100%">
+								<div
+									class="carousel-item active"
+									style="height: 100%"
+								>
 									<img
 										src="https://nhakhoatre.com/wp-content/uploads/2023/02/phong-kham-nha-khoa-tre-1.jpg"
 										alt=""
@@ -184,25 +193,69 @@
 								<span class="visually-hidden">Next</span>
 							</button>
 						</div>
+					</div>
+				</div>
+				<div class="clinic__detail__map__desc row">
+					<div class="col-md-4">
+						<div class="map">
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14899.433547295605!2d105.799865!3d20.998313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135acbc82896c2b%3A0xc36a3966949f5e0a!2zTmhhIEtob2EgVHLhurs!5e0!3m2!1svi!2sus!4v1718035809868!5m2!1svi!2sus"
+								width="100%"
+								height="100%"
+								style="border: 0"
+								allowfullscreen=""
+								loading="lazy"
+								referrerpolicy="no-referrer-when-downgrade"
+							></iframe>
+						</div>
+					</div>
+					<div class="col-md-8">
 						<div class="desc">
 							<div class="desc__style">
 								<h2>Mô tả</h2>
 								<p>
-									<strong>Đối với khách hàng:</strong> Đem đến cho khách hàng
-									những dịch vụ nha khoa tốt nhất, mang đến sự thoải mái và an
-									toàn trong suốt quá trình điều trị tại Nha khoa. Đồng thời
-									thực hiện điều trị răng miệng cho khách hàng nhanh chóng và
-									hiệu quả với các công nghệ hiện đại nhất. <br />
-									<strong>Đối với xã hội:</strong> Kết nối nụ cười rạng rỡ đến
-									với mọi người, không chỉ các bạn trẻ mà tất cả những người
-									mong muốn có nụ cười khỏe, tươi trẻ. Nâng cao nhận thức về tầm
-									quan trọng của việc chăm sóc và bảo vệ răng miệng khỏe mạnh.
+									<strong>Đối với khách hàng:</strong> Đem đến
+									cho khách hàng những dịch vụ nha khoa tốt
+									nhất, mang đến sự thoải mái và an toàn trong
+									suốt quá trình điều trị tại Nha khoa. Đồng
+									thời thực hiện điều trị răng miệng cho khách
+									hàng nhanh chóng và hiệu quả với các công
+									nghệ hiện đại nhất. <br />
+									<strong>Đối với xã hội:</strong> Kết nối nụ
+									cười rạng rỡ đến với mọi người, không chỉ
+									các bạn trẻ mà tất cả những người mong muốn
+									có nụ cười khỏe, tươi trẻ. Nâng cao nhận
+									thức về tầm quan trọng của việc chăm sóc và
+									bảo vệ răng miệng khỏe mạnh.
 									<br />
-									<strong>Đối với khách hàng:</strong> Đem đến cho khách hàng
-									những dịch vụ nha khoa tốt nhất, mang đến sự thoải mái và an
-									toàn trong suốt quá trình điều trị tại Nha khoa. Đồng thời
-									thực hiện điều trị răng miệng cho khách hàng nhanh chóng và
-									hiệu quả với các công nghệ hiện đại nhất.
+									<strong>Đối với khách hàng:</strong> Đem đến
+									cho khách hàng những dịch vụ nha khoa tốt
+									nhất, mang đến sự thoải mái và an toàn trong
+									suốt quá trình điều trị tại Nha khoa. Đồng
+									thời thực hiện điều trị răng miệng cho khách
+									hàng nhanh chóng và hiệu quả với các công
+									nghệ hiện đại nhất.
+									<strong>Đối với khách hàng:</strong> Đem đến
+									cho khách hàng những dịch vụ nha khoa tốt
+									nhất, mang đến sự thoải mái và an toàn trong
+									suốt quá trình điều trị tại Nha khoa. Đồng
+									thời thực hiện điều trị răng miệng cho khách
+									hàng nhanh chóng và hiệu quả với các công
+									nghệ hiện đại nhất. <br />
+									<strong>Đối với xã hội:</strong> Kết nối nụ
+									cười rạng rỡ đến với mọi người, không chỉ
+									các bạn trẻ mà tất cả những người mong muốn
+									có nụ cười khỏe, tươi trẻ. Nâng cao nhận
+									thức về tầm quan trọng của việc chăm sóc và
+									bảo vệ răng miệng khỏe mạnh.
+									<br />
+									<strong>Đối với khách hàng:</strong> Đem đến
+									cho khách hàng những dịch vụ nha khoa tốt
+									nhất, mang đến sự thoải mái và an toàn trong
+									suốt quá trình điều trị tại Nha khoa. Đồng
+									thời thực hiện điều trị răng miệng cho khách
+									hàng nhanh chóng và hiệu quả với các công
+									nghệ hiện đại nhất.
 								</p>
 							</div>
 						</div>
@@ -216,37 +269,51 @@
 				<div class="clinic__detail__reviews">
 					<div class="reviews__container swiper">
 						<div class="reviews__content">
-							<div class="reviews__content__wrapper swiper-wrapper">
-								<div class="col-md-4 reviews__card swiper-slide">
+							<div
+								class="reviews__content__wrapper swiper-wrapper"
+							>
+								<div
+									class="col-md-4 reviews__card swiper-slide"
+								>
 									<div class="title">Hello</div>
 									<div class="rating">
 										<i class="fa-solid fa-star"></i
 										><i class="fa-solid fa-star"></i>
 										<i class="fa-solid fa-star"></i>
-										<i class="fa-solid fa-star-half-stroke"></i>
+										<i
+											class="fa-solid fa-star-half-stroke"
+										></i>
 										<i class="fa-regular fa-star"></i>
 									</div>
 									<div class="content">Hello</div>
 								</div>
-								<div class="col-md-4 reviews__card swiper-slide">
+								<div
+									class="col-md-4 reviews__card swiper-slide"
+								>
 									<div class="title">Hello</div>
 									<div class="rating">
 										<i class="fa-solid fa-star"></i
 										><i class="fa-solid fa-star"></i>
 										<i class="fa-solid fa-star"></i>
-										<i class="fa-solid fa-star-half-stroke"></i>
+										<i
+											class="fa-solid fa-star-half-stroke"
+										></i>
 										<i class="fa-regular fa-star"></i>
 									</div>
 									<div class="content">Hello</div>
 								</div>
 
-								<div class="col-md-4 reviews__card swiper-slide">
+								<div
+									class="col-md-4 reviews__card swiper-slide"
+								>
 									<div class="title">Hello</div>
 									<div class="rating">
 										<i class="fa-solid fa-star"></i
 										><i class="fa-solid fa-star"></i>
 										<i class="fa-solid fa-star"></i>
-										<i class="fa-solid fa-star-half-stroke"></i>
+										<i
+											class="fa-solid fa-star-half-stroke"
+										></i>
 										<i class="fa-regular fa-star"></i>
 									</div>
 									<div class="content">Hello</div>
@@ -297,7 +364,11 @@
 					<div class="footer__terms__address__contact col-md-6">
 						<div class="phone__number footer__terms__list">
 							<span>Số điện thoại: </span
-							><a href="tel:0123456789" class="footer__terms__links">00 có</a>
+							><a
+								href="tel:0123456789"
+								class="footer__terms__links"
+								>00 có</a
+							>
 						</div>
 						<div class="email__contact footer__terms__list">
 							<span>Email: </span
@@ -308,20 +379,25 @@
 							>
 						</div>
 						<div class="address footer__terms__list">
-							<span>Địa chỉ: </span>Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ,
-							Thành Phố Thủ Đức, Thành phố Hồ Chí Minh
+							<span>Địa chỉ: </span>Lô E2a-7, Đường D1, Đ. D1,
+							Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí
+							Minh
 						</div>
 					</div>
 					<div class="footer__terms__services col-md-2 text-start">
 						<div class="footer__terms__title">Dịch vụ Y tế</div>
 						<ul>
 							<li>
-								<a href="./clinic.html" class="footer__terms__links"
+								<a
+									href="./clinic.html"
+									class="footer__terms__links"
 									>Đặt khám tại cơ sở</a
 								>
 							</li>
 							<li>
-								<a href="./speciality.html" class="footer__terms__links"
+								<a
+									href="./speciality.html"
+									class="footer__terms__links"
 									>Đặt khám theo chuyên khoa</a
 								>
 							</li>
@@ -331,10 +407,14 @@
 						<div class="footer__terms__title">Hướng dẫn</div>
 						<ul>
 							<li>
-								<a href="#!" class="footer__terms__links">Đặt lịch khám</a>
+								<a href="#!" class="footer__terms__links"
+									>Đặt lịch khám</a
+								>
 							</li>
 							<li>
-								<a href="#!" class="footer__terms__links">Câu hỏi thường gặp</a>
+								<a href="#!" class="footer__terms__links"
+									>Câu hỏi thường gặp</a
+								>
 							</li>
 						</ul>
 					</div>
@@ -342,15 +422,21 @@
 						<div class="footer__terms__title">Về DentalCare</div>
 						<ul>
 							<li>
-								<a href="./about.html" class="footer__terms__links"
+								<a
+									href="./about.html"
+									class="footer__terms__links"
 									>Giới thiệu</a
 								>
 							</li>
 							<li>
-								<a href="#!" class="footer__terms__links">Điều khoản dịch vụ</a>
+								<a href="#!" class="footer__terms__links"
+									>Điều khoản dịch vụ</a
+								>
 							</li>
 							<li>
-								<a href="#!" class="footer__terms__links">Chính sách bảo mật</a>
+								<a href="#!" class="footer__terms__links"
+									>Chính sách bảo mật</a
+								>
 							</li>
 						</ul>
 					</div>
@@ -364,16 +450,28 @@
 							Liên hệ với chúng tôi:
 						</div>
 						<a href="#!">
-							<img src="./assets/images/facebook.png" alt="facebook" />
+							<img
+								src="./assets/images/facebook.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
-							<img src="./assets/images/instagram.png" alt="facebook" />
+							<img
+								src="./assets/images/instagram.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
-							<img src="./assets/images/youtube.png" alt="facebook" />
+							<img
+								src="./assets/images/youtube.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
-							<img src="./assets/images/linkedin.png" alt="facebook" />
+							<img
+								src="./assets/images/linkedin.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
 							<img src="./assets/images/X.png" alt="facebook" />

@@ -1,0 +1,143 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: "Baloo Paaji 2";
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	min-height: 100vh;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin-bottom: 0;
+}
+
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background-color: #b2b2b2;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: #1376f8;
+	border-radius: 10px;
+}
+
+/* ======= COMMON ======== */
+.list-order {
+	margin-top: 10px;
+	padding-left: 40px;
+}
+
+.list-unorder {
+	margin-top: 10px;
+	list-style-type: disc;
+	padding-left: 20px;
+}
+
+/* ======= BOOKING GUIDE ======= */
+.booking__guide {
+	padding-top: 50px;
+}
+
+.booking__guide .title {
+	text-align: center;
+	font-size: 4.8rem;
+	font-weight: bold;
+	color: #1376f8;
+	margin-bottom: 10px;
+}
+
+.booking__guide .desc {
+	text-align: center;
+	font-size: 2rem;
+	color: #686868;
+	margin-bottom: 30px;
+}
+
+.booking__guide__container {
+	background-color: #e8f2f7;
+	padding: 40px 0;
+	margin-top: 50px;
+}
+
+.booking__guide__container__style {
+	width: 1180px;
+	margin: 0 auto;
+	background: #fff;
+	padding: 20px 40px;
+	box-shadow: 4px 8px 30px rgba(192, 202, 214, 0.35);
+	border-radius: 20px;
+}
+
+.booking__guide__container__style h3 {
+	font-size: 2.4rem;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.booking__guide__container__style ul {
+	list-style-type: disc;
+	padding-left: 20px;
+	margin-bottom: 10px;
+}
+
+.booking__guide__container__style ul li {
+	font-size: 1.8rem;
+	color: #686868;
+	margin-bottom: 5px;
+}
+
+/* =========== FAQ ============ */
+.faq__container__style {
+	width: 1280px;
+	margin: 0 auto;
+	padding-top: 50px;
+}
+
+.faq__container__title {
+	text-align: center;
+	font-size: 4.8rem;
+	font-weight: bold;
+	color: #1376f8;
+}
+
+.faq__container__desc {
+	text-align: center;
+	font-size: 2rem;
+	color: #686868;
+	margin-bottom: 30px;
+}
+
+/* ### ACCORDION ### */
+.accordion {
+	font-size: 1.8rem;
+}
+
+.accordion-button {
+	font-size: 2rem;
+	font-weight: 600;
+}

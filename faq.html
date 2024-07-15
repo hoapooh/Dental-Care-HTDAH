@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Hướng dẫn đặt khám</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400..800&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="./assets/css/header.css" />
+		<link rel="stylesheet" href="./assets/css/footer.css" />
+		<link rel="stylesheet" href="./assets/css/support.css" />
+	</head>
+	<body>
+		<header class="header">
+			<nav class="header__navbar">
+				<a href="#!">
+					<img
+						src="./assets/images/logo.png"
+						class="navbar__logo"
+						alt="logo"
+					/>
+				</a>
+				<ul class="navbar__list">
+					<li>
+						<a href="./index.html">Trang chủ</a>
+					</li>
+					<li>
+						<a href="./about.html">Giới thiệu</a>
+					</li>
+					<li>
+						<a href="./clinic.html">Phòng khám</a>
+					</li>
+					<li>
+						<a href="./speciality.html">Chuyên khoa</a>
+					</li>
+					<li>
+						<a href="./news.html">Tin tức</a>
+					</li>
+					<li>
+						<a href="./contact.html">Liên hệ</a>
+					</li>
+				</ul>
+				<!-- ============== ACCESS PROFILE HERE ============== -->
+				<div class="navbar__auth">
+					<ul class="navbar__auth__dropdown">
+						<li class="outer">
+							<div class="name">
+								<i class="fa-solid fa-user"></i> Phúc Hoà
+							</div>
+							<ul class="sub-menu">
+								<li>
+									<a href="./profile.html" class="account"
+										>Tài khoản</a
+									>
+								</li>
+								<li>
+									<a
+										href="./patientrecord.html"
+										class="record"
+										>Hồ sơ bệnh nhân</a
+									>
+								</li>
+								<div class="divider"></div>
+								<li>
+									<a href="" class="logout-btn"
+										><i
+											class="fa-solid fa-right-from-bracket"
+										></i>
+										Đăng xuất</a
+									>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<!-- <a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
+					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a> -->
+				</div>
+			</nav>
+		</header>
+
+		<main class="faq__container">
+			<div class="faq__container__style">
+				<h1 class="faq__container__title">
+					DentalCare có thể giúp gì cho bạn?
+				</h1>
+				<div class="faq__container__desc">
+					Giải đáp các câu hỏi nhanh giúp quý khách hiểu rõ hơn về nền
+					tảng của chúng tôi.
+				</div>
+				<div class="accordion" id="accordionExample">
+					<!-- 1 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseOne"
+								aria-expanded="true"
+								aria-controls="collapseOne"
+							>
+								Lợi ích khi sử dụng ứng dụng đăng ký khám bệnh
+								trực tuyến này là gì?
+							</button>
+						</h2>
+						<div
+							id="collapseOne"
+							class="accordion-collapse collapse show"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								<strong
+									>Lợi ích khi sử dụng ứng dụng đăng ký khám
+									bệnh trực tuyến Medpro:</strong
+								>
+								<br />
+								<ol class="list-order">
+									<li>
+										Đặt lịch khám bệnh dễ dàng và thuận
+										tiện, mọi lúc, mọi nơi.
+									</li>
+									<li>
+										Loại bỏ thời gian đứng xếp hàng chờ đợi
+										để lấy số tiếp nhận khám bệnh tại bệnh
+										viện.
+									</li>
+									<li>
+										Giảm thời gian chờ đợi khi khám bệnh tại
+										phòng khám.
+									</li>
+									<li>
+										Thanh toán trực tuyến tiện lợi, không
+										cần sử dụng tiền mặt.
+									</li>
+									<li>
+										Nhận thông tin phiếu khám bệnh điện tử
+										qua ứng dụng.
+									</li>
+									<li>
+										Tự do lựa chọn lịch khám (theo ngày,
+										khung giờ và bác sĩ khám bệnh)
+									</li>
+									<li>
+										Hệ thống tự động nhắc lịch tái khám và
+										giúp bạn đặt lịch tái khám một cách
+										thuận tiện.
+									</li>
+									<li>
+										Tra cứu kết quả khám chữa bệnh trực
+										tuyến thông qua phần mềm.
+									</li>
+									<li>
+										Thực hiện thanh toán viện phí và chi phí
+										khám chữa bệnh trực tuyến từ mọi nơi.
+									</li>
+									<li>
+										Dễ dàng tiếp cận và nhận các thông báo
+										mới cũng như thông tin từ phòng khám
+										thông qua ứng dụng Medpro.
+									</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+					<!-- 2 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseTwo"
+								aria-expanded="false"
+								aria-controls="collapseTwo"
+							>
+								Có thể thanh toán trực tuyến chi phí khám chữa
+								bệnh bằng những phương thức nào?
+							</button>
+						</h2>
+						<div
+							id="collapseTwo"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								<strong
+									>Medpro hỗ trợ khách hàng thanh toán với đa
+									dạng các phương thức, bao gồm:</strong
+								>
+								<br />
+								<ul class="list-unorder">
+									<li>Ví điện tử MOMO</li>
+									<li>Thanh toán tại phòng khám</li>
+									<li>
+										Thanh toán hộ (Nhờ người thân hoặc bạn
+										bè thanh toán phí khám bệnh)
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- 3 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseThree"
+								aria-expanded="false"
+								aria-controls="collapseThree"
+							>
+								Làm sao tôi biết được là đã thanh toán thành
+								công?
+							</button>
+						</h2>
+						<div
+							id="collapseThree"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Khi quy trình thanh toán thành công, chi phí sẽ
+								được trừ thẳng vào tài khoản được lựa chọn ở
+								phương thức giao dịch trước đó. Đồng thời, ứng
+								dụng sẽ gửi thông tin xác nhận giao dịch thành
+								công, biên lai thanh toán, mã giao dịch, mã
+								thanh toán cho giao dịch thành công. Hệ thống
+								cũng sẽ cấp ngay phiếu khám bệnh điện tử.
+							</div>
+						</div>
+					</div>
+					<!-- 4 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseFour"
+								aria-expanded="false"
+								aria-controls="collapseFour"
+							>
+								Tôi có thể đặt khám cho người nhà tôi được
+								không?
+							</button>
+						</h2>
+						<div
+							id="collapseFour"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Được. Hiện nay, DentalCare hỗ trợ cho người dùng
+								tạo tối đa 10 hồ sơ bệnh nhân trên một tài
+								khoản. Khách hàng đặt khám cho bệnh nhân nào bấm
+								chọn hồ sơ bệnh nhân đó. <br />
+								<br />
+								Tuy nhiên, phần mềm và phòng khám khuyến cáo:
+								trừ trường hợp bất khả kháng, khách hàng không
+								nên đặt giúp cho người khác vì quy định an toàn
+								bảo mật thông tin sức khỏe mỗi người. <br />
+								<br />
+								Đồng thời, mọi vấn đề phát sinh từ việc đặt khám
+								cho người khác, cá nhân người đặt sẽ chịu hoàn
+								toàn trách nhiệm trước pháp luật.
+							</div>
+						</div>
+					</div>
+					<!-- 5 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseFive"
+								aria-expanded="false"
+								aria-controls="collapseFive"
+							>
+								Tôi muốn đăng ký khám online nhưng đến trực tiếp
+								phòng khám để thanh toán được không?
+							</button>
+						</h2>
+						<div
+							id="collapseFive"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Trả lời : không Hiện tại khi đặt khám trên phần
+								mềm bạn vui lòng hoàn tất quy trình thanh toán
+								ngay trên phần mềm để được nhận phiếu khám bệnh.
+							</div>
+						</div>
+					</div>
+					<!-- 6 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseSix"
+								aria-expanded="false"
+								aria-controls="collapseSix"
+							>
+								Tôi đến phòng khám trễ hơn so với giờ khám đã
+								đăng ký, vậy tôi có được khám hay không?
+							</button>
+						</h2>
+						<div
+							id="collapseSix"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Có. Trường hợp bạn đến trễ hơn so với giờ hẹn
+								trên phiếu khám bệnh, bạn vẫn có thể được vào
+								thăm khám tại phòng khám. Tuy nhiên, mọi sự tiếp
+								nhận và thời gian khám bệnh sẽ nghe theo sự sắp
+								xếp của phòng khám, phụ thuộc vào tình hình thực
+								tế của phòng khám ở thời điểm đó.
+							</div>
+						</div>
+					</div>
+					<!-- 7 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseSeven"
+								aria-expanded="false"
+								aria-controls="collapseSeven"
+							>
+								Đăng ký khám bệnh online có mất phí không?
+							</button>
+						</h2>
+						<div
+							id="collapseSeven"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Đăng ký khám bệnh trực tuyến qua nền tảng
+								DentalCare bạn chỉ cần thanh toán phí khi việc
+								đặt lịch khám của bạn được xác nhận. Các tính
+								năng khác của ứng dụng, bao gồm việc sử dụng nền
+								tảng và truy cập vào các thông tin khác, thì
+								hoàn toàn miễn phí.
+							</div>
+						</div>
+					</div>
+					<!-- 8 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseEight"
+								aria-expanded="false"
+								aria-controls="collapseEight"
+							>
+								Tôi có thể chọn tùy ý một hồ sơ bệnh nhân của
+								người khác để đăng ký khám bệnh cho mình không?
+							</button>
+						</h2>
+						<div
+							id="collapseEight"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Trong trường hợp bạn cố tình hay nhầm lẫn dùng
+								hồ sơ bệnh nhân của người khác hoặc khai báo sai
+								thông tin để đăng ký khám bệnh, bạn đã vi phạm
+								điều khoản sử dụng của phần mềm và quy định tại
+								phòng khám. <br />
+								<br />
+								Phòng khám sẽ từ chối khám chữa bệnh, bạn sẽ
+								chịu hoàn toàn những thiệt hại và tùy mức độ có
+								thể chịu trách nhiệm trước pháp luật. <br />
+								<br />
+								Vì vậy, khi đăng ký khám bệnh bạn vui lòng
+								chọn/nhập và kiểm tra chính xác hồ sơ bệnh nhân
+								của mình!
+							</div>
+						</div>
+					</div>
+					<!-- 9 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseNine"
+								aria-expanded="false"
+								aria-controls="collapseNine"
+							>
+								Có thể đăng ký khám bệnh trong khoảng thời gian
+								nào?
+							</button>
+						</h2>
+						<div
+							id="collapseNine"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Bạn có thể đăng ký khám bệnh qua nền tảng, mọi
+								lúc mọi nơi. Có thể đặt lịch hẹn khám bệnh trước
+								ngày khám đến 30 ngày.
+							</div>
+						</div>
+					</div>
+					<!-- 10 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseTen"
+								aria-expanded="false"
+								aria-controls="collapseTen"
+							>
+								Tôi có việc đột xuất hoặc bận không đến khám
+								được, tôi muốn huỷ phiếu khám có được không?
+							</button>
+						</h2>
+						<div
+							id="collapseTen"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Quý khách chủ động thực hiện việc hủy phiếu trên
+								phần mềm. <br />
+								Tiền khám bệnh sẽ hoàn lại tài khoản của bệnh
+								nhân đã sử dụng thanh toán. <br />
+								Thời gian nhận lại tiền khám trong tài khoản: từ
+								1 - 3 ngày (đối với ví điện tử MOMO). <br />
+								Các loại thẻ ATM nội địa: từ 01 đến 05 ngày làm
+								việc. <br />
+							</div>
+						</div>
+					</div>
+					<!-- 11 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseEleven"
+								aria-expanded="false"
+								aria-controls="collapseEleven"
+							>
+								Tôi có thể thay đổi thông tin khám đã đặt qua
+								nền tảng không?
+							</button>
+						</h2>
+						<div
+							id="collapseEleven"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Bạn không thể thay đổi thông tin khám trên phiếu
+								khám bệnh đã đặt thành công.
+							</div>
+						</div>
+					</div>
+					<!-- 12 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseTwelve"
+								aria-expanded="false"
+								aria-controls="collapseTwelve"
+							>
+								Tôi sẽ được khám bệnh vào đúng thời gian đã
+								chọn, sau khi đăng ký khám qua nền tảng đúng
+								không?
+							</button>
+						</h2>
+						<div
+							id="collapseTwelve"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Trả lời: Có thể. Thời gian bạn chọn khi đăng ký
+								khám, được xem là thời gian khám bệnh dự kiến.
+								Do đặc thù của công tác khám chữa bệnh, sẽ không
+								thể chính xác thời gian khám 100%.
+							</div>
+						</div>
+					</div>
+					<!-- 13 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseThirteen"
+								aria-expanded="false"
+								aria-controls="collapseThirteen"
+							>
+								Tôi đăng ký đã bị trừ tiền nhưng sao không nhận
+								được mã số khám bệnh?
+							</button>
+						</h2>
+						<div
+							id="collapseThirteen"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Bạn vui lòng kiểm tra thông tin phiếu khám trong
+								tài khoản trên phần mềm. Hoặc vui lòng gọi điện
+								tổng đài +84 28 3892 3543 để được hỗ trợ.
+							</div>
+						</div>
+					</div>
+					<!-- 14 -->
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseFourteen"
+								aria-expanded="false"
+								aria-controls="collapseFourteen"
+							>
+								Điều kiện để được hoàn tiền là gì?
+							</button>
+						</h2>
+						<div
+							id="collapseFourteen"
+							class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample"
+						>
+							<div class="accordion-body">
+								Bạn chỉ được hoàn tiền khi thực hiện thành công
+								yêu cầu Hủy Phiếu Khám Bệnh trên phần mềm theo
+								theo quy định hoặc do sơ suất của bên phòng
+								khám.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__navigation">
+					<a href="/">
+						<img
+							src="https://firebasestorage.googleapis.com/v0/b/auth-demo-123e3.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=b98bc2f0-f603-4b85-bd1b-764d8679baf0"
+							class="navbar__logo"
+							alt="logo"
+						/>
+					</a>
+					<ul class="footer__navigation__list">
+						<li>
+							<a href="./index.html">Trang chủ</a>
+						</li>
+						<li>
+							<a href="./about.html">Giới thiệu</a>
+						</li>
+						<li>
+							<a href="./clinic.html">Phòng khám</a>
+						</li>
+						<li>
+							<a href="./speciality.html">Chuyên khoa</a>
+						</li>
+						<li>
+							<a href="./news.html">Tin tức</a>
+						</li>
+						<li>
+							<a href="./contact.html">Liên hệ</a>
+						</li>
+					</ul>
+				</div>
+				<div class="footer__separate"></div>
+				<div class="footer__terms row">
+					<div class="footer__terms__address__contact col-md-6">
+						<div class="phone__number footer__terms__list">
+							<span>Số điện thoại: </span
+							><a
+								href="tel:0123456789"
+								class="footer__terms__links"
+								>00 có</a
+							>
+						</div>
+						<div class="email__contact footer__terms__list">
+							<span>Email: </span
+							><a
+								href="mailto:dentalcare@gmail.com"
+								class="footer__terms__links"
+								>dentalcare@gmail.com</a
+							>
+						</div>
+						<div class="address footer__terms__list">
+							<span>Địa chỉ: </span>Lô E2a-7, Đường D1, Đ. D1,
+							Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí
+							Minh
+						</div>
+					</div>
+					<div class="footer__terms__services col-md-2 text-start">
+						<div class="footer__terms__title">Dịch vụ Y tế</div>
+						<ul>
+							<li>
+								<a
+									href="./clinic.html"
+									class="footer__terms__links"
+									>Đặt khám tại cơ sở</a
+								>
+							</li>
+							<li>
+								<a
+									href="./speciality.html"
+									class="footer__terms__links"
+									>Đặt khám theo chuyên khoa</a
+								>
+							</li>
+						</ul>
+					</div>
+					<div class="footer__terms__instruction col-md-2 text-start">
+						<div class="footer__terms__title">Hướng dẫn</div>
+						<ul>
+							<li>
+								<a href="#!" class="footer__terms__links"
+									>Đặt lịch khám</a
+								>
+							</li>
+							<li>
+								<a href="#!" class="footer__terms__links"
+									>Câu hỏi thường gặp</a
+								>
+							</li>
+						</ul>
+					</div>
+					<div class="footer__terms__about__us col-md-2 text-start">
+						<div class="footer__terms__title">Về DentalCare</div>
+						<ul>
+							<li>
+								<a
+									href="./about.html"
+									class="footer__terms__links"
+									>Giới thiệu</a
+								>
+							</li>
+							<li>
+								<a href="#!" class="footer__terms__links"
+									>Điều khoản dịch vụ</a
+								>
+							</li>
+							<li>
+								<a href="#!" class="footer__terms__links"
+									>Chính sách bảo mật</a
+								>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer__condition__social">
+					<p class="footer__condition__social--copyright">
+						® 2024 Dental Care | All rights reserved.
+					</p>
+					<div class="footer__condition__social--media">
+						<div style="font-size: 2rem; font-weight: bold">
+							Liên hệ với chúng tôi:
+						</div>
+						<a href="#!">
+							<img
+								src="./assets/images/facebook.png"
+								alt="facebook"
+							/>
+						</a>
+						<a href="#!">
+							<img
+								src="./assets/images/instagram.png"
+								alt="facebook"
+							/>
+						</a>
+						<a href="#!">
+							<img
+								src="./assets/images/youtube.png"
+								alt="facebook"
+							/>
+						</a>
+						<a href="#!">
+							<img
+								src="./assets/images/linkedin.png"
+								alt="facebook"
+							/>
+						</a>
+						<a href="#!">
+							<img src="./assets/images/X.png" alt="facebook" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://kit.fontawesome.com/53f42380b0.js"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
