@@ -250,9 +250,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 				);
 
 			// Lấy danh sách các lịch đièu trị (future appoint...)
-			var periodicAppointments = _context.FutureAppointments
+			var periodicAppointments = _context.PeriodicAppointments
 				.Include(f => f.PatientRecord)
-				.Where(f => f.Dentist_ID == dentist.ID && f.FutureAppointmentStatus != "Đã Hủy")
+				.Where(f => f.Dentist_ID == dentist.ID && f.PeriodicAppointmentStatus != "Đã Hủy")
 				.ToList();
 
 			// chuyển đổi danh sách lịch điều trị thành dictionary
@@ -333,7 +333,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 									Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
 									End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
 									Url = "/dentist/appointment/periodicappointment?periodicappointmentID=" + periodicAppointment.ID,
-									StatusColor = periodicAppointment.FutureAppointmentStatus switch
+									StatusColor = periodicAppointment.PeriodicAppointmentStatus switch
 									{
 										"Đã Hủy" => "#d53700",
 										"Đã Khám" => "aqua",

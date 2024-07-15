@@ -488,9 +488,9 @@ namespace Dental_Clinic_System.Migrations
                         .HasColumnType("time(7)")
                         .HasColumnName("EndTime");
 
-                    b.Property<string>("FutureAppointmentStatus")
+                    b.Property<string>("PeriodicAppointmentStatus")
                         .HasColumnType("nvarchar(30)")
-                        .HasColumnName("FutureAppointmentStatus");
+                        .HasColumnName("PeriodicAppointmentStatus");
 
                     b.Property<int>("PatientRecord_ID")
                         .HasColumnType("int")
@@ -507,7 +507,7 @@ namespace Dental_Clinic_System.Migrations
 
                     b.HasIndex("PatientRecord_ID");
 
-                    b.ToTable("FutureAppointments");
+                    b.ToTable("PeriodicAppointments");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
@@ -1211,14 +1211,14 @@ namespace Dental_Clinic_System.Migrations
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.FutureAppointment", b =>
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.Dentist", "Dentist")
-                        .WithMany("FutureAppointments")
+                        .WithMany("PeriodicAppointments")
                         .HasForeignKey("Dentist_ID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK__Dentist__FutureAppointments");
 
                     b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecord")
-                        .WithMany("FutureAppointments")
+                        .WithMany("PeriodicAppointments")
                         .HasForeignKey("PatientRecord_ID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
@@ -1377,7 +1377,7 @@ namespace Dental_Clinic_System.Migrations
 
                     b.Navigation("DentistSpecialties");
 
-                    b.Navigation("FutureAppointments");
+                    b.Navigation("PeriodicAppointments");
 
                     b.Navigation("Reviews");
 
@@ -1388,7 +1388,7 @@ namespace Dental_Clinic_System.Migrations
                 {
                     b.Navigation("Appointments");
 
-                    b.Navigation("FutureAppointments");
+                    b.Navigation("PeriodicAppointments");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Schedule", b =>

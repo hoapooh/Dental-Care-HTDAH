@@ -76,7 +76,7 @@ namespace Dental_Clinic_System.Models.Data
         public virtual ICollection<Appointment>? Appointments { get; set; } = new List<Appointment>();
 
 		[InverseProperty("PatientRecord")]
-		public virtual ICollection<FutureAppointment>? FutureAppointments { get; set; } = new List<FutureAppointment>();
+		public virtual ICollection<PeriodicAppointment>? PeriodicAppointments { get; set; } = new List<PeriodicAppointment>();
 		#endregion
 	}
 }

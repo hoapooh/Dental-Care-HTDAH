@@ -1,4 +1,5 @@
 ﻿using Dental_Clinic_System.Areas.Admin.Models;
+using Dental_Clinic_System.Areas.Dentist.Services;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services.BacklogAPI;
@@ -81,6 +82,8 @@ builder.Services.AddScoped<GoogleSecurity>();
 
 // Register the background service
 builder.Services.AddHostedService<AppointmentReminder>();
+
+builder.Services.AddHostedService<AppointmentStatusUpdater>();
 
 // Register the email sender service
 builder.Services.AddScoped<IEmailSenderCustom, EmailSender>();

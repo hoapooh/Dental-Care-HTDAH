@@ -32,7 +32,7 @@ namespace Dental_Clinic_System.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "AppointmentID",
-                table: "FutureAppointments",
+                table: "PeriodicAppointments",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -86,7 +86,7 @@ namespace Dental_Clinic_System.Migrations
 
             migrationBuilder.DropColumn(
                 name: "AppointmentID",
-                table: "FutureAppointments");
+                table: "PeriodicAppointments");
 
             migrationBuilder.DropColumn(
                 name: "IsExport",

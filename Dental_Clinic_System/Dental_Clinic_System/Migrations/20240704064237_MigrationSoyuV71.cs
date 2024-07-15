@@ -12,7 +12,7 @@ namespace Dental_Clinic_System.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "FutureAppointments",
+                name: "PeriodicAppointments",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -43,12 +43,12 @@ namespace Dental_Clinic_System.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_FutureAppointments_Dentist_ID",
-                table: "FutureAppointments",
+                table: "PeriodicAppointments",
                 column: "Dentist_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FutureAppointments_PatientRecord_ID",
-                table: "FutureAppointments",
+                table: "PeriodicAppointments",
                 column: "PatientRecord_ID");
         }
 
@@ -56,7 +56,7 @@ namespace Dental_Clinic_System.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FutureAppointments");
+                name: "PeriodicAppointments");
         }
     }
 }

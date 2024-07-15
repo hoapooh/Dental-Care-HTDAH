@@ -27,7 +27,7 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual DbSet<ClinicTransaction> ClinicTransactions { get; set; }
 		public virtual DbSet<News> News { get; set; }
 		public virtual DbSet<Order> Orders { get; set; }
-		public virtual DbSet<FutureAppointment> FutureAppointments { get; set; }
+		public virtual DbSet<PeriodicAppointment> PeriodicAppointments { get; set; }
 
 		//================================================================================================================================
 		public virtual DbSet<Dentist_Session> Dentist_Sessions { get; set; }
@@ -297,20 +297,20 @@ namespace Dental_Clinic_System.Models.Data
 				entity.HasMany(d => d.PmWorkTimeClinics).WithOne(p => p.PmWorkTimes).HasForeignKey(fk => fk.PmWorkTimeID).HasConstraintName("FK__PmWorkTime__Clinic").IsRequired(false);
 			});
 
-			modelBuilder.Entity<FutureAppointment>(entity =>
+			modelBuilder.Entity<PeriodicAppointment>(entity =>
 			{
-				entity.HasKey(e => e.ID).HasName("PK_FutureAppointment");
-				
+				entity.HasKey(e => e.ID).HasName("PK_PeriodicAppointment");
+
 				entity.Property(e => e.ID).ValueGeneratedOnAdd();
 
-				entity.HasOne(fa => fa.Dentist).WithMany(d => d.FutureAppointments).HasConstraintName("FK__Dentist__FutureAppointments").OnDelete(DeleteBehavior.Restrict);
+				entity.HasOne(fa => fa.Dentist).WithMany(d => d.PeriodicAppointments).HasConstraintName("FK__Dentist__PeriodicAppointments").OnDelete(DeleteBehavior.Restrict);
 
-				entity.HasOne(fa => fa.PatientRecord).WithMany(pr => pr.FutureAppointments).HasConstraintName("FK__PatientRecord__FutureAppointments").OnDelete(DeleteBehavior.Restrict);
+				entity.HasOne(fa => fa.PatientRecord).WithMany(pr => pr.PeriodicAppointments).HasConstraintName("FK__PatientRecord__PeriodicAppointments").OnDelete(DeleteBehavior.Restrict);
 
-				entity.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "FutureAppointmentStatus = N'Chưa Khám' OR FutureAppointmentStatus = N'Đã Khám' OR FutureAppointmentStatus = N'Đã Hủy'");
+				entity.HasCheckConstraint("CK__Valid_PeriodicAppointmentStatus", "PeriodicAppointmentStatus = N'Đã Chấp Nhận' OR PeriodicAppointmentStatus = N'Đã Khám' OR PeriodicAppointmentStatus = N'Đã Hủy'");
 			});
 
-            modelBuilder.Entity<ChatHubMessage>(entity =>
+			modelBuilder.Entity<ChatHubMessage>(entity =>
             {
                 entity.HasKey(e => e.ID).HasName("PK_ChatHubMessage");
 

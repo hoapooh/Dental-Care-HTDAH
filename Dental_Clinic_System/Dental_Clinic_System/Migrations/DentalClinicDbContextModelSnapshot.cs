@@ -498,59 +498,6 @@ namespace Dental_Clinic_System.Migrations
                     b.ToTable("Dentist_Sessions");
                 });
 
-            modelBuilder.Entity("Dental_Clinic_System.Models.Data.FutureAppointment", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("AppointmentID")
-                        .HasColumnType("int")
-                        .HasColumnName("AppointmentID");
-
-                    b.Property<int>("Dentist_ID")
-                        .HasColumnType("int")
-                        .HasColumnName("Dentist_ID");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("Description");
-
-                    b.Property<DateOnly>("DesiredDate")
-                        .HasColumnType("date")
-                        .HasColumnName("DesiredDate");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time(7)")
-                        .HasColumnName("EndTime");
-
-                    b.Property<string>("FutureAppointmentStatus")
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("FutureAppointmentStatus");
-
-                    b.Property<int>("PatientRecord_ID")
-                        .HasColumnType("int")
-                        .HasColumnName("PatientRecord_ID");
-
-                    b.Property<TimeOnly>("StartTime")
-                        .HasColumnType("time(7)")
-                        .HasColumnName("StartTime");
-
-                    b.HasKey("ID")
-                        .HasName("PK_FutureAppointment");
-
-                    b.HasIndex("Dentist_ID");
-
-                    b.HasIndex("PatientRecord_ID");
-
-                    b.ToTable("FutureAppointments", t =>
-                        {
-                            t.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "FutureAppointmentStatus = N'Chưa Khám' OR FutureAppointmentStatus = N'Đã Khám' OR FutureAppointmentStatus = N'Đã Hủy'");
-                        });
-                });
-
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
                 {
                     b.Property<int>("ID")
@@ -783,6 +730,59 @@ namespace Dental_Clinic_System.Migrations
                     b.ToTable("PatientRecord", t =>
                         {
                             t.HasCheckConstraint("CK_Valid_PatientRecord_Status", "PatientRecordStatus = N'Đã Xóa' OR PatientRecordStatus = N'Đang Tồn Tại'");
+                        });
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.PeriodicAppointment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("AppointmentID")
+                        .HasColumnType("int")
+                        .HasColumnName("AppointmentID");
+
+                    b.Property<int>("Dentist_ID")
+                        .HasColumnType("int")
+                        .HasColumnName("Dentist_ID");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("Description");
+
+                    b.Property<DateOnly>("DesiredDate")
+                        .HasColumnType("date")
+                        .HasColumnName("DesiredDate");
+
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time(7)")
+                        .HasColumnName("EndTime");
+
+                    b.Property<int>("PatientRecord_ID")
+                        .HasColumnType("int")
+                        .HasColumnName("PatientRecord_ID");
+
+                    b.Property<string>("PeriodicAppointmentStatus")
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("PeriodicAppointmentStatus");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time(7)")
+                        .HasColumnName("StartTime");
+
+                    b.HasKey("ID")
+                        .HasName("PK_PeriodicAppointment");
+
+                    b.HasIndex("Dentist_ID");
+
+                    b.HasIndex("PatientRecord_ID");
+
+                    b.ToTable("PeriodicAppointments", t =>
+                        {
+                            t.HasCheckConstraint("CK__Valid_PeriodicAppointmentStatus", "PeriodicAppointmentStatus = N'Đã Chấp Nhận' OR PeriodicAppointmentStatus = N'Đã Khám' OR PeriodicAppointmentStatus = N'Đã Hủy'");
                         });
                 });
 
@@ -1259,27 +1259,6 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("Dental_Clinic_System.Models.Data.FutureAppointment", b =>
-                {
-                    b.HasOne("Dental_Clinic_System.Models.Data.Dentist", "Dentist")
-                        .WithMany("FutureAppointments")
-                        .HasForeignKey("Dentist_ID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK__Dentist__FutureAppointments");
-
-                    b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecord")
-                        .WithMany("FutureAppointments")
-                        .HasForeignKey("PatientRecord_ID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK__PatientRecord__FutureAppointments");
-
-                    b.Navigation("Dentist");
-
-                    b.Navigation("PatientRecord");
-                });
-
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.Account", "Account")
@@ -1301,6 +1280,27 @@ namespace Dental_Clinic_System.Migrations
                         .HasConstraintName("FK__Patient__Account");
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.PeriodicAppointment", b =>
+                {
+                    b.HasOne("Dental_Clinic_System.Models.Data.Dentist", "Dentist")
+                        .WithMany("PeriodicAppointments")
+                        .HasForeignKey("Dentist_ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK__Dentist__PeriodicAppointments");
+
+                    b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecord")
+                        .WithMany("PeriodicAppointments")
+                        .HasForeignKey("PatientRecord_ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK__PatientRecord__PeriodicAppointments");
+
+                    b.Navigation("Dentist");
+
+                    b.Navigation("PatientRecord");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Review", b =>
@@ -1433,7 +1433,7 @@ namespace Dental_Clinic_System.Migrations
 
                     b.Navigation("DentistSpecialties");
 
-                    b.Navigation("FutureAppointments");
+                    b.Navigation("PeriodicAppointments");
 
                     b.Navigation("Reviews");
 
@@ -1444,7 +1444,7 @@ namespace Dental_Clinic_System.Migrations
                 {
                     b.Navigation("Appointments");
 
-                    b.Navigation("FutureAppointments");
+                    b.Navigation("PeriodicAppointments");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Schedule", b =>

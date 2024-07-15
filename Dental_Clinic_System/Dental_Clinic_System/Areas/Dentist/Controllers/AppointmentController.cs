@@ -237,7 +237,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 			//Lấy ngày và giờ riêng ra của hentaikham
 			AppointmentServices.FormatDateTime(selectedDates, giobatdau, gioketthuc, out List<DateOnly> desiredDate, out TimeOnly startTime, out TimeOnly endTime);
 
-			//Thêm appointment với giờ tạo vào FutureAppointments 
+			//Thêm appointment với giờ tạo vào PeriodicAppointments 
 			if (appointment.IsExport == false) // Case: lần đầu tiên tạo future appointment
 			{
 				appointment.Note = $"{dando}";
@@ -249,17 +249,17 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 					// Lặp qua mỗi ngày trong danh sách ngày hẹn tái khám, tạo future appointment cho mỗi ngày
 					foreach (var date in desiredDate)
 					{
-						var futureAppointment = new FutureAppointment
+						var futureAppointment = new PeriodicAppointment
 						{
 							PatientRecord_ID = appointment.PatientRecordID,
 							Dentist_ID = dentistID,
 							StartTime = startTime,
 							EndTime = endTime,
 							DesiredDate = date,
-							FutureAppointmentStatus = "Chưa Khám",
+							PeriodicAppointmentStatus = "Chưa Khám",
 							AppointmentID = appointmentID
 						};
-						_context.FutureAppointments.Add(futureAppointment);
+						_context.PeriodicAppointments.Add(futureAppointment);
 					}
 				}
 				_context.SaveChanges();
@@ -274,7 +274,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 {
 
                     //Lấy FutureAppointment để cập nhật lại thời gian tái khám
-                    var futureAppointments = _context.FutureAppointments.Where(fa => fa.AppointmentID == appointmentID && fa.FutureAppointmentStatus == "Chưa Khám").ToList();
+                    var futureAppointments = _context.PeriodicAppointments.Where(fa => fa.AppointmentID == appointmentID && fa.PeriodicAppointmentStatus == "Chưa Khám").ToList();
                     if (futureAppointments == null)
                     {
                         return NotFound("Không tìm thấy đơn!");
@@ -282,24 +282,24 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                     // Xóa các futureAppointment cũ
 					foreach (var futureAppointment in futureAppointments)
 					{
-						_context.FutureAppointments.Remove(futureAppointment);
+						_context.PeriodicAppointments.Remove(futureAppointment);
 					}
 					// Thêm các futureAppointment mới
 					foreach (var date in desiredDate)
 					{
 						// Create a new FutureAppointment instance for each date
-						var futureAppointment = new FutureAppointment
+						var futureAppointment = new PeriodicAppointment
 						{
 							PatientRecord_ID = appointment.PatientRecordID,
 							Dentist_ID = dentistID,
 							StartTime = startTime, 
 							EndTime = endTime,
 							DesiredDate = date,
-							FutureAppointmentStatus = "Chưa Khám",
+							PeriodicAppointmentStatus = "Chưa Khám",
 							AppointmentID = appointmentID
 						};
 
-						_context.FutureAppointments.Add(futureAppointment);
+						_context.PeriodicAppointments.Add(futureAppointment);
 					}
 				}
 				_context.SaveChanges();
@@ -328,7 +328,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             var dentist = await _context.Dentists.Where(d => d.Account.ID == dentistAccountID).Include(d => d.Account).FirstAsync();
 
-            var periodicAppointment = await _context.FutureAppointments
+            var periodicAppointment = await _context.PeriodicAppointments
                                     .Include(p => p.PatientRecord)
                                     .Include(p => p.Dentist)
                                     .Where(p => p.Dentist.Account.ID == dentistAccountID)
@@ -356,13 +356,13 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         #region Hàm xử lý nút bấm thay đổi trạng thái của lịch khám định kì - FUTURE APPOINTMENT
         public async Task<IActionResult> CancelFutureAppointment(int futureappointmentID, string? description)
         {
-            var futureAppointment = _context.FutureAppointments.FirstOrDefault(a => a.ID == futureappointmentID && a.FutureAppointmentStatus == "Chưa Khám");
+            var futureAppointment = _context.PeriodicAppointments.FirstOrDefault(a => a.ID == futureappointmentID && a.PeriodicAppointmentStatus == "Chưa Khám");
             if (futureAppointment == null)
             {
                 TempData["ErrorMessage"] = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
                 return RedirectToAction("periodicappointment");
             }
-            futureAppointment.FutureAppointmentStatus = "Đã Hủy";
+            futureAppointment.PeriodicAppointmentStatus = "Đã Hủy";
             //futureAppointment.Description = "Đã hủy từ Nha sĩ. Lý do hủy: " + description;
             _context.Update(futureAppointment);
             await _context.SaveChangesAsync();
@@ -373,7 +373,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         //Hàm thay đổi trạng thái của đơn đặt
         public async Task<IActionResult> ChangeStatusFutureAppointment(int futureappointmentID)
         {
-            var futureAppointment = _context.FutureAppointments.FirstOrDefault(a => a.ID == futureappointmentID && a.FutureAppointmentStatus == "Chưa Khám");
+            var futureAppointment = _context.PeriodicAppointments.FirstOrDefault(a => a.ID == futureappointmentID && a.PeriodicAppointmentStatus == "Chưa Khám");
             if (futureAppointment == null)
             {
                 TempData["ErrorMessage"] = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
@@ -387,7 +387,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 				return RedirectToAction("periodicappointment");
 			}
 
-			futureAppointment.FutureAppointmentStatus = "Đã Khám";
+			futureAppointment.PeriodicAppointmentStatus = "Đã Khám";
 
             _context.Update(futureAppointment);
             await _context.SaveChangesAsync();
