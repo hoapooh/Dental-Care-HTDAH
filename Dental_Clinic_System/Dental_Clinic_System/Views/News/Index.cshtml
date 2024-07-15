@@ -6,7 +6,7 @@
 }
 @using Dental_Clinic_System.Helper
 @using System.Linq
-@model IEnumerable<Dental_Clinic_System.Models.Data.News>
+@model IEnumerable<Dental_Clinic_System.ViewModels.NewsVM>
 
 <head>
     <meta charset="UTF-8" />
@@ -27,7 +27,7 @@
     <div class="news">
         <h1 class="news__title text-center fw-bold">Tin tức y khoa</h1>
         <div class="text-center">
-            <img src="./assets/images/separate.png" alt="" />
+            <img src="~/assets/images/separate.png" alt="" />
         </div>
         <!-- =========== BRIEF DESCRIPTION =========== -->
         <p class="news__desc text-center">
@@ -49,7 +49,8 @@
                                     <h2 class="newsItem__title">@news?.Title</h2>
                                 </a>
                                 <p class="newsItem__desc">
-                                    @Html.Raw(HtmlHelpers.ExtractTextAndLimitCharacters(news?.Content, 200))
+                                    @* @Html.Raw(HtmlHelpers.ExtractTextAndLimitCharacters(news?.Content, 200)) *@
+                                    @news?.Content
                                 </p>
                                 <div class="newsItem__datetime">
                                     <span class="newsItem__datetime__style">

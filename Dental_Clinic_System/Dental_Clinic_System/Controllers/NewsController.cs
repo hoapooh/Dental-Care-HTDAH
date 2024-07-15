@@ -1,4 +1,6 @@
-﻿using Dental_Clinic_System.Models.Data;
+﻿using Dental_Clinic_System.Helper;
+using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +17,20 @@ namespace Dental_Clinic_System.Controllers
         public async Task<IActionResult> Index()
         {
             var newsList = await _context.News.ToListAsync();
-            return View(newsList);
+
+            var newsViewModelList = _context.News.AsNoTracking()
+                             .Select(news => new NewsVM
+                             {
+                                 ID = news.ID,
+                                 AccountID = news.AccountID,
+                                 CreatedDate = news.CreatedDate,
+                                 Title = news.Title,
+                                 Content = HtmlHelpers.ExtractTextAndLimitCharacters(news.Content, 100),
+                                 ThumbNail = news.ThumbNail,
+                                 Status = news.Status
+                             });
+
+            return View(newsViewModelList);
         }
 
         [HttpGet]

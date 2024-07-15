@@ -25,7 +25,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 50px 0 0;
         }
 
         .error-content {
@@ -48,42 +48,50 @@
         }
 
             .error-text h1 {
-                font-size: 96px;
-                color: #5a5af2;
-                margin: 0;
+                font-size: 8.6rem;
+                line-height: 1;
+                color: #1376f8;
                 font-weight: 700; /* Bold */
             }
 
-            .error-text h2 {
-                font-size: 48px;
-                color: #5a5af2;
+            .error-text p:first-of-type {
+                font-size: 4.8rem;
+                color: #1376f8;
                 margin: 0;
                 font-weight: 600; /* Semi-bold */
             }
 
-            .error-text h3 {
+            .error-text p:nth-of-type(2) {
                 font-size: 36px;
-                color: #5a5af2;
-                margin: 20px 0;
+                color: #1376f8;
                 font-weight: 600; /* Semi-bold */
             }
 
-            .error-text p {
+            .error-text p:last-of-type {
                 font-size: 18px;
-                color: #5a5af2;
-                margin-bottom: 20px;
+                color: #1376f8;
+                margin: 10px 0 10px;
                 font-weight: 400; /* Regular */
             }
 
         .back-home {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #5a5af2;
+            background-color: #1376f8;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
             font-weight: 600; /* Semi-bold */
         }
+
+            .back-home:hover {
+                background-color: #0f5bd8;
+            }
+
+            .back-home span {
+                margin-right: 5px;
+                font-weight: bold;
+            }
 
         .error-image {
             flex: 1;
@@ -100,6 +108,7 @@
 
         .footer {
             background-color: #e0f7fa;
+            margin-top: 0;
             padding: 20px 0;
             font-family: 'Poppins', sans-serif;
         }
@@ -199,14 +208,14 @@
         <div class="error-content">
             <div class="error-text">
                 <h1>404</h1>
-                <h2>Ooops!</h2>
-                <h3>Không tìm thấy trang</h3>
+                <p>Oops!</p>
+                <p>Không tìm thấy trang</p>
                 <p>Xin lỗi, trang bạn đang tìm kiếm không có sẵn. Chúng tôi khuyên bạn nên quay lại Trang chủ</p>
-                <a href="/" class="back-home">← Quay lại Trang chủ</a>
+                <a href="/" class="back-home"><span>←</span> Quay lại Trang chủ</a>
             </div>
 
             <div class="error-image">
-                <img src="https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/profile_pictures%2Ferror.png?alt=media&token=0fd8498f-41b6-4972-a0c8-44902ace1907" alt="404 Error">
+                <img src="https://cdn.dribbble.com/users/722246/screenshots/3066818/404-page.gif" alt="404 Error">
             </div>
         </div>
     </main>
