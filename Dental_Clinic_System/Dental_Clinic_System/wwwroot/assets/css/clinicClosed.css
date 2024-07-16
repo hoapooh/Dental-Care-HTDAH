@@ -36,6 +36,10 @@
     background: #4880ff;
 }
 
+.sidebar .nav-item a:hover {
+    text-decoration: none; /* Xóa gạch chân khi di chuột */
+}
+
 .unlock {
     background-color: #ff4c4c;
     border: none;
@@ -51,7 +55,7 @@
         background-color: #e60000;
     }
 
-/* New styles for centering the modal */
+/* Căn giữa phương thức */
 .modal-dialog {
     display: flex;
     align-items: center;
@@ -65,11 +69,11 @@
 
 .form-group label {
     font-weight: bold;
-    font-size: 1.2rem; /* Increase label font size */
+    font-size: 1.2rem; /* Tăng kích cỡ phông chữ label */
 }
 
 .modal-title {
-    font-size: 2.5rem; /* Increase modal title font size */
+    font-size: 2.5rem; /* Tăng kích cỡ phông chữ Title */
 }
 
 .img-fluid {
@@ -85,11 +89,11 @@
 }
 
 .modal-body .image-column {
-    flex: 0 0 35%; /* Adjust the width of the image column */
+    flex: 0 0 35%; /* Điều chỉnh độ rộng của cột hình ảnh */
     max-width: 35%;
     height: 100%;
     display: flex;
-    flex-direction: column; /* Stack image and description vertically */
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
@@ -101,7 +105,6 @@
     display: flex;
     flex-direction: column;
 }
-
 
 .form-control1 {
     font-size: 1.3rem;
@@ -131,5 +134,5 @@
 }
 
     .btn-view:hover {
-        background-color: rgb(0, 161, 136) !important; /* Darker green on hover */
+        background-color: rgb(0, 161, 136) !important; /* Màu xanh đậm hơn khi di chuột */
     }

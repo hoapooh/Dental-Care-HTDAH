@@ -34,7 +34,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
             int currentYear = DateTime.Now.Year;
             int currentMonth = month ?? DateTime.Now.Month;
-            DateTime today = DateTime.Today;
+            //DateTime today = DateTime.Today;
 
 			//Đạt khám Thành Công/Thất Bại mỗi tháng cho năm hiện tại và năm trước
 			var successfulAppointments = await _context.Appointments
@@ -74,17 +74,34 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     failedData[1] = item.Count;
             }
 
-			//Tổng Hợp Tác/Từ Chối Yêu Cầu Của Phòng Khám
-			var acceptOrderToday = await _context.Orders
-                .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Date == today && o.Status == "Đồng Ý")
-                .CountAsync();
+            //Tổng Hợp Tác/Từ Chối Yêu Cầu Của Phòng Khám
+            var acceptOrdersMonthly = await _context.Orders
+                         .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Year == currentYear && o.Status == "Đồng Ý")
+                         .GroupBy(o => o.CreatedDate.Value.Month)
+                         .Select(g => new { Month = g.Key, Count = g.Count() })
+                         .ToListAsync();
 
-            var rejectOrderToday = await _context.Orders
-                .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Date == today && o.Status == "Từ Chối")
-                .CountAsync();
+            var rejectOrdersMonthly = await _context.Orders
+                .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Year == currentYear && o.Status == "Từ Chối")
+                .GroupBy(o => o.CreatedDate.Value.Month)
+                .Select(g => new { Month = g.Key, Count = g.Count() })
+                .ToListAsync();
 
-			//Tổng New được đăng lên trong mỗi Tháng
-			var newPostPerMonth = await _context.News
+            var acceptedOrdersData = new int[12];
+            var rejectedOrdersData = new int[12];
+
+            foreach (var item in acceptOrdersMonthly)
+            {
+                acceptedOrdersData[item.Month - 1] = item.Count;
+            }
+
+            foreach (var item in rejectOrdersMonthly)
+            {
+                rejectedOrdersData[item.Month - 1] = item.Count;
+            }
+
+            //Tổng New được đăng lên trong mỗi Tháng
+            var newPostPerMonth = await _context.News
                 .Where(n => n.CreatedDate.Year == currentYear)
                 .GroupBy(n => n.CreatedDate.Month)
                 .Select(g => new { Month = g.Key, Count = g.Count() })
@@ -114,8 +131,8 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 SuccessfulAppointmentsPreviousYear = successfulData[1],
                 FailedAppointmentsCurrentYear = failedData[0],
                 FailedAppointmentsPreviousYear = failedData[1],
-                AcceptedOrdersToday = acceptOrderToday,
-                RejectedOrdersToday = rejectOrderToday,
+                AcceptedOrdersMonthly = acceptedOrdersData.ToList(),
+                RejectedOrdersMonthly = rejectedOrdersData.ToList(),
                 MonthlyNewPost = newsData.ToList(),
                 ClinicNames = clinicName,
                 ClinicRatings = clinicRating
@@ -130,3 +147,11 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
 //SuccessfulAppointments = successfulAppointmentsPerMonth.Sum(x => x.Count),
 //FailedAppointments = failedAppointmentsPerMonth.Sum(x => x.Count),
+
+//var acceptOrderToday = await _context.Orders
+//             .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Date == today && o.Status == "Đồng Ý")
+//             .CountAsync();
+
+//         var rejectOrderToday = await _context.Orders
+//             .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Date == today && o.Status == "Từ Chối")
+//             .CountAsync();

@@ -83,8 +83,16 @@
 
 		@* Biểu đồ tròn *@
 		<div class="dashboard__info__chartTron">
-			<h2 class="chart-title">Tổng Số Hợp Tác/ Từ Chối Yêu Cầu Của Phòng Khám Trong Ngày</h2>
-			</br>
+			<h2 class="chart-title">Tổng Số Hợp Tác/ Từ Chối Yêu Cầu Của Phòng Khám Theo Tháng</h2>
+			<div class="chart-header">
+				<label for="orderMonthSelect" class="month-select-label">Tháng:</label>
+				<select id="orderMonthSelect">
+					@for (int i = 1; i <= 12; i++)
+					{
+						<option value="@i">@i</option>
+					}
+				</select>
+			</div>
 			<canvas id="orderChart" style="width: 100%; height: 300px"></canvas>
 		</div>
 
@@ -166,15 +174,26 @@
 
 			//Biểu đồ tròn
 			var orderCtx = document.getElementById('orderChart').getContext('2d');
-			var acceptedOrdersToday = @Model.AcceptedOrdersToday;
-			var rejectedOrdersToday = @Model.RejectedOrdersToday;
+			var acceptedOrdersMonthly = @Html.Raw(Json.Serialize(Model.AcceptedOrdersMonthly));
+			var rejectedOrdersMonthly = @Html.Raw(Json.Serialize(Model.RejectedOrdersMonthly));
+
+			function updateOrderChart(month) {
+				orderChart.data.datasets[0].data = [
+					acceptedOrdersMonthly[month - 1],
+					rejectedOrdersMonthly[month - 1]
+				];
+				orderChart.update();
+			}
 
 			var orderChart = new Chart(orderCtx, {
 				type: 'pie',
 				data: {
 					labels: ['Đồng ý', 'Từ chối'],
 					datasets: [{
-						data: [acceptedOrdersToday, rejectedOrdersToday],
+						data: [
+							acceptedOrdersMonthly[@Model.SelectedMonth - 1],
+							rejectedOrdersMonthly[@Model.SelectedMonth - 1]
+						],
 						backgroundColor: [
 							'rgba(75, 192, 192, 0.2)',
 							'rgba(255, 99, 132, 0.2)'
@@ -195,6 +214,10 @@
 						}
 					}
 				}
+			});
+
+			document.getElementById('orderMonthSelect').addEventListener('change', function () {
+				updateOrderChart(this.value);
 			});
 
 			//Biểu đồ cột

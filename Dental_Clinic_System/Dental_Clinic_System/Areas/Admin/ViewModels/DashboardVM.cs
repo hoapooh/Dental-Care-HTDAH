@@ -19,9 +19,13 @@
 
         public int FailedAppointmentsPreviousYear { get; set; }
 
-        public int AcceptedOrdersToday { get; set; }
+        //public int AcceptedOrdersToday { get; set; }
 
-        public int RejectedOrdersToday { get; set; }
+        //public int RejectedOrdersToday { get; set; }
+
+        public List<int> AcceptedOrdersMonthly { get; set; }
+
+        public List<int> RejectedOrdersMonthly { get; set; }
 
         public List<int> MonthlyNewPost { get; set; }
 

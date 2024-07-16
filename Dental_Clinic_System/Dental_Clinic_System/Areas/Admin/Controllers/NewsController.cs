@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	//[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin, Mini Admin")]
 	public class NewsController : Controller
 	{
 		private readonly DentalClinicDbContext _context;
@@ -23,16 +23,17 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			return View(news);
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> NewsPostAdd()
-		{
-			var user = _context.Accounts.FirstOrDefault(r => r.Role == "Admin");
+        [HttpGet]
+        public async Task<IActionResult> NewsPostAdd()
+        {
+            var user = await _context.Accounts
+                .FirstOrDefaultAsync(r => r.Role == "Mini Admin" || r.Role == "Admin");
 
-			ViewBag.AdminID = user?.ID;
-			return View();
-		}
+            ViewBag.AdminID = user?.ID;
+            return View();
+        }
 
-		[HttpPost]
+        [HttpPost]
 		public async Task<IActionResult> CreateNewsPost(string? content, string? newsTitle, int adminID, string? thumbnail)
 		{
 			
