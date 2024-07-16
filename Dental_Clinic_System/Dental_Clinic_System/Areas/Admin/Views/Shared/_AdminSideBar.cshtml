@@ -208,3 +208,19 @@
 	});
 
 </script>
+
+@* 
+<script>
+	const currentUserRole = 'Mini Admin'; 
+
+	document.addEventListener('DOMContentLoaded', function () {
+		const adminLink = document.querySelector('.nav-link[href="~/Admin/AccountSecondAdmin/ListAccountSecondAdmin"]');
+
+		if (currentUserRole === 'Mini Admin') {
+			adminLink.addEventListener('click', function (event) {
+				event.preventDefault();
+				alert('Không có quyền truy cập');
+			});
+		}
+	});
+</script> *@

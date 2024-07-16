@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Danh sách chat";
     var chats = ViewBag.ChatList;
+    var accounts = ViewBag.Accounts as Dictionary<int, string>; // Assuming this is a dictionary with user ID as key and role as value
 }
 
 <head>
@@ -48,13 +49,22 @@
     <div class="chat-list" id="chatList">
         @foreach (var chat in chats)
         {
-            <a href="@Url.Action("ChatDetail", "Chat", new { area = "Dentist", patientID = @chat.SenderId })">
-                <div class="chat-item">
-                    <strong>@chat.ReceiverName</strong>
-                    <p>@chat.Content</p>
-                    <small>@chat.Timestamp</small>
-                </div>
-            </a>
+            int patientID = chat.SenderId;
+            if (accounts?.ContainsKey(chat.SenderId) && accounts?[chat.SenderId] == "Nha Sĩ")
+            {
+                patientID = chat.ReceiverId;
+            }
+
+            if (accounts.ContainsKey(patientID) && accounts[patientID] == "Bệnh Nhân")
+            {
+                <a href="@Url.Action("ChatDetail", "Chat", new { area = "Dentist", patientID = patientID })">
+                    <div class="chat-item">
+                        <strong>@chat.ReceiverName</strong>
+                        <p>@chat.Content</p>
+                        <small>@chat.Timestamp</small>
+                    </div>
+                </a>
+            }
         }
     </div>
 </body>

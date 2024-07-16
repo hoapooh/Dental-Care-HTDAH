@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "403 - Truy cập bị từ chối";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .access-denied-container {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .access-denied-container img {
+                width: 150px;
+            }
+
+            .access-denied-container h1 {
+                font-size: 24px;
+                margin: 20px 0;
+                color: #007bff;
+            }
+
+            .access-denied-container p {
+                font-size: 18px;
+                color: #333;
+            }
+
+            .access-denied-container img {
+                width: 500px;
+            }
+
+            .access-denied-container a {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+                color: white;
+                background-color: #007bff;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+            }
+
+                .access-denied-container a:hover {
+                    background-color: #0056b3;
+                }
+    </style>
+</head>
+<body>
+    <div class="access-denied-container">
+        <img src="https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/profile_pictures%2F403.png?alt=media&token=77304bde-1b8c-4be1-9832-d5ffa992d32f" alt="Access Denied">
+        <h1>OOOH! 403, TRUY CẬP BỊ TỪ CHỐI</h1>
+        <p>Xin lỗi về điều đó, nhưng bạn không có quyền truy cập trang này.</p>
+        <p>May mắn thay, bạn có thể quay trở lại:</p>
+        <a href="~/Admin/AdminAccount/Login">← Quay lại trang Login</a>
+    </div>
+</body>
+</html>

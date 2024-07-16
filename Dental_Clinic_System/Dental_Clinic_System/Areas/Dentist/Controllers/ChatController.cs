@@ -32,6 +32,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             var patientName = $"{patient.FirstName} {patient.LastName}";
 
+            var accounts = await _context.Accounts.ToDictionaryAsync(a => a.ID, a => a.Role);
+
+            ViewBag.Accounts = accounts;
             ViewBag.PatientName = patientName ?? "Ẩn Danh";
 
             return View();
@@ -57,6 +60,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 .Select(g => g.OrderByDescending(m => m.Timestamp).FirstOrDefault())
                 .ToListAsync();
 
+            var accounts = await _context.Accounts.ToDictionaryAsync(a => a.ID, a => a.Role);
+
+            ViewBag.Accounts = accounts;
             ViewBag.ChatList = chats;
             return View();
         }

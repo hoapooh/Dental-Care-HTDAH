@@ -1,9 +1,10 @@
-﻿@model IEnumerable<Dental_Clinic_System.Models.Data.FutureAppointment>
+﻿@model IEnumerable<Dental_Clinic_System.Models.Data.PeriodicAppointment>
 @using Dental_Clinic_System.Helper
 @using System.Globalization
 @{
     ViewData["Title"] = "Đơn Khám Định Kỳ";
     string statusColorClass = "status";
+    int index = 1;
 }
 <head>
     <link rel="stylesheet" href="~/assets/css/sidebar.css" />
@@ -22,7 +23,7 @@
 </head>
 
 <div class="patients__management" style="padding: 40px">
-    <h1 style="text-align:center;"><strong>Quản Lý Đơn Khám Định Kỳ</strong></h1>
+    <h1 style="text-align:center;"><strong>Quản Lý Đơn Điều Trị/ Khám Định Kỳ</strong></h1>
     <div class="text-center"><img style="vertical-align: middle;" src="/assets/images/separate-01.png" alt="Sepherate image"></div>
     <div class="search__bar" style="text-align:end;">
         <form asp-controller="appointment" asp-action="periodicappointment" method="get">
@@ -33,7 +34,7 @@
     <table class="table table-striped mt-5" style="font-size: 2rem;">
         <thead>
             <tr>
-                <th>Mã Số Phiếu</th>
+                <th>STT</th>
                 <th>Họ tên bệnh nhân</th>
                 <th>Ngày khám</th>
                 <th>GIờ hẹn</th>
@@ -42,30 +43,33 @@
             </tr>
         </thead>
         <tbody id="myTableBody">
-            @foreach (var futureAppointment in Model)
+            @foreach (var periodicAppointment in Model)
             {
-                <tr>
-                    <td>@futureAppointment.ID</td>
-                    <td>@futureAppointment?.PatientRecord?.FullName</td>
-                    <td>@futureAppointment?.DesiredDate.ToString("dd/MM/yyyy")</td>
-                    <td>@futureAppointment?.StartTime.ToString("HH:mm") - @futureAppointment?.EndTime.ToString("HH:mm")</td>
 
-                    @switch (@futureAppointment.FutureAppointmentStatus)
+                <tr>
+                    <td>@index</td>
+                    <td>@periodicAppointment?.PatientRecord?.FullName</td>
+                    <td>@periodicAppointment?.DesiredDate.ToString("dd/MM/yyyy")</td>
+                    <td>@periodicAppointment?.StartTime.ToString("HH:mm") - @periodicAppointment?.EndTime.ToString("HH:mm")</td>
+
+                    @switch (periodicAppointment.PeriodicAppointmentStatus)
                     {
                         @case "Chưa Khám": statusColorClass = "status notyet"; break;
                         @case "Đã Khám": statusColorClass = "status complete"; break;
                         @case "Đã Hủy": statusColorClass = "status deny"; break;
                     }
-                    <td><p class="@statusColorClass">@futureAppointment.FutureAppointmentStatus</p></td>
+                    <td><p class="@statusColorClass">@periodicAppointment.PeriodicAppointmentStatus</p></td>
                     <td>
-                        @if (futureAppointment.FutureAppointmentStatus == "Chưa Khám")
+                        @if (periodicAppointment.PeriodicAppointmentStatus == "Đã Chấp Nhận")
                         {
-                            <a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="appointment" asp-action="changestatusfutureappointment" asp-route-futureappointmentID="@futureAppointment.ID">Đã Khám</a>
+                            <a class="confirm-link" style="color:green; text-decoration:none;" asp-controller="appointment" asp-action="changestatusperiodicappointment" asp-route-periodicappointmentID="@periodicAppointment.ID">Đã Khám</a>
                             <span> | </span>
-                            <a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="appointment" asp-action="cancelfutureappointment" asp-route-futureappointmentID="@futureAppointment.ID">Hủy</a>
+                            <a class="cancel-link" style="color:red; text-decoration:none;" asp-controller="appointment" asp-action="cancelperiodicappointment" asp-route-periodicappointmentID="@periodicAppointment.ID">Hủy</a>
                         }
                     </td>
                 </tr>
+
+                index++;
             }
         </tbody>
     </table>

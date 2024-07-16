@@ -12,12 +12,12 @@ namespace Dental_Clinic_System.Migrations
         {
             migrationBuilder.DropCheckConstraint(
                 name: "CK__Valid_FutureAppointmentStatus",
-                table: "FutureAppointments");
+                table: "PeriodicAppointments");
 
             migrationBuilder.AddCheckConstraint(
                 name: "CK__Valid_FutureAppointmentStatus",
-                table: "FutureAppointments",
-                sql: "FutureAppointmentStatus = N'Chưa Khám' OR FutureAppointmentStatus = N'Đã Khám' OR FutureAppointmentStatus = N'Đã Hủy'");
+                table: "PeriodicAppointments",
+                sql: "PeriodicAppointmentStatus = N'Chưa Khám' OR PeriodicAppointmentStatus = N'Đã Khám' OR PeriodicAppointmentStatus = N'Đã Hủy'");
         }
 
         /// <inheritdoc />
@@ -25,12 +25,12 @@ namespace Dental_Clinic_System.Migrations
         {
             migrationBuilder.DropCheckConstraint(
                 name: "CK__Valid_FutureAppointmentStatus",
-                table: "FutureAppointments");
+                table: "PeriodicAppointments");
 
             migrationBuilder.AddCheckConstraint(
                 name: "CK__Valid_FutureAppointmentStatus",
-                table: "FutureAppointments",
-                sql: "FutureAppointmentStatus = 'Chưa Khám' OR FutureAppointmentStatus = 'Đã Khám' OR FutureAppointmentStatus = 'Đã Hủy'");
+                table: "PeriodicAppointments",
+                sql: "PeriodicAppointmentStatus = 'Chưa Khám' OR PeriodicAppointmentStatus = 'Đã Khám' OR PeriodicAppointmentStatus = 'Đã Hủy'");
         }
     }
 }

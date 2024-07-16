@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dental_Clinic_System.Models.Data
 {
-	public class FutureAppointment
+	public class PeriodicAppointment
 	{
 		[Key]
 		public int ID { get; set; }
@@ -26,19 +26,19 @@ namespace Dental_Clinic_System.Models.Data
         [Column("Description", TypeName = "nvarchar(1000)")]
         public string? Description { get; set; }
 
-        [Column("FutureAppointmentStatus", TypeName = "nvarchar(30)")]
-		public string? FutureAppointmentStatus { get; set; }
+        [Column("PeriodicAppointmentStatus", TypeName = "nvarchar(30)")]
+		public string? PeriodicAppointmentStatus { get; set; }
 
 		[Column("AppointmentID", TypeName = "int")]
 		public int AppointmentID { get; set; }
 
 		#region Foreign Key
 		[ForeignKey("PatientRecord_ID")]
-		[InverseProperty("FutureAppointments")]
+		[InverseProperty("PeriodicAppointments")]
 		public virtual PatientRecord? PatientRecord { get; set; }
 
 		[ForeignKey("Dentist_ID")]
-		[InverseProperty("FutureAppointments")]
+		[InverseProperty("PeriodicAppointments")]
 		public virtual Dentist? Dentist { get; set; }
 		#endregion
 	}

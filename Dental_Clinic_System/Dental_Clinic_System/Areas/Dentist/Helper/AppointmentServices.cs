@@ -42,7 +42,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Helper
 				.Where(a => a.Schedule.DentistID == dentistID)
 			.ToList();
 
-			var futureAppointments = _context.FutureAppointments
+			var futureAppointments = _context.PeriodicAppointments
 				.Include(f => f.Dentist)
 				.Where(f => f.Dentist_ID == dentistID)
 				.ToList();

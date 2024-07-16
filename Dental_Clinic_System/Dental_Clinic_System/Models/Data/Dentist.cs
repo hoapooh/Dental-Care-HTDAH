@@ -53,7 +53,7 @@ namespace Dental_Clinic_System.Models.Data
 		public virtual ICollection<Dentist_Session> DentistSessions { get; set; } = new List<Dentist_Session>();
 
         [InverseProperty("Dentist")]
-        public virtual ICollection<FutureAppointment> FutureAppointments { get; set; } = new List<FutureAppointment>();
+        public virtual ICollection<PeriodicAppointment> PeriodicAppointments { get; set; } = new List<PeriodicAppointment>();
 		#endregion
 	}
 }

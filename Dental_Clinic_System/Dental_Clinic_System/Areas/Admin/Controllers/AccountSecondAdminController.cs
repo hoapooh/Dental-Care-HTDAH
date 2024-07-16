@@ -4,12 +4,13 @@ using Dental_Clinic_System.Models.Data;
 using Google.Apis.PeopleService.v1.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dental_Clinic_System.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin")]
+	[Authorize(AuthenticationSchemes = "GetAppointmentStatus", Roles = "Admin, Mini Admin")]
 	public class AccountSecondAdminController : Controller
 	{
 		private readonly DentalClinicDbContext _context;
@@ -18,6 +19,18 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 		{
 			_context = context;
 		}
+
+		//Nếu là Role "Mini Admin", thì chuyển sang màn hình 403 Từ chối truy cập
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            if (User.IsInRole("Mini Admin"))
+            {
+                context.Result = View("AccessDenied");
+                return;
+            }
+
+            base.OnActionExecuting(context);
+        }
 
         #region Show List Account Admin phụ
         //===================LIST ACCOUNT===================

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dental_Clinic_System.Migrations
 {
     [DbContext(typeof(DentalClinicDbContext))]
-    [Migration("20240711152141_MigrationV79Soyu")]
-    partial class MigrationV79Soyu
+    [Migration("20240715154130_MigrationV82Soyu")]
+    partial class MigrationV82Soyu
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,7 +121,7 @@ namespace Dental_Clinic_System.Migrations
                         {
                             t.HasCheckConstraint("CK_Valid_Gender", "[Gender] = N'Nam' OR [Gender] = N'Nữ'");
 
-                            t.HasCheckConstraint("CK_Valid_Role", "[Role] = 'Admin' OR [Role] = 'PatientRecord' OR [Role] = 'Dentist' OR [Role] = 'Manager' OR [Role] = N'Bệnh Nhân' OR [Role] = N'Nha Sĩ' OR [Role] = N'Quản Lý'");
+                            t.HasCheckConstraint("CK_Valid_Role", "[Role] = 'Admin' OR [Role] = 'PatientRecord' OR [Role] = 'Dentist' OR [Role] = 'Manager' OR [Role] = N'Bệnh Nhân' OR [Role] = N'Nha Sĩ' OR [Role] = N'Quản Lý' OR [Role] = N'Mini Admin'");
 
                             t.HasCheckConstraint("CK_Valid_Status_Account", "[AccountStatus] = N'Hoạt Động' OR [AccountStatus] = N'Bị Khóa' OR [AccountStatus] = N'Chưa Kích Hoạt'");
                         });
@@ -190,6 +190,39 @@ namespace Dental_Clinic_System.Migrations
                         {
                             t.HasCheckConstraint("CK_Valid_Status_Appointment", "[AppointmentStatus] = N'Chờ Xác Nhận' OR [AppointmentStatus] = N'Đã Hủy' OR [AppointmentStatus] = N'Đã Chấp Nhận' OR [AppointmentStatus] = N'Đã Khám'");
                         });
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.ChatHubMessage", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Content");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime")
+                        .HasColumnName("Timestamp");
+
+                    b.HasKey("ID")
+                        .HasName("PK_ChatHubMessage");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("ChatHubMessage");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Clinic", b =>
@@ -468,59 +501,6 @@ namespace Dental_Clinic_System.Migrations
                     b.ToTable("Dentist_Sessions");
                 });
 
-            modelBuilder.Entity("Dental_Clinic_System.Models.Data.FutureAppointment", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("AppointmentID")
-                        .HasColumnType("int")
-                        .HasColumnName("AppointmentID");
-
-                    b.Property<int>("Dentist_ID")
-                        .HasColumnType("int")
-                        .HasColumnName("Dentist_ID");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("Description");
-
-                    b.Property<DateOnly>("DesiredDate")
-                        .HasColumnType("date")
-                        .HasColumnName("DesiredDate");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time(7)")
-                        .HasColumnName("EndTime");
-
-                    b.Property<string>("PeriodicAppointmentStatus")
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("PeriodicAppointmentStatus");
-
-                    b.Property<int>("PatientRecord_ID")
-                        .HasColumnType("int")
-                        .HasColumnName("PatientRecord_ID");
-
-                    b.Property<TimeOnly>("StartTime")
-                        .HasColumnType("time(7)")
-                        .HasColumnName("StartTime");
-
-                    b.HasKey("ID")
-                        .HasName("PK_FutureAppointment");
-
-                    b.HasIndex("Dentist_ID");
-
-                    b.HasIndex("PatientRecord_ID");
-
-                    b.ToTable("PeriodicAppointments", t =>
-                        {
-                            t.HasCheckConstraint("CK__Valid_FutureAppointmentStatus", "PeriodicAppointmentStatus = N'Chưa Khám' OR PeriodicAppointmentStatus = N'Đã Khám' OR PeriodicAppointmentStatus = N'Đã Hủy'");
-                        });
-                });
-
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
                 {
                     b.Property<int>("ID")
@@ -753,6 +733,59 @@ namespace Dental_Clinic_System.Migrations
                     b.ToTable("PatientRecord", t =>
                         {
                             t.HasCheckConstraint("CK_Valid_PatientRecord_Status", "PatientRecordStatus = N'Đã Xóa' OR PatientRecordStatus = N'Đang Tồn Tại'");
+                        });
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.PeriodicAppointment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("AppointmentID")
+                        .HasColumnType("int")
+                        .HasColumnName("AppointmentID");
+
+                    b.Property<int>("Dentist_ID")
+                        .HasColumnType("int")
+                        .HasColumnName("Dentist_ID");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("Description");
+
+                    b.Property<DateOnly>("DesiredDate")
+                        .HasColumnType("date")
+                        .HasColumnName("DesiredDate");
+
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time(7)")
+                        .HasColumnName("EndTime");
+
+                    b.Property<int>("PatientRecord_ID")
+                        .HasColumnType("int")
+                        .HasColumnName("PatientRecord_ID");
+
+                    b.Property<string>("PeriodicAppointmentStatus")
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("PeriodicAppointmentStatus");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time(7)")
+                        .HasColumnName("StartTime");
+
+                    b.HasKey("ID")
+                        .HasName("PK_PeriodicAppointment");
+
+                    b.HasIndex("Dentist_ID");
+
+                    b.HasIndex("PatientRecord_ID");
+
+                    b.ToTable("PeriodicAppointments", t =>
+                        {
+                            t.HasCheckConstraint("CK__Valid_PeriodicAppointmentStatus", "PeriodicAppointmentStatus = N'Đã Chấp Nhận' OR PeriodicAppointmentStatus = N'Đã Khám' OR PeriodicAppointmentStatus = N'Đã Hủy'");
                         });
                 });
 
@@ -1103,6 +1136,25 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("Specialty");
                 });
 
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.ChatHubMessage", b =>
+                {
+                    b.HasOne("Dental_Clinic_System.Models.Data.Account", "Receiver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ChatHubMessage_Receiver");
+
+                    b.HasOne("Dental_Clinic_System.Models.Data.Account", "Sender")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ChatHubMessage_Sender");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Clinic", b =>
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.WorkTime", "AmWorkTimes")
@@ -1210,27 +1262,6 @@ namespace Dental_Clinic_System.Migrations
                     b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("Dental_Clinic_System.Models.Data.FutureAppointment", b =>
-                {
-                    b.HasOne("Dental_Clinic_System.Models.Data.Dentist", "Dentist")
-                        .WithMany("PeriodicAppointments")
-                        .HasForeignKey("Dentist_ID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK__Dentist__FutureAppointments");
-
-                    b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecord")
-                        .WithMany("PeriodicAppointments")
-                        .HasForeignKey("PatientRecord_ID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK__PatientRecord__FutureAppointments");
-
-                    b.Navigation("Dentist");
-
-                    b.Navigation("PatientRecord");
-                });
-
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.News", b =>
                 {
                     b.HasOne("Dental_Clinic_System.Models.Data.Account", "Account")
@@ -1252,6 +1283,27 @@ namespace Dental_Clinic_System.Migrations
                         .HasConstraintName("FK__Patient__Account");
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Dental_Clinic_System.Models.Data.PeriodicAppointment", b =>
+                {
+                    b.HasOne("Dental_Clinic_System.Models.Data.Dentist", "Dentist")
+                        .WithMany("PeriodicAppointments")
+                        .HasForeignKey("Dentist_ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK__Dentist__PeriodicAppointments");
+
+                    b.HasOne("Dental_Clinic_System.Models.Data.PatientRecord", "PatientRecord")
+                        .WithMany("PeriodicAppointments")
+                        .HasForeignKey("PatientRecord_ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK__PatientRecord__PeriodicAppointments");
+
+                    b.Navigation("Dentist");
+
+                    b.Navigation("PatientRecord");
                 });
 
             modelBuilder.Entity("Dental_Clinic_System.Models.Data.Review", b =>
@@ -1351,7 +1403,11 @@ namespace Dental_Clinic_System.Migrations
 
                     b.Navigation("PatientRecords");
 
+                    b.Navigation("ReceivedMessages");
+
                     b.Navigation("Reviews");
+
+                    b.Navigation("SentMessages");
 
                     b.Navigation("Wallet")
                         .IsRequired();
