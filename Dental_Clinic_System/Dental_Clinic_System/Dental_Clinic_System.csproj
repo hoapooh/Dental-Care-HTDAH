@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\assets\css\chat.css" />
     <_ContentIncludedByDefault Remove="wwwroot\assets\css\reset.css" />
     <_ContentIncludedByDefault Remove="wwwroot\assets\js\pagination-news-post.js" />
   </ItemGroup>

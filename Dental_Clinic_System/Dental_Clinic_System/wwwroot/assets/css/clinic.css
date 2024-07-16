@@ -79,13 +79,12 @@ body::-webkit-scrollbar {
         font-size: 1.6rem;
         font-weight: 600;
         color: #fff;
-        background: linear-gradient( 83.63deg, #00b5f1 33.34%, #00e0ff 113.91% ) !important;
+        background: linear-gradient(45deg, #0078f1 33.34%, #0099ff 113.91%) !important;
         border-radius: 8px;
     }
 
         .btn-wrapper .add-record-btn:hover {
             box-shadow: 0 4px 30px 0 rgba(116, 157, 206, 0.2);
-            background: linear-gradient(40deg, #07aae0, #00c6e1) !important;
         }
 
 .clinic {

@@ -306,20 +306,16 @@ label {
     outline: none;
 }
 
-/*.main-container {
-    font-family: 'Lato';
+.main-container {
+    font-family: "Lato";
     width: fit-content;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .ck-content {
-    font-family: 'Lato';
+    font-family: "Lato";
     line-height: 1.6;
     word-break: break-word;
 }
-
-.editor-container_classic-editor .editor-container__editor {
-    min-width: 795px;
-    max-width: 795px;
-}*/

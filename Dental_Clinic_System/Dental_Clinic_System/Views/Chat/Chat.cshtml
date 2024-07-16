@@ -4,248 +4,46 @@
 
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        a {
-            text-decoration: none;
-        }
-
-        sup {
-            font-size: 18px;
-            color: red;
-        }
-
-        /* #chatContainer {
-            display: flex;
-            flex-direction: column;
-            width: 300px;
-            margin: auto;
-        }
-
-        #receiverInput, #messageInput {
-            margin-bottom: 10px;
-            padding: 5px;
-            width: 100%;
-        }
-
-        button {
-            padding: 5px;
-            width: 100%;
-        } */
-
-        /* #messagesList {
-            border: 1px solid #ccc;
-            height: 200px;
-            overflow-y: scroll;
-            margin-bottom: 10px;
-            padding: 5px;
-        } */
-
-        :root {
-            --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --msger-bg: #fff;
-            --border: 2px solid #ddd;
-            --left-msg-bg: #ececec;
-            --right-msg-bg: #579ffb;
-        }
-
-        main {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* html {
-            box-sizing: border-box;
-        } */
-
-        /* *,
-        *:before,
-        *:after {
-            margin: 0;
-            padding: 0;
-            box-sizing: inherit;
-        } */
-
-        /* body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: var(--body-bg);
-            font-family: Helvetica, sans-serif;
-        } */
-
-        .msger {
-            display: flex;
-            flex-flow: column wrap;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 867px;
-            margin: 25px 10px;
-            height: 80vh; /* Adjust height as needed */
-            border: var(--border);
-            border-radius: 5px;
-            background: var(--msger-bg);
-            box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
-        }
-
-        .msger-header {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: var(--border);
-            background: #eee;
-            color: #666;
-            align-items: center;
-        }
-
-        .msger-chat {
-            flex: 1; /* Ensure it takes up available space */
-            overflow-y: scroll;
-            padding: 10px;
-            display: block; /* New line */
-            flex-direction: column; /* New line */
-        }
-
-            .msger-chat::-webkit-scrollbar {
-                width: 10px;
-            }
-
-            .msger-chat::-webkit-scrollbar-track {
-                background: #ddd;
-            }
-
-            .msger-chat::-webkit-scrollbar-thumb {
-                background: #bdbdbd;
-            }
-
-        .msg {
-            display: flex;
-            align-items: flex-end;
-            margin-bottom: 10px;
-        }
-
-            .msg:last-of-type {
-                margin: 0;
-            }
-
-        .msg-img {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-            background: #ddd;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            border-radius: 50%;
-        }
-
-        .msg-bubble {
-            max-width: 450px;
-            padding: 15px;
-            border-radius: 15px;
-            background: var(--left-msg-bg);
-            font-size: 1.5rem;
-        }
-
-        .msg-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .msg-info-name {
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        .msg-info-time {
-            font-size: 0.85em;
-        }
-
-        .left-msg .msg-bubble {
-            border-bottom-left-radius: 0;
-        }
-
-        .right-msg {
-            flex-direction: row-reverse;
-        }
-
-            .right-msg .msg-bubble {
-                background: var(--right-msg-bg);
-                color: #fff;
-                border-bottom-right-radius: 0;
-            }
-
-            .right-msg .msg-img {
-                margin: 0 0 0 10px;
-            }
-
-        .msger-inputarea {
-            display: flex;
-            padding: 10px;
-            border-top: var(--border);
-            background: #eee;
-        }
-
-            .msger-inputarea * {
-                padding: 10px;
-                border: none;
-                border-radius: 3px;
-                font-size: 2em;
-            }
-
-        .msger-input {
-            flex: 1;
-            background: #ddd;
-        }
-
-        .msger-send-btn {
-            margin-left: 10px;
-            background: rgb(0, 196, 65);
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.23s;
-        }
-
-            .msger-send-btn:hover {
-                background: rgb(0, 180, 50);
-            }
-
-        .msger-chat {
-            background-color: #fcfcfe;
-        }
-
-    </style>
+    <link rel="stylesheet" href="~/assets/css/chat.css" />
 </head>
 
-<section class="msger">
-    <header class="msger-header">
-        <div class="msger-header-title" style="font-size: 2rem">
-            <i class="fas fa-comment-alt"></i> @ViewBag.DentistName
-        </div>
-        <div class="msger-header-options">
-            <div class="btn-wrapper" style="font-size: 2rem;">
-                <a href="/specialty/choosedentistry?specialtyID=@ViewBag.SpecialtyID">
-                    Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
-                </a>
+<div class="msger__container">
+    <section class="msger">
+        <header class="msger-header">
+            <div class="msger-header-title" style="font-size: 2rem">
+                <i class="fa-solid fa-comments"></i>
+                @ViewBag.DentistName
             </div>
-        </div>
-    </header>
+            <div class="msger-header-options">
+                <div class="btn-wrapper" style="font-size: 2rem">
+                    <a href="/specialty/choosedentistry?specialtyID=@ViewBag.SpecialtyID"
+                       class="back-btn">
+                        Quay lại
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
 
-    <main class="msger-chat" id="messagesList">
-        <!-- Messages will be appended here dynamically -->
-    </main>
+        <main class="msger-chat" id="messagesList">
+            <!-- Messages will be appended here dynamically -->
+        </main>
 
-    <form class="msger-inputarea" onsubmit="sendMessage(); return false;">
-        <input type="hidden" id="receiverInput" value="@ViewBag.dentistID" />
-        <input type="text" id="messageInput" class="msger-input" placeholder="Nhập tin nhắn...">
-        <button type="submit" class="msger-send-btn">Gửi</button>
-    </form>
-
-</section>
+        <form class="msger-inputarea"
+              onsubmit="sendMessage(); return false;">
+            <input type="hidden"
+                   id="receiverInput"
+                   value="@ViewBag.dentistID" />
+            <input type="text"
+                   id="messageInput"
+                   class="msger-input"
+                   placeholder="Nhập tin nhắn..." />
+            <button type="submit" class="msger-send-btn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+    </section>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
 <script>
@@ -260,15 +58,15 @@
         const msg = document.createElement("div");
         msg.classList.add("msg", user === userID ? "right-msg" : "left-msg");
         msg.innerHTML = `
-                                <div class="msg-img" style="background-image: url(${user === userID ? 'https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744' : 'https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744'})"></div>
-                        <div class="msg-bubble">
-                            <div class="msg-info">
-                                <div class="msg-info-name">${user === userID ? 'Bạn' : 'Nha Sĩ'}</div>
-                                <div class="msg-info-time">${new Date().toLocaleTimeString()}</div>
+                                    <div class="msg-img" style="background-image: url(${user === userID ? 'https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744' : 'https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744'})"></div>
+                            <div class="msg-bubble">
+                                <div class="msg-info">
+                                    <div class="msg-info-name">${user === userID ? 'Bạn' : 'Nha Sĩ'}</div>
+                                    <div class="msg-info-time">${new Date().toLocaleTimeString()}</div>
+                                </div>
+                                <div class="msg-text">${message}</div>
                             </div>
-                            <div class="msg-text">${message}</div>
-                        </div>
-                    `;
+                        `;
         document.getElementById("messagesList").appendChild(msg);
         document.getElementById("messagesList").scrollTop = document.getElementById("messagesList").scrollHeight;
     });
