@@ -181,8 +181,8 @@
         <main class="msger-chat" id="messagesList">
             @foreach (var message in messages)
             {
-                var isSenderDentist = accounts.ContainsKey(message.SenderId) && accounts[message.SenderId] == "Nha Sĩ";
-                var isReceiverDentist = accounts.ContainsKey(message.ReceiverId) && accounts[message.ReceiverId] == "Nha Sĩ";
+                var isSenderDentist = accounts?.ContainsKey(message.SenderId) && accounts?[message.SenderId] == "Nha Sĩ";
+                var isReceiverDentist = accounts?.ContainsKey(message.ReceiverId) && accounts?[message.ReceiverId] == "Nha Sĩ";
 
                 @if (isSenderDentist)
                 {
@@ -272,5 +272,14 @@
                 })
                 .catch(err => console.error("Send message failed: ", err.toString()));
         }
+
+        function scrollToBottom() {
+            const messagesList = document.getElementById("messagesList");
+            messagesList.scrollTop = messagesList.scrollHeight;
+        }
+
+        // Scroll to bottom when the page loads
+        window.onload = scrollToBottom;
+
     </script>
 </body>

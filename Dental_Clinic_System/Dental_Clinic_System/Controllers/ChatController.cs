@@ -1,5 +1,6 @@
 ﻿using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services.BacklogAPI;
+using Dental_Clinic_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,10 +34,21 @@ namespace Dental_Clinic_System.Controllers
                 return View("Chat");
             }
 
+            var messages = await _context.ChatHubMessages
+            .Where(m => (m.SenderId == patient.ID && m.ReceiverId == dentistID) || (m.SenderId == dentistID && m.ReceiverId == patient.ID))
+            .OrderBy(m => m.Timestamp)
+            .ToListAsync();
+
+            var accounts = await _context.Accounts.ToDictionaryAsync(a => a.ID, a => a.Role);
+
             ViewBag.patientID = patient.ID;
             ViewBag.dentistID = dentistID;
+            ViewBag.DentistAvatar = dentist.Account.Image;
             ViewBag.DentistName = (dentist.Account.LastName + " " + dentist.Account.FirstName).Trim();
             ViewBag.SpecialtyID = dentistSpecialty.SpecialtyID;
+            ViewBag.Accounts = accounts;
+            ViewBag.Messages = messages;
+
             return View("Chat");
         }
     }

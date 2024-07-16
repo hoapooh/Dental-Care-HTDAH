@@ -725,7 +725,10 @@ namespace Dental_Clinic_System.Services.EmailSender
                                                             <p style='margin:0;padding:0;font-weight:500;font-size:18px;line-height:140%;letter-spacing:-0.01em;color:#666;font-family:inherit'>Chúng tôi đã cung cấp cho bạn tài khoản Manager.</p>
                                                             <p style='margin:0;padding:0;font-weight:500;font-size:18px;line-height:140%;letter-spacing:-0.01em;color:#666;font-family:inherit'><strong>Username: </strong> {managerAccount.Username}</p>
                                                             <p style='margin:0;padding:0;font-weight:500;font-size:18px;line-height:140%;letter-spacing:-0.01em;color:#666;font-family:inherit'><strong>Password: </strong> {encryptedPassword}</p>
-                                                            <p style='margin:0;padding:0;font-weight:500;font-size:18px;line-height:140%;letter-spacing:-0.01em;color:#666;font-family:inherit'>Vui lòng đổi mật khẩu của bạn khi đăng nhập thành công</p>
+                                                            <a href='https://dentalcareplatform.online/manager' style='margin:0;padding:0;font-weight:500;font-size:18px;line-height:140%;letter-spacing:-0.01em;color:blue;font-family:inherit;text-decoration:underline' target='_blank''>
+                                                            Đăng nhập tại đây
+                                                            </a>
+                                                            <p style='margin:0;padding:0;font-weight:500;font-size:18px;line-height:140%;letter-spacing:-0.01em;color:red;font-family:inherit'>Vui lòng đổi mật khẩu của bạn khi đăng nhập thành công</p>
                                                             <p style='margin:0;padding:0;font-weight:500;font-size:18px;line-height:140%;letter-spacing:-0.01em;color:#666;font-family:inherit'>Nếu bạn không yêu cầu thực hiện thay đổi này, vui lòng liên hệ với <a href='mailto:Rivinger7@gmail.com' style='color:#bd2225;text-decoration:underline' target='_blank'>Đội Ngũ Hỗ Trợ Dental Care</a>.</p>
                                                         </td>
                                                     </tr>
@@ -943,7 +946,7 @@ namespace Dental_Clinic_System.Services.EmailSender
                     IsBodyHtml = true,
                 };
 
-                mailMessage.To.Add(order.CompanyEmail);
+                mailMessage.To.Add(managerAccount.Email);
 
                 // Optional: Add additional headers to improve deliverability
                 mailMessage.Headers.Add("X-Priority", "1");
@@ -951,11 +954,11 @@ namespace Dental_Clinic_System.Services.EmailSender
                 mailMessage.Headers.Add("Importance", "High");
 
                 await smtpClient.SendMailAsync(mailMessage);
-                _logger.LogInformation($"Email sent to {order.CompanyEmail} with {subject}");
+                _logger.LogInformation($"Email sent to {managerAccount.Email} with {subject}");
             }
             catch (SmtpException ex)
             {
-                _logger.LogError(ex, $"Email did not send to {order.CompanyEmail}");
+                _logger.LogError(ex, $"Email did not send to {managerAccount.Email}");
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }

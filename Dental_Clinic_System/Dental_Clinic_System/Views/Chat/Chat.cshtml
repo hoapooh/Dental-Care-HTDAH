@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Chat with Dentist";
     var utc7PlusNow = Util.GetUtcPlus7Time();
+    var dentistAvatar = ViewBag.DentistAvatar;
+    var messages = ViewBag.Messages;
+    var accounts = ViewBag.Accounts as Dictionary<int, string>; // Assuming this is a dictionary with user ID as key and role as value
 }
 
 <head>
@@ -28,9 +31,44 @@
             </div>
         </header>
 
-        <main class="msger-chat" id="messagesList">
-            <!-- Messages will be appended here dynamically -->
-        </main>
+    <main class="msger-chat" id="messagesList">
+        @foreach (var message in messages)
+        {
+            var isSenderDentist = accounts?.ContainsKey(message.SenderId) && accounts?[message.SenderId] == "Bệnh Nhân";
+            var isReceiverDentist = accounts?.ContainsKey(message.ReceiverId) && accounts?[message.ReceiverId] == "Bệnh Nhân";
+
+            @if (isSenderDentist)
+            {
+                <div class="msg right-msg">
+                    <div class="msg-img" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744')"></div>
+                    <div class="msg-bubble">
+                        <div class="msg-info">
+                            <div class="msg-info-name">Bạn</div>
+                            <div class="msg-info-time">@message.Timestamp</div>
+                        </div>
+                        <div class="msg-text">
+                            @message.Content
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="msg left-msg">
+                    <div class="msg-img" style="background-image: url('@dentistAvatar')"></div>
+                    <div class="msg-bubble">
+                        <div class="msg-info">
+                            <div class="msg-info-name">Nha Sĩ</div>
+                            <div class="msg-info-time">@message.Timestamp</div>
+                        </div>
+                        <div class="msg-text">
+                            @message.Content
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </main>
 
         <form class="msger-inputarea"
               onsubmit="sendMessage(); return false;">
@@ -90,4 +128,13 @@
             })
             .catch(err => console.error("Send message failed: ", err.toString()));
     }
+
+    function scrollToBottom() {
+        const messagesList = document.getElementById("messagesList");
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
+
+    // Scroll to bottom when the page loads
+    window.onload = scrollToBottom;
+
 </script>
