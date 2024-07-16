@@ -12,5 +12,7 @@ namespace Dental_Clinic_System.Services.EmailSender
         Task SendInvoiceEmailAsync(Appointment appointment, Transaction transaction, int clinicID, string subject);
         Task SendBusinessPartnershipsInfo(Order order, Account managerAccount, string encryptedPassword, string subject);
 
+        Task SendCustomEmailAsync(string email, string subject, string message);
+
     }
 }

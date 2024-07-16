@@ -30,6 +30,7 @@ namespace Dental_Clinic_System.Services.EmailSender
             _emailVerification = emailVerification;
         }
 
+        #region Custom Email
         public async Task SendEmailAsync(string email, string subject, string message)
         {
             try
@@ -66,7 +67,9 @@ namespace Dental_Clinic_System.Services.EmailSender
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }
+        #endregion
 
+        #region Confirmation Email for Changing
         public async Task SendEmailConfirmationAsync(string email, string subject, string message)
         {
             // Get username from the email
@@ -115,7 +118,9 @@ namespace Dental_Clinic_System.Services.EmailSender
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }
+        #endregion
 
+        #region Reset Password Email
         public async Task SendResetasswordEmailAsync(string email, string subject, string message)
         {
             // Get username from the email
@@ -425,7 +430,9 @@ namespace Dental_Clinic_System.Services.EmailSender
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }
+        #endregion
 
+        #region Updated Email
         public async Task SendEmailForUpdatingAsync(string email, string username, string subject, string message)
         {
             try
@@ -461,7 +468,9 @@ namespace Dental_Clinic_System.Services.EmailSender
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }
+        #endregion
 
+        #region Updated Email V2
         public async Task SendEmailUpdatedAsync(string oldEmail, string newEmail, string subject, string message)
         {
             // Get username from the email
@@ -500,7 +509,9 @@ namespace Dental_Clinic_System.Services.EmailSender
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }
+        #endregion
 
+        #region Invoice Email
         public async Task SendInvoiceEmailAsync(Appointment appointment, Transaction transaction, int clinicID, string subject)
         {
             var clinic = _context.Clinics.FirstOrDefaultAsync(c => c.ID == clinicID).Result;
@@ -640,7 +651,9 @@ namespace Dental_Clinic_System.Services.EmailSender
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }
+        #endregion
 
+        #region Business Partner Email
         public async Task SendBusinessPartnershipsInfo(Order order, Account managerAccount, string encryptedPassword, string subject)
         {
             try
@@ -962,5 +975,13 @@ namespace Dental_Clinic_System.Services.EmailSender
                 throw; // Re-throw the exception if you want the caller to handle it
             }
         }
+        #endregion
+
+        #region Testing
+        public Task SendCustomEmailAsync(string email, string subject, string message)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }
