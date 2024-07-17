@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = Model.Name;
     var reviews = ViewBag.Reviews as List<Dental_Clinic_System.Models.Data.Review>;
+    var services = ViewBag.Services as List<Dental_Clinic_System.Models.Data.Service>;
 }
 
 <head>
@@ -159,15 +160,56 @@
             </div>
         </div>
 
+        @*  ========= SERVICES =========  *@
+        <h2 class="clinic__detail__title text-center">
+            Bảng giá dịch vụ
+        </h2>
+        @if (services != null && services.Any())
+        {
+            <div class="table-responsive service__table">
+                <table class="table table-striped table-hover table-borderless align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Dịch vụ</th>
+                            <th>Mức giá</th>
+                            <th>Ghi chú (nếu có)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        @foreach (var service in services)
+                        {
+                            <tr>
+                                <td scope="row">@service.Name</td>
+                                <td>@service.Price</td>
+                                <td>@service.Description</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="error__noti">
+                Dịch vụ đang được cập nhật, vui lòng quay lại sau
+            </div>
+        }
+
         @* ========= REVIEWS ========= *@
         <h2 class="clinic__detail__title text-center">
             Đánh giá của bệnh nhân
         </h2>
+        @if (reviews == null || !reviews.Any())
+        {
+            <div class="error__noti">
+                Hiện tại phòng khám chưa có đánh giá nào
+            </div>
+        }
         <div class="clinic__detail__reviews">
             <div class="reviews__container swiper">
                 <div class="reviews__content">
                     <div class="reviews__content__wrapper swiper-wrapper">
-                        @if (reviews != null)
+                        @if (reviews != null && reviews.Any())
                         {
                             @foreach (var review in reviews)
                             {

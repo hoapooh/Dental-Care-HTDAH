@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Dentist>
 @{
     var specialtyID = ViewBag.SpecialtyID as int?;
-    var specialtyName = Model.FirstOrDefault(d => d.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID))?.DentistSpecialties.FirstOrDefault(ds => ds.SpecialtyID == specialtyID)?.Specialty.Name;
-    var specialtyDesc = Model.FirstOrDefault(d => d.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID))?.DentistSpecialties.FirstOrDefault(ds => ds.SpecialtyID == specialtyID)?.Specialty.Description;
+    var specialtyName = ViewBag.SpecialtyName as string;
+    var specialtyDesc = ViewBag.SpecialtyDesc as string; 
     ViewData["Title"] = specialtyName;
 }
 
@@ -47,7 +47,7 @@
         <h2 class="emptyDentistList">Danh sách nha sĩ trống</h2>
 
         <div class="dentistry__info row">
-            @foreach (var dentistry in Model.Where(d => d.DentistSpecialties.Any(ds => (ds.SpecialtyID == specialtyID && ds.Check == true))))
+            @foreach (var dentistry in Model)
             {
                 <!-- ====== DENTIST ITEM CARD INFO ====== -->
                 <div class="col-md-6 dentistItem">
@@ -55,28 +55,7 @@
                         <!-- ========== PERSONAL INFORMATION ========== -->
                         <div class="dentistInfo__personal">
                             <div class="dentistInfo__image">
-                                @if (specialtyID == 6)
-                                {
-                                    @if (dentistry.Account.Gender == "Nam")
-                                    {
-                                        <img src="~/assets/images/default-dentist-man.webp" alt="Dentist Image" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/assets/images/default-dentist-woman.webp" alt="Dentist Image" />
-                                    }
-                                }
-                                else
-                                {
-                                    @if (dentistry.Account.Gender == "Nam")
-                                    {
-                                        <img src="~/assets/images/dentist-default-men.png" alt="Dentist Image" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/assets/images/dentist-default-women.png" alt="Dentist Image" />
-                                    }
-                                }
+                                <img src="@dentistry.Account.Image" alt="Dentist Image" />
                             </div>
                             <div class="dentistInfo__groupInfo">
                                 <h3 class="name">@dentistry.Account.LastName @dentistry.Account.FirstName</h3>
@@ -126,12 +105,12 @@
                                 </div>
                             </div>
                             <div class="dentistInfo__booking">
-                                <a asp-controller="clinic" asp-action="clinicdentistcalendar" asp-route-clinicID="@dentistry.Clinic.ID" asp-route-specialtyID="@dentistry.DentistSpecialties.FirstOrDefault()?.Specialty.ID" asp-route-dentistID="@dentistry.ID">
+                                <a asp-controller="clinic" asp-action="clinicdentistcalendar" asp-route-clinicID="@dentistry.Clinic.ID" asp-route-specialtyID="@specialtyID" asp-route-dentistID="@dentistry.ID">
                                     <button type="button">
                                         Đặt ngay
                                     </button>
                                 </a>
-                                <br/>
+                                <br />
                                 <a asp-controller="chat" asp-action="index" asp-route-dentistID="@dentistry.ID">
                                     <button type="button" class="chat-button">
                                         Chat ngay

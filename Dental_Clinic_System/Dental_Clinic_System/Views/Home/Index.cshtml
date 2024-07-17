@@ -39,7 +39,7 @@
                     <a asp-controller="clinic" asp-action="index" class="btn"> Đặt lịch khám </a>
                     <div class="hero__call">
                         <a to="/#!">
-                            <img src="~/assets/images/Calling.png" alt="call" />
+                            <img src="~/assets/images/Calling.webp" alt="call" loading="lazy" />
                         </a>
                         <p>
                             <strong>Nha khoa khẩn cấp 24H</strong>
@@ -57,16 +57,16 @@
                 </div> *@
             </div>
             <div class="hero__image">
-                <img src="~/assets/images/home-image.png" alt="" class="home-image" />
-                <img src="~/assets/images/big-circle.png" alt="" class="big-circle" />
-                <img src="~/assets/images/small-circle.png"
+                <img src="~/assets/images/home-image.webp" alt="" class="home-image" />
+                <img src="~/assets/images/big-circle.webp" alt="" class="big-circle" />
+                <img src="~/assets/images/small-circle.webp"
                      alt=""
                      class="small-circle" />
-                <img src="~/assets/images/teeth1.png" alt="" class="teeth1-01" />
-                <img src="~/assets/images/teeth1.png" alt="" class="teeth1-02" />
-                <img src="~/assets/images/teeth2.png" alt="" class="teeth2-01" />
-                <img src="~/assets/images/teeth2.png" alt="" class="teeth2-02" />
-                <img src="~/assets/images/teeth3.png" alt="" class="teeth3" />
+                <img src="~/assets/images/teeth1.webp" alt="" class="teeth1-01" />
+                <img src="~/assets/images/teeth1.webp" alt="" class="teeth1-02" />
+                <img src="~/assets/images/teeth2.webp" alt="" class="teeth2-01" />
+                <img src="~/assets/images/teeth2.webp" alt="" class="teeth2-02" />
+                <img src="~/assets/images/teeth3.webp" alt="" class="teeth3" />
             </div>
         </div>
 
@@ -74,7 +74,7 @@
         <div class="special">
             <h2 class="special__title">CHUYÊN KHOA</h2>
             <div class="special__separate">
-                <img src="~/assets/images/separate-01.png" alt="" />
+                <img src="~/assets/images/separate-01.png" alt="" loading="lazy" />
             </div>
             <div class="special__container">
                 <div class="special__container__wrapper swiper">
@@ -85,7 +85,7 @@
 
                                 <div class="special__cards__card swiper-slide" style="height: initial">
                                     <a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
-                                        <img src="@specialty.Image" alt="@specialty.Name" />
+                                        <img src="@specialty.Image" alt="@specialty.Name" loading="lazy" />
                                         <h3 class="title">@specialty.Name</h3>
                                     </a>
                                 </div>
@@ -120,7 +120,8 @@
                                         <div class="card-image">
                                             <img src="@clinic.Image"
                                                  alt="@clinic.Name"
-                                                 class="card-img" />
+                                                 class="card-img"
+                                                 loading="lazy"/>
                                         </div>
                                     </div>
                                     <div class="card-content">
@@ -152,7 +153,7 @@
                     </a>
                 </div>
                 <div class="news__separate">
-                    <img src="~/assets/images/separate-01.png" alt="" />
+                    <img src="~/assets/images/separate-01.png" alt="" loading="lazy"/>
                 </div>
 
                 <div class="news__cards d-flex flex-row">
@@ -162,7 +163,7 @@
                         {
                             <div class="news__cards_item">
                                 <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })">
-                                    <img src="@news.ThumbNail" alt="" />
+                                    <img src="@news.ThumbNail" alt="" loading="lazy" />
                                 </a>
                                 <p class="news__cards_item--title">
                                     <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })">

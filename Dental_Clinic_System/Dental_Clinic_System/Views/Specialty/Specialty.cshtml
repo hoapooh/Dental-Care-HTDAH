@@ -13,7 +13,7 @@
 		Các chuyên khoa của nha khoa
 	</h1>
 	<div class="text-center">
-		<img src="~/assets/images/separate.png" alt="" />
+		<img src="~/assets/images/separate.png" alt="" loading="lazy" />
 	</div>
 	<div class="special__list">
 		<div class="special__list__wrapper">
@@ -21,7 +21,7 @@
 			{
 				<div class="special__list__item d-flex flex-row">
 					<div class="special__list__item--image">
-					<img src="@specialty.Image" alt="" />
+					<img src="@specialty.Image" alt="" loading="lazy" />
 					<p>@specialty.Name</p>
 				</div>
 				<div class="special__list__item--info">
@@ -31,7 +31,7 @@
 					<a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
 						<span>Chi tiết</span><i class="bx bx-chevron-right-circle"></i>
 					</a>
-					<img src="~/assets/images/separate-01.png" alt="" />
+					<img src="~/assets/images/separate-01.png" alt="" loading="lazy" />
 				</div>
 			</div>
 			}

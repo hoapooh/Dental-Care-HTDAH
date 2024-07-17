@@ -19,7 +19,7 @@ namespace Dental_Clinic_System.Models.Data
         [Column("Name", TypeName = "nvarchar(100)")]
         public string Name { get; set; } = null!;
 
-        [Column(TypeName = "ntext")]
+        [Column("Description", TypeName = "ntext")]
         public string? Description { get; set; } = null;
 
         [Column("Price", TypeName = "nvarchar(200)")]

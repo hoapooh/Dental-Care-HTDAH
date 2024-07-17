@@ -18,7 +18,7 @@
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous" />
-    
+
     <link rel="stylesheet" href="~/assets/css/contentDash.css" />
     <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/dentalClinicLogoOfficial.png" />
 </head>
@@ -46,28 +46,30 @@
     {
         var successMessage = TempData["SuccessMessage"] as string;
         var errorMessage = TempData["ErrorMessage"] as string;
-		<script>
-			window.addEventListener('DOMContentLoaded', (event) => {
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
                 showSuccessToasts('@successMessage');
                 showErrorToasts('@errorMessage');
-			});
-		</script>
-	}
+            });
+        </script>
+    }
 
 
-	<div class="dashboard__container d-flex">
-		@* <div id="toast"></div> *@
-		@await Html.PartialAsync("_DentistSidebar")
-		<div class="container-fluid" style="width: 85%; padding: 0">
-			@await Html.PartialAsync("_DentistAvatar")
-			@RenderBody()
+    <div class="dashboard__container d-flex">
+        @* <div id="toast"></div> *@
+        @await Html.PartialAsync("_DentistSidebar")
+        <div class="container-fluid" style="width: 85%; padding: 0">
+            @await Html.PartialAsync("_DentistAvatar")
+            @RenderBody()
             <div id="toasts"></div>
-		</div>
-	</div>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/53f42380b0.js"
+            crossorigin="anonymous"></script>
     <script src="~/assets/js/toastmessage.js"></script>
     <!-- Change Password -->
     <script>

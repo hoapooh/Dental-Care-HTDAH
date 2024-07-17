@@ -32,12 +32,25 @@ namespace Dental_Clinic_System.Controllers
 									.Include(d => d.Clinic)
 									.Include(d => d.Degree)
 									.Include(d => d.Schedules).ThenInclude(s => s.TimeSlot)
-									.Where(w => w.DentistSpecialties.Any(c => c.SpecialtyID == specialtyID))
+									.Where(w => w.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID && ds.Check == true))
 									.ToList();
 
 			ViewBag.SpecialtyID = specialtyID;
 
-			return View("Dentistry",dentistry);
+            var specialtyName = _context.Specialties
+                            .Where(s => s.ID == specialtyID)
+                            .Select(s => s.Name)
+                            .FirstOrDefault();
+            ViewBag.SpecialtyName = specialtyName;
+
+            var specialtyDesc = _context.Specialties
+                            .Where(s => s.ID == specialtyID)
+                            .Select(s => s.Description)
+                            .FirstOrDefault();
+			ViewBag.SpecialtyDesc = specialtyDesc;
+
+
+            return View("Dentistry",dentistry);
 		}
 
 		[HttpGet]

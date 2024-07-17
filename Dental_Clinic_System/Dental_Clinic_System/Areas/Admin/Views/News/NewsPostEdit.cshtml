@@ -16,6 +16,8 @@
           crossorigin="anonymous" />
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+    <link rel="stylesheet"
+          href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css" />
     <link rel="stylesheet" href="~/assets/fonts/stylesheet.css" />
     <link rel="stylesheet" href="~/assets/css/newspost.css" />
 </head>
@@ -82,8 +84,13 @@
         </div>
 
         <label for="imageInput">Mô tả bài viết</label>
-        <div id="container">
-            <textarea id="editor" name="content">@Model.Content</textarea>
+        <div class="main-container">
+            <div class="editor-container editor-container_classic-editor"
+                 id="editor-container">
+                <div class="editor-container__editor">
+                    <textarea id="editor" name="content">@Model.Content</textarea>
+                </div>
+            </div>
         </div>
         <div style="margin-top: 1%;">
             <button type="submit" class="btn btn-primary" style="font-size: 15px;">Xác Nhận</button>
@@ -100,6 +107,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 <script src="https://kit.fontawesome.com/53f42380b0.js"
         crossorigin="anonymous"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+<script type="importmap">
+    {
+        "imports": {
+            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.js",
+            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.1/"
+        }
+    }
+</script>
+<script src="https://cdn.ckbox.io/ckbox/latest/ckbox.js"></script>
 <script src="~/assets/js/upload-image-firebase-news.js" type="module"></script>
-<script src="~/assets/js/richtexteditor.js"></script>
+<script src="~/assets/js/richtexteditor3.js" type="module"></script>

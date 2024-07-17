@@ -48,6 +48,8 @@ namespace Dental_Clinic_System.Controllers
             // Get Review from Patient
             var reviews = await _context.Reviews.Include(r => r.Patient).Include(r => r.Dentist).Where(d => d.Dentist.ClinicID == clinicID).ToListAsync();
             ViewBag.Reviews = reviews;
+            var services = await _context.Services.Where(s => s.ClinicID == clinicID).ToListAsync();
+            ViewBag.Services = services;
 
             return View(clinic);
         }

@@ -583,9 +583,9 @@ body::-webkit-scrollbar {
                 pointer-events: none;
             }
 
-        .clinic__dentist__container .booking-body .filter__item select option {
-            color: #111c63;
-        }
+            .clinic__dentist__container .booking-body .filter__item select option {
+                color: #111c63;
+            }
 
     .clinic__dentist__container .booking__dentist {
         height: 48vh;
@@ -934,4 +934,39 @@ body::-webkit-scrollbar {
     .reviews__card .content {
         font-size: 1.8rem;
         color: #003553;
+    }
+
+/* ==== LATEST CSS CODE ==== */
+.error__noti {
+    color: #1376f8;
+    font-size: 2.4rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.service__table {
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+    .service__table th:first-child {
+        border-radius: 10px 0 0 0;
+        padding-left: 10px;
+    }
+
+    .service__table th:last-child {
+        border-radius: 0 10px 0 0;
+    }
+
+    .service__table tbody tr td:first-child {
+        padding-left: 10px;
+    }
+
+    .service__table tbody tr:last-child td:first-child {
+        border-radius: 0 0 0 10px;
+    }
+
+    .service__table tbody tr:last-child td:last-child {
+        border-radius: 0 0 10px 0;
     }
