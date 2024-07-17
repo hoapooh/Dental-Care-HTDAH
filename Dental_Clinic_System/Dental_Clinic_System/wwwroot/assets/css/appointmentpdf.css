@@ -69,6 +69,7 @@ img {
 table, th, td {
     border: 1px solid black;
     text-align: end;
+    border-left: solid 1px;
 }
 
 table {

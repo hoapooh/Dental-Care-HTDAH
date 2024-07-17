@@ -1,10 +1,14 @@
 ﻿using Dental_Clinic_System.Areas.Dentist.Helper;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.Services.EmailSender;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using NuGet.ProjectModel;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Dental_Clinic_System.Areas.Dentist.Controllers
 {
@@ -13,9 +17,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
     public class AppointmentController : Controller
     {
         private readonly DentalClinicDbContext _context;
-        public AppointmentController(DentalClinicDbContext context)
+        private readonly IEmailSenderCustom _emailSender;
+        public AppointmentController(DentalClinicDbContext context, IEmailSenderCustom emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
         //===================APPOINTMENT===================
         #region Lấy dữ liệu quản lý lịch đặt khám của bệnh nhân cho nha sĩ
@@ -141,7 +147,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 			var appointment = _context.Appointments
 				.Include(a => a.Schedule)
-				.ThenInclude(s => s.Dentist)
+				    .ThenInclude(s => s.Dentist)
+                .Include(a => a.PatientRecords)
+                    .ThenInclude(p => p.Account)
 				.Where(a => a.ID == appointmentID)
 				.FirstOrDefault();
 
@@ -252,10 +260,16 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 				_context.SaveChanges();
 			}
 
-            //=========================================================================
+			//=========================================================================
+            //gửi mail khi bấm Xuất PDF
+			await SendMailToPatient(appointment.PatientRecords.EmailReceiver ?? appointment.PatientRecords.FMEmail ?? appointment.PatientRecords.Account.Email,
+				  appointment.PatientRecords.FullName,
+				  selectedDates, startTime,
+				  endTime, dentist.Clinic.Name,
+				  dentist.Account.LastName + " " + dentist.Account.FirstName);
 
 
-            return RedirectToAction("generatepdf","appointmentpdf", new {dentistID, appointmentID, selectedDates, giobatdau, gioketthuc, ketquakham, dando});
+			return RedirectToAction("generatepdf","appointmentpdf", new {dentistID, appointmentID, selectedDates, giobatdau, gioketthuc, ketquakham, dando});
 			}
 
 
@@ -340,8 +354,32 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             TempData["SuccessMessage"] = "Thay đổi trạng thái thành công!";
             return RedirectToAction("periodicappointment");
         }
-        #endregion
+		#endregion
 
+		#region Hàm gửi mail cho bệnh nhân khi nhấn nút xuất PDF
+		private Task SendMailToPatient(string email, string fullName, List<DateOnly> dateList, TimeOnly startTime, TimeOnly endTime, string clinicName, string dentistName)
+		{
+			string subject = "Thông báo thời gian điều trị/ tái khám định kỳ";
 
-    }
+			StringBuilder dateListBuilder = new StringBuilder();
+			foreach (var date in dateList)
+			{
+				dateListBuilder.Append($"<li>{date.ToString("dd/MM/yyyy")}</li>");
+			}
+
+			string message = $"<p>Xin chào <strong>{fullName}</strong></p>" +
+							 $"<p>Đây là thông báo về những đơn hẹn điều trị/ tái khám định kỳ của quý khách.</p><br>" +
+							 $"<p>Tại: <strong>{clinicName}</strong> - Nha sĩ: <strong>{dentistName}</strong></p>" +
+							 $"<p>Thời gian bắt đầu: <strong>{startTime.ToString("HH:mm")} - {endTime.ToString("HH:mm")}</strong></p>" +
+							 $"<ul>Ngày khám: <strong>{dateListBuilder.ToString()}</strong></ul>" +
+							 $"<p>Vui lòng đến đúng thời gian trên để được hỗ trợ tốt nhất.</p>" +
+							 $"<p>Trân trọng,</p>" +
+							 $"<p>DentalCare</p><br>" +
+							 @$"<img src='https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=8854a154-1dde-4aa3-b573-f3c0aca83776' alt='logo DentalCare'>";
+
+			_emailSender.SendEmailAsync(email, subject, message);
+			return Task.CompletedTask;
+		}
+		#endregion
+	}
 }

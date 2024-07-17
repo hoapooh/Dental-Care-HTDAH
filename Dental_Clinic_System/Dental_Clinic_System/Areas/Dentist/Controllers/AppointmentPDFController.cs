@@ -11,6 +11,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Dental_Clinic_System.Areas.Manager.ViewModels;
 using Dental_Clinic_System.Areas.Dentist.Helper;
+using System.Text;
 
 namespace Dental_Clinic_System.Areas.Dentist.Controllers
 {
@@ -85,12 +86,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             //Lấy ngày và giờ riêng ra của hentaikham
             AppointmentServices.FormatDateTime(selectedDates, giobatdau, gioketthuc ,out List<DateOnly> desiredDate, out TimeOnly startTime, out TimeOnly endTime);
 
-			// Convert each DateOnly to a string
-			List<string> formattedDates = selectedDates.Select(date => date.ToString("dd/MM/yyyy")).ToList();
-
-			// Join all the formatted date strings with a comma separator
-			string selectedDatesString = string.Join(" <br> ", formattedDates);
-
+			StringBuilder dateListBuilder = new StringBuilder();
+			foreach (var date in selectedDates)
+			{
+				dateListBuilder.Append($"<li>{date.ToString("dd/MM/yyyy")}</li>");
+			}
 
 			#region PHẦN TẠO NÔI DUNG HTML CHO PDF
 			string htmlContent = $@"
@@ -130,7 +130,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
         </div>
     </div>
     <table>
-        <tr>
+        <tr style=""border-bottom: solid 1px;"">
             <th>STT</th>
             <th>Tên Chuyên Khoa</th>
             <th>Ngày Khám</th>
@@ -148,7 +148,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
     <p><strong>Tổng chi phí: </strong> {string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.a.TotalPrice)}</p>
     <p><strong>Tình Trạng: </strong>{appointment.a.AppointmentStatus}</p>
     <p><strong>Kết Quả Khám: </strong>{ketquakham}</p>
-    <p><strong>HẸN KHÁM ĐỊNH KỲ (nếu có): </strong>{startTime.ToString("HH:mm")}-{endTime.ToString("HH:mm")} <ul><li>{selectedDatesString}</li></ul></p>
+    <p><strong>HẸN KHÁM ĐỊNH KỲ (nếu có): </strong>{startTime.ToString("HH:mm")}-{endTime.ToString("HH:mm")} <ul>Ngày Khám: {dateListBuilder.ToString()}</ul></p>
     <p><strong>Dặn dò (nếu có): </strong>{dando}</p> <br><br><br><br><br><br>
     <div class=""footer__signature"">
         <p style=""margin-left:10%; margin-right: 50%;""><strong>Bệnh Nhân</strong> <br>(Ký và ghi rõ họ tên)</p>

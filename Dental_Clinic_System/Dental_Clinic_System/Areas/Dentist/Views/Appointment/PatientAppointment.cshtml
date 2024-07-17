@@ -35,8 +35,8 @@
 	<h1 style="text-align:center;"><strong>Quản Lý Đơn Khám Bệnh Nhân</strong></h1>
 	<div class="text-center"><img style="vertical-align: middle;" src="/assets/images/separate-01.png" alt="Sepherate image"></div>
 	<div class="search__bar" style="text-align:end;">
-		<form asp-controller="appointment" asp-action="patientappointment" method="get">
-			<input style="font-size:15px;" type="search" placeholder="Tìm kiếm ..." name="keyword">
+		<form style="height: 35px;" asp-controller="appointment" asp-action="patientappointment" method="get">
+			<input style="font-size:15px; height: inherit; border-radius: 15px;" type="search" placeholder="Tìm kiếm ..." name="keyword">
 			@if (!string.IsNullOrEmpty(ViewBag.Status))
 			{
 				<input type="hidden" name="status" value="@ViewBag.Status">
@@ -224,7 +224,7 @@
 				<p><strong>HẸN TÁI KHÁM / ĐIỀU TRỊ (nếu có): </strong></p>
 			</div>
 			<div style="width:80%;">
-				<input name="ketquakham" type="text" style="width:100%; margin-bottom:2px;" id="description"><br>
+				<input name="ketquakham" type="text" style="width:100%; margin-bottom:2px;" id="description" required><br>
 				<input type="hidden" name="ngayhentaikham" id="ngayhentaikham">
 				<input type="hidden" name="giobatdau" id="giobatdau">
 				<input type="hidden" name="gioketthuc" id="gioketthuc">
@@ -238,7 +238,8 @@
 			</div>
 		</div>
 		<sup>
-			**Nếu không chọn ngày khám thì sẽ không tạo lịch định kỳ</br>
+			**Nếu không chọn ngày khám thì sẽ không tạo lịch điều trị/ định kỳ</br>
+			***Sau khi ấn "Xuất PDF" sẽ không thể chỉnh sửa hay tạo lại thời gian khám định kỳ nữa.</br>
 		</sup>
 		<div style="margin-top:30px;font-size:15px;text-align: end;">
 			<button type="submit" class="btn btn-warning" style="font-size:15px;">Xuất PDF</button>

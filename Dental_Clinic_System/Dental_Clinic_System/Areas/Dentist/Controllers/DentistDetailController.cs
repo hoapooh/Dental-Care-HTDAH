@@ -302,28 +302,28 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                         var key = new { schedule.Date, StartTime = startTime };
 
 
-                        //if (appointmentDict.ContainsKey(key) && appointmentDict.TryGetValue(key, out var values))
-                        //{
-                        //	foreach (var value in values)
-                        //	{
-                        //		dailyTimeSlots.Add(new EventVM
-                        //		{
-                        //			Title = $"#{value.ID} {value.PatientRecords.FullName}",
-                        //			Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
-                        //			End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
-                        //			Url = "/dentist/appointment/patientappointment?appointmentID=" + value.ID,
-                        //			StatusColor = value.AppointmentStatus switch
-                        //			{
-                        //				"Chờ Xác Nhận" => "#d5c700", // Yellow
-                        //				"Đã Chấp Nhận" => "#0078d5", // Blue
-                        //				"Đã Hủy" => "#d53700", // Red
-                        //				"Đã Khám" => "#00d55f", // Green
-                        //				_ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
-                        //			}
-                        //		});
-                        //	}
+                        if (appointmentDict.ContainsKey(key) && appointmentDict.TryGetValue(key, out var values))
+                        {
+                            foreach (var value in values)
+                            {
+                                dailyTimeSlots.Add(new EventVM
+                                {
+                                    Title = $"#{value.ID} {value.PatientRecords.FullName}",
+                                    Start = $"{schedule.Date:yyyy-MM-dd}T{startTime:HH:mm:ss}",
+                                    End = $"{schedule.Date:yyyy-MM-dd}T{nextTime:HH:mm:ss}",
+                                    Url = "/dentist/appointment/patientappointment?appointmentID=" + value.ID,
+                                    StatusColor = value.AppointmentStatus switch
+                                    {
+                                        "Chờ Xác Nhận" => "#d5c700", // Yellow
+                                        "Đã Chấp Nhận" => "#0078d5", // Blue
+                                        "Đã Hủy" => "#d53700", // Red
+                                        "Đã Khám" => "#00d55f", // Green
+                                        _ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
+                                    }
+                                });
+                            }
 
-                        //}
+                        }
 
                         if (periodicAppointmentDict.ContainsKey(key) && periodicAppointmentDict.TryGetValue(key, out var periodicAppointmentValues))
                         {
@@ -346,7 +346,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                             }
                         }
 
-                        else// if(!appointmentDict.ContainsKey(key))
+                        else if(!appointmentDict.ContainsKey(key))
                         {
                             dailyTimeSlots.Add(new EventVM
                             {
@@ -366,25 +366,6 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                 timeSlots.AddRange(dailyTimeSlots);
             }
 
-            foreach (var appointment in appointments)
-            {
-                timeSlots.Add(new EventVM
-                {
-                    Title = $"#{appointment.ID} {appointment.PatientRecords.FullName}",
-                    Start = $"{appointment.Schedule.Date:yyyy-MM-dd}T{appointment.Schedule.TimeSlot.StartTime:HH:mm:ss}",
-                    End = $"{appointment.Schedule.Date:yyyy-MM-dd}T{appointment.Schedule.TimeSlot.EndTime:HH:mm:ss}",
-                    Url = "/dentist/appointment/patientappointment?appointmentID=" + appointment.ID,
-                    StatusColor = appointment.AppointmentStatus switch
-                    {
-                        "Chờ Xác Nhận" => "#d5c700", // Yellow
-                        "Đã Chấp Nhận" => "#0078d5", // Blue
-                        "Đã Hủy" => "#d53700", // Red
-                        "Đã Khám" => "#00d55f", // Green
-                        _ => "#c2c2c2" // Default color (Grey) nếu không trùng với mấy cái trên
-                    }
-                });
-            }
-
             //Lấy những future appointment nằm ngoài phạm vi lịch ảo
             foreach (var periodicAppoint in periodicAppointments)
             {
@@ -400,7 +381,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                         {
                             "Đã Khám" => "#4ed1d7",
                             "Đã Hủy" => "#d53700",
-                            "Đã Chấp Nhận" => "#00d55f",
+                            "Đã Chấp Nhận" => "#0078d5",
                             _ => "#c2c2c2"
                         }
                     });

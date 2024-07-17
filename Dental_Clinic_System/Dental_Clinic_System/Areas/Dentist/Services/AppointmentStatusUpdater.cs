@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
+using Dental_Clinic_System.Services.EmailSender;
 using Dental_Clinic_System.Services.MOMO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,18 +34,20 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 					{
 						var context = scope.ServiceProvider.GetRequiredService<DentalClinicDbContext>();
 						var momoPayment = scope.ServiceProvider.GetRequiredService<IMOMOPayment>();
+						var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSenderCustom>();
 
 						var now = Util.GetUtcPlus7Time();
 						var appointments = context.Appointments
 							.Include(a => a.Schedule)
 								.ThenInclude(s => s.TimeSlot)
 							.Include(a => a.Transactions)
-							.Where(a => a.AppointmentStatus == "Chờ Xác Nhận") // Nếu không xác nhận thì sẽ thực hiện cái dưới
+							.Include(a => a.PatientRecords)
 							.ToList();
 
 						var periodicAppointment = context.PeriodicAppointments
 												.Where(pa => pa.PeriodicAppointmentStatus == "Đã Chấp Nhận").ToList();
 						
+						var pendingAppointments = appointments.Where(a => a.AppointmentStatus == "Chờ Xác Nhận").ToList();
 						foreach (var appointment in appointments)
 						{
 							//Điều kiện để dc hoàn tiền:  1. Nha sĩ ko xác nhận cho tới trước giờ bắt đầu khám
@@ -61,6 +64,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 								var response = await momoPayment.RefundPayment((long)decimal.Parse(amount.ToString()), long.Parse(transactionCode), "");
 								if (response != null)
 								{
+									//Nếu như đã hoàn tiền / hoàn tiền thất bại / số dư hoàn tiền không hợp lệ thì bỏ qua
+									if (response.message == "Yêu cầu bị từ chối vì số tiền giao dịch không hợp lệ." || response.resultCode != 0)
+									{
+										continue;
+									}
 									var refundTransaction = new Transaction
 									{
 										AppointmentID = appointment.ID,
@@ -74,17 +82,46 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 										Message = "Hoàn tiền thành công do phòng khám quá giờ xác nhận đơn khám",
 										Status = "Thành Công"
 									};
+
+									// Cập nhật trạng thái
+									appointment.AppointmentStatus = "Đã Hủy";
+									// Gửi lại mail xác nhận đã hủy cho khách hàng
+									var user = await context.Accounts.FirstOrDefaultAsync(a => a.ID == appointment.PatientRecords.AccountID);
+									if (user != null)
+									{
+										var email = user.Email ?? "Rivinger7@gmail.com";
+										var subject = "Nhắc nhở hủy khám";
+
+										var message = $@"Xin chào {user.FirstName},
+
+Đây là thông báo về việc hủy lịch khám vào ngày {appointment.Schedule.Date.ToString("dd/MM/yyyy")} lúc {appointment.Schedule.TimeSlot.StartTime.ToString("HH:mm")}.
+Lý do: Quá giờ nha sĩ xác nhận đơn đặt khám của quý khách. Số tiền đặt cọc sẽ được hoàn trả lại vào tài khoản của quý khách, vui lòng kiểm tra.
+
+Trân trọng,
+Dental Care.";
+										await emailSender.SendEmailAsync(email, subject, message);
+									}
+									appointment.Description = "Đã Hủy đơn khám do quá giờ nha sĩ xác nhận đơn khám + Đã hoàn tiền.";
 								}
-								// Cập nhật trạng thái
+							}
+						}
+
+						var acceptAppointment = appointments.Where(a => a.AppointmentStatus == "Đã Chấp Nhận").ToList();
+						foreach (var appointment in acceptAppointment)
+						{
+							if (appointment.Schedule.Date.ToDateTime(appointment.Schedule.TimeSlot.EndTime).AddMinutes(30) < now) // Nếu sau 30 phút kể từ thời gian kết thúc khám mà chưa thay đổi trạng thái thì hủy đơn, không hoàn tiền
+							{
 								appointment.AppointmentStatus = "Đã Hủy";
+								appointment.Description = "Đã Hủy đơn khám do quá giờ nha sĩ xác nhận đơn khám sau khi khám + Không hoàn tiền.";
 							}
 						}
 
 						foreach (var periodic in periodicAppointment)
 						{
-							if (periodic.DesiredDate.ToDateTime(periodic.EndTime).AddHours(2) <= now) //Nếu như thời gian kết thúc khám định kỳ mà đã quá 2 tiếng thì cho hủy đơn, ko có hoàn tiền
+							if (periodic.DesiredDate.ToDateTime(periodic.EndTime).AddMinutes(30) < now) //Nếu như thời gian kết thúc khám định kỳ mà đã quá 30 phút thì cho hủy đơn, ko có hoàn tiền (vì không có cọc gì ở periodic appointment)
 							{
 								periodic.PeriodicAppointmentStatus = "Đã Hủy";
+								periodic.Description = "Đã Hủy đơn khám định kỳ do quá giờ nha sĩ xác nhận đơn khám sau khi khám + Không hoàn tiền.";
 
 							}
 						}
@@ -92,7 +129,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 						await context.SaveChangesAsync();
 					}
 
-					_logger.LogInformation("Appointment status change successfully.");
+					_logger.LogInformation("///////////-Appointment status change successfully.-///////////");
 
 					
 				}
