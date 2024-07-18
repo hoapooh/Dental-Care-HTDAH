@@ -96,12 +96,12 @@
                             </div>
                             <div style="width: 50%">
                                 <label for="phone">Số điện thoại</label><br /><input type="text"
-                                                                                                  id="phone"
-                                                                                                  placeholder="Vui lòng nhập số điện thoại ..."
-                                                                                                  pattern="[0-9]*"
-                                                                                                  value="@Model.PhoneNumber"
-                                                                                                  asp-for="@Model.PhoneNumber"
-                                                                                                  style="width: 100%" />
+                                                                                     id="phone"
+                                                                                     placeholder="Vui lòng nhập số điện thoại ..."
+                                                                                     pattern="[0-9]*"
+                                                                                     value="@Model.PhoneNumber"
+                                                                                     asp-for="@Model.PhoneNumber"
+                                                                                     style="width: 100%" />
                                 <span class="text-danger" asp-validation-for="PhoneNumber"></span>
 
                             </div>
@@ -266,8 +266,8 @@
                                 @foreach (var appointment in appointments)
                                 {
                                     @* var currentTime = TimeOnly.FromDateTime(Util.GetUtcPlus7Time()).ToTimeSpan();
-                                    var startTime = appointment.Schedule.TimeSlot.StartTime.ToTimeSpan();
-                                    var timeDifference = startTime - currentTime; *@
+                            var startTime = appointment.Schedule.TimeSlot.StartTime.ToTimeSpan();
+                            var timeDifference = startTime - currentTime; *@
 
                                     // Lấy thời gian hiện tại tại Hà Nội
                                     var currentTime = Util.GetUtcPlus7Time();
@@ -281,14 +281,14 @@
                                     var timeDifference = appointmentDateTime - currentTime;
 
                                     @* Console.WriteLine("=================================================");
-                                    // Ghi log hoặc hiển thị giá trị để kiểm tra
-                                    Console.WriteLine($"Current Time: {currentTime}");
-                                    Console.WriteLine($"Appointment Start Time: {appointmentDateTime}");
-                                    Console.WriteLine($"Time Difference (Hours): {timeDifference.TotalHours}");
+                            // Ghi log hoặc hiển thị giá trị để kiểm tra
+                            Console.WriteLine($"Current Time: {currentTime}");
+                            Console.WriteLine($"Appointment Start Time: {appointmentDateTime}");
+                            Console.WriteLine($"Time Difference (Hours): {timeDifference.TotalHours}");
 
-                                    var showRescheduleButton = timeDifference.TotalHours >= 7;
-                                    Console.WriteLine($"Show Reschedule Button: {showRescheduleButton}");
-                                    Console.WriteLine("================================================="); *@
+                            var showRescheduleButton = timeDifference.TotalHours >= 7;
+                            Console.WriteLine($"Show Reschedule Button: {showRescheduleButton}");
+                            Console.WriteLine("================================================="); *@
 
 
                                     <div class="appointment-card" style="border: 1px solid #1376f8; border-radius: 8px; padding: 16px; margin-bottom: 16px; background-color: #fff;">
@@ -308,7 +308,7 @@
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
                                                 );
-                                                                                                                                                                                                                                                    ">
+                                                                                                                                                                                                                                                            ">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -376,10 +376,11 @@
 
                                                         break;
                                                     case "Chờ Xác Nhận":
-                                                        @if (timeDifference.TotalHours >= 7) {
-                                                        <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
-                                                            Đổi lịch khám
-                                                        </button>
+                                                        @if (timeDifference.TotalHours >= 7)
+                                                        {
+                                                            <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
+                                                                Đổi lịch khám
+                                                            </button>
                                                         }
 
                                                         <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
@@ -392,6 +393,13 @@
                                                         </form>
                                                         break;
                                                     case "Đã Chấp Nhận":
+                                                        @if (timeDifference.TotalHours >= 7)
+                                                        {
+                                                            <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
+                                                                Đổi lịch khám
+                                                            </button>
+                                                        }
+
                                                         <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
                                                             <input type="hidden" name="appointmentID" value="@appointment.ID" />
                                                             <input type="hidden" name="appointmentStatus" value="Đã Hủy" />

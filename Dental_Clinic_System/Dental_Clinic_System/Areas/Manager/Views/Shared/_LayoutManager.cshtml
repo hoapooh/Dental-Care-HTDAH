@@ -264,11 +264,11 @@
                                         </div>
 
                                         <div class="row mt-3">
-                                            <p style="font-size: 3rem;">5</p>
+                                            <p style="font-size: 3rem;" id="today-successful"></p>
                                         </div>
 
                                         <div class="row">
-                                            <p style="color: red;">-4.1%</p>
+                                            <p style="color: red;" id="today-successful-change"></p>
                                         </div>
 
                                     </div>
@@ -281,11 +281,11 @@
                                         </div>
 
                                         <div class="row mt-3">
-                                            <p style="font-size: 3rem;">300.000 đ</p>
+                                            <p style="font-size: 3rem;" id="thisWeek-canceled"></p>
                                         </div>
 
                                         <div class="row">
-                                            <p style="color: red;">-4.1%</p>
+                                            <p style="color: red;" id="thisWeek-canceled-change"></p>
                                         </div>
 
                                     </div>
@@ -298,13 +298,26 @@
                                         </div>
 
                                         <div class="row mt-3">
-                                            <p style="font-size: 3rem;">500.000 đ</p>
+                                            <p style="font-size: 3rem;" id="thisMonth-successful"></p>
                                         </div>
 
                                         <div class="row">
-                                            <p style="color: red;">-4.1%</p>
+                                            <p style="color: red;" id="thisMonth-successful-change"></p>
                                         </div>
 
+                                    </div>
+                                </div>
+                                <div id="yearToDate" style="display: flex; background-color: aquamarine; border-radius: 10px; padding: 10px; width: 30%; margin-left: 2rem; cursor: pointer;">
+                                    <div class="col-md-12" style="margin-bottom: 5px;">
+                                        <div class="row">
+                                            <p><i class="fa-solid fa-calendar-day"></i> Tổng hợp</p>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <p style="font-size: 3rem;" id="yearToDate-successful"></p>
+                                        </div>
+                                        <div class="row">
+                                            <p style="color: red;" id="yearToDate-successful-change"></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -456,11 +469,20 @@
                 updateChart(chartType, startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
             });
 
+            $("#yearToDate").click(function () {
+                var chartType = $("#chartType").val();
+                var startDate = getHanoiTime().startOf('year');
+                var endDate = getHanoiTime().endOf('year');
+                console.log(startDate.format('YYYY-MM-DD') + " " + endDate.format('YYYY-MM-DD'));
+                updateChart(chartType, startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'), true); // Pass true for isYTD
+            });
+
+
             function getHanoiTime() {
                 return moment.tz("Asia/Ho_Chi_Minh");
             }
 
-            function updateChart(chartType, startDate, endDate) {
+            function updateChart(chartType, startDate, endDate, isYTD = false) {
                 console.log(startDate + " " + endDate);
                 var chartView = document.getElementById('chartView');
                 chartView.innerHTML = '&nbsp;';
@@ -479,20 +501,79 @@
                 });
 
                 function OnSuccessResult(data) {
-                    var _chartLabels = ["Đã Khám", "Đã Hủy Khám"];
-                    var _chartData = [data.successful, data.canceled];
-                    var dataColor = ["green", "red"];
+                    console.log("Data received:", data); // Debugging statement
+                    if (isYTD) {
+                        var _chartLabels = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+                        var successfulData = data.successfulPerMonth;
+                        var canceledData = data.canceledPerMonth;
+                        var successfulColor = "blue";
+                        var canceledColor = "red";
 
-                    new Chart("myChart", {
-                        type: chartType,
-                        data: {
-                            labels: _chartLabels,
-                            datasets: [{
-                                backgroundColor: dataColor,
-                                data: _chartData
-                            }]
-                        }
-                    });
+                        new Chart("myChart", {
+                            type: chartType,
+                            data: {
+                                labels: _chartLabels,
+                                datasets: [
+                                    {
+                                        label: "Đã Khám",
+                                        borderColor: successfulColor,
+                                        data: successfulData,
+                                        fill: false
+                                    },
+                                    {
+                                        label: "Đã Hủy Khám",
+                                        borderColor: canceledColor,
+                                        data: canceledData,
+                                        fill: false
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    x: {
+                                        beginAtZero: true
+                                    },
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        var _chartLabels = ["Đã Khám", "Đã Hủy Khám"];
+                        var _chartData = [data.successful, data.canceled];
+                        var dataColor = ["green", "red"];
+
+                        new Chart("myChart", {
+                            type: chartType,
+                            data: {
+                                labels: _chartLabels,
+                                datasets: [{
+                                    backgroundColor: dataColor,
+                                    data: _chartData
+                                }]
+                            },
+                            options: {
+                                plugins: {
+                                    legend: {
+                                        display: false // Disable the legend
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    // Update the numbers and percentage changes in the modal
+                    // $("#today-successful").text(data.successful);
+                    // $("#today-successful-change").text(data.successfulChange.toFixed(1) + "%").css("color", data.successfulChange >= 0 ? "green" : "red");
+
+                    // $("#thisWeek-canceled").text(data.canceled);
+                    // $("#thisWeek-canceled-change").text(data.canceledChange.toFixed(1) + "%").css("color", data.canceledChange >= 0 ? "green" : "red");
+
+                    // // Similar updates for "thisMonth" if needed
+                    // $("#thisMonth-successful").text(data.successful);
+                    // $("#thisMonth-successful-change").text(data.successfulChange.toFixed(1) + "%").css("color", data.successfulChange >= 0 ? "green" : "red");
                 }
 
                 function OnError(error) {

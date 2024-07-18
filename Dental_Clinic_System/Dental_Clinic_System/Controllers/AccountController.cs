@@ -1197,6 +1197,8 @@ namespace Dental_Clinic_System.Controllers
                         Message = "Hoàn tiền đặt cọc",
                         Status = "Thành Công"
                     };
+                    _context.Add(refundTransaction);
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
