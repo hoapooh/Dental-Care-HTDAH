@@ -8,12 +8,15 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\assets\js\pagination-news-post.js" />
+    <Content Remove="wwwroot\assets\js\togglepassword.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\assets\css\chat.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\css\marquee.css" />
     <_ContentIncludedByDefault Remove="wwwroot\assets\css\reset.css" />
     <_ContentIncludedByDefault Remove="wwwroot\assets\js\pagination-news-post.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\js\togglepassword.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +71,7 @@
     <None Include="wwwroot\assets\js\richtexteditor.js" />
     <None Include="wwwroot\assets\js\swiper-bundle.js" />
     <None Include="wwwroot\assets\js\text_editor.js" />
+    <None Include="wwwroot\assets\js\togglepassword.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,6 +6,7 @@
 }
 
 <head>
+    <meta name="description" content="Đây là nơi nha sĩ dùng để theo dõi tin nhắn đến từ phía của bệnh nhân">
     <link rel="stylesheet" href="~/assets/css/sidebar.css" />
     <link rel="stylesheet" href="~/assets/css/headerAd.css" />
     <link rel="stylesheet" href="~/assets/css/dentistpatients.css" />
@@ -25,22 +26,36 @@
         .chat-list {
             display: flex;
             flex-direction: column;
-            width: 300px;
+            width: 50%;
             margin: auto;
-            border: 1px solid #ccc;
+            border: 1px solid #1376f8;
             height: 80vh;
-            overflow-y: scroll;
-            padding: 5px;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 15px;
         }
 
         .chat-item {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
+            padding: 10px 20px;
+            border: 1px solid #1376f8;
+            border-radius: 15px;
             cursor: pointer;
+            margin-bottom: 10px;
         }
+
+            .chat-item strong {
+                font-size: 1.8rem;
+            }
+
+            .chat-item p {
+                font-size: 1.6rem;
+                color: #333;
+                margin-bottom: 5px;
+            }
 
             .chat-item:hover {
                 background-color: #f1f1f1;
+                border-radius: 15px;
             }
     </style>
 </head>
@@ -61,7 +76,7 @@
                     <div class="chat-item">
                         <strong>@chat.ReceiverName</strong>
                         <p>@chat.Content</p>
-                        <small>@chat.Timestamp</small>
+                        <p>@chat.Timestamp</p>
                     </div>
                 </a>
             }

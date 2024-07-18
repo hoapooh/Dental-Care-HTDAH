@@ -5,84 +5,93 @@
 }
 
 <head>
+	<meta name="description" content="Đây là nơi bạn dùng để chọn lịch dựa theo lịch làm việc của nha sĩ trước đó">
 	<link rel="stylesheet" href="~/assets/css/mobiscroll.javascript.min.css" />
 	<link rel="stylesheet" href="~/assets/css/clinic.css" />
 	<link rel="stylesheet" href="~/assets/css/schedule.css" />
+	<link rel="stylesheet" href="~/assets/css/marquee.css" />
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<div class="clinic">
-	<h1 class="clinic__title text-center fw-bold">Chọn Ngày Khám</h1>
-	<div class="text-center">
-		<img src="~/assets/images/separate.png" alt="seperate" />
+<div>
+	<div class="marquee">
+		<p>
+			Quý khách hàng vui lòng không đặt lịch khám quá nhiều lần trong ngày, nếu vi phạm điều này nền tảng chúng tôi sẽ không chịu trách nhiệm hoàn tiền cho quý khách. Xin cảm ơn !
+		</p>
 	</div>
-	<div class="clinic__dentist__container">
-		<div class="info">
-			<div class="info-style">
-				<div class="info-title">Thông tin cơ sở y tế</div>
-				<div class="info-body">
-					<ul>
-						<li>
-							<i class="fa-solid fa-hospital"></i>
-							<div class="text">
-								<span>@ViewBag.clinicName</span>
-								<p class="address">
-									@ViewBag.clinicAddress
-								</p>
-							</div>
-						</li>
-						<li>
-							<i class="fa-solid fa-tooth"></i>
-							<div class="text"><span>Chuyên khoa: @ViewBag.specialtyName</span></div>
-						</li>
-						<li>
-							<i class="fa-solid fa-stethoscope"></i>
-							<div class="text">
-								<span>Bác sĩ: @ViewBag.dentistName</span>
-							</div>
-						</li>
-					</ul>
+	<div class="clinic">
+		<h1 class="clinic__title text-center fw-bold">Chọn Ngày Khám</h1>
+		<div class="text-center">
+			<img src="~/assets/images/separate.png" alt="seperate" />
+		</div>
+		<div class="clinic__dentist__container">
+			<div class="info">
+				<div class="info-style">
+					<div class="info-title">Thông tin cơ sở y tế</div>
+					<div class="info-body">
+						<ul>
+							<li>
+								<i class="fa-solid fa-hospital"></i>
+								<div class="text">
+									<span>@ViewBag.clinicName</span>
+									<p class="address">
+										@ViewBag.clinicAddress
+									</p>
+								</div>
+							</li>
+							<li>
+								<i class="fa-solid fa-tooth"></i>
+								<div class="text"><span>Chuyên khoa: @ViewBag.specialtyName</span></div>
+							</li>
+							<li>
+								<i class="fa-solid fa-stethoscope"></i>
+								<div class="text">
+									<span>Bác sĩ: @ViewBag.dentistName</span>
+								</div>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- =========== BOOKING =========== -->
-		<div class="booking">
-			<form asp-controller="patientrecord" asp-action="patientrecord" method="get">
-				<div class="booking-style">
-					<div class="booking-title">Vui lòng chọn ngày và giờ khám</div>
+			<!-- =========== BOOKING =========== -->
+			<div class="booking">
+				<form asp-controller="patientrecord" asp-action="patientrecord" method="get">
+					<div class="booking-style">
+						<div class="booking-title">Vui lòng chọn ngày và giờ khám</div>
 
-					<!-- THẺ NÀY ĐỂ HIỂN THỊ LỊCH THEO GIAO DIỆN MOBISCROLL  -->
+						<!-- THẺ NÀY ĐỂ HIỂN THỊ LỊCH THEO GIAO DIỆN MOBISCROLL  -->
 
-					<div class="mbsc-col-sm-12 mbsc-col-md-4">
-						<div class="mbsc-form-group">
-							<div id="demo-single-day"></div>
+						<div class="mbsc-col-sm-12 mbsc-col-md-4">
+							<div class="mbsc-form-group">
+								<div id="demo-single-day"></div>
+							</div>
 						</div>
+
+
 					</div>
+					<input type="hidden" name="clinicID" value="@ViewBag.clinicID" />
+					<input type="hidden" name="specialtyID" value="@ViewBag.specialtyID" />
+					<input type="hidden" name="dentistID" value="@ViewBag.dentistID" />
 
-					
-				</div>
-				<input type="hidden" name="clinicID" value="@ViewBag.clinicID" />
-				<input type="hidden" name="specialtyID" value="@ViewBag.specialtyID" />
-				<input type="hidden" name="dentistID" value="@ViewBag.dentistID" />
+					<input type="hidden" id="bookingDateTime" name="bookingDateTime" />
+					<div class="btn-wrapper">
+						<a href="/clinic/choosedentist?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID">
+							<button type="button" class="back-btn">
+								Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
+							</button>
+						</a>
+						<a>
 
-				<input type="hidden" id="bookingDateTime" name="bookingDateTime" />
-				<div class="btn-wrapper">
-					<a href="/clinic/choosedentist?clinicID=@ViewBag.clinicID&specialtyID=@ViewBag.specialtyID">
-						<button type="button" class="back-btn">
-							Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
-						</button>
-					</a>
-					<a>
+							<button type="submit" class="add-record-btn">
+								Tiếp tục <i class="fa-solid fa-arrow-right"></i>
+							</button>
 
-						<button type="submit" class="add-record-btn">
-							Tiếp tục <i class="fa-solid fa-arrow-right"></i>
-						</button>
-
-					</a>
-				</div>
-			</form>
+						</a>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

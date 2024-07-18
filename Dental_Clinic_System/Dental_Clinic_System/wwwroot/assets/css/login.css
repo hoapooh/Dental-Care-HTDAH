@@ -16,12 +16,6 @@
 	width: 55%;
 }
 
-.content__img img {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-}
-
 .content__img__quote {
 	position: absolute;
 	bottom: 30px;
@@ -48,7 +42,7 @@
 }
 
 .content__form {
-	padding-top: 162px;
+	padding-top: 100px;
 }
 
 .content__form__title {
@@ -61,6 +55,10 @@
 	text-transform: capitalize;
 }
 
+.content__form__login {
+	text-align: center;
+}
+
 .content__form__login__google {
 	display: flex;
 	align-items: center;
@@ -69,7 +67,6 @@
 	border-radius: 10px;
 	padding: 16px 106px;
 	margin: 0 auto;
-	margin-top: 63px;
 	border: 1px solid #011632;
 	background: #fff;
 	color: #011632;
@@ -125,19 +122,23 @@
 	margin-top: 25px;
 }
 
-.content__form__system .username input,
-.content__form__system .password input {
-	background: transparent;
-	width: 260px;
-	border: none;
-	outline: none;
-	color: rgba(0, 0, 0, 0.3);
-	font-size: 1.4rem;
-	font-family: "Baloo Paaji 2";
-	font-weight: 500;
-	line-height: 155%; /* 21.7px */
-	letter-spacing: 0.28px;
-}
+	.content__form__system .password i {
+		font-size: 1.6rem;
+	}
+
+	.content__form__system .username input,
+	.content__form__system .password input {
+		background: transparent;
+		width: 100%;
+		border: none;
+		outline: none;
+		color: #000;
+		font-size: 1.6rem;
+		font-family: "Baloo Paaji 2";
+		font-weight: 500;
+		line-height: 155%; /* 21.7px */
+		letter-spacing: 0.28px;
+	}
 
 .content__form__system .remember__forgot {
 	display: flex;

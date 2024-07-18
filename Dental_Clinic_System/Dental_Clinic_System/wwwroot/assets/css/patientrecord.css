@@ -85,10 +85,10 @@ input:focus {
 
 /* ========= PATIENT RECORD ========= */
 
-.pt__record,
-.pt__rcd__confirm {
-	background: #d8e9f2;
+.pt__record {
+	background: #cfe2ff;
 	padding: 50px 0;
+	margin-bottom: -50px;
 }
 
 	.pt__record.add {
@@ -102,12 +102,10 @@ input:focus {
 
 /* ======== BUTTON ========= */
 .btn-wrapper {
-	margin-bottom: 24px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 24px;
-	margin-bottom: 28px;
 }
 
 	.btn-wrapper.add__record {
@@ -241,7 +239,6 @@ input:focus {
 
 .style__container__choose {
 	margin: 0 auto;
-	padding-bottom: 30px;
 	width: 450px;
 }
 

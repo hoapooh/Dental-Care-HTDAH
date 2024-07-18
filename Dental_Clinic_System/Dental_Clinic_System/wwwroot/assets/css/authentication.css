@@ -57,7 +57,7 @@ body::-webkit-scrollbar {
 }
 
 .content__form.register {
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 .content__form__title {
@@ -70,6 +70,10 @@ body::-webkit-scrollbar {
 	text-transform: capitalize;
 }
 
+.content__form__login {
+	text-align: center;
+}
+
 .content__form__login__google {
 	display: flex;
 	align-items: center;
@@ -78,7 +82,6 @@ body::-webkit-scrollbar {
 	border-radius: 10px;
 	padding: 16px 106px;
 	margin: 0 auto;
-	margin-top: 63px;
 	border: 1px solid #011632;
 	background: #fff;
 	color: #011632;

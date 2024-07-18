@@ -13,6 +13,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="description" content="Đây là trang chủ của chúng tôi, nơi bạn có thể xem nhanh qua các chuyên khoa, phòng khám và các tin tức mới">
     <link rel="stylesheet" href="~/assets/css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="~/assets/css/styles.css" />
 </head>
@@ -38,13 +39,13 @@
                 <div class="hero__cta">
                     <a asp-controller="clinic" asp-action="index" class="btn"> Đặt lịch khám </a>
                     <div class="hero__call">
-                        <a to="/#!">
+                        <a href="tel:02838923543">
                             <img src="~/assets/images/Calling.webp" alt="call" loading="lazy" />
                         </a>
                         <p>
                             <strong>Nha khoa khẩn cấp 24H</strong>
                             <br />
-                            0900-78601
+                            +84 28 3892 3543
                         </p>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
 
                                 <div class="special__cards__card swiper-slide" style="height: initial">
                                     <a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
-                                        <img src="@specialty.Image" alt="@specialty.Name" loading="lazy" />
+                                        <img src="@specialty.Image" alt="Chuyên khoa: @specialty.Name" loading="lazy" />
                                         <h3 class="title">@specialty.Name</h3>
                                     </a>
                                 </div>

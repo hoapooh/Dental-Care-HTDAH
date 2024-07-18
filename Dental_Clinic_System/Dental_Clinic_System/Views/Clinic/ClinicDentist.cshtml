@@ -10,107 +10,116 @@
 }
 
 <head>
+    <meta name="description" content="Đây là nơi bạn chọn nha sĩ dựa vào chuyên khoa bạn đã lựa chọn">
     <link rel="stylesheet" href="~/assets/css/clinic.css" />
+    <link rel="stylesheet" href="~/assets/css/marquee.css" />
 </head>
 
-<div class="clinic">
-    <h1 class="clinic__title text-center fw-bold">Chọn Bác Sĩ</h1>
-    <div class="text-center">
-        <img src="~/assets/images/separate.png" alt="" />
+<div>
+    <div class="marquee">
+        <p>
+            Quý khách hàng vui lòng không đặt lịch khám quá nhiều lần trong ngày, nếu vi phạm điều này nền tảng chúng tôi sẽ không chịu trách nhiệm hoàn tiền cho quý khách. Xin cảm ơn !
+        </p>
     </div>
-    <div class="clinic__dentist__container">
-        <div class="info">
-            <div class="info-style">
-                <div class="info-title">Thông tin cơ sở y tế</div>
-                <div class="info-body">
-                    <ul>
-                        <li>
-                            <i class="fa-solid fa-hospital"></i>
-                            <div class="text">
-                                <span>@Model.FirstOrDefault()?.Clinic.Name</span>
-                                <p class="address">
-                                    @clinic.Address, @clinic.WardName, @clinic.DistrictName, @clinic.ProvinceName
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-tooth"></i>
-                            <div class="text"><span>Chuyên khoa: @ViewBag.Specialty?.Name</span></div>
-                        </li>
-                    </ul>
+    <div class="clinic">
+        <h1 class="clinic__title text-center fw-bold">Chọn Bác Sĩ</h1>
+        <div class="text-center">
+            <img src="~/assets/images/separate.png" alt="" />
+        </div>
+        <div class="clinic__dentist__container">
+            <div class="info">
+                <div class="info-style">
+                    <div class="info-title">Thông tin cơ sở y tế</div>
+                    <div class="info-body">
+                        <ul>
+                            <li>
+                                <i class="fa-solid fa-hospital"></i>
+                                <div class="text">
+                                    <span>@Model.FirstOrDefault()?.Clinic.Name</span>
+                                    <p class="address">
+                                        @clinic.Address, @clinic.WardName, @clinic.DistrictName, @clinic.ProvinceName
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-tooth"></i>
+                                <div class="text"><span>Chuyên khoa: @ViewBag.Specialty?.Name</span></div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="booking">
-            <div class="booking-style">
-                <div class="booking-title">Vui lòng chọn Bác sĩ</div>
-                <div class="booking-body">
-                    <div>
-                        <div class="search">
-                            <span class="input-wrap">
-                                <span class="input-wrap-search">
-                                    <input type="search" name="keysearch" value="" placeholder="Tìm nhanh bác sĩ" />
+            <div class="booking">
+                <div class="booking-style">
+                    <div class="booking-title">Vui lòng chọn Bác sĩ</div>
+                    <div class="booking-body">
+                        <div>
+                            <div class="search">
+                                <span class="input-wrap">
+                                    <span class="input-wrap-search">
+                                        <input type="search" name="keysearch" value="" placeholder="Tìm nhanh bác sĩ" />
+                                    </span>
+                                    <span class="icon-wrap">
+                                        <button type="button">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </span>
                                 </span>
-                                <span class="icon-wrap">
-                                    <button type="button">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </button>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="filter">
-                            <div class="filter__item">
-                                <select name="degreeID" class="degreeFilter">
-                                    <option value="all">Học hàm / Học vị</option>
-                                    <option value="Phó Giáo Sư Tiến Sĩ">Phó Giáo Sư Tiến Sĩ</option>
-                                    <option value="Phó Giáo Sư">Phó Giáo Sư</option>
-                                    <option value="Tiến Sĩ">Tiến Sĩ</option>
-                                    <option value="Thạc Sĩ">Thạc Sĩ</option>
-                                    <option value="Cử Nhân">Cử Nhân</option>
-                                </select>
-                                <i class="fa-solid fa-chevron-down filter__icon"></i>
                             </div>
+                            <div class="filter">
+                                <div class="filter__item">
+                                    <select name="degreeID" class="degreeFilter">
+                                        <option value="all">Học hàm / Học vị</option>
+                                        <option value="Phó Giáo Sư Tiến Sĩ">Phó Giáo Sư Tiến Sĩ</option>
+                                        <option value="Phó Giáo Sư">Phó Giáo Sư</option>
+                                        <option value="Tiến Sĩ">Tiến Sĩ</option>
+                                        <option value="Thạc Sĩ">Thạc Sĩ</option>
+                                        <option value="Cử Nhân">Cử Nhân</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down filter__icon"></i>
+                                </div>
 
-                            <div class="filter__item">
-                                <select name="gender" class="genderFilter">
-                                    <option value="all">Giới tính</option>
-                                    <option value="Nam">Nam</option>
-                                    <option value="Nữ">Nữ</option>
-                                </select>
-                                <i class="fa-solid fa-chevron-down filter__icon"></i>
+                                <div class="filter__item">
+                                    <select name="gender" class="genderFilter">
+                                        <option value="all">Giới tính</option>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down filter__icon"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="booking__dentist">
-                        @foreach (var dentist in Model)
-                        {
-                            <a asp-controller="clinic" asp-action="clinicdentistcalendar" asp-route-clinicID="@dentist.Clinic.ID" asp-route-specialtyID="@ViewBag.Specialty?.ID" asp-route-dentistID="@dentist.ID">
-                                <div class="booking__dentist__card">
-                                    <div class="booking__dentist__card__style">
+                        <div class="booking__dentist">
+                            @foreach (var dentist in Model)
+                            {
+                                <a asp-controller="clinic" asp-action="clinicdentistcalendar" asp-route-clinicID="@dentist.Clinic.ID" asp-route-specialtyID="@ViewBag.Specialty?.ID" asp-route-dentistID="@dentist.ID">
+                                    <div class="booking__dentist__card">
+                                        <div class="booking__dentist__card__style">
 
-                                        <div class="stylist">
-                                            <i class="fa-solid fa-stethoscope"></i> @dentist.Account.LastName @dentist.Account.FirstName
-                                        </div>
-                                        <div class="gender">
-                                            <i class="fa-solid fa-mars-and-venus"></i> Giới tính: @dentist.Account.Gender
-                                        </div>
-                                        <div class="degree">
-                                            <i class="fa-solid fa-certificate"></i> Bằng cấp: <span>@dentist.Degree.Name</span>
+                                            <div class="stylist">
+                                                <i class="fa-solid fa-stethoscope"></i> @dentist.Account.LastName @dentist.Account.FirstName
+                                            </div>
+                                            <div class="gender">
+                                                <i class="fa-solid fa-mars-and-venus"></i> Giới tính: @dentist.Account.Gender
+                                            </div>
+                                            <div class="degree">
+                                                <i class="fa-solid fa-certificate"></i> Bằng cấp: <span>@dentist.Degree.Name</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        }
-                        <div class="card-end">Đã hết danh sách</div>
+                                </a>
+                            }
+                            <div class="card-end">Đã hết danh sách</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="btn-wrapper">
-                <a href="/clinic/chooseclinicspecialty?clinicID=@ViewBag.clinicID">
-                    <button type="button" class="back-btn">
-                        Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
-                    </button>
-                </a>
+                <div class="btn-wrapper">
+                    <a href="/clinic/chooseclinicspecialty?clinicID=@ViewBag.clinicID">
+                        <button type="button" class="back-btn">
+                            Quay lại <i class="fa-solid fa-arrow-rotate-left"></i>
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

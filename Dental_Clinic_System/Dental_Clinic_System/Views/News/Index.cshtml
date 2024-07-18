@@ -9,6 +9,7 @@
 @model IEnumerable<Dental_Clinic_System.ViewModels.NewsVM>
 
 <head>
+    <meta name="description" content="Tại đây bạn có thể xem tin tức bất kỳ mà bạn muốn">
     <link rel="stylesheet" href="~/assets/css/news.css" />
 </head>
 
@@ -50,7 +51,7 @@
 
                             <!-- =========== THUMB =========== -->
                             <div class="newsItem__thumb">
-                                <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })">
+                                <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })" aria-label="@news?.Title">
                                     <img src="@news.ThumbNail"
                                          alt="thumbnail" loading="lazy" />
                                 </a>

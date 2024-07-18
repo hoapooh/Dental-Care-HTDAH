@@ -5,6 +5,7 @@
 }
 
 <head>
+    <meta name="description" content="Đây là nơi bạn đăng ký tài khoản để có thể truy cập vào nền tảng của chúng tôi">
     <link rel="stylesheet" href="~/assets/css/authentication.css" />
 </head>
 <body>
@@ -22,7 +23,8 @@
         <div class="content__form register">
             <h1 class="content__form__title">Đăng ký tài khoản</h1>
             <div class="content__form__login">
-                <a asp-controller="account" asp-action="loginbygoogle">
+                <a asp-controller="account" asp-action="loginbygoogle" style="
+                   display: inline-block; margin-top: 63px;">
                     <button type="button" class="content__form__login__google">
                         <img src="~/assets/images/Google.png" alt="" />
                         Đăng nhập bằng Google
@@ -36,29 +38,35 @@
                     <i class="fa-solid fa-user"></i>
                     <input type="text" placeholder="Tên tài khoản" asp-for="@Model.Username" />
                     @Html.ValidationMessage("errorUsernameRegister")
-                    <span class="text-danger" asp-validation-for="Username"></span>
                 </div>
                 <div class="phone">
                     <i class="fa-solid fa-phone"></i>
                     <input type="text" placeholder="Nhập số điện thoại" asp-for="@Model.PhoneNumber" />
                     @Html.ValidationMessage("errorPhoneRegister")
-                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
                 </div>
                 <div class="email">
                     <i class="fa-solid fa-envelope"></i>
                     <input type="email" placeholder="Nhập Email của bạn" asp-for="@Model.Email" />
                     @Html.ValidationMessage("errorEmailRegister")
-                    <span class="text-danger" asp-validation-for="Email"></span>
                 </div>
-                <div class="password">
+                <div class="password password1">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="Nhập mật khẩu" asp-for="@Model.Password" />
-                    <span class="text-danger" asp-validation-for="Password"></span>
+                    <input type="password" placeholder="Nhập mật khẩu" class="passwordInput" asp-for="@Model.Password" />
+                    <i class="fa-solid fa-eye eyeIcon"
+                       onclick="togglePasswordVisibility('password1')"></i>
+                    <i class="fa-solid fa-eye-slash eyeSlashIcon"
+                       onclick="togglePasswordVisibility('password1')"
+                       style="display: none"></i>
                 </div>
-                <div class="password">
+                <div class="password password2">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="Nhập mật khẩu xác nhận" asp-for="@Model.ConfirmedPassword" />
-                    <span class="text-danger" asp-validation-for="ConfirmedPassword"></span>
+                    <input type="password"
+                           class="passwordInput" placeholder="Nhập mật khẩu xác nhận" asp-for="@Model.ConfirmedPassword" />
+                    <i class="fa-solid fa-eye eyeIcon"
+                       onclick="togglePasswordVisibility('password2')"></i>
+                    <i class="fa-solid fa-eye-slash eyeSlashIcon"
+                       onclick="togglePasswordVisibility('password2')"
+                       style="display: none"></i>
                 </div>
                 <label class="policies_check">
                     <input type="checkbox" required />
@@ -81,5 +89,6 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/js/togglepassword.js"></script>
 </body>
 

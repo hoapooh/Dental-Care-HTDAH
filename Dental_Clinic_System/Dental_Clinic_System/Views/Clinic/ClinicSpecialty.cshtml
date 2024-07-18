@@ -4,6 +4,7 @@
 }
 
 <head>
+    <meta name="description" content="Đây là nơi bạn có thể xem và lựa chọn chuyên khoa của một phòng khám trước đó">
     <link rel="stylesheet" href="~/assets/css/clinic.css" />
 </head>
 
@@ -15,13 +16,14 @@
     <div class="clinic__container clinic__container__special">
         <h2 class="clinic__container__title">
             <span><img src="~/assets/images/note-icon.svg" alt="" /><span style="margin-left: 10px;">Chọn Chuyên khoa</span></span>
+            <a href="/clinic" class="back-btn">Quay lại <i class="fa-solid fa-rotate-left"></i></a>
         </h2>
         <div class="clinic__special__container__wrapper">
             @foreach (var specialty in Model)
             {
                 <div class="clinic__special__container__card">
                     <div class="image-content">
-                        <img src="~/assets/images/clinic-special.png" alt="" />
+                        <img src="@($"/assets/images/clinic-special{specialty.ID}.png")" alt="@specialty.Name" />
                     </div>
                     <div class="text-content">
                         <h2 class="text-content-title">@specialty.Name</h2>

@@ -122,9 +122,24 @@ body::-webkit-scrollbar {
         font-size: 3rem;
     }
 
-.clinic__filter {
-    position: relative;
-}
+    .clinic__container__title a {
+        color: #1376f8;
+        font-size: 2rem;
+        font-weight: 600;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .clinic__container__title a:hover {
+            border-radius: 15px;
+            background: #e8f1ff;
+        }
+
+        .clinic__filter {
+            position: relative;
+        }
 
 .clinic__filter__select {
     border-radius: 10px;
@@ -301,6 +316,7 @@ body::-webkit-scrollbar {
 
         .clinic__special__container__card .image-content img {
             max-width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 

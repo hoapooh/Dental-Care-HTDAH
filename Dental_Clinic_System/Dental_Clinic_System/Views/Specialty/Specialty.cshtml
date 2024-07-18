@@ -5,6 +5,7 @@
 }
 
 <head>
+	<meta name="description" content="Tại đây hiển thị toàn bộ danh sách của các chuyên khoa có trong phòng khám">
 	<link rel="stylesheet" href="~/assets/css/special.css" />
 </head>
 
@@ -21,7 +22,7 @@
 			{
 				<div class="special__list__item d-flex flex-row">
 					<div class="special__list__item--image">
-					<img src="@specialty.Image" alt="" loading="lazy" />
+						<img src="@specialty.Image" alt="Chuyên khoa: @specialty.Name" loading="lazy" />
 					<p>@specialty.Name</p>
 				</div>
 				<div class="special__list__item--info">
