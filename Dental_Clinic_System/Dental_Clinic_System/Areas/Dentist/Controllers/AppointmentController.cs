@@ -2,6 +2,7 @@
 using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Dental_Clinic_System.Services.EmailSender;
+using Dental_Clinic_System.Services.MOMO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,12 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 	{
 		private readonly DentalClinicDbContext _context;
 		private readonly IEmailSenderCustom _emailSender;
-		public AppointmentController(DentalClinicDbContext context, IEmailSenderCustom emailSender)
+		private readonly IMOMOPayment _payment;
+		public AppointmentController(DentalClinicDbContext context, IEmailSenderCustom emailSender, IMOMOPayment payment)
 		{
 			_context = context;
 			_emailSender = emailSender;
+			_payment = payment;
 		}
 		//===================APPOINTMENT===================
 		#region Lấy dữ liệu quản lý lịch đặt khám của bệnh nhân cho nha sĩ
@@ -80,7 +83,8 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 		//Hàm hủy đơn đặt
 		public async Task<IActionResult> CancelAppointment(int appointmentID, string? description)  //string description
 		{
-			var appointment = _context.Appointments.FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Đã Chấp Nhận" || a.AppointmentStatus == "Chờ Xác Nhận"));
+			var appointment = _context.Appointments.Include(a => a.Transactions)
+												   .FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Đã Chấp Nhận" || a.AppointmentStatus == "Chờ Xác Nhận"));
 			if (appointment == null)
 			{
 				TempData["ErrorMessage"] = "Lỗi! Không tìm thấy đơn đặt tương ứng hoặc trạng thái không hợp lệ.";
@@ -89,7 +93,30 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 			appointment.AppointmentStatus = "Đã Hủy";
 			appointment.Description = "Đã hủy từ Nha sĩ. Lý do hủy: " + description;
 			_context.Update(appointment);
+
+			var transactionCode = appointment.Transactions.FirstOrDefault()?.TransactionCode;
+			var amount = appointment.Transactions.FirstOrDefault()?.TotalPrice;
+			var bankName = appointment.Transactions.FirstOrDefault()?.BankName;
+			var fullName = appointment.Transactions.FirstOrDefault()?.FullName;
+			var response = await _payment.RefundPayment((long)decimal.Parse(amount.ToString()), long.Parse(transactionCode), "");
+			var refundTransaction = new Transaction
+			{
+				AppointmentID = appointment.ID,
+				Date = DateTime.Now,
+				BankName = bankName,
+				TransactionCode = response.transId.ToString(),
+				PaymentMethod = "MOMO",
+				TotalPrice = Decimal.Parse(response.amount.ToString()),
+				BankAccountNumber = "9704198526191432198",
+				FullName = fullName,
+				Message = "Hoàn tiền thành công do nha sĩ hủy lịch hẹn",
+				Status = "Thành Công"
+			};
+
+			//Thêm transaction vào DB
+			_context.Transactions.Add(refundTransaction);
 			await _context.SaveChangesAsync();
+
 			TempData["SuccessMessage"] = "Thay đổi trạng thái thành công!";
 			return RedirectToAction("patientappointment");
 		}
@@ -129,7 +156,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 		}
 		#endregion
 
-		                      #region Hàm handle những data truyền vào có thể xuất ra future appointment (PDF) hay không
+		#region Hàm handle những data truyền vào có thể xuất ra future appointment (PDF) hay không
 		[HttpPost]
 		public async Task<IActionResult> ValidAppointmentForFutureAppointment(int appointmentID, string? ngayhentaikham, string? giobatdau, string? gioketthuc, string ketquakham, string? dando)
 		{

@@ -337,9 +337,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                                     Url = "/dentist/appointment/periodicappointment?periodicappointmentID=" + periodicAppointment.ID,
                                     StatusColor = periodicAppointment.PeriodicAppointmentStatus switch
                                     {
-                                        "Đã Khám" => "#4ed1d7",
+                                        "Đã Khám" => "#00d55f",
                                         "Đã Hủy" => "#d53700",
-                                        "Đã Chấp Nhận" => "#00d55f",
+                                        "Đã Chấp Nhận" => "#0078d5",
                                         _ => "#c2c2c2"
                                     }
                                 });
@@ -379,7 +379,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                         Url = "/dentist/appointment/periodicappointment?periodicappointmentID=" + periodicAppoint.ID,
                         StatusColor = periodicAppoint.PeriodicAppointmentStatus switch
                         {
-                            "Đã Khám" => "#4ed1d7",
+                            "Đã Khám" => "#00d55f",
                             "Đã Hủy" => "#d53700",
                             "Đã Chấp Nhận" => "#0078d5",
                             _ => "#c2c2c2"
@@ -466,8 +466,6 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             ViewBag.DentistAvatar = dentist?.Account.Image ?? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744";
             ViewBag.DentistName = dentist?.Account.LastName + " " + dentist?.Account.FirstName;
             //Lấy ra những thông báo cần hiển thị
-            TempData["ErrorMessage"] = TempData["ErrorMessage"] as string;
-            TempData["SuccessMessage"] = TempData["SuccessMessage"] as string;
             return View(dentist);
         }
 
@@ -486,7 +484,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
             if (string.IsNullOrEmpty(content))
             {
                 TempData["ErrorMessage"] = "Lỗi! Mô tả không được để trống.";
-                return View();
+                return RedirectToAction("dentistdescription");
             }
             var dentist = await _context.Dentists.FirstOrDefaultAsync(d => d.AccountID == dentistAccountID);
             dentist.Description = content;
