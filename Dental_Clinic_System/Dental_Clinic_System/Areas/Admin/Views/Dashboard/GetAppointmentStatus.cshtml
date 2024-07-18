@@ -5,7 +5,7 @@
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
 	var monthOptions = new System.Text.StringBuilder();
-	var now = DateTime.Now;
+	var now = Dental_Clinic_System.Helper.Util.GetUtcPlus7Time();
 	for (int m = 1; m <= 12; m++)
 	{
 		var selected = (m == Model.SelectedMonth) ? "selected=\"selected\"" : "";

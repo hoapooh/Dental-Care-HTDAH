@@ -1,4 +1,5 @@
 ﻿using Dental_Clinic_System.Areas.Admin.ViewModels;
+using Dental_Clinic_System.Helper;
 using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,41 +33,42 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 return RedirectToAction("Login", "AdminAccount", new { area = "Admin" });
             }
 
-            int currentYear = DateTime.Now.Year;
-            int currentMonth = month ?? DateTime.Now.Month;
-            //DateTime today = DateTime.Today;
+			DateTime currentDateTime = Util.GetUtcPlus7Time();
+			int currentYear = currentDateTime.Year;
+			int currentMonth = month ?? currentDateTime.Month;
+			//DateTime today = DateTime.Today;
 
 			//Đạt khám Thành Công/Thất Bại mỗi tháng cho năm hiện tại và năm trước
 			var successfulAppointments = await _context.Appointments
-                .Where(a => a.CreatedDate.HasValue &&
-                            (a.CreatedDate.Value.Year == currentYear || a.CreatedDate.Value.Year == currentYear - 1) &&
-                            a.CreatedDate.Value.Month == currentMonth &&
-                            a.AppointmentStatus == "Đã Khám")
-                .GroupBy(a => new { a.CreatedDate.Value.Year, a.CreatedDate.Value.Month })
-                .Select(g => new { Year = g.Key.Year, Month = g.Key.Month, Count = g.Count() })
-                .ToListAsync();
+				.Where(a => a.CreatedDate.HasValue &&
+							(a.CreatedDate.Value.Year == currentYear || a.CreatedDate.Value.Year == currentYear - 1) &&
+							a.CreatedDate.Value.Month == currentMonth &&
+							a.AppointmentStatus == "Đã Khám")
+				.GroupBy(a => new { a.CreatedDate.Value.Year, a.CreatedDate.Value.Month })
+				.Select(g => new { Year = g.Key.Year, Month = g.Key.Month, Count = g.Count() })
+				.ToListAsync();
 
-            var failedAppointments = await _context.Appointments
-                .Where(a => a.CreatedDate.HasValue &&
-                            (a.CreatedDate.Value.Year == currentYear || a.CreatedDate.Value.Year == currentYear - 1) &&
-                            a.CreatedDate.Value.Month == currentMonth &&
-                            a.AppointmentStatus == "Đã Hủy")
-                .GroupBy(a => new { a.CreatedDate.Value.Year, a.CreatedDate.Value.Month })
-                .Select(g => new { Year = g.Key.Year, Month = g.Key.Month, Count = g.Count() })
-                .ToListAsync();
+			var failedAppointments = await _context.Appointments
+				.Where(a => a.CreatedDate.HasValue &&
+							(a.CreatedDate.Value.Year == currentYear || a.CreatedDate.Value.Year == currentYear - 1) &&
+							a.CreatedDate.Value.Month == currentMonth &&
+							a.AppointmentStatus == "Đã Hủy")
+				.GroupBy(a => new { a.CreatedDate.Value.Year, a.CreatedDate.Value.Month })
+				.Select(g => new { Year = g.Key.Year, Month = g.Key.Month, Count = g.Count() })
+				.ToListAsync();
 
-            var successfulData = new int[2];
+			var successfulData = new int[2];
             var failedData = new int[2];
 
-            foreach (var item in successfulAppointments)
-            {
-                if (item.Year == currentYear)
-                    successfulData[0] = item.Count;
-                else
-                    successfulData[1] = item.Count;
-            }
+			foreach (var item in successfulAppointments)
+			{
+				if (item.Year == currentYear)
+					successfulData[0] = item.Count;
+				else
+					successfulData[1] = item.Count;
+			}
 
-            foreach (var item in failedAppointments)
+			foreach (var item in failedAppointments)
             {
                 if (item.Year == currentYear)
                     failedData[0] = item.Count;
@@ -74,20 +76,20 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     failedData[1] = item.Count;
             }
 
-            //Tổng Hợp Tác/Từ Chối Yêu Cầu Của Phòng Khám
-            var acceptOrdersMonthly = await _context.Orders
-                         .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Year == currentYear && o.Status == "Đồng Ý")
-                         .GroupBy(o => o.CreatedDate.Value.Month)
-                         .Select(g => new { Month = g.Key, Count = g.Count() })
-                         .ToListAsync();
+			//Tổng Hợp Tác/Từ Chối Yêu Cầu Của Phòng Khám
+			var acceptOrdersMonthly = await _context.Orders
+						  .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Year == currentYear && o.Status == "Đồng Ý")
+						  .GroupBy(o => o.CreatedDate.Value.Month)
+						  .Select(g => new { Month = g.Key, Count = g.Count() })
+						  .ToListAsync();
 
-            var rejectOrdersMonthly = await _context.Orders
-                .Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Year == currentYear && o.Status == "Từ Chối")
-                .GroupBy(o => o.CreatedDate.Value.Month)
-                .Select(g => new { Month = g.Key, Count = g.Count() })
-                .ToListAsync();
+			var rejectOrdersMonthly = await _context.Orders
+				.Where(o => o.CreatedDate.HasValue && o.CreatedDate.Value.Year == currentYear && o.Status == "Từ Chối")
+				.GroupBy(o => o.CreatedDate.Value.Month)
+				.Select(g => new { Month = g.Key, Count = g.Count() })
+				.ToListAsync();
 
-            var acceptedOrdersData = new int[12];
+			var acceptedOrdersData = new int[12];
             var rejectedOrdersData = new int[12];
 
             foreach (var item in acceptOrdersMonthly)
@@ -100,14 +102,14 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 rejectedOrdersData[item.Month - 1] = item.Count;
             }
 
-            //Tổng New được đăng lên trong mỗi Tháng
-            var newPostPerMonth = await _context.News
-                .Where(n => n.CreatedDate.Year == currentYear)
-                .GroupBy(n => n.CreatedDate.Month)
-                .Select(g => new { Month = g.Key, Count = g.Count() })
-                .ToListAsync();
+			//Tổng New được đăng lên trong mỗi Tháng
+			var newPostPerMonth = await _context.News
+				.Where(n => n.CreatedDate.Year == currentYear)
+				.GroupBy(n => n.CreatedDate.Month)
+				.Select(g => new { Month = g.Key, Count = g.Count() })
+				.ToListAsync();
 
-            var newsData = new int[12];
+			var newsData = new int[12];
             foreach (var item in newPostPerMonth)
             {
                 newsData[item.Month - 1] = item.Count;
