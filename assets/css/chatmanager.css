@@ -1,0 +1,80 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: "Baloo Paaji 2";
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	min-height: 100vh;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin-bottom: 0;
+}
+
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background-color: #b2b2b2;
+}
+
+.managerChat__container {
+	height: 50vh;
+	width: 50%;
+	margin: 0 auto;
+	padding: 20px;
+	border-radius: 15px;
+	border: 1px solid #ccc;
+	margin-top: 50px;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+	overflow-y: auto;
+}
+
+.msg-bubble-cus .name,
+.msg-bubble-dentist .name {
+	font-size: 1.8rem;
+	font-weight: 600;
+}
+
+.msg-bubble-cus .msg-text,
+.msg-bubble-dentist .msg-text {
+	font-size: 1.6rem;
+}
+
+.msg-bubble-cus .msg-text,
+.msg-bubble-dentist .msg-text {
+	display: inline-block;
+	padding: 5px 12px;
+	background-color: tomato;
+	color: #fff;
+	border-radius: 50px;
+	margin: 5px 0;
+	max-width: 80%;
+	word-wrap: break-word;
+}
+.msg-bubble-dentist .msg-text {
+	background: #5e6eed;
+}

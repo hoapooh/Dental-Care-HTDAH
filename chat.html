@@ -3,10 +3,16 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Dental Care | login</title>
+		<title>Chat System</title>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400..800&display=swap"
+			rel="stylesheet"
 		/>
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -14,10 +20,9 @@
 			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
 		<link rel="stylesheet" href="./assets/css/header.css" />
 		<link rel="stylesheet" href="./assets/css/footer.css" />
-		<link rel="stylesheet" href="./assets/css/authentication.css" />
+		<link rel="stylesheet" href="./assets/css/chat.css" />
 	</head>
 	<body>
 		<header class="header">
@@ -43,99 +48,95 @@
 						<a href="./speciality.html">Chuyên khoa</a>
 					</li>
 					<li>
-						<a href="#!">Blogs</a>
+						<a href="./news.html">Tin tức</a>
 					</li>
 					<li>
 						<a href="./contact.html">Liên hệ</a>
 					</li>
 				</ul>
+				<!-- ============== ACCESS PROFILE HERE ============== -->
 				<div class="navbar__auth">
-					<!-- <a href="/" class="navbar__auth__avatar">
-                    <img src="images/avatar.jpg" alt="" />
-                </a>
-                <a href="/" class="navbar__auth__booking"> Đặt lịch khám </a> -->
-					<a href="./login.html" class="navbar__auth__login">
-						Đăng nhập
-					</a>
-					<a href="./register.html" class="navbar__auth__register">
-						Đăng ký
-					</a>
+					<ul class="navbar__auth__dropdown">
+						<li class="outer">
+							<div class="name">
+								<i class="fa-solid fa-user"></i> Phúc Hoà
+							</div>
+							<ul class="sub-menu">
+								<li>
+									<a href="./profile.html" class="account"
+										>Tài khoản</a
+									>
+								</li>
+								<li>
+									<a
+										href="./patientrecord.html"
+										class="record"
+										>Hồ sơ bệnh nhân</a
+									>
+								</li>
+								<div class="divider"></div>
+								<li>
+									<a href="" class="logout-btn"
+										><i
+											class="fa-solid fa-right-from-bracket"
+										></i>
+										Đăng xuất</a
+									>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<!-- <a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
+					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a> -->
 				</div>
 			</nav>
 		</header>
 
-		<div class="content">
-			<div class="content__img">
-				<img src="./assets/images/login-image.png" alt="doctor" />
-				<div class="content__img__quote">
-					<p class="quote">
-						“Chưa hề có một ai có thể kiên nhẫn chịu đựng cơn đau
-						răng” <br />
-						~ Dr Đỗ Anh Tú
-					</p>
-					<p class="summary">
-						Người sáng lập ra công ty trách nhiệm hữu hạn 1 mình tôi
-					</p>
-				</div>
-			</div>
-			<div class="content__form">
-				<h1 class="content__form__title">Đăng nhập tài khoản</h1>
-				<div class="content__form__login">
-					<button type="button" class="content__form__login__google">
-						<img src="./assets/images/Google.png" alt="" />
-						Đăng nhập bằng Google
+		<div class="msger__container">
+			<section class="msger">
+				<header class="msger-header">
+					<div class="msger-header-title" style="font-size: 2rem">
+						<i class="fa-solid fa-comments"></i>
+						@ViewBag.DentistName
+					</div>
+					<div class="msger-header-options">
+						<div class="btn-wrapper" style="font-size: 2rem">
+							<a
+								href="/specialty/choosedentistry?specialtyID=@ViewBag.SpecialtyID"
+								class="back-btn"
+							>
+								Quay lại
+								<i class="fa-solid fa-arrow-rotate-left"></i>
+							</a>
+						</div>
+					</div>
+				</header>
+
+				<main class="msger-chat" id="messagesList">
+					<!-- Messages will be appended here dynamically -->
+				</main>
+
+				<form
+					class="msger-inputarea"
+					onsubmit="sendMessage(); return false;"
+				>
+					<input
+						type="hidden"
+						id="receiverInput"
+						value="@ViewBag.dentistID"
+					/>
+					<input
+						type="text"
+						id="messageInput"
+						class="msger-input"
+						placeholder="Nhập tin nhắn..."
+					/>
+					<button type="submit" class="msger-send-btn">
+						<i class="fa-solid fa-paper-plane"></i>
 					</button>
-				</div>
-				<div class="content__form__separate">Hoặc</div>
-				<form action="/" method="POST" class="content__form__system">
-					<div class="username">
-						<i class="fa-solid fa-envelope"></i>
-						<input type="email" placeholder="Nhập Email của bạn" />
-					</div>
-					<div class="password">
-						<i class="fa-solid fa-lock"></i>
-						<input
-							type="password"
-							id="passwordInput"
-							placeholder="Mật khẩu"
-						/>
-						<i
-							class="fa-solid fa-eye"
-							id="eyeIcon"
-							onclick="togglePasswordVisibility()"
-						></i>
-						<i
-							class="fa-solid fa-eye-slash"
-							id="eyeSlashIcon"
-							onclick="togglePasswordVisibility()"
-							style="display: none"
-						></i>
-					</div>
-					<div class="remember__forgot">
-						<label class="remember">
-							<input type="checkbox" />
-							Tự động đăng nhập
-						</label>
-						<a href="./forgot.html" class="forgot">
-							Quên mật khẩu?
-						</a>
-					</div>
-					<div class="cta-btn">
-						<input
-							type="submit"
-							value="Đăng nhập"
-							class="content__form__system__submit"
-						/>
-						<br />
-						<a
-							class="content__form__system__register__navigation"
-							href="./register.html"
-						>
-							Bạn chưa có tài khoản? Đăng ký ngay!
-						</a>
-					</div>
 				</form>
-			</div>
+			</section>
 		</div>
 
 		<footer class="footer">
@@ -162,7 +163,7 @@
 							<a href="./speciality.html">Chuyên khoa</a>
 						</li>
 						<li>
-							<a href="#!">Blogs</a>
+							<a href="./news.html">Tin tức</a>
 						</li>
 						<li>
 							<a href="./contact.html">Liên hệ</a>
@@ -300,21 +301,63 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
 		<script>
-			function togglePasswordVisibility() {
-				var passwordInput = document.getElementById("passwordInput");
-				var eyeIcon = document.getElementById("eyeIcon");
-				var eyeSlashIcon = document.getElementById("eyeSlashIcon");
+			const userID = "@ViewBag.patientID";
+			const connection = new signalR.HubConnectionBuilder()
+				.withUrl("/chathub?userID=" + encodeURIComponent(userID))
+				.configureLogging(signalR.LogLevel.Information)
+				.build();
 
-				if (passwordInput.type === "password") {
-					passwordInput.type = "text";
-					eyeIcon.style.display = "none";
-					eyeSlashIcon.style.display = "inline-block";
-				} else {
-					passwordInput.type = "password";
-					eyeIcon.style.display = "inline-block";
-					eyeSlashIcon.style.display = "none";
-				}
+			connection.on("ReceiveMessage", (user, message) => {
+				console.log(`Message received from ${user}: ${message}`);
+				const msg = document.createElement("div");
+				msg.classList.add(
+					"msg",
+					user === userID ? "right-msg" : "left-msg"
+				);
+				msg.innerHTML = `
+                                <div class="msg-img" style="background-image: url(${
+									user === userID
+										? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744"
+										: "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FPatient%2Fuser.png?alt=media&token=9010a4a6-0220-4d29-bb85-1fe425100744"
+								})"></div>
+                        <div class="msg-bubble">
+                            <div class="msg-info">
+                                <div class="msg-info-name">${
+									user === userID ? "Bạn" : "Nha Sĩ"
+								}</div>
+                                <div class="msg-info-time">${new Date().toLocaleTimeString()}</div>
+                            </div>
+                            <div class="msg-text">${message}</div>
+                        </div>
+                    `;
+				document.getElementById("messagesList").appendChild(msg);
+				document.getElementById("messagesList").scrollTop =
+					document.getElementById("messagesList").scrollHeight;
+			});
+
+			connection
+				.start()
+				.then(() => console.log("Connection established."))
+				.catch((err) =>
+					console.error("Connection failed: ", err.toString())
+				);
+
+			function sendMessage() {
+				const receiver = document.getElementById("receiverInput").value;
+				const message = document.getElementById("messageInput").value;
+				if (!message) return;
+				console.log(`Sending message to ${receiver}: ${message}`);
+				connection
+					.invoke("SendMessageToUser", receiver, message)
+					.then(() => {
+						document.getElementById("messageInput").value = "";
+						console.log("Message sent successfully.");
+					})
+					.catch((err) =>
+						console.error("Send message failed: ", err.toString())
+					);
 			}
 		</script>
 	</body>

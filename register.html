@@ -23,12 +23,40 @@
 		<link rel="stylesheet" href="./assets/css/header.css" />
 		<link rel="stylesheet" href="./assets/css/footer.css" />
 		<link rel="stylesheet" href="./assets/css/authentication.css" />
+		<style>
+			.marquee {
+				overflow: hidden;
+				white-space: nowrap;
+				box-sizing: border-box;
+				width: 1280px;
+				margin: 0 auto;
+			}
+
+			.marquee p {
+				display: inline-block;
+				padding-left: 100%; /* Bắt đầu từ bên phải của container */
+				animation: marquee 20s linear infinite; /* Thời gian chạy và lặp lại */
+			}
+
+			@keyframes marquee {
+				from {
+					transform: translateX(0);
+				}
+				to {
+					transform: translateX(-100%);
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<header class="header">
 			<nav class="header__navbar">
 				<a href="#!">
-					<img src="./assets/images/logo.png" class="navbar__logo" alt="logo" />
+					<img
+						src="./assets/images/logo.png"
+						class="navbar__logo"
+						alt="logo"
+					/>
 				</a>
 				<ul class="navbar__list">
 					<li>
@@ -55,70 +83,132 @@
                     <img src="images/avatar.jpg" alt="" />
                 </a>
                 <a href="/" class="navbar__auth__booking"> Đặt lịch khám </a> -->
-					<a href="./login.html" class="navbar__auth__login"> Đăng nhập </a>
-					<a href="./register.html" class="navbar__auth__register"> Đăng ký </a>
+					<a href="./login.html" class="navbar__auth__login">
+						Đăng nhập
+					</a>
+					<a href="./register.html" class="navbar__auth__register">
+						Đăng ký
+					</a>
 				</div>
 			</nav>
 		</header>
 
-		<div class="content">
-			<div class="content__img">
-				<img src="./assets/images/register-image.png" alt="doctor" />
-				<div class="content__img__quote">
-					<p class="quote">
-						“Effort is like toothpaste; you can usually squeeze out just a
-						little bit more.” <br />~ Dr Andre Jackson
-					</p>
-					<p class="summary">Manager of Smile Pvt.Ltd</p>
-				</div>
+		<div>
+			<div class="marquee">
+				<p>
+					Đây là các dòng chữ để test, Đây là các dòng chữ để test,
+					Đây là các dòng chữ để test, Đây là các dòng chữ để test,
+					Đây là các dòng chữ để test, Đây là các dòng chữ để test
+				</p>
 			</div>
-			<div class="content__form register">
-				<h1 class="content__form__title">Đăng ký tài khoản</h1>
-				<div class="content__form__login">
-					<button type="button" class="content__form__login__google">
-						<img src="./assets/images/Google.png" alt="" />
-						Đăng nhập bằng Google
-					</button>
+			<div class="content">
+				<div class="content__img">
+					<img
+						src="./assets/images/register-image.png"
+						alt="doctor"
+					/>
+					<div class="content__img__quote">
+						<p class="quote">
+							“Effort is like toothpaste; you can usually squeeze
+							out just a little bit more.” <br />~ Dr Andre
+							Jackson
+						</p>
+						<p class="summary">Manager of Smile Pvt.Ltd</p>
+					</div>
 				</div>
-				<div class="content__form__separate">Hoặc</div>
-				<form action="/" method="POST" class="content__form__system">
-					<div class="username">
-						<i class="fa-solid fa-user"></i>
-						<input type="text" placeholder="Tên tài khoản" />
-					</div>
-					<div class="phone">
-						<i class="fa-solid fa-phone"></i>
-						<input type="text" placeholder="Nhập số điện thoại" />
-					</div>
-					<div class="email">
-						<i class="fa-solid fa-envelope"></i>
-						<input type="email" placeholder="Nhập Email của bạn" />
-					</div>
-					<div class="password">
-						<i class="fa-solid fa-lock"></i>
-						<input type="text" placeholder="Nhập mật khẩu" />
-					</div>
-					<label class="policies_check">
-						<input type="checkbox" />
-						Tôi đã đọc và đồng ý với Điều khoản Dịch vụ
-					</label>
-					<div class="cta_btn">
-						<input
-							type="submit"
-							value="Đăng ký"
-							class="content__form__system__submit"
-						/>
-						<br />
-						<a
-							class="content__form__system__login__navigation"
-							href="./login.html"
+				<div class="content__form register">
+					<h1 class="content__form__title">Đăng ký tài khoản</h1>
+					<div class="content__form__login">
+						<button
+							type="button"
+							class="content__form__login__google"
 						>
-							<strong>Đăng nhập</strong> nếu bạn đã có tài khoản
-						</a>
+							<img src="./assets/images/Google.png" alt="" />
+							Đăng nhập bằng Google
+						</button>
 					</div>
-				</form>
+					<div class="content__form__separate">Hoặc</div>
+					<form
+						action="/"
+						method="POST"
+						class="content__form__system"
+					>
+						<div class="username">
+							<i class="fa-solid fa-user"></i>
+							<input type="text" placeholder="Tên tài khoản" />
+						</div>
+						<div class="phone">
+							<i class="fa-solid fa-phone"></i>
+							<input
+								type="text"
+								placeholder="Nhập số điện thoại"
+							/>
+						</div>
+						<div class="email">
+							<i class="fa-solid fa-envelope"></i>
+							<input
+								type="email"
+								placeholder="Nhập Email của bạn"
+							/>
+						</div>
+						<div class="password password1">
+							<i class="fa-solid fa-lock"></i>
+							<input
+								type="password"
+								class="passwordInput"
+								placeholder="Nhập mật khẩu"
+							/>
+							<i
+								class="fa-solid fa-eye eyeIcon"
+								onclick="togglePasswordVisibility('password1')"
+							></i>
+							<i
+								class="fa-solid fa-eye-slash eyeSlashIcon"
+								onclick="togglePasswordVisibility('password1')"
+								style="display: none"
+							></i>
+						</div>
+						<div class="password password2">
+							<i class="fa-solid fa-lock"></i>
+							<input
+								type="password"
+								class="passwordInput"
+								placeholder="Nhập lại mật khẩu"
+							/>
+							<i
+								class="fa-solid fa-eye eyeIcon"
+								onclick="togglePasswordVisibility('password2')"
+							></i>
+							<i
+								class="fa-solid fa-eye-slash eyeSlashIcon"
+								onclick="togglePasswordVisibility('password2')"
+								style="display: none"
+							></i>
+						</div>
+						<label class="policies_check">
+							<input type="checkbox" />
+							Tôi đã đọc và đồng ý với Điều khoản Dịch vụ
+						</label>
+						<div class="cta_btn">
+							<input
+								type="submit"
+								value="Đăng ký"
+								class="content__form__system__submit"
+							/>
+							<br />
+							<a
+								class="content__form__system__login__navigation"
+								href="./login.html"
+							>
+								<strong>Đăng nhập</strong> nếu bạn đã có tài
+								khoản
+							</a>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
+
 		<footer class="footer">
 			<div class="footer__container">
 				<div class="footer__navigation">
@@ -155,7 +245,11 @@
 					<div class="footer__terms__address__contact col-md-6">
 						<div class="phone__number footer__terms__list">
 							<span>Số điện thoại: </span
-							><a href="tel:0123456789" class="footer__terms__links">00 có</a>
+							><a
+								href="tel:0123456789"
+								class="footer__terms__links"
+								>00 có</a
+							>
 						</div>
 						<div class="email__contact footer__terms__list">
 							<span>Email: </span
@@ -166,20 +260,25 @@
 							>
 						</div>
 						<div class="address footer__terms__list">
-							<span>Địa chỉ: </span>Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ,
-							Thành Phố Thủ Đức, Thành phố Hồ Chí Minh
+							<span>Địa chỉ: </span>Lô E2a-7, Đường D1, Đ. D1,
+							Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí
+							Minh
 						</div>
 					</div>
 					<div class="footer__terms__services col-md-2 text-start">
 						<div class="footer__terms__title">Dịch vụ Y tế</div>
 						<ul>
 							<li>
-								<a href="./clinic.html" class="footer__terms__links"
+								<a
+									href="./clinic.html"
+									class="footer__terms__links"
 									>Đặt khám tại cơ sở</a
 								>
 							</li>
 							<li>
-								<a href="./speciality.html" class="footer__terms__links"
+								<a
+									href="./speciality.html"
+									class="footer__terms__links"
 									>Đặt khám theo chuyên khoa</a
 								>
 							</li>
@@ -189,10 +288,14 @@
 						<div class="footer__terms__title">Hướng dẫn</div>
 						<ul>
 							<li>
-								<a href="#!" class="footer__terms__links">Đặt lịch khám</a>
+								<a href="#!" class="footer__terms__links"
+									>Đặt lịch khám</a
+								>
 							</li>
 							<li>
-								<a href="#!" class="footer__terms__links">Câu hỏi thường gặp</a>
+								<a href="#!" class="footer__terms__links"
+									>Câu hỏi thường gặp</a
+								>
 							</li>
 						</ul>
 					</div>
@@ -200,15 +303,21 @@
 						<div class="footer__terms__title">Về DentalCare</div>
 						<ul>
 							<li>
-								<a href="./about.html" class="footer__terms__links"
+								<a
+									href="./about.html"
+									class="footer__terms__links"
 									>Giới thiệu</a
 								>
 							</li>
 							<li>
-								<a href="#!" class="footer__terms__links">Điều khoản dịch vụ</a>
+								<a href="#!" class="footer__terms__links"
+									>Điều khoản dịch vụ</a
+								>
 							</li>
 							<li>
-								<a href="#!" class="footer__terms__links">Chính sách bảo mật</a>
+								<a href="#!" class="footer__terms__links"
+									>Chính sách bảo mật</a
+								>
 							</li>
 						</ul>
 					</div>
@@ -222,16 +331,28 @@
 							Liên hệ với chúng tôi:
 						</div>
 						<a href="#!">
-							<img src="./assets/images/facebook.png" alt="facebook" />
+							<img
+								src="./assets/images/facebook.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
-							<img src="./assets/images/instagram.png" alt="facebook" />
+							<img
+								src="./assets/images/instagram.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
-							<img src="./assets/images/youtube.png" alt="facebook" />
+							<img
+								src="./assets/images/youtube.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
-							<img src="./assets/images/linkedin.png" alt="facebook" />
+							<img
+								src="./assets/images/linkedin.png"
+								alt="facebook"
+							/>
 						</a>
 						<a href="#!">
 							<img src="./assets/images/X.png" alt="facebook" />
@@ -250,5 +371,28 @@
 			src="https://kit.fontawesome.com/53f42380b0.js"
 			crossorigin="anonymous"
 		></script>
+		<script>
+			function togglePasswordVisibility(passwordGroup) {
+				var passwordInput = document.querySelector(
+					"." + passwordGroup + " .passwordInput"
+				);
+				var eyeIcon = document.querySelector(
+					"." + passwordGroup + " .eyeIcon"
+				);
+				var eyeSlashIcon = document.querySelector(
+					"." + passwordGroup + " .eyeSlashIcon"
+				);
+
+				if (passwordInput.type === "password") {
+					passwordInput.type = "text";
+					eyeIcon.style.display = "none";
+					eyeSlashIcon.style.display = "inline-block";
+				} else {
+					passwordInput.type = "password";
+					eyeIcon.style.display = "inline-block";
+					eyeSlashIcon.style.display = "none";
+				}
+			}
+		</script>
 	</body>
 </html>
