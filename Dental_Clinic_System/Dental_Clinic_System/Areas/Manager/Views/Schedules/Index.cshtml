@@ -245,10 +245,13 @@
 				var checkAm = group.Any(g => g.TimeSlotID == 1);
 				var checkPm = group.Any(g => g.TimeSlotID == 2);
 				var checkConTrongLe = group.Any(g => g.ScheduleStatus == "Còn Trống");
+				var checkDaDat = group.Any(g => g.ScheduleStatus == "Đã Đặt");
+				var checkDaHuy = group.Any(g => g.ScheduleStatus == "Đã Hủy");
+				var checkNghi = group.Any(g => g.ScheduleStatus == "Nghỉ");
 				var checkFuture = slotIDs_FutureAppts.Count > 0;
-
+				var checkDaHuyOnly = checkAm != true && checkPm != true && checkConTrongLe != true && checkFuture != true && checkDaDat != true && checkNghi != true && checkDaHuy == true;
 				
-				if (ViewBag.Status != "Còn Trống" || checkAm == true || checkPm == true || checkConTrongLe == true || checkFuture == true)
+				if ((ViewBag.Status != "Còn Trống" || checkAm == true || checkPm == true || checkConTrongLe == true || checkFuture == true) && checkDaHuyOnly == false )
 				{
 					List<int> slotIDs_DaDat = new();
 					List<int> slotIDs_Nghi = new();
@@ -418,7 +421,7 @@
 								<i class="bx bxs-trash"></i>
 							</a> *@
 
-							<form asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link inline">
+							<form asp-action="Delete" asp-route-dentistId="@group.Key.DentistID" asp-route-date="@group.Key.Date.ToString("yyyy-MM-dd")" class="button-link inline" class="confirm-link">
 								<button type="submit" class="close-btn">
 									<i class="bx bxs-trash"></i>
 								</button>
@@ -435,9 +438,52 @@
 <!-- ========== PAGINATION  ========== -->
 <ul id="pagination" class="pagination">
 </ul>
+<!-- Modal xác nhận -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content mx-auto" style="width:40%;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="confirmModalLabel" style="font-size:20px;">Xác Nhận Xóa Lịch Khám</h5>
+				<button type="button" class="btn-close" style="font-size:20px;" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" style="font-size:20px;">
+				<p style="color: red">Lưu ý</p>
+				<p>Hành động này xóa tất cả các lịch "Còn Trống" (chưa ai đặt lịch). </p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size:20px;">Hủy</button>
+				<button type="button" class="btn btn-primary" id="confirmAction" style="font-size:20px;">Xác Nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 @section Scripts {
 	<script>
+		//Phần load cho trạng thái của các nút bấm
+		document.addEventListener('DOMContentLoaded', () => {
+			const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+			let formToSubmit = null;
+
+			document.querySelectorAll('form .close-btn').forEach(button => {
+				button.addEventListener('click', (e) => {
+					e.preventDefault();
+					formToSubmit = button.closest('form');
+					confirmModal.show();
+				});
+			});
+
+			document.getElementById('confirmAction').addEventListener('click', () => {
+				if (formToSubmit) {
+					formToSubmit.submit();
+				}
+			});
+		});
+	
+	</script>
+	
+	<script>
+		// Filter chạy ngay khi chọn bất kì value khác value hiện tại đang có
 		document.addEventListener('DOMContentLoaded', function () {
 			var form = document.getElementById('filterForm');
 

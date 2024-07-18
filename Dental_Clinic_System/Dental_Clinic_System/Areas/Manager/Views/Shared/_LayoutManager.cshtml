@@ -131,6 +131,7 @@
                         <span class="menu-icon"><i class="bx bxs-user"></i></span>Tài khoản
                     </a>
                 </li>
+                
                 <hr/>
                 <!-- ====================== -->
                 <li class="nav-item menu-items">
@@ -157,7 +158,7 @@
 
                             <li class="nav-item">
                                 <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec2" asp-controller="Schedules" asp-action="Index">
-                                    <i class="fa-solid bx bxs-dashboard"></i> Lịch đã tạo
+                                    <span class="menu-icon"><i class="fa-solid bx bxs-dashboard"></i>  </span> Lịch đã tạo
                                 </a>
                             </li>
 
@@ -168,7 +169,7 @@
                             </li> *@
                             <li class="nav-item" title="Tạo lịch khám theo tuần">
                                 <a style="padding-left: 40px; font-size: 1.4rem" class="nav-link Lich_lam_viec1" asp-controller="Schedules" asp-action="GetWorkingSchedule">
-                                    <i class="fa-solid bx bxs-dashboard"></i> Lịch làm việc
+                                    <span class="menu-icon"><i class="fa-solid bx bxs-dashboard"></i>  </span>Lịch làm việc
                                 </a>
                             </li>
                         </ul>
@@ -177,16 +178,26 @@
                 <!-- ====================== -->
                 <li class="nav-item">
                     <a class="Quan_ly_dat_lich" asp-controller="Schedules" asp-action="GetBookedSchedule">
-                        <i class="fa-solid fa-calendar-days"></i> Quản lý đặt lịch
+                        <span class="menu-icon"><i class="fa-solid fa-calendar-days"></i> </span> Quản lý đặt lịch
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="Xem_lich_su_dat_lich" asp-controller="Schedules" asp-action="ViewHistory">
-                        <i class="bx bx-history"></i> Xem lịch sử đặt lịch
+                        <span class="menu-icon"><i class="bx bx-history"></i> </span> Lịch sử đặt lịch
                     </a>
                 </li>
                 
-                <hr/>
+                <hr />
+                <li class="nav-item">
+                    <a asp-controller="Clinics" asp-action="Edit" class="Quan_ly_phong_kham">
+                        <span class="menu-icon"><i class="fa-solid fa-house-chimney-medical"></i></span>Thông tin phòng khám
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="Quan_ly_danh_gia" asp-controller="Reviews" asp-action="Index">
+                        <span class="menu-icon"><i class="fa-solid fa-eye"></i></span>Đánh giá phòng khám
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a asp-controller="Dentists" asp-action="Index" class="Quan_ly_nha_si">
                         <span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản lý nha sĩ
@@ -198,10 +209,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Clinics" asp-action="Edit" class="Quan_ly_phong_kham">
-                        <span class="menu-icon"><i class="fa-solid fa-house-chimney-medical"></i></span>Thông tin phòng khám
+                    <a asp-controller="" asp-action="" class="Quan_ly_chat">
+                        <span class="menu-icon"><i class="bx bx-list-ul"></i></span>Quản lý chat
                     </a>
                 </li>
+                
             </ul>
 
         </nav>

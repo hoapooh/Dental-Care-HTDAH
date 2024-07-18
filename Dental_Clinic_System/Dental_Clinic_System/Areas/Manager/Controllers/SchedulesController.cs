@@ -344,8 +344,8 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				_context.Update(denses);
 			}
 			await _context.SaveChangesAsync();
-			return RedirectToAction("GetWorkingSchedule");
-		}
+            return RedirectToAction("GetWorkingSchedule");
+        }
 		#endregion
 
 		#region Tạo lịch theo tuần - dựa trên lịch hàng tuần (quy định sáng, chiều có làm việc ko)
@@ -361,12 +361,11 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			{   // Check if session has expired, log out
 				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
 			}
-			if (!string.IsNullOrEmpty(selectedDates))
+            List<DateOnly> dates = selectedDates.Split(',')
+                    .Select(date => DateOnly.ParseExact(date.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture))
+                    .ToList();
+            if (!string.IsNullOrEmpty(selectedDates))
 			{
-				List<DateOnly> dates = selectedDates.Split(',')
-					.Select(date => DateOnly.ParseExact(date.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture))
-					.ToList();
-
 				// Tạo dictionary để dễ dàng map session ID với ngày và time slot
 				var sessionToDayTime = new Dictionary<int, (int, int)>
 				{
@@ -409,8 +408,8 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				_context.AddRange(newScheList);
 				await _context.SaveChangesAsync();
 			}
-
-			return RedirectToAction("Index");
+			TempData["ToastMessageSuccessTempData"] = "Thành công tạo lịch khám từ ngày " + dates[0].ToString("dd/MM/yyyy") + " đến " + dates[6].ToString("dd/MM/yyyy");
+            return RedirectToAction("GetWorkingSchedule");
 		}
 		#endregion
 
@@ -524,7 +523,42 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("DentistIDs, Dates, TimeSlots")] ScheduleVM schedule)
 		{
-			if (schedule.DentistIDs.Count > 0 && schedule.Dates != null && schedule.TimeSlots.Count > 0)
+            var clinicId = HttpContext.Session.GetInt32("clinicId");
+            if (clinicId == null)
+            {   // Check if session has expired, log out
+                return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
+            }
+            var dentists = _context.Dentists
+                           .Join(_context.Accounts,
+                                 dentist => dentist.AccountID,
+                                 account => account.ID,
+                                 (dentist, account) => new
+                                 {
+                                     DentistID = dentist.ID,
+                                     FullName = account.LastName + " " + account.FirstName,
+                                     ClinicID = dentist.ClinicID,
+                                     Status = account.AccountStatus
+                                 })
+                           .ToList();
+
+            ViewData["DentistID"] = new SelectList(dentists.Where(d => d.ClinicID == clinicId && d.Status == "Hoạt Động"), "DentistID", "FullName");
+			//---------------------------------------------------------------------------------------------------------------------------------------
+            if (schedule.DentistIDs.Count == 0)
+			{
+				TempData["ToastMessageFailTempData"] = "Bạn chưa chọn nha sĩ nào.";
+                return View(schedule);
+            } 
+			if (schedule.Dates == null)
+			{
+                TempData["ToastMessageFailTempData"] = "Bạn chưa chọn ngày nào.";
+                return View(schedule);
+            }
+            if (schedule.TimeSlots.Count == 0)
+            {
+                TempData["ToastMessageFailTempData"] = "Bạn chưa chọn khung giờ nào.";
+                return View(schedule);
+            }
+            if (schedule.DentistIDs.Count > 0 && schedule.Dates != null && schedule.TimeSlots.Count > 0)
 			{
 				var newScheList = new List<Schedule>();
 				List<DateOnly> dateList = ConvertStringToDateOnlyList(schedule.Dates);
@@ -554,27 +588,9 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				//------------
 				_context.AddRange(newScheList);
 				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
+				TempData["ToastMessageSuccessTempData"] = "Thành công tạo lịch khám.";
+                return RedirectToAction(nameof(Index));
 			}
-			var clinicId = HttpContext.Session.GetInt32("clinicId");
-			if (clinicId == null)
-			{   // Check if session has expired, log out
-				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
-			}
-			var dentists = _context.Dentists
-						   .Join(_context.Accounts,
-								 dentist => dentist.AccountID,
-								 account => account.ID,
-								 (dentist, account) => new
-								 {
-									 DentistID = dentist.ID,
-									 FullName = account.LastName + " " + account.FirstName,
-									 ClinicID = dentist.ClinicID,
-									 Status = account.AccountStatus
-								 })
-						   .ToList();
-
-			ViewData["DentistID"] = new SelectList(dentists.Where(d => d.ClinicID == clinicId && d.Status == "Hoạt Động"), "DentistID", "FullName");
 			return View(schedule);
 		}
 		private List<DateOnly> ConvertStringToDateOnlyList(string dateString)
@@ -689,7 +705,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		public async Task<IActionResult> Delete(int? dentistId, DateTime? date) 
 		{
 			var scheduleSubList = _context.Schedules.Where(p =>
-				p.DentistID == dentistId && p.Date == DateOnly.FromDateTime(date.Value) && p.ScheduleStatus != "Đã Đặt" && p.TimeSlotID != 31);
+				p.DentistID == dentistId && p.Date == DateOnly.FromDateTime(date.Value) && p.ScheduleStatus != "Đã Đặt" && p.ScheduleStatus != "Đã Hủy" && p.TimeSlotID != 31);
 			if (scheduleSubList.Any())
 			{
 				_context.Schedules.RemoveRange(scheduleSubList);
