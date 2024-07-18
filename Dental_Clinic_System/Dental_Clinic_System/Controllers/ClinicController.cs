@@ -159,83 +159,6 @@ namespace Dental_Clinic_System.Controllers
         }
 
         [HttpGet]
-        //     public async Task<IActionResult> GetSchedules(int? dentistID)
-        //     {
-        //         if (dentistID == null || dentistID == 0)
-        //         {
-        //             return NotFound("Không tìm thấy nha sĩ này");
-        //         }
-
-        //         //Lấy thông tin phòng khám từ nha sĩ
-        //         var dentist = _context.Dentists.Include(d => d.Clinic).First(d => d.ID == dentistID);
-
-        //         //Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
-        //         var clinic = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefaultAsync(m => m.ID == dentist.Clinic.ID);
-        //         var amID = clinic.AmWorkTimeID;
-        //         var pmID = clinic.PmWorkTimeID;
-        //         List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
-        //         List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
-        //         foreach (var s in amTimeSlots)
-        //         {
-        //             Console.WriteLine(s.StartTime + "         " + s.EndTime);
-        //         }
-
-        //         foreach (var s in pmTimeSlots)
-        //         {
-        //             Console.WriteLine(s.StartTime + "         " + s.EndTime);
-        //         }
-
-        //         //Generate lịch làm việc ảo dựa theo dentist ID. 
-
-        //         //var today = DateOnly.FromDateTime(DateTime.Today);
-        //         DateTime utc7Now = Util.GetUtcPlus7Time().AddHours(12); //Thêm thời gian 12 tiếng cho phù hợp với business rule
-        //         DateOnly todayDate = DateOnly.FromDateTime(utc7Now);
-        //         TimeOnly todayTime = TimeOnly.FromDateTime(utc7Now);
-        //         var schedules = _context.Schedules
-        //                 .Include(s => s.Dentist)
-        //                 //.ThenInclude(d => d.Account)
-        //                 .Include(s => s.TimeSlot)
-        //                 .Where(s => (s.Date >= todayDate && s.TimeSlot.StartTime >= todayTime) && s.DentistID == dentistID); // && s.ScheduleStatus == "Còn Trống"
-        //																														   //.Select(s => new
-        //																														   //{
-        //																														   //    s.DentistID,
-        //																														   //    Date = s.Date.ToString("yyyy-MM-dd"),
-        //																														   //    StartTime = s.TimeSlot.StartTime.ToString("HH:mm"),
-        //																														   //    EndTime = s.TimeSlot.EndTime.ToString("HH:mm"),
-        //																														   //    scheduleID = s.ID
-        //																														   //})
-        //																														   //.ToList();
-
-        ////Làm sao để lấy được danh sách các future appointment
-        ////
-        ////dính tới ngày làm việc của dentist này với số lượng tối đa là 2 slot 
-
-        //var groupData = schedules.GroupBy(s => new { s.Date, s.DentistID });
-        //         groupData.Select(gd => new
-        //{
-        //	Date = gd.Key.Date,
-        //	DentistID = gd.Key.DentistID,
-        //	TimeSlots = gd.Select(s => new
-        //	{
-        //		StartTime = s.TimeSlot.StartTime,
-        //		EndTime = s.TimeSlot.EndTime,
-        //		ScheduleID = s.ID
-        //	})
-        //});
-        //         foreach (var group in groupData)
-        //         {
-        //             Console.WriteLine(group.Key.Date);
-        //         }
-
-        //         foreach (var s in schedules)
-        //         {
-        //             Console.WriteLine(s);
-        //         }
-
-        //         return Json(groupData);
-        //     }
-
-
         public async Task<IActionResult> GetSchedules(int? dentistID)
         {
             // Lấy thông tin phòng khám từ nha sĩ
@@ -270,6 +193,11 @@ namespace Dental_Clinic_System.Controllers
                 timeSlotId = s.TimeSlot.ID,
                 date = s.Date
             }).Distinct().ToList();
+
+            // lấy các periodic appointment của nha sĩ
+            var periodicAppointments = _context.PeriodicAppointments
+				.Where(pa => pa.Dentist_ID == dentistID && pa.PeriodicAppointmentStatus == "Đã Chấp Nhận")
+				.ToList();
 
             // tạo danh sách các time slot với thời gian 30 phút cho từng ngày
             var timeSlots = new List<object>();
@@ -313,20 +241,42 @@ namespace Dental_Clinic_System.Controllers
                             var key = new { Date = schedule.date, StartTime = startTime };
                             appointmentDict.TryGetValue(key, out var appointmentCount);
 
-                            if (schedule.date.ToDateTime(startTime) >= utc7Now && (appointmentCount < 2 || !appointmentDict.ContainsKey(key)))
-                            {
-                                Console.WriteLine(utc7Now);
-                                Console.WriteLine(schedule.date.ToDateTime(startTime));
-                                dailyTimeSlots.Add(new
-                                {
-                                    Date = schedule.date.ToString("yyyy-MM-dd"),
-                                    StartTime = startTime.ToString("HH:mm"),
-                                    EndTime = nextTime.ToString("HH:mm"),
-                                    ScheduleID = (int?)null
-                                });
-                            }
+                            bool skipTimeSlot = false;
 
-                            startTime = nextTime;
+						    foreach (var period in periodicAppointments)
+						    {
+                                var start = period.DesiredDate.ToDateTime(period.StartTime);
+                                var end = period.DesiredDate.ToDateTime(period.EndTime);
+							    if ((schedule.date.ToDateTime(startTime) < end && schedule.date.ToDateTime(endTime) > end) ||
+									(schedule.date.ToDateTime(startTime) < start && schedule.date.ToDateTime(endTime) > start) ||
+									(schedule.date.ToDateTime(startTime) >= start && schedule.date.ToDateTime(endTime) <= end))
+                                {
+                                    skipTimeSlot = true;
+                                    break;
+                                }
+
+						    }
+
+						    if (skipTimeSlot)
+						    {
+							    startTime = nextTime;
+							    continue;
+						    }
+
+						    if (schedule.date.ToDateTime(startTime) >= utc7Now && (appointmentCount < 2 || !appointmentDict.ContainsKey(key)))
+						    {
+							        Console.WriteLine(utc7Now);
+							        Console.WriteLine(schedule.date.ToDateTime(startTime));
+							        dailyTimeSlots.Add(new
+							        {
+								        Date = schedule.date.ToString("yyyy-MM-dd"),
+								        StartTime = startTime.ToString("HH:mm"),
+								        EndTime = nextTime.ToString("HH:mm"),
+								        ScheduleID = (int?)null
+							        });
+						    }
+
+						    startTime = nextTime;
                         }
                     }
 

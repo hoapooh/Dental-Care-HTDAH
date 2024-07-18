@@ -495,7 +495,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
             TempData["SuccessMessage"] = "Thay đổi thành công!";
 
-            return View();
+            return RedirectToAction("dentistdescription");
         }
 
         #endregion

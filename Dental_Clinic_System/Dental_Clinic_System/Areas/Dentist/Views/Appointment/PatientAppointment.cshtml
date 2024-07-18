@@ -90,7 +90,8 @@
 						}
 						else if (appointment.AppointmentStatus == "Đã Khám")
 						{
-							<button type="button" class="btn show-popup" data-appointment-id="@appointment.ID"
+							<button type="button" class="btn show-popup" 
+									data-appointment-id="@appointment.ID"
 									data-medical-report-id="@appointment.Transactions.Where(t => t.AppointmentID == appointment.ID).First().MedicalReportID"
 									data-specialty="@appointment.Specialty.Name"
 									data-patient-name="@appointment.PatientRecords.FullName"
@@ -107,9 +108,17 @@
 									data-appointment-price="@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", appointment.TotalPrice)"
 									data-appointment-status="@appointment.AppointmentStatus"
 									data-input-description="@appointment.Description"
-									data-input-note="@appointment.Note">
+									data-input-note="@appointment.Note"
+									data-is-export=@appointment.IsExport >
 								<p style="font-size:20px; color:chocolate; text-decoration:underline;">Chi Tiết Đơn</p>
 							</button>
+							if(appointment.PatientRecords.PeriodicAppointments.Where(pr => pr.AppointmentID == appointment.ID).ToList().Count != 0)
+							{
+								<span> | </span>
+								<button type="button">
+									<a style="color:blueviolet; text-decoration:underline;" asp-controller="appointment" asp-action="periodicappointment" asp-route-appointmentID="@appointment.ID">Đơn định kỳ</a>
+								</button>
+							}
 						}
 					</td>
 				</tr>
@@ -241,8 +250,8 @@
 			**Nếu không chọn ngày khám thì sẽ không tạo lịch điều trị/ định kỳ</br>
 			***Sau khi ấn "Xuất PDF" sẽ không thể chỉnh sửa hay tạo lại thời gian khám định kỳ nữa.</br>
 		</sup>
-		<div style="margin-top:30px;font-size:15px;text-align: end;">
-			<button type="submit" class="btn btn-warning" style="font-size:15px;">Xuất PDF</button>
+		<div style="margin-top:30px;font-size:15px; display: flex;">
+			<button type="submit" class="btn btn-warning" id="exportBtn" style="font-size:15px; margin-right: 10px;">Xuất PDF</button>
 			<button type="button" class="btn btn-secondary" id="closePopup" style="font-size:15px;">Đóng</button>
 		</div>
 	</form>
@@ -257,6 +266,9 @@
 <script src="~/assets/js/mobiscroll.javascript.min.js"></script>
 
 <script>
+
+	let appointmentID = "";
+
 	//Phần load cho trạng thái của các nút bấm
 	document.addEventListener('DOMContentLoaded', () => {
 		const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
@@ -302,14 +314,12 @@
 				alert("Vui lòng nhập lý do hủy.");
 			}
 		});
-
-
 	});
 
 	//Phần load cho modal show ra của chi tiết đơn khám
 	document.querySelectorAll('.show-popup').forEach(button => {
 		button.addEventListener('click', (e) => {
-			const appointmentID = e.currentTarget.getAttribute('data-appointment-id');
+			appointmentID = e.currentTarget.getAttribute('data-appointment-id');
 			const specialtyName = e.currentTarget.getAttribute('data-specialty');
 			const patientName = e.currentTarget.getAttribute('data-patient-name');
 			const patientGender = e.currentTarget.getAttribute('data-patient-gender');
@@ -326,6 +336,14 @@
 			const medicalReportId = e.currentTarget.getAttribute('data-medical-report-id');
 			const description = e.currentTarget.getAttribute('data-input-description');
 			const note = e.currentTarget.getAttribute('data-input-note');
+			const isExport = e.currentTarget.getAttribute('data-is-export');
+			if (isExport === 'True') {
+				document.getElementById('exportBtn').style.display = 'none';
+			}
+			else if (isExport === 'False') {
+				document.getElementById('exportBtn').style.display = 'block';
+			}
+			console.log(appointmentID);
 
 
 			document.getElementById('appointmentID').value = appointmentID;
@@ -378,20 +396,15 @@
 			theme: "ios",
 			themeVariant: "light"
 		});
-
-
-		fetch('/dentist/dentistdetail/getscheduledates?dentistID=' + @ViewBag.dentistID + '&appointmentID=' + appointmentID)
+		fetch('/dentist/dentistdetail/getscheduledates?dentistID=' + @ViewBag.dentistID ) //+ '&appointmentID=' + @ViewBag.appointmentID )
 			.then(response => response.json())
 			.then(data => {
 
-
 				var periodicBookingDates = data.unavailableDates.map(function (item) {
-					console.log(item);
 					return {
 						dates: item.date
 					};
 				});
-
 
 				//Lấy CÁC ngày mà nha sĩ chọn
 				mobiscroll.datepicker('#period-booking-date', {
@@ -414,10 +427,7 @@
 						var selectedDates = event.value.map(function (date) {
 							return formatDateTime(date, true);
 						});
-
 						var selectedDatesJson = JSON.stringify(selectedDates);
-						console.log(selectedDatesJson);
-
 						document.getElementById("ngayhentaikham").value = selectedDatesJson;
 					}
 
@@ -430,7 +440,6 @@
 			.then(data => {
 				//Lấy danh sách giờ làm việc lý tưởng của nha sĩ trong phòng khám đó (cả sáng + chiều)
 				var workingTimeSlots = data.timeSlot.map(function (item) {
-					console.log(item);
 					return {
 						startTime: item.start,
 						endTime: item.end,
