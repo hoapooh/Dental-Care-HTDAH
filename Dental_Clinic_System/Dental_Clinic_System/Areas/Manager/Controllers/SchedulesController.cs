@@ -361,7 +361,19 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			{   // Check if session has expired, log out
 				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
 			}
-            List<DateOnly> dates = selectedDates.Split(',')
+			// Check if there are any active dentists in the clinic
+			var activeDentists = await _context.Dentists.Include(d => d.Account)
+				.Where(d => d.ClinicID == clinicId && d.Account.AccountStatus == "Hoạt Động")
+				.ToListAsync();
+
+			if (!activeDentists.Any())
+			{
+				TempData["ToastMessageFailTempData"] = "Phòng khám hiện không có nha sĩ nào làm việc.";
+				return RedirectToAction("GetWorkingSchedule");
+			}
+
+
+			List<DateOnly> dates = selectedDates.Split(',')
                     .Select(date => DateOnly.ParseExact(date.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture))
                     .ToList();
             if (!string.IsNullOrEmpty(selectedDates))
@@ -408,7 +420,17 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				_context.AddRange(newScheList);
 				await _context.SaveChangesAsync();
 			}
-			TempData["ToastMessageSuccessTempData"] = "Thành công tạo lịch khám từ ngày " + dates[0].ToString("dd/MM/yyyy") + " đến " + dates[6].ToString("dd/MM/yyyy");
+
+			var today = DateOnly.FromDateTime(DateTime.Today);
+			if (today < dates[0])
+			{
+				TempData["ToastMessageSuccessTempData"] = "Thành công tạo lịch khám từ ngày " + dates[0].ToString("dd/MM/yyyy") + " đến " + dates[6].ToString("dd/MM/yyyy");
+			}
+			else
+			{
+				TempData["ToastMessageSuccessTempData"] = "Thành công tạo lịch khám từ ngày " + today.ToString("dd/MM/yyyy") + " đến " + dates[6].ToString("dd/MM/yyyy");
+			}
+			
             return RedirectToAction("GetWorkingSchedule");
 		}
 		#endregion
