@@ -1,22 +1,52 @@
 ﻿@using System.Globalization
-@model IEnumerable<Dental_Clinic_System.Areas.Admin.ViewModels.TransactionVM>
+@model IEnumerable<Dental_Clinic_System.Models.Data.Transaction>
 
 @{
 	ViewData["Title"] = "Lịch sử giao dịch";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+	var filter = ViewData["Filter"] as string ?? "All";
+	var searchQuery = ViewData["Search"] as string ?? "";
 }
+
+<style>
+	.btn-group {
+		display: flex;
+	}
+
+	.btn-filter {
+		background-color: #343a40;
+		color: white;
+		padding: 10px 20px;
+		text-decoration: none;
+		border: none;
+		margin: 0 2px;
+		cursor: pointer;
+		transition: background-color 0.3s;
+	}
+
+		.btn-filter:hover, .btn-filter.active {
+			background-color: #007bff;
+		}
+
+		.btn-filter.active {
+			background-color: #007bff;
+			color: white;
+		}
+</style>
 
 <!-- account management header -->
 <div class="account__management__header">
 	<div class="title">Lịch sử giao dịch</div>
 	<div class="action-btn">
+		<a href="@Url.Action("TransactionHistory", "Transaction", new { filter = "All" })" class="btn btn-filter @(filter == "All" ? "active" : "")">Tất cả</a>
+		<a href="@Url.Action("TransactionHistory", "Transaction", new { filter = "ThanhToan" })" class="btn btn-filter @(filter == "ThanhToan" ? "active" : "")">Thanh Toán</a>
+		<a href="@Url.Action("TransactionHistory", "Transaction", new { filter = "HoanTien" })" class="btn btn-filter @(filter == "HoanTien" ? "active" : "")">Hoàn Tiền</a>
+		
 		<!-- TÌM KIẾM -->
-		@* <form action="~/Admin/Account/SearchLockedAccount" method="get">
-			<input type="hidden" name="role" />
-			<div class="search__bar">
-				<input type="search" placeholder="Tìm kiếm ..." name="keyword" />
-			</div>
-		</form> *@
+		<form method="get" action="@Url.Action("TransactionHistory", "Transaction")" class="search__bar">
+			<input type="hidden" name="filter" value="@filter" />
+			<input type="text" name="search" value="@searchQuery" placeholder="Tìm kiếm..." />
+		</form>
 
 	</div>
 </div>
@@ -31,10 +61,10 @@
 	<thead>
 		<tr>
 			<th class="text-center">STT</th>
+			<th>Tên phòng khám</th>
 			<th>Mã giao dịch</th>
-			<th class="text-center">Thời gian</th>
-			<th>Tên ngân hàng</th>
-			<th>Số tài khoản</th>
+			<th>Thời gian</th>
+			<th>Phương thức</th>
 			<th>Tổng tiền</th>
 			<th>Nội dung</th>
 			<th>Trạng thái</th>
@@ -49,10 +79,10 @@
 			{
 				<tr style="vertical-align: middle">
 					<td style="text-align: center">@stt</td>
+					<td>@transaction.Appointment.Schedule.Dentist.Clinic.Name</td>
 					<td>@transaction.TransactionCode</td>
-					<td style="text-align: center">@transaction.Date</td>
+					<td>@transaction.Date</td>
 					<td>@transaction.BankName</td>
-					<td>@transaction.BankAccountNumber</td>
 					<td>@string.Format(new CultureInfo("vi-VN"), "{0:#,##0.} đ", transaction.TotalPrice)</td>
 					<td>@transaction.Message</td>
 					<td>@transaction.Status</td>

@@ -319,8 +319,7 @@
                                                     appointment?.AppointmentStatus == "Chờ Xác Nhận" ? "#ffc107" :
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
-                                                );
-                                                                                                                                                                                                                                                                    ">
+                                                );">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -405,6 +404,13 @@
                                                         </form>
                                                         break;
                                                     case "Đã Chấp Nhận":
+                                                        @if (timeDifference.TotalHours >= 7)
+                                                        {
+                                                            <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
+                                                                Đổi lịch khám
+                                                            </button>
+                                                        }
+
                                                         <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
                                                             <input type="hidden" name="appointmentID" value="@appointment.ID" />
                                                             <input type="hidden" name="appointmentStatus" value="Đã Hủy" />
@@ -479,7 +485,7 @@
 
     <!-- Reschedule Modal -->
     <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 50% !important">
             <div class="modal-content">
                 <div class="modal-header" style="justify-content: center; border: 0; color: #fff;
     padding: 12px 16px;

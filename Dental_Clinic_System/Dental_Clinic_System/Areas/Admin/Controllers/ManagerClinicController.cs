@@ -831,6 +831,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                     Account_ID = user.ID,
                     Money = 0
                 };
+                _context.Add(managerBalance);
 
                 var clinic = new Clinic
                 {

@@ -3,6 +3,7 @@
     var specialtyID = ViewBag.SpecialtyID as int?;
     var specialtyName = ViewBag.SpecialtyName as string;
     var specialtyDesc = ViewBag.SpecialtyDesc as string; 
+    var provinces = ViewBag.Provinces as List<string>;
     ViewData["Title"] = specialtyName;
 }
 
@@ -31,13 +32,10 @@
                 <div class="location__filter__style">
                     <select name="location" id="location__filter">
                         <option value="all">Toàn quốc</option>
-                        <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-                        <option value="Hà Nội">Hà Nội</option>
-                        <option value="Hải Phòng">Hải Phòng</option>
-                        <option value="Nam Định">Nam Định</option>
-                        <option value="Bà Rịa - Vũng Tàu">
-                            Bà Rịa - Vũng Tàu
-                        </option>
+                        @foreach (var province in provinces)
+                        {
+                            <option value="@province">@province</option>
+                        }
                     </select>
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>

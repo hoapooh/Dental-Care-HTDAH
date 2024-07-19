@@ -35,7 +35,15 @@ namespace Dental_Clinic_System.Controllers
 									.Where(w => w.DentistSpecialties.Any(ds => ds.SpecialtyID == specialtyID && ds.Check == true))
 									.ToList();
 
-			ViewBag.SpecialtyID = specialtyID;
+            var provinces =  _context.Clinics
+                                  .Where(c => c.ClinicStatus == "Hoạt Động")
+                                  .Select(c => c.ProvinceName)
+                                  .Distinct()
+                                  .ToList();
+
+
+            ViewBag.SpecialtyID = specialtyID;
+            ViewBag.Provinces = provinces;
 
             var specialtyName = _context.Specialties
                             .Where(s => s.ID == specialtyID)

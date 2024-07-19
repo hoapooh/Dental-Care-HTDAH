@@ -46,15 +46,15 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 
 						var periodicAppointment = context.PeriodicAppointments
 												.Where(pa => pa.PeriodicAppointmentStatus == "Đã Chấp Nhận").ToList();
-						
+
 						var pendingAppointments = appointments.Where(a => a.AppointmentStatus == "Chờ Xác Nhận").ToList();
-						foreach (var appointment in appointments)
+
+						foreach (var appointment in pendingAppointments)
 						{
 							//Điều kiện để dc hoàn tiền:  1. Nha sĩ ko xác nhận cho tới trước giờ bắt đầu khám
 							//							  2. Thời gian hiện tại lớn hơn hoặc bằng 12h so với thời gian tạo hẹn
 							if (appointment.Schedule.Date.ToDateTime(appointment.Schedule.TimeSlot.StartTime) < now || appointment.CreatedDate.Value.AddHours(12) <= now)
 							{
-
 								//Refund lại tiền nếu quá giờ mà chưa xác nhận
 								var transactionCode = appointment.Transactions.FirstOrDefault()?.TransactionCode;
 								var amount = appointment.Transactions.FirstOrDefault()?.TotalPrice;
@@ -83,6 +83,9 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 										Status = "Thành Công"
 									};
 
+									//Thêm transaction vào DB
+									context.Transactions.Add(refundTransaction);
+
 									// Cập nhật trạng thái
 									appointment.AppointmentStatus = "Đã Hủy";
 									// Gửi lại mail xác nhận đã hủy cho khách hàng
@@ -92,13 +95,12 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 										var email = user.Email ?? "Rivinger7@gmail.com";
 										var subject = "Nhắc nhở hủy khám";
 
-										var message = $@"Xin chào {user.FirstName},
-
-Đây là thông báo về việc hủy lịch khám vào ngày {appointment.Schedule.Date.ToString("dd/MM/yyyy")} lúc {appointment.Schedule.TimeSlot.StartTime.ToString("HH:mm")}.
-Lý do: Quá giờ nha sĩ xác nhận đơn đặt khám của quý khách. Số tiền đặt cọc sẽ được hoàn trả lại vào tài khoản của quý khách, vui lòng kiểm tra.
-
-Trân trọng,
-Dental Care.";
+										var message = $@"<p>Xin chào <strong>{user.FirstName}</strong></p>," +
+													  $"<p>Đây là thông báo về việc hủy lịch khám vào ngày <strong>{appointment.Schedule.Date.ToString("dd/MM/yyyy")}</strong> lúc <strong>{appointment.Schedule.TimeSlot.StartTime.ToString("HH:mm")}</strong><br>." +
+													  $"<p><strong>Lý do:</strong> Quá giờ nha sĩ xác nhận đơn đặt khám của quý khách. Số tiền đặt cọc sẽ được hoàn trả lại vào tài khoản của quý khách, vui lòng kiểm tra.</p>" +
+													  $"<p>Trân trọng,</p>" +
+													  $"<p>Dental Care.</p><br>" +
+													  $"<img src='https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Dental%20Care%20Logo%2FDentalCare.png?alt=media&token=8854a154-1dde-4aa3-b573-f3c0aca83776' alt='logo DentalCare'>";
 										await emailSender.SendEmailAsync(email, subject, message);
 									}
 									appointment.Description = "Đã Hủy đơn khám do quá giờ nha sĩ xác nhận đơn khám + Đã hoàn tiền.";
@@ -131,7 +133,7 @@ Dental Care.";
 
 					_logger.LogInformation("///////////-Appointment status change successfully.-///////////");
 
-					
+
 				}
 				catch (Exception ex)
 				{
