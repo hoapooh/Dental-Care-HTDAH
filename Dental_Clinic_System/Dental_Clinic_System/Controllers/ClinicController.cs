@@ -24,6 +24,12 @@ namespace Dental_Clinic_System.Controllers
         {
             var clinics = await _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).Where(c => c.ClinicStatus == "Hoạt Động").ToListAsync();
 
+            var provinces = await _context.Clinics
+                                  .Where(c => c.ClinicStatus == "Hoạt Động")
+                                  .Select(c => c.ProvinceName)
+                                  .Distinct()
+                                  .ToListAsync();
+
             // Format the current date and time
             var now = Util.GetUtcPlus7Time();
             var weekdays = new[] { "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
@@ -32,6 +38,8 @@ namespace Dental_Clinic_System.Controllers
 
             // Pass the formatted date to the view
             ViewBag.CurrentDateTime = formattedDate;
+
+            ViewBag.Provinces = provinces;
 
             return View("clinic", clinics);
         }

@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Danh sách phòng khám";
+    var provinces = ViewBag.Provinces as List<string>;
 }
 
 <head>
@@ -26,11 +27,10 @@
                 Sắp xếp theo:
                 <select name="clinic" id="clinic" class="clinic__filter__select">
                     <option value="all">Tất cả</option>
-                    <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-                    <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
-                    <option value="Nam Định">Nam Định</option>
-                    <option value="Hải Phòng">Hải Phòng</option>
-                    <option value="Hà Nội">Hà Nội</option>
+                    @foreach (var province in provinces)
+                    {
+                        <option value="@province">@province</option>
+                    }
                 </select>
                 <i class="fa-solid fa-chevron-down clinic__filter__icon"></i>
             </div>

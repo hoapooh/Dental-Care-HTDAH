@@ -549,7 +549,7 @@ namespace Dental_Clinic_System.Services.EmailSender
         <!-- HEADER -->
         <tr>
             <td style='padding: 20px 0; text-align: center;'>
-                <h1 style='font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;'>PHIẾU KHÁM BỆNH</h1>
+                <h1 style='font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;'>PHIẾU KHÁM NHA KHOA</h1>
                 <p style='font-size: 26px; font-weight: 700; margin-bottom: 5px;'>{clinic?.Name}</p>
                 <p style='font-size: 20px; font-weight: 300; color: #3e3e3e;'>{clinic?.Address}</p>
                 <h2 style='font-size: 1.4rem; margin-bottom: 10px;'>Mã phiếu</h2>
