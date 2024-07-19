@@ -23,7 +23,7 @@
                 <div class="special-name">
                     <label for="nameSpecialty">Tên chuyên khoa</label>
                     <input type="text" name="Name" id="nameSpecialty" value="@Model.Name" required />
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="special-deposis">
                     <label for="deposisSpecialty">Tiền đặt cọc</label>
@@ -79,3 +79,5 @@
 @* Dùng editor *@
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 <script src="~/assets/js/richtexteditor2.js"></script>
+
+

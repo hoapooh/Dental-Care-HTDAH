@@ -133,16 +133,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         }
         #endregion
 
-        #region Xóa tạm thời (Delete)
-        //===================XÓA CHUYÊN KHOA TẠM THỜI===================
-        public IActionResult DeleteSpecialty(int id)
-        {
-            _hiddenSpecialty.HiddenSpecialty(id);
-            TempData["ToastMessageSuccessTempData"] = "Xóa chuyên khoa thành công";
-            return RedirectToAction(nameof(ListSpecialty));
-        }
-        #endregion
-
         #region Thêm chuyên khoa (Add)
         //===================THÊM CHUYÊN KHOA===================
         [HttpPost]
@@ -229,6 +219,16 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 
             return Json(specialtyVM);
         }
+        #endregion
+
+        #region Xóa tạm thời (Delete)
+        //===================XÓA CHUYÊN KHOA TẠM THỜI===================
+        //public IActionResult DeleteSpecialty(int id)
+        //{
+        //    _hiddenSpecialty.HiddenSpecialty(id);
+        //    TempData["ToastMessageSuccessTempData"] = "Xóa chuyên khoa thành công";
+        //    return RedirectToAction(nameof(ListSpecialty));
+        //}
         #endregion
     }
 }

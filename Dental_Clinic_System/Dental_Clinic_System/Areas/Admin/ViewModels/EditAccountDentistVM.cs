@@ -37,7 +37,6 @@ namespace Dental_Clinic_System.Areas.Admin.ViewModels
 		[RegularExpression(@"^\d{9,11}$", ErrorMessage = "Số điện thoại phải có độ dài từ 9 đến 11 số.")]
 		public string? PhoneNumber { get; set; }
 
-		[Required(ErrorMessage = "Vui lòng nhập ngày sinh.")]
 		public DateOnly? DateOfBirth { get; set; }
 
 		public int? Province { get; set; }

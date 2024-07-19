@@ -98,13 +98,13 @@
             </select>
         </div>
         <div class="col-md-6">
-            <label for="email">Email</label>
-            <input type="email" name="Email" id="email" value="@Model.Email" />
+            <label for="email">Email<sup style="color:red">*</sup></label>
+            <input type="email" name="Email" id="email" value="@Model.Email" required/>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="col-md-6">
-            <label for="phonenumber">Số điện thoại</label>
-            <input type="text" name="PhoneNumber" id="phonenumber" value="@Model.PhoneNumber" />
+            <label for="phonenumber">Số điện thoại<sup style="color:red">*</sup></label>
+            <input type="text" name="PhoneNumber" id="phonenumber" value="@Model.PhoneNumber" required/>
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
         <div class="col-md-6">
@@ -112,7 +112,7 @@
             <select name="DegreeID" id="degreeID" class="form-control" asp-items="ViewBag.DegreeID" required></select>
         </div>
         <div class="col-md-6">
-            <label for="clinicID">Phòng khám</label>
+            <label for="clinicID">Phòng khám<sup style="color:red">*</sup></label>
             <select name="ClinicID" id="clinicID" class="form-control" asp-items="ViewBag.ClinicID" required></select>
         </div>
         <div class="col-md-6">
@@ -138,7 +138,7 @@
             </select>
         </div>
         <div class="col-md-12">
-            <label for="specialties">Chọn các chuyên khoa:</label>
+            <label for="specialties">Chọn các chuyên khoa:<sup style="color:red">*</sup></label>
             <div id="specialties" class="specialties-container">
                 @foreach (var specialty in ViewData["Specialties"] as List<Dental_Clinic_System.Models.Data.Specialty>)
                 {
