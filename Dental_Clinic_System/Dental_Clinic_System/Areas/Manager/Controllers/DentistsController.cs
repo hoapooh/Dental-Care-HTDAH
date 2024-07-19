@@ -153,8 +153,8 @@ namespace Dental_Clinic_System.Controllers
 			if (existingAccount != null)
 			{
 				//Thấy thông tin bị trùng, thông báo lỗi
-				ModelState.AddModelError(string.Empty, "Fail: Tên đăng nhập / Email / Số điện thoại - đã tồn tại");
-
+				//ModelState.AddModelError(string.Empty, "Fail: Tên đăng nhập / Email / Số điện thoại - đã tồn tại");
+				TempData["ToastMessageFailTempData"] = "Tên đăng nhập / Email / Số điện thoại - đã tồn tại.";
 				return View("Create", dentist);
 			}
 
@@ -226,6 +226,7 @@ namespace Dental_Clinic_System.Controllers
 			}
 			_context.AddRange(newDenSesList);
 			await _context.SaveChangesAsync();
+			TempData["ToastMessageSuccessTempData"] = "Thành công thêm mới nha sĩ.";
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -300,8 +301,8 @@ namespace Dental_Clinic_System.Controllers
 			if (existingAccount != null)
 			{
 				//Thấy thông tin bị trùng, thông báo lỗi
-				ModelState.AddModelError(string.Empty, "Fail: Email / Số điện thoại - đã tồn tại trên tài khoản khác!");
-
+				//ModelState.AddModelError(string.Empty, "Fail: Email / Số điện thoại - đã tồn tại trên tài khoản khác!");
+				TempData["ToastMessageFailTempData"] = "Tên đăng nhập / Email / Số điện thoại - đã tồn tại.";
 				return View(dentistForm);
 			}
 			if (ModelState.IsValid )
@@ -364,7 +365,7 @@ namespace Dental_Clinic_System.Controllers
 					}
 				}
 
-				TempData["ToastMessageSuccessTempData"] = "Chỉnh sửa thành công.";
+				TempData["ToastMessageSuccessTempData"] = "Thành công chỉnh sửa nha sĩ.";
 				return RedirectToAction(nameof(Details), new { id = id });
 			}
 			

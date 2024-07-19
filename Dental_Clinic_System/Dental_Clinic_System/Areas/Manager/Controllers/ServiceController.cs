@@ -46,18 +46,6 @@ namespace Dental_Clinic_System.Controllers
             }
             return View(serviceList);
         }
-        //[Route("Search")]
-        [HttpPost]
-        public async Task<IActionResult> Search(string keyword)
-        {
-            // Xử lý từ khóa tìm kiếm như trim, kiểm tra null, v.v...
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                keyword = keyword.Trim().ToLower();
-                keyword = Util.ConvertVnString(keyword);
-            }
-            return RedirectToAction("Index", new { keyword = keyword });
-        }
 
 		// GET: Service/Details/5
 		public async Task<IActionResult> Details(int? id)
@@ -116,7 +104,8 @@ namespace Dental_Clinic_System.Controllers
                 };
                 _context.Add(newSer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+				TempData["ToastMessageSuccessTempData"] = "Thành công thêm mới dịch vụ.";
+				return RedirectToAction(nameof(Index));
             }
             ViewBag.ClinicID = service.ClinicID;
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
@@ -193,11 +182,12 @@ namespace Dental_Clinic_System.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Details), new { id = id });
+				TempData["ToastMessageSuccessTempData"] = "Thành công chỉnh sửa dịch vụ.";
+				return RedirectToAction(nameof(Details), new { id = id });
             }
             ViewBag.ClinicID = service.ClinicID;
             ViewData["SpecialtyID"] = new SelectList(_context.Specialties, "ID", "Name", service.SpecialtyID);
-            return View(service);
+			return View(service);
         }
 
         // GET: Service/Delete/5
@@ -220,8 +210,7 @@ namespace Dental_Clinic_System.Controllers
             {
                 return NotFound();
             }
-
-            return View(service);
+			return View(service);
         }
 
         // POST: Service/Delete/5
@@ -236,7 +225,8 @@ namespace Dental_Clinic_System.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+			TempData["ToastMessageSuccessTempData"] = "Thành công xóa dịch vụ.";
+			return RedirectToAction(nameof(Index));
         }
 
         private bool ServiceExists(int id)

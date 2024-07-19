@@ -37,7 +37,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
             if (user == null)
             {
                 //ViewBag.ToastFailMessage = "Sai Tên đăng nhập hoặc Mật khẩu";
-                TempData["ToastMessageFailTempData"] = "Sai Tên đăng nhập hoặc Mật khẩu";
+                TempData["ToastMessageFailTempData"] = "Sai Tên đăng nhập hoặc Mật khẩu.";
                 return RedirectToAction("Login");
                 //ViewBag.ErrorMessage = "Invalid username or password";
                 //return BadRequest("Sai Tên đăng nhập hoặc Mật khẩu");
@@ -61,20 +61,20 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				HttpContext.Session.SetString("image", clinic?.Image ?? "");
 				HttpContext.Session.SetInt32("clinicId", clinic?.ID ?? 0);
 
-                if (!string.IsNullOrEmpty(returnUrl))
-                {
-                    TempData["ToastMessageSuccessTempData"] = "Đăng nhập thành công!";
-                    return Redirect(returnUrl);
-                }
-                else
-                {
+                //if (!string.IsNullOrEmpty(returnUrl))
+                //{
+                //    TempData["ToastMessageSuccessTempData"] = "Đăng nhập thành công!";
+                //    return Redirect(returnUrl);
+                //}
+                //else
+                //{
                     ViewBag.ToastMessageSuccess = "Đăng nhập thành công!";
-                    TempData["ToastMessageSuccessTempData"] = "Đăng nhập thành công!";
+                    TempData["ToastMessageSuccessTempData"] = "Đăng nhập thành công.";
                     return RedirectToAction("Profile", "ManagerAccount", new { area = "Manager" });
-                }
+                //}
             }
 
-            TempData["ToastMessageFailTempData"] = "Tài khoản không hợp lệ, vui lòng thử lại!";
+            TempData["ToastMessageFailTempData"] = "Tài khoản không hợp lệ (không phải tài khoản của quản lý).";
             return View();
 
             //ViewBag.ErrorMessage = "Invalid role";
