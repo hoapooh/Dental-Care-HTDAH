@@ -31,10 +31,10 @@ namespace Dental_Clinic_System.Areas.Dentist.Helper
 		/// <returns>Trả về giá trị boolean, nếu như chọn ngày trùng với ngày đặt thì trả về false, nguọc lại thì trả về true</returns>
 		public static bool IsHaveSelectedDate(List<DateOnly> chosenDate, TimeOnly startTime, int dentistID, DentalClinicDbContext _context)
 		{
-			var schedules = _context.Schedules
-				.Include(s => s.TimeSlot)
-				.Where(s => s.DentistID == dentistID)
-			.ToList();
+			//var schedules = _context.Schedules
+			//	.Include(s => s.TimeSlot)
+			//	.Where(s => s.DentistID == dentistID)
+			//.ToList();
 
 			var appointments = _context.Appointments
 				.Include(a => a.Schedule)
@@ -49,13 +49,13 @@ namespace Dental_Clinic_System.Areas.Dentist.Helper
 
 			var dates = new List<DateTime>();
 
-			foreach (var schedule in schedules)
-			{
-				if (schedule.TimeSlotID != 1 && schedule.TimeSlotID != 2)
-				{
-					dates.Add(schedule.Date.ToDateTime(schedule.TimeSlot.StartTime));
-				}
-			}
+			//foreach (var schedule in schedules)
+			//{
+			//	if (schedule.TimeSlotID != 1 && schedule.TimeSlotID != 2)
+			//	{
+			//		dates.Add(schedule.Date.ToDateTime(schedule.TimeSlot.StartTime));
+			//	}
+			//}
 			foreach (var appointment in appointments)
 			{
 				dates.Add(appointment.Schedule.Date.ToDateTime(appointment.Schedule.TimeSlot.StartTime));

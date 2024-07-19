@@ -16,10 +16,11 @@
 		<!-- ============ NAVBAR LIST ============ -->
 		<div class="nav__list col-md-3">
 			<ul>
-				@if (modelSize < 10){
-				<li>
+				@if (modelSize < 10)
+				{
+					<li>
 						<a asp-controller="patientrecord" asp-action="showformcreatingnewpatientrecord" class="nav__list__add__record" id="add-record"><i class="fa-solid fa-user-plus"></i> Thêm hồ sơ</a>
-				</li>
+					</li>
 				}
 				<li>
 					<a class="active"><i class="fa-regular fa-id-card"></i> Hồ sơ bệnh nhân</a>
@@ -29,7 +30,7 @@
 		<!-- ============ LIST RECORD ============ -->
 		<div class="record__list col-md-9">
 			<div class="title">Danh sách hồ sơ bệnh nhân</div>
-			@if(modelSize == 0)
+			@if (modelSize == 0)
 			{
 				<p style="color:red; font-size:17px;">*Bạn chưa có hồ sơ, vui lòng thêm mới ở bên trái!</p>
 			}
@@ -38,7 +39,7 @@
 			{
 				<p style="color:red; font-size:17px;">**Không thể thêm mới hồ sơ vì bạn đã có tối đa 10 hồ sơ, vui lòng xóa hồ sơ không cần thiết để có thể thêm mới!</p>
 			}
-			
+
 			<div class="list__record">
 				@foreach (var patient in Model)
 				{
@@ -250,7 +251,7 @@
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" style="font-size:20px;">
 	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
+		<div class="modal-content" style="margin: auto; width: auto;">
 			<div class="modal-header">
 				<h5 class="modal-title" id="deleteModalLabel" style="font-size:20px;">Xác nhận xóa</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -260,7 +261,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size:20px;">Hủy</button>
-				<a id="confirmDeleteBtn" class="btn btn-danger style=" font-size:20px;"">Xóa</a>
+				<a id="confirmDeleteBtn" class="btn btn-danger" style=" font-size:20px;" ">Xóa</a>
 			</div>
 		</div>
 	</div>

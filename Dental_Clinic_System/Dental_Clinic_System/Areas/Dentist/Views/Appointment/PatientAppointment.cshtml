@@ -90,6 +90,8 @@
 						}
 						else if (appointment.AppointmentStatus == "Đã Khám")
 						{
+							if (appointment.IsExport == false)
+							{
 							<button type="button" class="btn show-popup" 
 									data-appointment-id="@appointment.ID"
 									data-medical-report-id="@appointment.Transactions.Where(t => t.AppointmentID == appointment.ID).First().MedicalReportID"
@@ -111,13 +113,11 @@
 									data-input-note="@appointment.Note"
 									data-is-export=@appointment.IsExport >
 								<p style="font-size:20px; color:chocolate; text-decoration:underline;">Chi Tiết Đơn</p>
-							</button>
-							if(appointment.PatientRecords.PeriodicAppointments.Where(pr => pr.AppointmentID == appointment.ID).ToList().Count != 0)
-							{
-								<span> | </span>
-								<button type="button">
-									<a style="color:blueviolet; text-decoration:underline;" asp-controller="appointment" asp-action="periodicappointment" asp-route-appointmentID="@appointment.ID">Đơn định kỳ</a>
 								</button>
+							}
+							if (appointment.PatientRecords.PeriodicAppointments.Where(pr => pr.AppointmentID == appointment.ID).ToList().Count != 0)
+							{
+								<a style="color:blueviolet; text-decoration:underline; padding-bottom: 1rem;" asp-controller="appointment" asp-action="periodicappointment" asp-route-appointmentID="@appointment.ID">Đơn định kỳ</a>
 							}
 						}
 					</td>

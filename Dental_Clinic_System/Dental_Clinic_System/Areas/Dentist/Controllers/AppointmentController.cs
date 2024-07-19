@@ -84,6 +84,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 		public async Task<IActionResult> CancelAppointment(int appointmentID, string? description)  //string description
 		{
 			var appointment = _context.Appointments.Include(a => a.Transactions)
+												   .Include(a => a.Schedule)
 												   .FirstOrDefault(a => a.ID == appointmentID && (a.AppointmentStatus == "Đã Chấp Nhận" || a.AppointmentStatus == "Chờ Xác Nhận"));
 			if (appointment == null)
 			{
@@ -115,6 +116,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 			//Thêm transaction vào DB
 			_context.Transactions.Add(refundTransaction);
+
+			//Chỉnh sửa lại status của Schedule
+			var schedule = _context.Schedules.First(s => s.ID == appointment.ScheduleID);
+			schedule.ScheduleStatus = "Đã Hủy";
+
 			await _context.SaveChangesAsync();
 
 			TempData["SuccessMessage"] = "Thay đổi trạng thái thành công!";
@@ -184,11 +190,15 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 			var appointmentAvailable = _context.Appointments
 				.Include(a => a.Schedule)
 					.ThenInclude(s => s.TimeSlot)
-				.Where(a => a.AppointmentStatus != "Đã Hủy")
+				.Where(a => a.AppointmentStatus != "Đã Hủy" && a.AppointmentStatus != "Đã Khám")
 				.ToList();
 
 			var periodicAppointmentsAvailable = _context.PeriodicAppointments
-				.Where(p => p.AppointmentID != appointmentID && p.PeriodicAppointmentStatus == "Đã Chấp Nhận")
+				.Where(p => p.PeriodicAppointmentStatus == "Đã Chấp Nhận")
+				//.Select(pa => new
+				//{
+
+				//})
 				.ToList();
 
 			List<DateOnly>? selectedDates = null;
@@ -242,16 +252,20 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 				//Valid ngày hẹn tái khám xem có trùng với ngày hẹn khác + periodic không
 				foreach (var appoint in appointmentAvailable)
 				{
-					DateTime start = appoint.Schedule.Date.ToDateTime(appoint.Schedule.TimeSlot.StartTime);
-					DateTime end = appoint.Schedule.Date.ToDateTime(appoint.Schedule.TimeSlot.EndTime);
+					DateTime startAppointment = appoint.Schedule.Date.ToDateTime(appoint.Schedule.TimeSlot.StartTime);
+					DateTime endAppointment = appoint.Schedule.Date.ToDateTime(appoint.Schedule.TimeSlot.EndTime);
 					foreach (var date in selectedDates)
 					{
-						if((date.ToDateTime(startTimeInCalendar) < end && date.ToDateTime(endTimeInCalendar) > end) ||
-						   (date.ToDateTime(startTimeInCalendar) < start && date.ToDateTime(endTimeInCalendar) > start) ||
-						   (date.ToDateTime(startTimeInCalendar) <= start && date.ToDateTime(endTimeInCalendar) <= end)
-							)
+						DateTime startChoose = date.ToDateTime(startTimeInCalendar);
+						DateTime endChoose = date.ToDateTime(endTimeInCalendar);
+						if (!(endChoose <= startAppointment || startChoose >= endAppointment))
 						{
-							TempData["ErrorMessage"] = $"Ngày hẹn tái khám trùng với ngày {appoint.Schedule.Date.ToString("dd/MM/yyyy")} lúc {appoint.Schedule.TimeSlot.StartTime.ToString("HH:mm")} - {appoint.Schedule.TimeSlot.EndTime.ToString("HH:mm")}!";
+							TempData["ErrorMessage"] = $"Đã có ca khám ngày {appoint.Schedule.Date.ToString("dd/MM/yyyy")} lúc {appoint.Schedule.TimeSlot.StartTime.ToString("HH:mm")} - {appoint.Schedule.TimeSlot.EndTime.ToString("HH:mm")}.";
+							return RedirectToAction("patientappointment");
+						}
+						if (startAppointment == startChoose && endAppointment == endChoose)
+						{
+							TempData["ErrorMessage"] = $"Đã có ca khám ngày {appoint.Schedule.Date.ToString("dd/MM/yyyy")} lúc {appoint.Schedule.TimeSlot.StartTime.ToString("HH:mm")} - {appoint.Schedule.TimeSlot.EndTime.ToString("HH:mm")}..";
 							return RedirectToAction("patientappointment");
 						}
 					}
@@ -259,25 +273,23 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 				foreach (var appoint in periodicAppointmentsAvailable)
 				{
-					DateTime start = appoint.DesiredDate.ToDateTime(appoint.StartTime);
-					DateTime end = appoint.DesiredDate.ToDateTime(appoint.EndTime);
+					DateTime startPeriodicAppointment = appoint.DesiredDate.ToDateTime(appoint.StartTime);
+					DateTime endPeriodicAppointment = appoint.DesiredDate.ToDateTime(appoint.EndTime);
 					foreach (var date in selectedDates)
 					{
-						if ((date.ToDateTime(startTimeInCalendar) < end && date.ToDateTime(endTimeInCalendar) > end) ||
-						   (date.ToDateTime(startTimeInCalendar) < start && date.ToDateTime(endTimeInCalendar) > start) ||
-						   (date.ToDateTime(startTimeInCalendar) <= start && date.ToDateTime(endTimeInCalendar) <= end)
-							)
+						DateTime startChoose = date.ToDateTime(startTimeInCalendar);
+						DateTime endChoose = date.ToDateTime(endTimeInCalendar);
+						if (!(endChoose <= startPeriodicAppointment || startChoose >= endPeriodicAppointment))
 						{
-							TempData["ErrorMessage"] = $"Ngày hẹn tái khám trùng với ngày {appoint.DesiredDate.ToString("dd/MM/yyyy")} lúc {appoint.StartTime.ToString("HH:mm")} - {appoint.EndTime.ToString("HH:mm")}!";
+							TempData["ErrorMessage"] = $"Ngày hẹn định kỳ/ tái khám trùng với ngày {appoint.DesiredDate.ToString("dd/MM/yyyy")} lúc {appoint.StartTime.ToString("HH:mm")} - {appoint.EndTime.ToString("HH:mm")}!";
+							return RedirectToAction("patientappointment");
+						}
+						if(startPeriodicAppointment == startChoose && endPeriodicAppointment == endChoose)
+						{
+							TempData["ErrorMessage"] = $"Ngày hẹn định kỳ/ tái khám trùng với ngày {appoint.DesiredDate.ToString("dd/MM/yyyy")} lúc {appoint.StartTime.ToString("HH:mm")} - {appoint.EndTime.ToString("HH:mm")}!!";
 							return RedirectToAction("patientappointment");
 						}
 					}
-				}
-
-				if (!AppointmentServices.IsHaveSelectedDate(selectedDates, startTimeInCalendar, dentistID, _context))
-				{
-					TempData["ErrorMessage"] = "Bạn đã có ca làm việc tương ứng trong thời gian này, vui lòng chọn lại!";
-					return RedirectToAction("patientappointment");
 				}
 
 				//Lấy ngày và giờ riêng ra của hentaikham
@@ -329,7 +341,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 		#region Hàm lấy thông tin của tất cả lịch điều trị cho nha sĩ đó - FUTURE APPOINTMENT
 		[HttpGet]
-		public async Task<IActionResult> PeriodicAppointment(int? periodicappointmentID, string? keyword, int? appointmentID)
+		public async Task<IActionResult> PeriodicAppointment(string? keyword, int? appointmentID)
 		{
 			var dentistAccountID = HttpContext.Session.GetInt32("dentistAccountID");
 			if (dentistAccountID == null)
@@ -346,7 +358,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 									.ToListAsync();
 			if (appointmentID != null)
 			{
-				periodicAppointment.Where(p => p.AppointmentID == appointmentID).ToList();
+				periodicAppointment = periodicAppointment.Where(p => p.AppointmentID == appointmentID).ToList();
 			}
 
 			if (!string.IsNullOrEmpty(keyword))
@@ -356,7 +368,8 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 				periodicAppointment = periodicAppointment.Where(p =>
 					Util.ConvertVnString(p.PatientRecord.FullName).Contains(keyword) ||
 					Util.ConvertVnString(p.DesiredDate.ToString("dd/MM/yyyy")).Contains(keyword) ||
-					Util.ConvertVnString(p.StartTime.ToString("HH:mm") + " - " + p.EndTime.ToString("HH:mm")).Contains(keyword)
+					Util.ConvertVnString(p.StartTime.ToString("HH:mm") + " - " + p.EndTime.ToString("HH:mm")).Contains(keyword) ||
+					Util.ConvertVnString(p.PeriodicAppointmentStatus).Contains(keyword)
 					).ToList();
 			}
 
