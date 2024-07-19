@@ -241,3 +241,45 @@ body::-webkit-scrollbar {
     font-size: 2.4rem;
     font-weight: bold;
 }
+
+#filterStatus {
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    border: 1px solid #d9d9d9;
+    color: #1376f8;
+    font-weight: 600;
+}
+
+.filterStatus {
+    font-size: 1.6rem;
+}
+
+.history__filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ===== ANIMATION ====== */
+/* dentistry.css */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.appointment-card, .history__container__style {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+    .appointment-card.fade-in, .history__container__style.fade-in {
+        animation-name: fadeIn;
+    }

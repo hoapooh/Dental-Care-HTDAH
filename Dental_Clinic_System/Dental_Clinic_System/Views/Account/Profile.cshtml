@@ -96,12 +96,12 @@
                             </div>
                             <div style="width: 50%">
                                 <label for="phone">Số điện thoại</label><br /><input type="text"
-                                                                                                  id="phone"
-                                                                                                  placeholder="Vui lòng nhập số điện thoại ..."
-                                                                                                  pattern="[0-9]*"
-                                                                                                  value="@Model.PhoneNumber"
-                                                                                                  asp-for="@Model.PhoneNumber"
-                                                                                                  style="width: 100%" />
+                                                                                     id="phone"
+                                                                                     placeholder="Vui lòng nhập số điện thoại ..."
+                                                                                     pattern="[0-9]*"
+                                                                                     value="@Model.PhoneNumber"
+                                                                                     asp-for="@Model.PhoneNumber"
+                                                                                     style="width: 100%" />
                                 <span class="text-danger" asp-validation-for="PhoneNumber"></span>
 
                             </div>
@@ -258,7 +258,19 @@
 
                     @* Lịch sử đặt khám *@
                     <div id="history" class="tab-pane fade">
-                        <h2>Lịch sử đặt khám</h2>
+                        <h2 class="history__filter">
+                            Lịch sử đặt khám 
+                            <div class="filterStatus">
+                                <i class="fa-solid fa-filter"></i> Sắp xếp theo: 
+                                <select id="filterStatus">
+                                    <option value="all">Tất cả</option>
+                                    <option value="Chờ Xác Nhận">Chờ Xác Nhận</option>
+                                    <option value="Đã Hủy">Đã Hủy</option>
+                                    <option value="Đã Chấp Nhận">Đã Chấp Nhận</option>
+                                    <option value="Đã Khám">Đã Khám</option>
+                                </select>
+                            </div>
+                        </h2>
                         <div class="history__management">
 
                             @if (appointments?.Count > 0)
@@ -266,8 +278,8 @@
                                 @foreach (var appointment in appointments)
                                 {
                                     @* var currentTime = TimeOnly.FromDateTime(Util.GetUtcPlus7Time()).ToTimeSpan();
-                                    var startTime = appointment.Schedule.TimeSlot.StartTime.ToTimeSpan();
-                                    var timeDifference = startTime - currentTime; *@
+                            var startTime = appointment.Schedule.TimeSlot.StartTime.ToTimeSpan();
+                            var timeDifference = startTime - currentTime; *@
 
                                     // Lấy thời gian hiện tại tại Hà Nội
                                     var currentTime = Util.GetUtcPlus7Time();
@@ -281,20 +293,20 @@
                                     var timeDifference = appointmentDateTime - currentTime;
 
                                     @* Console.WriteLine("=================================================");
-                                    // Ghi log hoặc hiển thị giá trị để kiểm tra
-                                    Console.WriteLine($"Current Time: {currentTime}");
-                                    Console.WriteLine($"Appointment Start Time: {appointmentDateTime}");
-                                    Console.WriteLine($"Time Difference (Hours): {timeDifference.TotalHours}");
+                            // Ghi log hoặc hiển thị giá trị để kiểm tra
+                            Console.WriteLine($"Current Time: {currentTime}");
+                            Console.WriteLine($"Appointment Start Time: {appointmentDateTime}");
+                            Console.WriteLine($"Time Difference (Hours): {timeDifference.TotalHours}");
 
-                                    var showRescheduleButton = timeDifference.TotalHours >= 7;
-                                    Console.WriteLine($"Show Reschedule Button: {showRescheduleButton}");
-                                    Console.WriteLine("================================================="); *@
+                            var showRescheduleButton = timeDifference.TotalHours >= 7;
+                            Console.WriteLine($"Show Reschedule Button: {showRescheduleButton}");
+                            Console.WriteLine("================================================="); *@
 
 
-                                    <div class="appointment-card" style="border: 1px solid #1376f8; border-radius: 8px; padding: 16px; margin-bottom: 16px; background-color: #fff;">
+                                    <div class="appointment-card" id="appointment-card" style="border: 1px solid #1376f8; border-radius: 8px; padding: 16px; margin-bottom: 16px; background-color: #fff;">
                                         <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                                             <div class="code" style="font-weight: bold; color: #007bff;">@index</div>
-                                            <div class="status" style="
+                                            <div class="status" id="statusCheck" style="
                                                 color: white;
                                                 font-weight: bold;
                                                 width: 30%;
@@ -308,7 +320,7 @@
                                                     appointment?.AppointmentStatus == "Đã Chấp Nhận" ? "#17a2b8" :
                                                     appointment?.AppointmentStatus == "Đã Hủy" ? "#ff474d" : ""
                                                 );
-                                                                                                                                                                                                                                                    ">
+                                                                                                                                                                                                                                                                    ">
                                                 @appointment?.AppointmentStatus
                                             </div>
                                         </div>
@@ -376,10 +388,11 @@
 
                                                         break;
                                                     case "Chờ Xác Nhận":
-                                                        @if (timeDifference.TotalHours >= 7) {
-                                                        <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
-                                                            Đổi lịch khám
-                                                        </button>
+                                                        @if (timeDifference.TotalHours >= 7)
+                                                        {
+                                                            <button type="button" class="btn btn-warning pendingButton" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold; margin-right: 1rem;" data-bs-toggle="modal" data-bs-target="#rescheduleModal" data-dentist-id="@appointment?.Schedule?.Dentist?.ID" data-appointment-id="@appointment?.ID">
+                                                                Đổi lịch khám
+                                                            </button>
                                                         }
 
                                                         <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
@@ -409,7 +422,7 @@
                             }
                             else
                             {
-                                <div class="history__container__style">
+                                <div class="history__container__style" id="history__container__style">
                                     <span>Bạn chưa có lịch khám nào</span>
                                     <span>
                                         <img src="https://medpro.vn/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FEmptyList.a1f0b7f8.png&w=640&q=75"
@@ -584,6 +597,27 @@
                             alert('Không tải được lịch tương ứng!');
                             console.error('error:', error);
                         });
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var filterStatusSelect = document.getElementById('filterStatus');
+
+            filterStatusSelect.addEventListener('change', function () {
+                var selectedStatus = filterStatusSelect.value;
+                var appointmentCards = document.querySelectorAll('.appointment-card');
+
+                appointmentCards.forEach(function (card) {
+                    var statusCheck = card.querySelector('#statusCheck').textContent.trim();
+
+                    if (selectedStatus === "all" || statusCheck === selectedStatus) {
+                        card.style.display = ''; // Hiển thị thẻ nếu trùng khớp hoặc không có bộ lọc
+                        card.classList.add('fade-in');
+                    } else {
+                        card.classList.remove('fade-in');
+                        card.style.display = 'none'; // Ẩn thẻ nếu không trùng khớp
+                    }
                 });
             });
         });
