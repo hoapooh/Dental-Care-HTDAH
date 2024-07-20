@@ -53,7 +53,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 						{
 							//Điều kiện để dc hoàn tiền:  1. Nha sĩ ko xác nhận cho tới trước giờ bắt đầu khám
 							//							  2. Thời gian hiện tại lớn hơn hoặc bằng 12h so với thời gian tạo hẹn
-							if (appointment.Schedule.Date.ToDateTime(appointment.Schedule.TimeSlot.StartTime) < now || appointment.CreatedDate.Value.AddHours(12) <= now)
+							if (appointment.Schedule.Date.ToDateTime(appointment.Schedule.TimeSlot.StartTime) < now || appointment.CreatedDate.Value.AddHours(24) <= now)
 							{
 								//Refund lại tiền nếu quá giờ mà chưa xác nhận
 								var transactionCode = appointment.Transactions.FirstOrDefault()?.TransactionCode;

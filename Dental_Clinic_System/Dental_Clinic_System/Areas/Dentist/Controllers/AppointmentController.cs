@@ -216,19 +216,20 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 
 			}
 
-			else { 
-			var settings = new JsonSerializerSettings();
-			settings.Converters.Add(new DateOnlyConverter());
+			else
+			{
+				var settings = new JsonSerializerSettings();
+				settings.Converters.Add(new DateOnlyConverter());
 
-			try
-			{
-				selectedDates = JsonConvert.DeserializeObject<List<DateOnly>>(ngayhentaikham, settings);
-			}
-			catch (JsonSerializationException ex)
-			{
-				TempData["ErrorMessage"] = $"Lỗi khi phân tích ngày hẹn tái khám: {ex.Message}";
-				return RedirectToAction("patientappointment");
-			}
+				try
+				{
+					selectedDates = JsonConvert.DeserializeObject<List<DateOnly>>(ngayhentaikham, settings);
+				}
+				catch (JsonSerializationException ex)
+				{
+					TempData["ErrorMessage"] = $"Lỗi khi phân tích ngày hẹn tái khám: {ex.Message}";
+					return RedirectToAction("patientappointment");
+				}
 
 				TimeOnly startTimeInCalendar;
 				TimeOnly endTimeInCalendar;
@@ -271,6 +272,30 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 					}
 				}
 
+				//if(selectedDates != null)
+				//{
+				//	foreach (var sd in selectedDates)
+				//	{
+				//		var schedules = _context.Schedules.Where(s => s.DentistID == dentistID && s.Date == sd).ToList();
+				//		foreach(var s in schedules)
+				//		{
+				//			if(startTimeInCalendar >= new TimeOnly(7,0) && endTimeInCalendar <= new TimeOnly(12,0) && s.TimeSlotID == 1)
+				//			{
+				//				break;
+				//			}
+				//			else if (startTimeInCalendar >= new TimeOnly(13, 0) && endTimeInCalendar <= new TimeOnly(21, 0) && s.TimeSlotID == 2)
+				//			{
+				//				break;
+				//			}
+				//			else
+				//			{
+				//				TempData["ErrorMessage"] = $"Ngày này chưa có giờ làm việc tương ứng, không thể đặt!";
+				//				return 
+				//			}
+				//		}
+				//	}
+				//}
+
 				foreach (var appoint in periodicAppointmentsAvailable)
 				{
 					DateTime startPeriodicAppointment = appoint.DesiredDate.ToDateTime(appoint.StartTime);
@@ -284,7 +309,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 							TempData["ErrorMessage"] = $"Ngày hẹn định kỳ/ tái khám trùng với ngày {appoint.DesiredDate.ToString("dd/MM/yyyy")} lúc {appoint.StartTime.ToString("HH:mm")} - {appoint.EndTime.ToString("HH:mm")}!";
 							return RedirectToAction("patientappointment");
 						}
-						if(startPeriodicAppointment == startChoose && endPeriodicAppointment == endChoose)
+						if (startPeriodicAppointment == startChoose && endPeriodicAppointment == endChoose)
 						{
 							TempData["ErrorMessage"] = $"Ngày hẹn định kỳ/ tái khám trùng với ngày {appoint.DesiredDate.ToString("dd/MM/yyyy")} lúc {appoint.StartTime.ToString("HH:mm")} - {appoint.EndTime.ToString("HH:mm")}!!";
 							return RedirectToAction("patientappointment");
@@ -296,30 +321,42 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 				AppointmentServices.FormatDateTime(selectedDates, giobatdau, gioketthuc, out List<DateOnly> desiredDate, out TimeOnly startTime, out TimeOnly endTime);
 
 				//Thêm appointment với giờ tạo vào PeriodicAppointments 
-				if (appointment.IsExport == false) // Case: lần đầu tiên tạo future appointment
-				{
-					appointment.Note = $"{dando}";
-					appointment.Description = $"{ketquakham}";
-					appointment.IsExport = true;
+				appointment.Note = $"{dando}";
+				appointment.Description = $"{ketquakham}";
+				appointment.IsExport = true;
 
-					// Lặp qua mỗi ngày trong danh sách ngày hẹn tái khám, tạo periodic appointment cho mỗi ngày
-					foreach (var date in desiredDate)
+				// Lặp qua mỗi ngày trong danh sách ngày hẹn tái khám, tạo periodic appointment cho mỗi ngày
+				foreach (var date in desiredDate)
+				{
+					var newPeriodicAppointment = new PeriodicAppointment
 					{
-						var newPeriodicAppointment = new PeriodicAppointment
-						{
-							PatientRecord_ID = appointment.PatientRecordID,
-							Dentist_ID = dentistID,
-							StartTime = startTime,
-							EndTime = endTime,
-							DesiredDate = date,
-							PeriodicAppointmentStatus = "Đã Chấp Nhận",
-							AppointmentID = appointmentID
-						};
-						_context.PeriodicAppointments.Add(newPeriodicAppointment);
-					}
-					// lưu lại
-					_context.SaveChanges();
+						PatientRecord_ID = appointment.PatientRecordID,
+						Dentist_ID = dentistID,
+						StartTime = startTime,
+						EndTime = endTime,
+						DesiredDate = date,
+						PeriodicAppointmentStatus = "Đã Chấp Nhận",
+						AppointmentID = appointmentID
+					};
+					_context.PeriodicAppointments.Add(newPeriodicAppointment);
 				}
+
+				// thêm vao schedule để biết ngày này có lịch định kỳ
+				foreach (var date in desiredDate)
+				{
+					var schedule = new Schedule
+					{
+						DentistID = dentistID,
+						Date = date,
+						TimeSlotID = 32,
+						ScheduleStatus = "Đã Đặt"
+					};
+					_context.Schedules.Add(schedule);
+				}
+
+				// lưu lại
+				_context.SaveChanges();
+
 
 				//=========================================================================
 				//gửi mail khi bấm Xuất PDF
