@@ -927,6 +927,8 @@ namespace Dental_Clinic_System.Controllers
 
             await _context.SaveChangesAsync();
 
+            TempData["ToastMessageSuccessTempData"] = "Đổi lịch khám thành công";
+
             return RedirectToAction("Profile", "Account");
         }
 
