@@ -78,7 +78,7 @@
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 			<div class="clinic-name col-md-6">
-				<label for="name">Tên phòng khám</label>
+				<label for="name">Tên phòng khám<sup style="color:red">*</sup></label>
 				<input type="text" name="Name" id="name" class="form-control" value="@Model.Name" />
 				<span asp-validation-for="Name" class="text-danger"></span>
 			</div>
@@ -89,7 +89,7 @@
 				</select>
 			</div>
 			<div class="clinic-tel col-md-6">
-				<label for="tel">Hotline</label>
+				<label for="tel">Hotline<sup style="color:red">*</sup></label>
 				<input type="tel" name="PhoneNumber" id="tel" class="form-control" value="@Model.PhoneNumber" />
 				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 			</div>
@@ -108,7 +108,7 @@
 				</div>
 			</div>
 			<div class="clinic-mail col-md-6">
-				<label for="mail">Email của phòng khám</label>
+				<label for="mail">Email của phòng khám<sup style="color:red">*</sup></label>
 				<input type="email" name="Email" id="mail" class="form-control" value="@Model.Email" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
@@ -127,24 +127,24 @@
 				</div>
 			</div>
 			<div class="clinic-address col-md-12">
-				<label for="addrSpecialty">Địa chỉ phòng khám</label>
+				<label for="addrSpecialty">Địa chỉ phòng khám<sup style="color:red">*</sup></label>
 				<input type="text" name="Address" id="addrSpecialty" class="form-control" value="@Model.Address" />
 				<span asp-validation-for="Address" class="text-danger"></span>
 			</div>
 			<div class="clinic-province col-md-4">
-				<label for="province">Tỉnh / Thành phố</label>
+				<label for="province">Tỉnh / Thành phố<sup style="color:red">*</sup></label>
 				<select id="province" title="Chọn Tỉnh Thành" name="Province" class="form-control">
 					<option value="0">-- Chọn Tỉnh Thành --</option>
 				</select>
 			</div>
 			<div class="clinic-district col-md-4">
-				<label for="district">Quận / Huyện</label>
+				<label for="district">Quận / Huyện<sup style="color:red">*</sup></label>
 				<select id="district" title="Chọn Quận Huyện" name="District" class="form-control">
 					<option value="0">-- Chọn Quận Huyện --</option>
 				</select>
 			</div>
 			<div class="clinic-ward col-md-4">
-				<label for="ward">Phường / Xã</label>
+				<label for="ward">Phường / Xã<sup style="color:red">*</sup></label>
 				<select id="ward" title="Chọn Phường Xã" name="Ward" class="form-control">
 					<option value="0">-- Chọn Phường Xã --</option>
 				</select>

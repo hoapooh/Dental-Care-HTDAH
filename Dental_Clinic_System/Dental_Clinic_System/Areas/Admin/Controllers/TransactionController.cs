@@ -38,7 +38,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			}
 			else if (filter == "HoanTien")
 			{
-				transactionHistory = transactionHistory.Where(t => t.Message == "Hoàn tiền").ToList();
+				transactionHistory = transactionHistory.Where(t => t.Message == "Hoàn tiền thành công do nha sĩ hủy lịch hẹn" || t.Message == "Hoàn tiền thành công do phòng khám quá giờ xác nhận đơn khám").ToList();
 			}
 
 			ViewBag.transactionHistory = transactionHistory;

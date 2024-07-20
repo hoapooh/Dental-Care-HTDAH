@@ -118,7 +118,7 @@
 				</select>
 			</div>
 			<div class="clinic-image col-md-12">
-				<label>Hình ảnh</label>
+				<label>Hình ảnh<sup style="color:red">*</sup></label>
 				<input type="file" id="imageInput" class="form-control" required />
 				<img src="@Model.Image" alt="" id="imagePreview" style="display: block; max-width: 100px; text-align: center; border-radius: 10px;" />
 				<input asp-for="Image" id="imageUrl" class="form-control" type="hidden" />

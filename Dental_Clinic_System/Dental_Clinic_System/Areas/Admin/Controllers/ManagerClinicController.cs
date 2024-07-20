@@ -97,7 +97,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         public async Task<IActionResult> CreateClinic()
         {
             var unassignedManagers = await _context.Accounts
-            .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+            .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID) && a.AccountStatus == "Hoạt Động")
             .Select(a => new
             {
                 a.ID,
@@ -172,7 +172,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
                 {
                     //List những quản lý chưa có phòng khám nào
                     var unassignedManager = await _context.Accounts
-                        .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+                        .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID) && a.AccountStatus == "Hoạt Động")
                         .Select(a => new
                         {
                             a.ID,
@@ -356,7 +356,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				ClinicStatus = "Hoạt Động",
 
 				UnassignedManagers = new SelectList(await _context.Accounts
-					.Where(a => a.Role == "Quản Lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID))
+					.Where(a => a.Role == "Quản Lý" && (!_context.Clinics.Any(c => c.ManagerID == a.ID) || a.ID == clinic.ManagerID) && a.AccountStatus == "Hoạt Động")
 					.Select(a => new
 					{
 						a.ID,
@@ -465,7 +465,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 			//Load lại dữ liệu khi ModelState không hợp lệ
 			//Ghi lại List Manager chưa được chỉ định phòng khám nào
 			model.UnassignedManagers = new SelectList(await _context.Accounts
-                .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID))
+                .Where(a => a.Role == "Quản Lý" && !_context.Clinics.Any(c => c.ManagerID == a.ID) && a.AccountStatus == "Hoạt Động")
                 .Select(a => new
                 {
                     a.ID,

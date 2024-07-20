@@ -144,7 +144,7 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
 				FirstName = firstname,
 				PhoneNumber = phoneNumber,
 				Email = email,
-				Address = address ?? "",
+				//Address = address ?? "",
 				Role = "Quản Lý",
 				AccountStatus = "Hoạt Động"
 			};
