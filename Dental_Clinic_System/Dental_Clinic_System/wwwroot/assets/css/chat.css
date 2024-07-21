@@ -204,13 +204,12 @@ button {
 
 .msg-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    gap: 5px;
 }
 
 .msg-info-name {
-    margin-right: 10px;
     font-weight: bold;
 }
 

@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Quản lý nha sĩ";
+    Layout = "_LayoutManager";
+}
+
+@section Styles {
+    <style>
+        .form-container {
+            display: flex;
+            gap: 15px; /* Khoảng cách giữa các form */
+        }
+
+        .sidebar .nav-item a.Quan_ly_chat {
+            color: #fff;
+            background: #4880ff;
+        }
+
+        a.button-link, button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            border-radius: 6px;
+        }
+
+        .manager__management table a.button-link i,
+        .manager__management table button i {
+            vertical-align: middle;
+        }
+
+        .manager__management table a.button-link,
+        .manager__management .submit-btn {
+            background: #17a2b8;
+            color: white;
+        }
+
+            .manager__management table a.button-link:hover,
+            .manager__management .submit-btn:hover {
+                background: #138496;
+            }
+
+        .manager__management .button-link.close-btn {
+            margin-left: 5px;
+            background: rgb(255, 66, 66);
+            color: white;
+        }
+
+            .manager__management .button-link.close-btn:hover {
+                background: #f81f1f;
+            }
+
+        .inline {
+            display: inline-block;
+        }
+
+        .manager__management__header .action-btn .search__bar {
+            height: 43.6px;
+            padding: 5px 10px;
+            border: 1px solid #4880ff;
+            border-radius: 0px;
+            font-size: 1em;
+            margin: 0;
+            /* color: #757575; */
+            align-content: center;
+        }
+
+        #searchStatus {
+            border-radius: 15px;
+            padding: 5px 10px;
+            border: 1px solid #1376f8;
+        }
+    </style>
+}
+
+<!-- account management header -->
+<div class="manager__management__header">
+    <div class="title">
+        Quản lý chat
+    </div>
+    <form id="filterForm" method="get" asp-action="Index" class="form-container">
+        <select id="searchStatus" name="searchStatus" class="search__bar" style="min-width: 150px;" onchange="document.getElementById('filterForm').submit();">
+            @if (ViewBag.SearchStatus == "Bị Khóa")
+            {
+                <option value="Hoạt Động">Hoạt Động</option>
+                <option value="Bị Khóa" selected>Bị Khóa</option>
+            }
+            else
+            {
+                <option value="Hoạt Động" selected>Hoạt Động</option>
+                <option value="Bị Khóa">Bị Khóa</option>
+            }
+        </select>
+    </form>
+</div>
+
+<!-- Table -->
+<table class="table table-striped mt-5" style="font-size: 1.6rem">
+    <thead>
+        <tr>
+            <th class="text-center">STT</th>
+            <th>Tên đăng nhập</th>
+            <th>Tên nha sĩ</th>
+            <th>Giới tính</th>
+            <th>Học vị</th>
+            <th>Hành động</th>
+
+        </tr>
+    </thead>
+    <tbody id="myTableBody">
+        @{
+            int index = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style="vertical-align: middle">
+                <td class="text-center">
+                    <a asp-action="Details" asp-route-id="@item.ID">@(++index)</a>
+                </td>
+                <td>
+                    @item.Account.Username
+                </td>
+                <td>
+                    @item.Account.LastName @item.Account.FirstName
+                </td>
+                <td>
+                    @item.Account.Gender
+                </td>
+                <td>
+                    @item.Degree?.Name
+                </td>
+
+                <td>
+                    <a href="~/Manager/Chat/ChatList?dentistID=@item.ID" class="button-link btn-view inline" title="Xem đoạn tin nhắn">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- ========== PAGINATION  ========== -->
+<ul id="pagination" class="pagination">
+</ul>

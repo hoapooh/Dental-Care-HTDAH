@@ -1,0 +1,108 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Danh sách chat";
+    Layout = "_LayoutManager";
+    var chats = ViewBag.ChatList;
+    var accounts = ViewBag.Accounts as Dictionary<int, string>; // Assuming this is a dictionary with user ID as key and role as value
+}
+
+<head>
+    <meta name="description" content="Đây là nơi nha sĩ dùng để theo dõi tin nhắn đến từ phía của bệnh nhân">
+    <style>
+
+        a {
+            text-decoration: none !important;
+        }
+
+        sup {
+            font-size: 18px;
+            color: red;
+        }
+
+        .sidebar .nav-item a.Quan_ly_chat {
+            color: #fff;
+            background: #4880ff;
+        }
+
+        .chat-list {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            margin: auto;
+            border: 1px solid #1376f8;
+            height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .chat-item {
+            padding: 10px 20px;
+            border: 1px solid #1376f8;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+            .chat-item strong {
+                font-size: 1.8rem;
+            }
+
+            .chat-item p {
+                font-size: 1.6rem;
+                color: #333;
+                margin-bottom: 5px;
+            }
+
+            .chat-item:hover {
+                background-color: #f1f1f1;
+                border-radius: 15px;
+            }
+
+        .back-btn {
+            color: #1376f8;
+            font-size: 2rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 5px;
+        }
+
+            .back-btn:hover {
+                border-radius: 15px;
+                background: #e8f1ff;
+            }
+    </style>
+</head>
+
+<body>
+    <div>
+    <div>
+        <div style="text-align: right; width: 50%; margin: auto; margin-top: 10px;">
+                <a asp-controller="Chat" asp-action="Index" class="back-btn">Trở về danh sách nha sĩ <i class="fa-solid fa-rotate-left" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <div class="chat-list" id="chatList">
+        @foreach (var chat in chats)
+        {
+            int patientID = chat.SenderId;
+            if (accounts?.ContainsKey(chat.SenderId) && accounts?[chat.SenderId] == "Nha Sĩ")
+            {
+                patientID = chat.ReceiverId;
+            }
+
+            if (accounts.ContainsKey(patientID) && accounts[patientID] == "Bệnh Nhân")
+            {
+                <a href="@Url.Action("ChatDentistDetail", "Chat", new { area = "Manager", patientID = patientID, dentistID = ViewBag.DentistID })">
+                    <div class="chat-item">
+                        <strong>@chat.ReceiverName</strong>
+                        <p>@chat.Content</p>
+                        <p>@chat.Timestamp</p>
+                    </div>
+                </a>
+            }
+        }
+    </div>
+</body>
