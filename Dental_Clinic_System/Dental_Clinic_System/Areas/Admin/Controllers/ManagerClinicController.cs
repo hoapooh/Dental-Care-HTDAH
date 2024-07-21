@@ -514,7 +514,13 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             if (clinic != null)
             {
                 clinic.ClinicStatus = status;
-                _context.SaveChanges();
+
+                var managerAccount = await _context.Accounts.SingleOrDefaultAsync(a => a.ID == clinic.ManagerID);
+                if (managerAccount != null)
+                {
+                    managerAccount.AccountStatus = "Bị Khóa";
+                }
+                await _context.SaveChangesAsync();
             }
 
             TempData["ToastMessageSuccessTempData"] = "Đóng cửa phòng khám thành công";
@@ -525,7 +531,6 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
         //=====================PHÒNG KHÁM ĐÓNG CỬA=====================
 
         #region Show Clinic Closed
-        //[Route("ListClinicClosed")]
         public async Task<IActionResult> ListClinicClosed()
         {
             var clinicClosed = await (from clinic in _context.Clinics
@@ -590,7 +595,13 @@ namespace Dental_Clinic_System.Areas.Admin.Controllers
             if (clinic != null)
             {
                 clinic.ClinicStatus = status;
-                _context.SaveChanges();
+
+                var managerAccount = await _context.Accounts.SingleOrDefaultAsync(a => a.ID == clinic.ManagerID);
+                if (managerAccount != null)
+                {
+                    managerAccount.AccountStatus = "Hoạt Động";
+                }
+                await _context.SaveChangesAsync();
             }
 
             TempData["ToastMessageSuccessTempData"] = "Mở cửa phòng khám thành công";

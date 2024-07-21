@@ -140,7 +140,7 @@
 			<th>Hành động</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody id="myTableBody">
 		@if (Model != null && Model.Any())
 		{
 			int stt = 1;
@@ -177,6 +177,13 @@
 		}
 	</tbody>
 </table>
+
+
+<!-- ========== PAGINATION  ========== -->
+<ul class="pagination" id="pagination">
+</ul>
+
+<script src="~/assets/js/pagination.js"></script>
 
 @section Scripts{
 	@* Định dạng tiền Việt Nam (VNĐ)*@
