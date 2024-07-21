@@ -1218,6 +1218,7 @@ namespace Dental_Clinic_System.Controllers
             if (appointment.AppointmentStatus == "Đã Hủy")
             {
                 appointment.Schedule.ScheduleStatus = "Đã Hủy";
+                appointment.Description = $"Hủy khám từ bệnh nhân lúc {Util.GetUtcPlus7Time()}";
                 await _context.SaveChangesAsync();
             }
 

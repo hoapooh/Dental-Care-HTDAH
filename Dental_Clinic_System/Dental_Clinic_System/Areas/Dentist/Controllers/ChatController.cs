@@ -53,8 +53,8 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                     Timestamp = m.Timestamp,
                     SenderId = m.SenderId,
                     ReceiverId = m.ReceiverId,
-                    SenderName = m.Sender.FirstName ?? "Ẩn" + " " + m.Sender.LastName ?? "Danh",
-                    ReceiverName = m.Receiver.FirstName ?? "Ẩn" + " " + m.Receiver.LastName ?? "Danh"
+                    SenderName = m.Sender.FirstName + " " + m.Sender.LastName,
+                    ReceiverName = m.Receiver.FirstName + " " + m.Receiver.LastName
                 })
                 .GroupBy(m => m.SenderId == dentistID ? m.ReceiverId : m.SenderId)
                 .Select(g => g.OrderByDescending(m => m.Timestamp).FirstOrDefault())
