@@ -36,7 +36,6 @@ namespace Dental_Clinic_System.Controllers
         [HttpGet]
         public async Task<IActionResult> NewsDetail(int newsID)
         {
-            await Console.Out.WriteLineAsync($"NewsID = {newsID}");
             var news = await _context.News.FirstOrDefaultAsync(c => c.ID == newsID);
             string? content = news?.Content;
             ViewBag.News = news;
