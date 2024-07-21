@@ -293,7 +293,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 			// Retrieve the matching TimeSlots
 			return _context.TimeSlots
-						  .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime).ToList();
+						  .Where(ts => ts.StartTime >= startTime && ts.EndTime <= endTime && ts.ID != 1 && ts.ID != 2).ToList();
 
 		}
 		#endregion
@@ -521,6 +521,17 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			{   // Check if session has expired, log out
 				return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
 			}
+			//---------------------------------------------------
+			//Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
+			var clinic =  _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefault(m => m.ID == clinicId);
+			var amID = clinic.AmWorkTimeID;
+			var pmID = clinic.PmWorkTimeID;
+			List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
+			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
+			ViewBag.AmTimeSlots = amTimeSlots;
+			ViewBag.PmTimeSlots = pmTimeSlots;
+
+			//--------------------------------------------------
 			var dentists = _context.Dentists
 						   .Join(_context.Accounts,
 								 dentist => dentist.AccountID,
@@ -564,8 +575,18 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                            .ToList();
 
             ViewData["DentistID"] = new SelectList(dentists.Where(d => d.ClinicID == clinicId && d.Status == "Hoạt Động"), "DentistID", "FullName");
-			//---------------------------------------------------------------------------------------------------------------------------------------
-            if (schedule.DentistIDs.Count == 0)
+			//---------------------------------------------------
+			//Generate 2 list timeSlot dựa trên WorkTime Sáng vs Chiều
+			var clinic = _context.Clinics.Include(c => c.AmWorkTimes).Include(c => c.PmWorkTimes).FirstOrDefault(m => m.ID == clinicId);
+			var amID = clinic.AmWorkTimeID;
+			var pmID = clinic.PmWorkTimeID;
+			List<TimeSlot> amTimeSlots = GenerateTimeSlots(amID);
+			List<TimeSlot> pmTimeSlots = GenerateTimeSlots(pmID);
+			ViewBag.AmTimeSlots = amTimeSlots;
+			ViewBag.PmTimeSlots = pmTimeSlots;
+
+			//-----------------------------------------------------------------------------
+			if (schedule.DentistIDs.Count == 0)
 			{
 				TempData["ToastMessageFailTempData"] = "Bạn chưa chọn nha sĩ nào.";
                 return View(schedule);
@@ -591,7 +612,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 						foreach (var slot in schedule.TimeSlots)
 						{
 							var existSchedule = await _context.Schedules.FirstOrDefaultAsync(
-								a => a.DentistID == dentist && a.Date == date && a.TimeSlotID == slot);
+								a => a.DentistID == dentist && a.Date == date && a.TimeSlotID == slot && a.ScheduleStatus != "Đã Hủy");
 
 							if (existSchedule == null)
 							{
@@ -727,7 +748,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 		public async Task<IActionResult> Delete(int? dentistId, DateTime? date) 
 		{
 			var scheduleSubList = _context.Schedules.Where(p =>
-				p.DentistID == dentistId && p.Date == DateOnly.FromDateTime(date.Value) && p.ScheduleStatus != "Đã Đặt" && p.ScheduleStatus != "Đã Hủy" && p.TimeSlotID != 31);
+				p.DentistID == dentistId && p.Date == DateOnly.FromDateTime(date.Value) && p.ScheduleStatus != "Đã Đặt" && p.ScheduleStatus != "Đã Hủy" && p.TimeSlotID != 32);
 			if (scheduleSubList.Any())
 			{
 				_context.Schedules.RemoveRange(scheduleSubList);

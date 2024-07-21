@@ -345,14 +345,6 @@
 												{
 													<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 												}
-												else if (slotIDs_Nghi.Contains(slot.ID))
-												{
-													<p class="time_Nghi">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-												}
-												else if (slotIDs_ConTrong.Contains(slot.ID))
-												{
-													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-												}
 											}
 										}
 									}
@@ -380,14 +372,6 @@
 											{
 												if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID)
 												&& (slotIDs_AmPm.Contains(2) || slotIDs_ConTrong.Contains(slot.ID)))
-												{
-													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
-												}
-											}
-											else
-											{
-												if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID)
-												&& (slotIDs_ConTrong.Contains(slot.ID)))
 												{
 													<p class="time_ChuaDat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
 												}
