@@ -349,7 +349,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 						DentistID = dentistID,
 						Date = date,
 						TimeSlotID = 32,
-						ScheduleStatus = "Đã Đặt"
+						ScheduleStatus = "Lịch điều trị"
 					};
 					_context.Schedules.Add(schedule);
 				}
