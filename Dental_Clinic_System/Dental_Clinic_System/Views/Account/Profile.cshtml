@@ -394,7 +394,7 @@
                                                             </button>
                                                         }
 
-                                                        <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;">
+                                                        <form asp-area="" asp-controller="Account" asp-action="CancelAppointment" method="post" style="margin-left: auto;" onsubmit="return confirmCancel();">
                                                             <input type="hidden" name="appointmentID" value="@appointment?.ID" />
                                                             <input type="hidden" name="scheduleID" value="@appointment?.Schedule?.ID" />
                                                             <input type="hidden" name="appointmentStatus" value="Đã Hủy" />
@@ -671,6 +671,12 @@
                 });
             });
         });
+    </script>
+
+    <script>
+        function confirmCancel() {
+            return confirm("Xác nhận hủy khám?");
+        }
     </script>
 
     @* Call API from https://esgoo.net to get data*@
