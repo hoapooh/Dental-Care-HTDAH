@@ -198,7 +198,7 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
                         }
 
                         // Những ngày còn lại đã dc lên lịch nếu không có appointment nào liên quan sẽ ko cho vô và đánh "Trống"
-                        else if(!appointmentDict.ContainsKey(key) || !periodicAppointmentDict.ContainsKey(key))
+                        else if(!appointmentDict.ContainsKey(key))
                         {
                             dailyTimeSlots.Add(new EventVM
                             {

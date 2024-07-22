@@ -88,6 +88,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Services
 
 									// Cập nhật trạng thái
 									appointment.AppointmentStatus = "Đã Hủy";
+
+									//Cập nhật lại trạng thái của schedule
+									var schedules = context.Schedules.First(s => s.ID == appointment.ScheduleID);
+									schedules.ScheduleStatus = "Đã Hủy";
+
 									// Gửi lại mail xác nhận đã hủy cho khách hàng
 									var user = await context.Accounts.FirstOrDefaultAsync(a => a.ID == appointment.PatientRecords.AccountID);
 									if (user != null)
