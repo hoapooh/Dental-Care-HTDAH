@@ -225,7 +225,7 @@
 				<th>Mô tả</th>
 			</tr>
 		</thead>
-		<tbody id="myTableBody">
+		<tbody @* id="myTableBody" *@>
 			@{
 				int index = 0; //đếm STT của table
 			}
@@ -278,8 +278,8 @@
 </div>
 
 <!-- ========== PAGINATION  ========== -->
-<ul id="pagination" class="pagination">
-</ul>
+@* <ul id="pagination" class="pagination">
+</ul> *@
 
 @section Scripts {
 	<script>

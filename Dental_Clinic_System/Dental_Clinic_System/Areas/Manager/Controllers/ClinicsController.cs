@@ -110,7 +110,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
                         TimeOnly pmS = clinic.PmStartTime;
                         TimeOnly pmE = clinic.PmEndTime;
                         //--------------------------------------KIỂM TRA GIỜ HỢP LỆ KHÔNG?
-                        if (amS >= amE || pmS >= pmE)
+                        if (amS > amE || pmS > pmE)
                         {
                             TempData["ToastMessageFailTempData"] = "Thời gian làm việc không hợp lệ.";
                             return View(clinic);

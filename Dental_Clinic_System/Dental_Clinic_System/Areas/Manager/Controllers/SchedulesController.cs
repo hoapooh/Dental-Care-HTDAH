@@ -15,6 +15,8 @@ using Dental_Clinic_System.ViewModels;
 using Newtonsoft.Json;
 using System.Collections;
 using Microsoft.AspNetCore.Authorization;
+using Dental_Clinic_System.Helper;
+using static Dental_Clinic_System.Services.VNPAY.VNPAYLibrary;
 
 namespace Dental_Clinic_System.Areas.Manager.Controllers
 {
@@ -46,7 +48,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			//---------------------------------------------------
 			//Lấy các lịch trong Appointment Table
 			// Filter schedules from today onwards
-			var today = DateOnly.FromDateTime(DateTime.Today);
+			var today = DateOnly.FromDateTime(Util.GetUtcPlus7Time());
 			var sche_Appointment = _context.Appointments.Include(a => a.Schedule).ThenInclude(s => s.Dentist).ThenInclude(d => d.Account).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Where(a => a.Schedule.Dentist.ClinicID == clinicId && a.Schedule.Date >= today);
 			var sche_FutureAppts = _context.PeriodicAppointments.Include(f => f.Dentist).Where(f => f.Dentist.ClinicID == clinicId && f.DesiredDate >= today);
             //--------------------------------------------------
@@ -140,7 +142,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 			//--------------------------------------------------
 			// Filter schedules from today onwards
-			var today = DateOnly.FromDateTime(DateTime.Today);
+			var today = DateOnly.FromDateTime(Util.GetUtcPlus7Time());
 			var schedulesQuery = _context.Schedules
 					.Include(s => s.Dentist)
 					.ThenInclude(d => d.Account)
@@ -197,7 +199,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 			//---------------------------------------------------
 			//Lấy các lịch trong Appointment Table
 			// Filter schedules from today view history
-			var today = DateOnly.FromDateTime(DateTime.Today);
+			var today = DateOnly.FromDateTime(Util.GetUtcPlus7Time());
 			var sche_Appointment = _context.Appointments.Include(a => a.Schedule).ThenInclude(s => s.Dentist).ThenInclude(d => d.Account).Include(a => a.Schedule).ThenInclude(s => s.TimeSlot).Where(a => a.Schedule.Dentist.ClinicID == clinicId && a.Schedule.Date < today);
 			var sche_FutureAppts = _context.PeriodicAppointments.Include(f => f.Dentist).Where(f => f.Dentist.ClinicID == clinicId && f.DesiredDate < today);
 			//--------------------------------------------------
@@ -259,7 +261,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 					});
 				}
 			}
-			return View("ViewHistory", bookedSchedules.OrderBy(b => b.Date).ToList());
+			return View("ViewHistory", bookedSchedules.OrderByDescending(b => b.Date).ToList());
 		}
 		private List<int> GenerateTimeSlotIDs(TimeOnly startTime, TimeOnly endTime)
         {
@@ -421,7 +423,7 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 				await _context.SaveChangesAsync();
 			}
 
-			var today = DateOnly.FromDateTime(DateTime.Today);
+			var today = DateOnly.FromDateTime(Util.GetUtcPlus7Time());
 			if (today < dates[0])
 			{
 				TempData["ToastMessageSuccessTempData"] = "Thành công tạo lịch khám từ ngày " + dates[0].ToString("dd/MM/yyyy") + " đến " + dates[6].ToString("dd/MM/yyyy");

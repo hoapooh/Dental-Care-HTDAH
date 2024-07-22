@@ -223,7 +223,7 @@
 				<th>Hành động</th>
 			</tr>
 		</thead>
-		<tbody id="myTableBody">
+		<tbody @* id="myTableBody" *@>
 			@{
 				var groupedData = Model.GroupBy(s => new { s.Date, s.DentistID });
 				int index = 0; //đếm STT của table
@@ -420,8 +420,8 @@
 </div>
 
 <!-- ========== PAGINATION  ========== -->
-<ul id="pagination" class="pagination">
-</ul>
+@* <ul id="pagination" class="pagination">
+</ul> *@
 <!-- Modal xác nhận -->
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
