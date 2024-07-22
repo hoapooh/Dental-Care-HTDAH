@@ -53,7 +53,7 @@
                             <div class="newsItem__thumb">
                                 <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })" aria-label="@news?.Title">
                                     <img src="@news.ThumbNail"
-                                         alt="thumbnail" loading="lazy" />
+                                         alt="@news?.Title" loading="lazy" />
                                 </a>
                             </div>
                         </div>

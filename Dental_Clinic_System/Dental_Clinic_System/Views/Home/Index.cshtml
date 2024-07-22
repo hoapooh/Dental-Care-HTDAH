@@ -164,7 +164,7 @@
                         {
                             <div class="news__cards_item">
                                 <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })">
-                                    <img src="@news.ThumbNail" alt="" loading="lazy" />
+                                    <img src="@news.ThumbNail" alt="@news?.Title" loading="lazy" />
                                 </a>
                                 <p class="news__cards_item--title">
                                     <a href="@Url.Action("NewsDetail", "News", new { newsID = news.ID })">
