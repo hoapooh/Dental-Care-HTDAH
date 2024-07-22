@@ -1,4 +1,4 @@
-using Dental_Clinic_System.Models;
+﻿using Dental_Clinic_System.Models;
 using Dental_Clinic_System.Models.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ namespace Dental_Clinic_System.Controllers
             var specialties = await _context.Specialties.ToListAsync();
             ViewBag.Specialities = specialties;
 
-            var clinics = await _context.Clinics.Where(c => c.ClinicStatus == "Ho?t ??ng").ToListAsync();
+            var clinics = await _context.Clinics.Where(c => c.ClinicStatus == "Hoạt Động").ToListAsync();
             ViewBag.Clinics = clinics;
 
 			var news = await _context.News.ToListAsync();
