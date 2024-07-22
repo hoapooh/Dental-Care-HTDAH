@@ -1,42 +1,40 @@
 ﻿@model IEnumerable<Dental_Clinic_System.Models.Data.Specialty>
 
 @{
-	ViewData["Title"] = "Chuyên Khoa";
+    ViewData["Title"] = "Chuyên Khoa";
 }
 
 <head>
-	<meta name="description" content="Tại đây hiển thị toàn bộ danh sách của các chuyên khoa có trong phòng khám">
-	<link rel="stylesheet" href="~/assets/css/special.css" />
+    <meta name="description" content="Tại đây hiển thị toàn bộ danh sách của các chuyên khoa có trong phòng khám">
+    <link rel="stylesheet" href="~/assets/css/special.css" />
 </head>
 
 <div class="special">
-	<h1 class="special__title text-center fw-bold">
-		Các chuyên khoa của nha khoa
-	</h1>
-	<div class="text-center">
-		<img src="~/assets/images/separate.png" alt="" loading="lazy" />
-	</div>
-	<div class="special__list">
-		<div class="special__list__wrapper">
-			@foreach (var specialty in Model)
-			{
-				<div class="special__list__item d-flex flex-row">
-					<div class="special__list__item--image">
-						<img src="@specialty.Image" alt="Chuyên khoa: @specialty.Name" loading="lazy" />
-					<p>@specialty.Name</p>
-				</div>
-				<div class="special__list__item--info">
-					<p>
-						@specialty.Description
-					</p>
-					<a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
-						<span>Chi tiết</span><i class="bx bx-chevron-right-circle"></i>
-					</a>
-					<img src="~/assets/images/separate-01.png" alt="" loading="lazy" />
-				</div>
-			</div>
-			}
-		</div>
-	</div>
+    <h1 class="special__title text-center fw-bold">
+        Các chuyên khoa của nha khoa
+    </h1>
+    <div class="text-center">
+        <img src="~/assets/images/separate.png" alt="" loading="lazy" />
+    </div>
+    <div class="special__list">
+        <div class="special__list__wrapper">
+            @foreach (var specialty in Model)
+            {
+                <div class="special__list__item d-flex flex-row">
+                    <div class="special__list__item--image">
+                        <img src="@specialty.Image" alt="Chuyên khoa: @specialty.Name" loading="lazy" />
+                        <p>@specialty.Name</p>
+                    </div>
+                    <div class="special__list__item--info">
+                            @Html.Raw(specialty.Description)
+                        <a asp-controller="specialty" asp-action="choosedentistry" asp-route-specialtyID="@specialty.ID">
+                            <span>Chi tiết</span><i class="bx bx-chevron-right-circle"></i>
+                        </a>
+                        <img src="~/assets/images/separate-01.png" alt="" loading="lazy" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
