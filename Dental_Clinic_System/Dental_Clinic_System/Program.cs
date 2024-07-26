@@ -123,16 +123,16 @@ builder.Services.AddSignalR();
 
 //});
 
-//Soyu: Cấu hình DinkToPDF
-var context = new CustomAssemblyLoadContext();
-var wkHtmlToPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wkhtmltox", "libwkhtmltox.dll");
-context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+////Soyu: Cấu hình DinkToPDF
+//var context = new CustomAssemblyLoadContext();
+//var wkHtmlToPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wkhtmltox", "libwkhtmltox.dll");
+//context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
 
-//Soyu: Thêm Singleton cho phần xuất pdf
-builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+////Soyu: Thêm Singleton cho phần xuất pdf
+//builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
-//Soyu: Đăng Ký PDFService
-builder.Services.AddSingleton<PdfService>();
+////Soyu: Đăng Ký PDFService
+//builder.Services.AddSingleton<PdfService>();
 
 var app = builder.Build();
 
@@ -225,55 +225,55 @@ app.UseEndpoints(endpoints =>
 
 app.Run();
 
-#region Class CustomAssemblyLoadContext
-public class CustomAssemblyLoadContext : AssemblyLoadContext
-{
-    public IntPtr LoadUnmanagedLibrary(string absolutePath)
-    {
-        return LoadUnmanagedDll(absolutePath);
-    }
+//#region Class CustomAssemblyLoadContext
+//public class CustomAssemblyLoadContext : AssemblyLoadContext
+//{
+//    public IntPtr LoadUnmanagedLibrary(string absolutePath)
+//    {
+//        return LoadUnmanagedDll(absolutePath);
+//    }
 
-    protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
-    {
-        return LoadUnmanagedDllFromPath(unmanagedDllName);
-    }
+//    protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+//    {
+//        return LoadUnmanagedDllFromPath(unmanagedDllName);
+//    }
 
-    protected override Assembly Load(AssemblyName assemblyName)
-    {
-        throw new NotImplementedException();
-    }
-}
-#endregion
+//    protected override Assembly Load(AssemblyName assemblyName)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}
+//#endregion
 
-#region Class PdfService
-public class PdfService
-{
-    private readonly IConverter _converter;
+//#region Class PdfService
+//public class PdfService
+//{
+//    private readonly IConverter _converter;
 
-    public PdfService(IConverter converter)
-    {
-        _converter = converter;
-    }
+//    public PdfService(IConverter converter)
+//    {
+//        _converter = converter;
+//    }
 
-    public byte[] GeneratePdf(string html)
-    {
-        var doc = new HtmlToPdfDocument()
-        {
-            GlobalSettings = {
-                ColorMode = DinkToPdf.ColorMode.Color,
-                Orientation = DinkToPdf.Orientation.Portrait,
-                PaperSize = DinkToPdf.PaperKind.A4
-            },
-            Objects = {
-                new ObjectSettings() {
-                    PagesCount = null,
-                    HtmlContent = html,
-                    WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/css", "appointmentpdf.css") },
-                }
-            }
-        };
+//    public byte[] GeneratePdf(string html)
+//    {
+//        var doc = new HtmlToPdfDocument()
+//        {
+//            GlobalSettings = {
+//                ColorMode = DinkToPdf.ColorMode.Color,
+//                Orientation = DinkToPdf.Orientation.Portrait,
+//                PaperSize = DinkToPdf.PaperKind.A4
+//            },
+//            Objects = {
+//                new ObjectSettings() {
+//                    PagesCount = null,
+//                    HtmlContent = html,
+//                    WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/css", "appointmentpdf.css") },
+//                }
+//            }
+//        };
 
-        return _converter.Convert(doc);
-    }
-}
-#endregion
+//        return _converter.Convert(doc);
+//    }
+//}
+//#endregion

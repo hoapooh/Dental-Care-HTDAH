@@ -18,13 +18,19 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
     [Area("Dentist")]
     public class AppointmentPdfController : Controller
     {
-        private readonly PdfService _pdfService;
+        //private readonly PdfService _pdfService;
         private readonly DentalClinicDbContext _context;
         IWebHostEnvironment _webHostEnvironment;
 
-        public AppointmentPdfController(PdfService pdfService, DentalClinicDbContext context, IWebHostEnvironment webHostEnvironment)
+        //public AppointmentPdfController(PdfService pdfService, DentalClinicDbContext context, IWebHostEnvironment webHostEnvironment)
+        //{
+        //    _pdfService = pdfService;
+        //    _context = context;
+        //    _webHostEnvironment = webHostEnvironment;
+        //}
+
+        public AppointmentPdfController(DentalClinicDbContext context, IWebHostEnvironment webHostEnvironment)
         {
-            _pdfService = pdfService;
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -159,11 +165,11 @@ namespace Dental_Clinic_System.Areas.Dentist.Controllers
 ";
 			#endregion
 
-			byte[] pdf = _pdfService.GeneratePdf(htmlContent);
+			//byte[] pdf = _pdfService.GeneratePdf(htmlContent);
             string fileName = $"donkham_{appointmentID}.pdf";
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pdf", fileName);
 
-            System.IO.File.WriteAllBytes(filePath, pdf);
+            //System.IO.File.WriteAllBytes(filePath, pdf);
 			
 			//return File(pdf, "application/pdf", "appointment.pdf"); //Trả về file pdf
 			return Redirect($"/pdf/{fileName}");
