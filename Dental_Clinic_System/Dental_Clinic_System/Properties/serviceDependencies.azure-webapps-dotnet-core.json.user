@@ -2,8 +2,19 @@
   "dependencies": {
     "mssql1": {
       "restored": true,
-      "restoreTime": "2024-07-26T10:55:22.2309195Z"
+      "restoreTime": "2024-07-27T06:29:50.2740334Z"
     }
   },
-  "parameters": {}
+  "parameters": {
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "7bdfd614-cd01-4dee-963a-7564c84bf692"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "DentalCarePlatformResourceGroup"
+    }
+  }
 }
