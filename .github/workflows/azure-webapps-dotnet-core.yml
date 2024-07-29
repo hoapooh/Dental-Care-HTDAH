@@ -87,6 +87,22 @@ jobs:
                   name: .net-app
                   path: ${{ github.workspace }}/myapp
 
+            - name: Set environment variables
+              run: |
+                echo "DB_CONNECTION_USER_ID=${{ secrets.DB_CONNECTION_USER_ID }}" >> $GITHUB_ENV
+                echo "DB_CONNECTION_PASSWORD=${{ secrets.DB_CONNECTION_PASSWORD }}" >> $GITHUB_ENV
+                echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
+                echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
+                echo "EMAIL_SMTP_USERNAME=${{ secrets.EMAIL_SMTP_USERNAME }}" >> $GITHUB_ENV
+                echo "EMAIL_SMTP_PASSWORD=${{ secrets.EMAIL_SMTP_PASSWORD }}" >> $GITHUB_ENV
+                echo "VNPAY_TMNCODE=${{ secrets.VNPAY_TMNCODE }}" >> $GITHUB_ENV
+                echo "VNPAY_HASHSECRET=${{ secrets.VNPAY_HASHSECRET }}" >> $GITHUB_ENV
+                echo "MOMO_API_SECRETKEY=${{ secrets.MOMO_API_SECRETKEY }}" >> $GITHUB_ENV
+                echo "MOMO_API_ACCESSKEY=${{ secrets.MOMO_API_ACCESSKEY }}" >> $GITHUB_ENV
+                echo "MOMO_API_PARTNERCODE=${{ secrets.MOMO_API_PARTNERCODE }}" >> $GITHUB_ENV
+                echo "MOMO_API_PUBLICKEY=${{ secrets.MOMO_API_PUBLICKEY }}" >> $GITHUB_ENV
+                echo "ZEROBOUNCE_APIKEY=${{ secrets.ZEROBOUNCE_APIKEY }}" >> $GITHUB_ENV
+
             - name: Deploy to Azure Web App
               id: deploy-to-webapp
               uses: azure/webapps-deploy@v2
