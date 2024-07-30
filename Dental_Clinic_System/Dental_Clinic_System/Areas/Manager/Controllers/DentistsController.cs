@@ -146,88 +146,92 @@ namespace Dental_Clinic_System.Controllers
             {   // Check if session has expired, log out
                 return RedirectToAction("Logout", "ManagerAccount", new { area = "Manager" });
             }
-            //Check thông tin trùng lặp
-            var existingAccount = await _context.Accounts
-				.FirstOrDefaultAsync(a => a.Email == dentist.Email || a.PhoneNumber == dentist.PhoneNumber || a.Username == dentist.Username);
+			if (ModelState.IsValid)
+			{
+				//Check thông tin trùng lặp
+				var existingAccount = await _context.Accounts
+				.FirstOrDefaultAsync(a => (a.Email != null && a.Email == dentist.Email) || (a.PhoneNumber != null && a.PhoneNumber == dentist.PhoneNumber) || a.Username == dentist.Username);
 
-			if (existingAccount != null)
-			{
-				//Thấy thông tin bị trùng, thông báo lỗi
-				//ModelState.AddModelError(string.Empty, "Fail: Tên đăng nhập / Email / Số điện thoại - đã tồn tại");
-				TempData["ToastMessageFailTempData"] = "Tên đăng nhập / Email / Số điện thoại - đã tồn tại.";
-				return View("Create", dentist);
-			}
-
-			//Thêm mới account vào DB
-			var newAccount = new Account
-			{
-				Username = dentist.Username,
-				Password = DataEncryptionExtensions.ToMd5Hash(dentist.Password),
-				LastName = dentist.LastName,
-				FirstName = dentist.FirstName,
-				Gender = dentist.Gender,
-				PhoneNumber = dentist.PhoneNumber,
-				Email = dentist.Email,
-				Role = "Nha Sĩ",
-				AccountStatus = "Hoạt Động",
-				Image = dentist.Gender == "Nam"? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FDentist%2Fdentist-default-men.png?alt=media&token=f519d272-3f65-4269-9d0e-657ad36d4c87" : "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FDentist%2Fdentist-default-women.png?alt=media&token=f7412f77-1ed3-4383-8f37-c0cbe9048bc1"
-			};
-
-			_context.Accounts.Add(newAccount);
-			await _context.SaveChangesAsync();
-			//-----------------------------------------------------------
-			//Thêm mới nha sĩ
-			var account = await _context.Accounts
-				.FirstOrDefaultAsync(a => a.Username == dentist.Username);
-			// Debugging
-			Console.WriteLine($"AccountID: {account.ID}");
-			Console.WriteLine($"DegreeID: {dentist.DegreeID}");
-			var newDentist = new Dentist
-			{
-				AccountID = account.ID,
-				ClinicID = clinicId ?? 0,
-				DegreeID = dentist.DegreeID,
-				Description = dentist.Description
-			};
-			_context.Dentists.Add(newDentist);
-			await _context.SaveChangesAsync();
-			//-------------------------------------------------------------
-			//Thêm vào bảng NhaSi_ChuyenKhoa
-			var den = await _context.Dentists.FirstOrDefaultAsync(a => a.AccountID == account.ID); //lấy Nha sĩ ms tạo
-			var speIDs = _context.Specialties.OrderBy(a => a.ID).Select(a => a.ID).ToList(); //lấy các ID củae all chuyên khoa
-			bool check;
-			var newDen_speList = new List<DentistSpecialty>();
-			foreach (var speID in speIDs)
-			{
-				if (dentist.SpecialtyIDs.Contains(speID))
-					check = true;
-				else
-					check = false;
-				newDen_speList.Add( new DentistSpecialty
+				if (existingAccount != null)
 				{
-					DentistID = den.ID,
-					SpecialtyID = speID,
-					Check = check
-				});
-			}
-			_context.AddRange(newDen_speList);
-			await _context.SaveChangesAsync();
-			//--------------------------------------
-			//Thêm dòng cho nha sĩ ms trong Lịch làm việc Dentist_Session
-			var newDenSesList = new List<Dentist_Session>();
-			for (int i = 1; i <= 14; i++)
-			{
-				newDenSesList.Add( new Dentist_Session
+					//Thấy thông tin bị trùng, thông báo lỗi
+					//ModelState.AddModelError(string.Empty, "Fail: Tên đăng nhập / Email / Số điện thoại - đã tồn tại");
+					TempData["ToastMessageFailTempData"] = "Tên đăng nhập / Email / Số điện thoại - đã tồn tại.";
+					return View("Create", dentist);
+				}
+
+				//Thêm mới account vào DB
+				var newAccount = new Account
 				{
-					Dentist_ID = den.ID,
-					Session_ID = i,
-					Check = false //mặc định khi tạo ms
-				});
+					Username = dentist.Username,
+					Password = DataEncryptionExtensions.ToMd5Hash(dentist.Password),
+					LastName = dentist.LastName,
+					FirstName = dentist.FirstName,
+					Gender = dentist.Gender,
+					PhoneNumber = dentist.PhoneNumber,
+					Email = dentist.Email,
+					Role = "Nha Sĩ",
+					AccountStatus = "Hoạt Động",
+					Image = dentist.Gender == "Nam" ? "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FDentist%2Fdentist-default-men.png?alt=media&token=f519d272-3f65-4269-9d0e-657ad36d4c87" : "https://firebasestorage.googleapis.com/v0/b/dental-care-3388d.appspot.com/o/Profile%2FDentist%2Fdentist-default-women.png?alt=media&token=f7412f77-1ed3-4383-8f37-c0cbe9048bc1"
+				};
+
+				_context.Accounts.Add(newAccount);
+				await _context.SaveChangesAsync();
+				//-----------------------------------------------------------
+				//Thêm mới nha sĩ
+				var account = await _context.Accounts
+					.FirstOrDefaultAsync(a => a.Username == dentist.Username);
+				// Debugging
+				Console.WriteLine($"AccountID: {account.ID}");
+				Console.WriteLine($"DegreeID: {dentist.DegreeID}");
+				var newDentist = new Dentist
+				{
+					AccountID = account.ID,
+					ClinicID = clinicId ?? 0,
+					DegreeID = dentist.DegreeID,
+					Description = dentist.Description
+				};
+				_context.Dentists.Add(newDentist);
+				await _context.SaveChangesAsync();
+				//-------------------------------------------------------------
+				//Thêm vào bảng NhaSi_ChuyenKhoa
+				var den = await _context.Dentists.FirstOrDefaultAsync(a => a.AccountID == account.ID); //lấy Nha sĩ ms tạo
+				var speIDs = _context.Specialties.OrderBy(a => a.ID).Select(a => a.ID).ToList(); //lấy các ID củae all chuyên khoa
+				bool check;
+				var newDen_speList = new List<DentistSpecialty>();
+				foreach (var speID in speIDs)
+				{
+					if (dentist.SpecialtyIDs.Contains(speID))
+						check = true;
+					else
+						check = false;
+					newDen_speList.Add(new DentistSpecialty
+					{
+						DentistID = den.ID,
+						SpecialtyID = speID,
+						Check = check
+					});
+				}
+				_context.AddRange(newDen_speList);
+				await _context.SaveChangesAsync();
+				//--------------------------------------
+				//Thêm dòng cho nha sĩ ms trong Lịch làm việc Dentist_Session
+				var newDenSesList = new List<Dentist_Session>();
+				for (int i = 1; i <= 14; i++)
+				{
+					newDenSesList.Add(new Dentist_Session
+					{
+						Dentist_ID = den.ID,
+						Session_ID = i,
+						Check = false //mặc định khi tạo ms
+					});
+				}
+				_context.AddRange(newDenSesList);
+				await _context.SaveChangesAsync();
+				TempData["ToastMessageSuccessTempData"] = "Thành công thêm mới nha sĩ.";
+				return RedirectToAction(nameof(Index));
 			}
-			_context.AddRange(newDenSesList);
-			await _context.SaveChangesAsync();
-			TempData["ToastMessageSuccessTempData"] = "Thành công thêm mới nha sĩ.";
-			return RedirectToAction(nameof(Index));
+			return View("Create", dentist);
 		}
 
 		// GET: Dentists/Edit/5

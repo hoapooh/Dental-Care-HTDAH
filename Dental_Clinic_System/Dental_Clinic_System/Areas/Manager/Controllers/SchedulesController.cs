@@ -160,8 +160,10 @@ namespace Dental_Clinic_System.Areas.Manager.Controllers
 
 			if (!string.IsNullOrEmpty(status))
 			{
-				if (status != "Còn Trống")
+				if (status == "Nghỉ")
 					schedulesQuery = schedulesQuery.Where(s => s.ScheduleStatus == status);
+				if (status == "Đã Đặt")
+					schedulesQuery = schedulesQuery.Where(s => s.ScheduleStatus == status || s.TimeSlotID == 32);
 				ViewBag.Status = status;
 			}
 

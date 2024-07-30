@@ -360,7 +360,11 @@
 													<div class="newline"></div>
 												}
 											}
-											if (@ViewBag.AmTimeSlots.Contains(slot))
+											if (slotIDs_FutureAppts.Contains(slot.ID))
+											{
+												//ko hiện
+											}
+											else if (@ViewBag.AmTimeSlots.Contains(slot))
 											{
 												if (!slotIDs_DaDat.Contains(slot.ID) && !slotIDs_Nghi.Contains(slot.ID)
 												&& (slotIDs_AmPm.Contains(1) || slotIDs_ConTrong.Contains(slot.ID)))
@@ -381,10 +385,20 @@
 								}
 								else if (ViewBag.Status == "Đã Đặt")
 								{
-									@foreach (var item in group) //list các id slot đã đặt lịch
+									var slotList = group.Select(g => g.TimeSlotID).ToList();
+									foreach (var slot in @ViewBag.TimeSlots)
 									{
-										<p class="time_Dat">@item.TimeSlot.StartTime.ToString("HH:mm") - @item.TimeSlot.EndTime.ToString("HH:mm")</p>
+										if (slotIDs_FutureAppts.Contains(slot.ID))
+										{
+											<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+										}
+										else if (slotList.Contains(slot.ID)) 
+										{
+											<p class="time_Dat">@slot.StartTime.ToString("HH:mm") - @slot.EndTime.ToString("HH:mm")</p>
+										}
 									}
+
+
 								}
 								else if (ViewBag.Status == "Nghỉ")
 								{
